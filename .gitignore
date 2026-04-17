@@ -1,3 +1,3 @@
-# PDFs are generated artifacts; do not bloat the repo.
-# Run: node scripts/print-pdfs.mjs  (with local http-server on :8899)
-pdfs/
+# Build caches
+node_modules/
+.DS_Store
