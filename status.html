@@ -54,8 +54,17 @@
 .svc-legend .sw.inc { background: var(--warn); }
 .svc-legend .sw.deg { background: var(--muted-2); }
 @media (max-width: 900px) {
-  .svc-row { grid-template-columns: 1fr 1fr; grid-template-areas: "name uptime" "bar bar" "status status"; gap: 0.75rem; }
+  .svc-row { grid-template-columns: 1fr 1fr; grid-template-areas: "name uptime" "bar bar" "status status"; gap: 0.75rem; padding: 1rem 1.1rem; }
   .svc-name { grid-area: name; } .svc-bar { grid-area: bar; } .svc-status { grid-area: status; } .svc-uptime { grid-area: uptime; }
+  .svc-bar .cell { height: 22px; min-width: 2px; }
+}
+@media (max-width: 520px) {
+  .svc-row { padding: 0.85rem 0.9rem; }
+  .svc-name { font-size: 14.5px; }
+  .svc-name .sub { font-size: 9.5px; letter-spacing: 0.06em; }
+  .svc-bar .cell { height: 18px; min-width: 1px; }
+  .svc-uptime { font-size: 12px; min-width: 5ch; }
+  .svc-status { font-size: 10px; letter-spacing: 0.08em; }
 }
 
 .incident-table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); background: var(--paper); font-variant-numeric: tabular-nums; }
@@ -116,13 +125,29 @@
 }
 @media (max-width: 520px) {
   .status-hero h1 { font-size: clamp(40px, 12vw, 72px); }
-  .overall { padding: 1.25rem; }
-  .svc-legend { gap: 0.75rem 1.25rem; }
+  .overall { padding: 1.25rem; gap: 1rem; }
+  .overall .headline { font-size: 20px; }
+  .overall .meta { font-size: 10.5px; letter-spacing: 0.08em; }
+  .svc-legend { gap: 0.5rem 1rem; font-size: 9.5px; letter-spacing: 0.08em; }
   .svc-legend span[style] { margin-left: 0 !important; }
   .stat-row { grid-template-columns: 1fr; }
-  .stat-row .c { border-right: 0; border-bottom: 1px solid var(--line); }
+  .stat-row .c { border-right: 0; border-bottom: 1px solid var(--line); padding: 1.1rem 1rem; }
   .stat-row .c:last-child { border-bottom: 0; }
   .stat-row .c:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .status-section .head h2 { font-size: clamp(24px, 7vw, 34px); }
+  .status-section .head .note { font-size: 9.5px; letter-spacing: 0.08em; }
+  .incident-table tr { padding: 0.85rem 1rem; }
+  .incident-table .date { font-size: 11.5px; }
+  .maint { padding: 1.1rem 1.25rem; }
+  .maint .body { font-size: 14px; line-height: 1.5; }
+  .subscribe-form input { font-size: 12.5px; padding: 0.85rem 0.9rem; }
+  .subscribe-form button { font-size: 13px; padding: 0.85rem 1rem; }
+}
+@media (max-width: 380px) {
+  .status-hero h1 { font-size: 34px; }
+  .overall .headline { font-size: 17px; }
+  .svc-name { font-size: 13.5px; }
+  .stat-row .v { font-size: 24px; }
 }
 </style>
 </head>

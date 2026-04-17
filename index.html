@@ -214,17 +214,27 @@
 }
 @media (max-width: 520px) {
   .ledger { max-height: 420px; }
-  .ledger-head { grid-template-columns: 58px 1fr 68px 58px; padding: 8px 12px; font-size: 9px; gap: 0.5rem; }
-  .ledger-row { grid-template-columns: 58px 1fr 68px 58px; padding: 10px 12px; gap: 0.5rem; font-size: 12px; }
+  .ledger-head { grid-template-columns: 50px 1fr 60px 50px; padding: 8px 10px; font-size: 9px; gap: 0.4rem; }
+  .ledger-row { grid-template-columns: 50px 1fr 60px 50px; padding: 10px 10px; gap: 0.4rem; font-size: 12px; }
   .ledger-row .t { font-size: 10px; }
+  .ledger-row .w { font-size: 11.5px; }
   .ledger-row .w span { font-size: 9px; }
-  .ledger-row .p { font-size: 12px; }
+  .ledger-row .p { font-size: 11.5px; }
   .ledger-row .s { font-size: 9px; }
+  .ledger-chrome { padding: 0 10px; font-size: 9.5px; }
+  .ledger-chrome .u { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .home-headline { font-size: clamp(40px, 12vw, 72px) !important; }
+  .home-dek { font-size: 16px; }
   .home-proof { grid-template-columns: 1fr; }
   .home-proof .p { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
   .home-proof .p:last-child { border-bottom: 0; }
   .home-cta .btn { width: 100%; }
+  .home-hero .meta-row { font-size: 10px; gap: 0.5rem; }
+}
+@media (max-width: 380px) {
+  .ledger-head, .ledger-row { grid-template-columns: 44px 1fr 54px 42px; padding: 8px 8px; gap: 0.35rem; }
+  .ledger-chrome .u { display: none; }
+  .home-headline { font-size: clamp(34px, 13vw, 56px) !important; }
 }
 
 /* ---------- WHAT WE DO — 14 practice areas ---------- */
@@ -834,8 +844,30 @@
 }
 @media (max-width: 520px) {
   .case-card { padding: 1.5rem 1.25rem; }
-  .press-cell { padding: 1.5rem 1.25rem; }
+  .case-card blockquote { font-size: 16px; padding-left: 0.75rem; }
+  .case-kpi > div { padding: 0.75rem 0.85rem; }
+  .case-kpi .v { font-size: 19px; }
+  .press-cell { padding: 1.5rem 1.25rem; gap: 1rem; }
   .end-cta .btns .btn { width: 100%; }
+  .end-cta .btns { display: flex; flex-direction: column; align-items: stretch; gap: 0.6rem; }
+  .cell { min-height: 0; padding: 1.75rem 1.25rem 1.5rem; }
+  .cell-name { font-size: clamp(19px, 6vw, 22px) !important; margin-top: 1.25rem; }
+  .grid-12 .cell { min-height: 0; padding: 1.5rem 1.1rem; }
+  .grid-12 .cell-feature { min-height: 0; padding: 1.75rem 1.25rem; }
+  .grid-12 .cell-feature .cell-glyph { width: 44px; height: 44px; }
+  .diff-card { padding: 1.75rem 1.25rem; }
+  .diff-card .fig { font-size: clamp(44px, 13vw, 64px); }
+  .diff-card .figLabel { padding-bottom: 1rem; margin-bottom: 1rem; }
+  .vf-sku { padding: 1.1rem 1.25rem; }
+  .ops-bullets li { padding: 1.1rem 1rem; font-size: 14px; }
+  .proof-head, .do-head { gap: 1.25rem; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+}
+@media (max-width: 380px) {
+  .cell-glyph { width: 40px; height: 40px; }
+  .cell-feature .cell-glyph { width: 40px; height: 40px; }
+  .diff-card .fig { font-size: clamp(40px, 14vw, 52px); }
+  .end-cta h2 { font-size: clamp(32px, 13vw, 48px); letter-spacing: -0.04em; }
+  .vf-head h2 { font-size: clamp(32px, 12vw, 48px); letter-spacing: -0.04em; }
 }
 
 /* ---------- END CTA ---------- */
