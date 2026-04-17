@@ -250,12 +250,32 @@
 }
 
 @media (max-width: 1000px) {
-  .directory { grid-template-columns: 1fr; }
+  .directory { grid-template-columns: 1fr; min-height: 0; }
   .dir-list { border-right: 0; border-bottom: 1px solid var(--line); }
   .dp-top { grid-template-columns: 1fr; }
   .dp-agent { grid-template-columns: 30px 1fr auto; }
   .dp-a-unit { display: none; }
   .dp-foot { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .dir-panel { padding: 1.75rem 1.25rem; }
+  .dir-item { padding: 1rem 1.25rem; grid-template-columns: 32px 1fr auto; }
+  .dir-item:hover, .dir-item.active { padding-left: 1.25rem; }
+  .dp-title { font-size: clamp(26px, 6.5vw, 36px); }
+  .dp-badge { min-width: 0; padding: 0.85rem 1rem; text-align: left; }
+  .dp-badge-v { font-size: 32px; }
+  .dp-agent { gap: 0.6rem; padding: 0.9rem 0.1rem; }
+  .dp-agent:hover { padding-left: 0.35rem; padding-right: 0.35rem; }
+  .dp-a-name { font-size: 14.5px; }
+  .dp-a-price { font-size: 19px; }
+  .dp-quote { font-size: 17px; padding-left: 0.9rem; }
+  .dp-foot .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 520px) {
+  .dir-panel { padding: 1.5rem 1rem; }
+  .dir-head { padding: 1rem 1.25rem; }
+  .dir-item { padding: 0.9rem 1rem; grid-template-columns: 28px 1fr 14px; gap: 0.6rem; }
+  .dir-name { font-size: 15px; }
 }
 </style>
 </head>

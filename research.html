@@ -873,6 +873,25 @@
   padding: 0 clamp(20px, 4vw, 56px);
 }
 
+@media (max-width: 720px) {
+  .hero-research h1 { font-size: clamp(34px, 11vw, 60px); }
+  .wp-title { font-size: clamp(22px, 6vw, 30px); }
+  .wp-cite-box code { font-size: 10px; overflow-x: auto; }
+  .wp-actions { flex-direction: column; }
+  .wp-btn { flex: 1 1 100%; }
+  .submit-section h2 { font-size: clamp(30px, 9vw, 54px); }
+  .submit-cta-row { flex-direction: column; align-items: stretch; }
+  .submit-cta-row .submit-btn { justify-content: center; }
+  .submit-offer { grid-template-columns: 1fr; gap: 0.5rem; }
+}
+@media (max-width: 520px) {
+  .wp-keywords { gap: 0.3rem; }
+  .wp-kw { font-size: 10px; }
+  .collab-card { padding: 1.75rem 1.25rem; }
+  .collab-meta { grid-template-columns: 1fr; }
+  .collab-meta-cell { border-right: 0; border-bottom: 1px solid var(--line); }
+  .collab-meta-cell:last-child { border-bottom: 0; }
+}
 </style>
 </head>
 <body>

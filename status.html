@@ -110,6 +110,19 @@
   .stat-row { grid-template-columns: repeat(2, 1fr); }
   .stat-row .c:nth-child(2) { border-right: 0; }
   .stat-row .c:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .subscribe-form { flex-direction: column; }
+  .subscribe-form input { border-right: 1px solid var(--ink); border-bottom: 0; }
+  .subscribe-form button { border-top: 0; }
+}
+@media (max-width: 520px) {
+  .status-hero h1 { font-size: clamp(40px, 12vw, 72px); }
+  .overall { padding: 1.25rem; }
+  .svc-legend { gap: 0.75rem 1.25rem; }
+  .svc-legend span[style] { margin-left: 0 !important; }
+  .stat-row { grid-template-columns: 1fr; }
+  .stat-row .c { border-right: 0; border-bottom: 1px solid var(--line); }
+  .stat-row .c:last-child { border-bottom: 0; }
+  .stat-row .c:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
 }
 </style>
 </head>

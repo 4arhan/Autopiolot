@@ -956,6 +956,30 @@
 
 /* End CTA overrides — keep the standard system */
 .endcta-id h2 { max-width: 18ch; }
+
+@media (max-width: 720px) {
+  .hero-id h1 { font-size: clamp(40px, 12vw, 84px); }
+  .mark-cell { min-height: 200px; padding: 1.5rem 1rem 1rem; }
+  .mark-cell .mark[style*="256px"],
+  .mark-cell .mark[style*="160px"] { width: 128px !important; height: 128px !important; }
+  .clearspace-diagram { padding: 2.5rem; }
+  .clearspace-diagram .mark { width: 80px; height: 80px; }
+  .wm-scale-row { padding: 1.25rem 1.25rem; }
+  .wm-sz-2 { font-size: 36px; }
+  .lockup-cell { padding: 1.75rem 1.25rem; min-height: 200px; }
+  .lockup-horiz .wordmark { font-size: 28px; }
+  .lockup-alone .wordmark { font-size: 32px; }
+  .charset-row { font-size: clamp(22px, 7vw, 36px); }
+  .surface-cell { padding: 2rem 1.25rem; min-height: 180px; }
+  .grid-overlay { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .motion-cell { padding: 1.5rem 1.25rem; min-height: 220px; }
+}
+@media (max-width: 520px) {
+  .id-legend { grid-template-columns: 1fr; }
+  .kit-link { padding: 0.75rem; }
+  .swatch .chip { height: 80px; }
+  .swatch { min-height: 240px; }
+}
 </style>
 </head>
 <body>

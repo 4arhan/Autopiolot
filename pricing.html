@@ -138,6 +138,12 @@
 @media (max-width: 950px) {
   .models { grid-template-columns: 1fr; }
 }
+@media (max-width: 520px) {
+  .model { padding: 2rem 1.25rem; }
+  .model-tag { min-height: 0; margin-bottom: 1.5rem; }
+  .model-feat { margin-bottom: 1.5rem; }
+  .model .btn { width: 100%; justify-content: center; }
+}
 
 /* Outcome rate table */
 .rates {
@@ -211,6 +217,13 @@
 @media (max-width: 800px) {
   .rates-head, .rate-row { grid-template-columns: 1fr auto; }
   .rates-head .col-vert, .rates-head .col-unit, .rate-vert, .rate-unit { display: none; }
+}
+@media (max-width: 520px) {
+  .rates-head { padding: 0.85rem 1rem; font-size: 10px; }
+  .rate-row { padding: 0.9rem 1rem; gap: 0.75rem; }
+  .rate-name { font-size: 14.5px; }
+  .rate-name span { font-size: 10.5px; }
+  .rate-price { font-size: 22px; }
 }
 
 /* Calculator */
@@ -327,6 +340,21 @@
   .calc { grid-template-columns: 1fr; }
   .calc-left { border-right: 0; border-bottom: 1px solid var(--line); }
 }
+@media (max-width: 520px) {
+  .calc-left, .calc-right { padding: 1.75rem 1.25rem; }
+  .calc-tiers { grid-template-columns: repeat(2, 1fr); }
+  .calc input[type=range] { height: 44px; background: transparent; }
+  .calc input[type=range]::-webkit-slider-runnable-track { height: 2px; background: var(--line-strong); border-radius: 2px; }
+  .calc input[type=range]::-moz-range-track { height: 2px; background: var(--line-strong); border-radius: 2px; }
+  .calc input[type=range]::-webkit-slider-thumb { margin-top: -8px; width: 22px; height: 22px; }
+  .calc input[type=range]::-moz-range-thumb { width: 22px; height: 22px; }
+  .calc-tier { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+  .co-row { flex-wrap: wrap; gap: 4px; }
+  .co-row .r.big { font-size: 18px; }
+}
+@media (max-width: 380px) {
+  .calc-tiers { grid-template-columns: 1fr; }
+}
 
 /* FAQ */
 .faq {
@@ -388,6 +416,11 @@
   max-width: 62ch;
 }
 .faq-a-inner em { color: var(--ink); font-family: var(--font-serif); font-style: italic; letter-spacing: -0.01em; }
+
+@media (max-width: 520px) {
+  .faq-q { grid-template-columns: 32px 1fr 20px; gap: 0.65rem; padding: 1.15rem 0; }
+  .faq-a { padding-left: calc(32px + 0.65rem); }
+}
 </style>
 </head>
 <body>

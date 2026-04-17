@@ -618,6 +618,25 @@
   .talk-row { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 720px) {
+  .hero-events h1 { font-size: clamp(36px, 11vw, 64px); }
+  .ev-section-head { grid-template-columns: 1fr; gap: 0.5rem; }
+  .ev-f-main { padding: 1.5rem 1.25rem; }
+  .ev-f-side { padding: 1.5rem 1.25rem; }
+  .ev-f-meta { grid-template-columns: 1fr; }
+  .ev-f-meta-cell { border-right: 0; padding-left: 0 !important; }
+  .ev-f-meta-cell:nth-child(n+2) { border-top: 1px dashed rgba(255,255,255,0.12); padding-top: 0.75rem; margin-top: 0.75rem; }
+  .ev-f-actions { flex-direction: column; align-items: stretch; }
+  .ev-f-actions .btn { justify-content: center; }
+  .past-toggle { flex-direction: column; align-items: flex-start; }
+  .talk-submit { flex-direction: column; align-items: stretch; }
+  .talk-submit .btn { justify-content: center; }
+}
+@media (max-width: 520px) {
+  .ev-row { grid-template-columns: 72px 1fr; }
+  .ev-date .d { font-size: 32px; }
+  .ev-f-date-display .d { font-size: clamp(68px, 22vw, 96px); }
+}
 </style>
 </head>
 <body>

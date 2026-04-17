@@ -562,6 +562,23 @@
   .mini-intro { grid-template-columns: 1fr; gap: 1.5rem; }
 }
 
+@media (max-width: 720px) {
+  .hero-careers h1 { font-size: clamp(40px, 11vw, 68px); }
+  .hero-careers .hero-meta { flex-direction: column; align-items: flex-start; }
+  .role-row { padding: 1.25rem 1rem; }
+  .role-detail { padding: 0 1rem 2rem; }
+  .role-apply { flex-direction: column; align-items: flex-start; }
+  .reject h2 { font-size: clamp(32px, 8vw, 54px); }
+  .reject-head { grid-template-columns: 1fr; gap: 0.5rem; }
+  .reject-head .rule { display: none; }
+}
+@media (max-width: 520px) {
+  .hero-careers h1 { font-size: clamp(36px, 12vw, 56px); }
+  .val { padding: 2rem 1.25rem; }
+  .ben { padding: 1.5rem 1.25rem 1.75rem; min-height: 0; }
+  .step { padding: 2rem 1.25rem 1.75rem; }
+  .reject-item { padding: 1.5rem 0; }
+}
 </style>
 </head>
 <body>

@@ -98,6 +98,20 @@
   color: var(--ink-3); line-height: 1.5;
   max-width: 46rem; margin: 0 auto 2.5rem;
 }
+
+@media (max-width: 720px) {
+  .placeholder .hd { font-size: clamp(44px, 12vw, 80px); }
+  .placeholder .meta-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .placeholder .acts { flex-direction: column; align-items: stretch; }
+  .placeholder .acts .btn { justify-content: center; }
+  .stub { min-height: 0; padding: 1.5rem 1.25rem; }
+  .endcta h2 { font-size: clamp(30px, 9vw, 56px); }
+  .endcta .acts { flex-direction: column; align-items: stretch; }
+  .endcta .acts .btn { justify-content: center; }
+}
+@media (max-width: 520px) {
+  .placeholder .hd { font-size: clamp(38px, 13vw, 64px); letter-spacing: -0.045em; }
+}
 </style>
 </head>
 <body>

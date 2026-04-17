@@ -194,6 +194,19 @@
   .m-head { position: static; }
   .m-article { grid-template-columns: 48px 1fr; gap: 1rem; }
 }
+@media (max-width: 720px) {
+  .tl-step { padding: 2rem 0; }
+  .tl-num { font-size: 52px; }
+  .tl-title { font-size: 26px; }
+  .tl-body { font-size: 15px; }
+  .tl-bullets, .tl-meta { padding: 1rem; }
+  .m-roman { font-size: 36px; }
+  .m-art-title { font-size: 19px; }
+}
+@media (max-width: 520px) {
+  .m-article { grid-template-columns: 40px 1fr; gap: 0.75rem; padding: 1.5rem 0; }
+  .m-title { font-size: clamp(32px, 9vw, 48px); }
+}
 </style>
 </head>
 <body>

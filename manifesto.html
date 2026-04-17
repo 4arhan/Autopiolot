@@ -528,6 +528,11 @@
   .specimen .cell:nth-child(2n) { border-right: 0; }
   .specimen .cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
 }
+@media (max-width: 520px) {
+  .specimen .row { grid-template-columns: 1fr; }
+  .specimen .cell { border-right: 0; border-bottom: 1px solid var(--line); }
+  .specimen .cell:last-child { border-bottom: 0; }
+}
 
 /* End CTA — download the manifesto */
 .endcta.manifesto-cta h2 {
@@ -574,6 +579,21 @@
   font-weight: 600;
 }
 @media (max-width: 1200px) { .article-index { display: none; } }
+
+@media (max-width: 720px) {
+  .hero-manifesto h1 { font-size: clamp(48px, 14vw, 88px); max-width: none; }
+  .hero-manifesto .statement { padding: 1.25rem 1rem; font-size: clamp(18px, 5vw, 24px); }
+  .hero-manifesto .metaline { gap: 1rem; }
+  .preamble p .dropcap { font-size: 4.2em; }
+  .signature-break blockquote { font-size: clamp(28px, 8vw, 44px); }
+  .signature-break .mark { font-size: 56px; }
+  .closing h2 { font-size: clamp(32px, 8vw, 48px); }
+}
+@media (max-width: 520px) {
+  .closing .mailto { width: 100%; justify-content: center; }
+  .article-prose .example { padding: 1.25rem 1rem; }
+  .article-quote { padding: 1rem 0 1rem 1.25rem; }
+}
 
 </style>
 </head>
