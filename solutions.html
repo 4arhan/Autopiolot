@@ -294,6 +294,52 @@
   .dp-agents-head { font-size: 9.5px; }
   .dp-a-price { font-size: 15.5px; }
 }
+
+/* === 2026 modernization polish ============================ */
+.dir-panel, .sol-card, .dp-a, .dir-item {
+  border: 1px solid rgba(0,82,255,0.08);
+  transition: transform .25s var(--ease-out, ease-out),
+              box-shadow .25s var(--ease-out, ease-out),
+              border-color .25s var(--ease-out, ease-out),
+              background-color .2s var(--ease-out, ease-out);
+}
+.sol-card:hover, .dp-a:hover, .dir-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,82,255,0.18);
+  box-shadow: 0 10px 28px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
+}
+@supports (background: color-mix(in oklab, red, blue)) {
+  .sol-card:hover, .dp-a:hover, .dir-item:hover {
+    box-shadow: 0 12px 30px -18px color-mix(in oklab, var(--accent) 45%, transparent),
+                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
+  }
+}
+.hero-overlay {
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+}
+main p a:not(.btn):not(.btn-link)::after {
+  content: ""; display: block; height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .25s var(--ease-out, ease-out);
+}
+main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
+h1 em, .dek em, .hi-grad {
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+a:focus-visible, button:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+}
+.dp-a-price, .stat .v, .num, [data-tnum] {
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
+.scroll-x > * { scroll-snap-align: start; }
+@media (prefers-reduced-motion: reduce) {
+  .dir-panel, .sol-card, .dp-a, .dir-item { transition: none; }
+}
 </style>
 </head>
 <body>
