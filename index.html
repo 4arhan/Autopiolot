@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=4">
+<link rel="stylesheet" href="assets/site.css?v=5">
 <link rel="stylesheet" href="assets/motion.css">
 
 <style>
@@ -1087,6 +1087,75 @@
   main img, main svg, main object { max-width: 100%; height: auto; }
   .ops-canvas { aspect-ratio: 16/11; }
 }
+
+/* === 2026 modernization polish ============================ */
+/* Hairline accents + subtle glass on hero/overlay surfaces */
+.hero-overlay, .diff-card, .case-card, .logo-card, .ops-card {
+  border: 1px solid rgba(0,82,255,0.08);
+  transition: transform .25s var(--ease-out, ease-out),
+              box-shadow .25s var(--ease-out, ease-out),
+              border-color .25s var(--ease-out, ease-out);
+}
+.hero-overlay { backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px); }
+
+/* Refined elevation hover (no hard color swap) */
+.diff-card:hover, .case-card:hover, .logo-card:hover, .ops-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,82,255,0.18);
+  box-shadow: 0 10px 30px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
+}
+@supports (background: color-mix(in oklab, red, blue)) {
+  .diff-card:hover, .case-card:hover, .logo-card:hover, .ops-card:hover {
+    box-shadow: 0 12px 32px -18px color-mix(in oklab, var(--accent) 45%, transparent),
+                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
+  }
+}
+
+/* Underline animation for in-content links */
+main p a:not(.btn):not(.btn-link)::after {
+  content: ""; display: block; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .25s var(--ease-out, ease-out);
+}
+main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
+
+/* Gradient text on key emphasis spans */
+.hi-grad, h1 em, .dek em {
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Focus-visible ring */
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg, rgba(10,12,20,0.04) 25%, rgba(10,12,20,0.08) 37%, rgba(10,12,20,0.04) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 4px;
+}
+@keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+
+/* Scroll snap on horizontal scrollers */
+.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
+.scroll-x > * { scroll-snap-align: start; }
+
+/* Tabular figures on stats */
+.case-kpi .v, .diff-card .fig, .stat .v, .ticker-item .tup, .num, [data-tnum] {
+  font-feature-settings: 'tnum' 1, 'lnum' 1, 'ss01' 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diff-card, .case-card, .logo-card, .ops-card { transition: none; }
+  .skeleton { animation: none; }
+}
 </style>
 </head>
 <body>
@@ -1720,7 +1789,7 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=4"></script>
+<script src="assets/site.js?v=5"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {
