@@ -1155,99 +1155,38 @@ body.nav-locked {
   select {
     font-size: 16px !important;
   }
-  /* Form controls feel tappable */
+  /* Form controls feel tappable (excludes nav buttons, which set their own size) */
   input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
   textarea,
-  select,
-  button {
+  select {
     min-height: 44px;
   }
 }
 
-/* === TOPBAR / NAV — mobile refinements ==================== */
+/* === MOBILE NAV — safe enhancements only ==================
+   The base topbar/mobile-nav CSS (above) already handles the
+   layout, hamburger visibility, and fullscreen menu. These
+   rules only add polish without redefining structural props. */
+
+/* Active state is more visible inside the mobile menu */
 @media (max-width: 1024px) {
-  /* Tighter topbar chrome on narrower viewports */
-  .topbar-inner {
-    padding: 0.7rem var(--pad);
-    min-height: 60px;
-    gap: 0.5rem;
-  }
-  /* Keep the CTA visible on tablets but compact it */
-  .topbar-cta { gap: 0.4rem; }
-  .topbar-cta .btn-cta-desktop { display: none; }
-
-  /* Brand should never eat the whole row */
-  .brand { min-width: 0; flex-shrink: 1; }
-  .brand-name {
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 60vw;
-  }
-
-  /* Respect iOS safe areas at the very top */
-  .topbar { padding-top: env(safe-area-inset-top, 0px); }
-}
-
-@media (max-width: 640px) {
-  /* Shorten brand on very small screens to avoid nav wrap */
-  .brand-name { font-size: 13px; letter-spacing: -0.01em; }
-  .ticker { font-size: 9.5px; letter-spacing: 0.1em; }
-  .ticker-track { gap: 1.75rem; padding-left: 1.75rem; }
-  /* Make the hamburger obviously tappable */
-  .menu-toggle { width: 44px; height: 44px; }
-}
-
-/* Mobile nav panel refinements */
-@media (max-width: 1024px) {
-  .mobile-nav {
-    /* Remove top clamp so it fills reliably under the topbar */
-    padding-top: 0;
-    top: 0;
-    /* Keep the menu under the topbar so the hamburger stays tappable */
-    padding-top: calc(93px + env(safe-area-inset-top, 0px));
-  }
-  .topbar.is-scrolled .mobile-nav {
-    padding-top: calc(61px + env(safe-area-inset-top, 0px));
-  }
-  .mobile-nav-inner {
-    padding: 1.25rem var(--pad) 1.25rem;
-    gap: 1.25rem;
-  }
-  /* Hairline separation between groups reads better than big gaps */
-  .mnav-group + .mnav-group { padding-top: 0.5rem; }
-  /* Primary group type scales proportional to viewport */
-  .mnav-group:first-child a {
-    font-size: clamp(20px, 5.5vw, 28px);
-    padding: 13px 0;
-  }
-  .mnav-group.secondary a {
-    font-size: clamp(14px, 3.6vw, 16px);
-    padding: 11px 0;
-  }
-  /* Active state is more visible on mobile */
   .mnav-group a.is-active {
     color: var(--accent);
     font-weight: 600;
   }
   .mnav-group a.is-active .ar { color: var(--accent); }
-
-  .mobile-nav-foot {
-    padding: 1rem var(--pad) calc(1.15rem + env(safe-area-inset-bottom, 0px));
-    gap: 0.75rem;
-  }
+  /* CTA in the foot stays comfortably tappable */
   .mobile-nav-foot .btn { min-height: 48px; }
-  .mobile-nav-foot .mfoot-meta { font-size: 10px; }
 }
 
-/* Ultra-narrow phones: compact the mobile nav more */
-@media (max-width: 380px) {
-  .mobile-nav-inner { padding: 1rem 16px; gap: 1rem; }
-  .mnav-group h5 { font-size: 10px; margin-bottom: 0.35rem; padding-bottom: 0.5rem; }
-  .mnav-group:first-child a { font-size: 20px; padding: 11px 0; }
-  .mnav-group.secondary a { font-size: 14px; padding: 9px 0; }
-  .mobile-nav-foot { padding-left: 16px; padding-right: 16px; }
+/* Prevent the brand wordmark from pushing the hamburger off-screen */
+@media (max-width: 520px) {
+  .brand-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 58vw;
+  }
 }
 
 /* === GLOBAL MOBILE POLISH ================================= */
