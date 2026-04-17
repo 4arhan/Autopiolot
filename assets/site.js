@@ -44,6 +44,12 @@
   // ---- Mobile fullscreen menu ----
   const toggle = document.querySelector('.menu-toggle');
   const mobileNav = document.querySelector('.mobile-nav');
+  // Move .mobile-nav out of .topbar so position:fixed is relative to the
+  // viewport, not the topbar (topbar has backdrop-filter which creates a
+  // containing block for fixed descendants).
+  if (mobileNav && mobileNav.parentElement && mobileNav.parentElement.classList.contains('topbar')) {
+    document.body.appendChild(mobileNav);
+  }
   if (toggle && mobileNav) {
     let lastFocus = null;
     let savedScrollY = 0;

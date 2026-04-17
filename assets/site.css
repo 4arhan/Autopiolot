@@ -427,84 +427,17 @@ em, .italic {
 .menu-toggle[aria-expanded="true"] .bar.b2 { opacity: 0; }
 .menu-toggle[aria-expanded="true"] .bar.b3 { transform: translate(-50%, -50%) rotate(-45deg); }
 
-/* ---- Mobile fullscreen menu (base; see mobile rewrite below for overrides) ---- */
-.mobile-nav {
-  position: fixed; inset: 0;
-  background: var(--paper);
-  z-index: 99;
-  display: flex;
-  flex-direction: column;
-  transform: translateY(-100%);
-  transition: transform .38s var(--ease);
-  pointer-events: none;
-  visibility: hidden;
-}
-.mobile-nav.open {
-  transform: translateY(0);
-  pointer-events: auto;
-  visibility: visible;
-}
-/* Ignore the empty spacer <div> the markup has as first child */
-.mobile-nav > div:first-child:empty { display: none; }
-.mobile-nav-inner {
-  padding: 1.5rem var(--pad) 1rem;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  display: flex; flex-direction: column; gap: 1.75rem;
-}
-.mnav-group h5 {
-  font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--muted); font-weight: 500;
-  padding-bottom: 0.75rem; margin-bottom: 0.5rem;
-  border-bottom: 1px solid var(--line);
-}
-.mnav-group .mnav-list {
-  list-style: none; margin: 0; padding: 0;
-  display: flex; flex-direction: column;
-}
-.mnav-group a {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 5vw, 30px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  text-decoration: none;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-  display: flex; justify-content: space-between; align-items: center;
-  transition: color .15s;
-}
-.mnav-group a:hover,
-.mnav-group a.is-active { color: var(--accent); }
-.mnav-group a .ar {
-  font-family: var(--font-mono);
-  font-size: 14px; color: var(--muted);
-  transition: transform .2s var(--ease), color .15s;
-}
-.mnav-group a:hover .ar { transform: translateX(3px); color: var(--accent); }
-.mnav-group.secondary a {
-  font-size: clamp(15px, 3vw, 17px);
-  padding: 10px 0;
-  color: var(--ink-3);
-}
-.mobile-nav-foot {
-  padding: 1.25rem var(--pad) calc(1.5rem + env(safe-area-inset-bottom, 0px));
-  border-top: 1px solid var(--line);
-  display: flex; flex-direction: column; gap: 0.9rem;
-  background: var(--paper);
-}
-.mobile-nav-foot .btn { width: 100%; justify-content: center; }
-.mobile-nav-foot .mfoot-meta {
-  font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); display: flex; justify-content: space-between;
-  gap: 0.75rem; flex-wrap: wrap;
-}
-.mobile-nav-foot .mfoot-meta a { color: var(--accent); }
+/* =========================================================
+   MOBILE NAV v3 — BULLETPROOF
+   Uses display:none / display:flex toggle instead of transforms.
+   Guaranteed to be fully hidden when .open is absent.
+   Uses !important to defeat any conflicting legacy rules.
+   ========================================================= */
 
-/* iOS-safe scroll lock: position:fixed keeps iOS Safari from scrolling under the menu */
+/* Default (desktop): the mobile-nav is hidden — only for <=1024px */
+.mobile-nav { display: none !important; }
+
+/* Scroll-lock when the menu is open */
 body.nav-locked {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -512,161 +445,111 @@ body.nav-locked {
   overflow: hidden;
 }
 
-/* =========================================================
-   MOBILE NAVBAR — complete rewrite (2026-04 v2)
-   Clean, robust mobile nav that works across all phone sizes.
-   Key decisions:
-   - Ticker hides entirely on mobile (saves space + avoids bugs)
-   - Topbar is a single 56px row on mobile
-   - Mobile menu is position:fixed full-viewport, scrolls internally
-   - No dependence on .is-scrolled state for menu positioning
-   ========================================================= */
-
-@media (min-width: 1025px) {
-  .mobile-nav { display: none !important; }
+/* Shared list reset */
+.mnav-group .mnav-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column;
 }
 
 @media (max-width: 1024px) {
-  /* Topbar becomes a tight single row */
+  /* Topbar: single tight row on mobile */
   .topbar {
-    background: rgba(255,255,255,0.96);
+    background: rgba(255,255,255,0.97) !important;
     -webkit-backdrop-filter: saturate(160%) blur(14px);
     backdrop-filter: saturate(160%) blur(14px);
   }
   .topbar-inner {
-    grid-template-columns: auto 1fr auto;
-    gap: 0.75rem;
-    padding: 0.6rem var(--pad);
-    min-height: 56px;
+    grid-template-columns: auto 1fr auto !important;
+    gap: 0.75rem !important;
+    padding: 0.6rem var(--pad) !important;
+    min-height: 56px !important;
   }
-  /* Ticker hides on mobile — not useful at phone widths */
-  .ticker { display: none; }
-  .topbar.is-scrolled .ticker { display: none; }
+  .ticker,
+  .topbar.is-scrolled .ticker { display: none !important; }
 
-  /* Hide desktop items, surface hamburger */
-  .primary-nav { display: none; }
-  .topbar-cta { gap: 0.5rem; }
-  .topbar-cta .status-pill { display: none; }
-  .topbar-cta .btn-cta-desktop { display: none; }
-  .menu-toggle { display: inline-flex; }
+  /* Desktop items: hidden. Hamburger: visible. */
+  .primary-nav,
+  .topbar-cta .status-pill,
+  .topbar-cta .btn-cta-desktop { display: none !important; }
+  .topbar-cta { gap: 0.5rem !important; justify-self: end; }
+  .menu-toggle { display: inline-flex !important; }
 
-  /* Brand stays compact and never pushes the hamburger off-screen */
+  /* Brand truncates cleanly, never pushing the hamburger off-screen */
   .brand { min-width: 0; }
   .brand-name {
-    font-size: 14px;
+    font-size: 14px !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 58vw;
   }
 
-  /* Mobile fullscreen menu — flex column, never relies on grid auto-placement */
-  .mobile-nav {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    background: var(--paper);
-    z-index: 98;
-    transform: translateY(-100%);
-    transition: transform .35s var(--ease), visibility 0s linear .35s;
-    pointer-events: none;
-    visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    padding-top: calc(56px + env(safe-area-inset-top, 0px));
-  }
-  .topbar.is-scrolled .mobile-nav {
-    padding-top: calc(56px + env(safe-area-inset-top, 0px));
-  }
-  .mobile-nav.open {
-    transform: translateY(0);
-    pointer-events: auto;
-    visibility: visible;
-    transition: transform .35s var(--ease), visibility 0s linear 0s;
-  }
-  /* Hide the empty spacer div in the markup (first child of .mobile-nav) */
-  .mobile-nav > div:first-child { display: none !important; }
+  /* =========== MOBILE NAV MENU ============== */
+  /* Closed = display:none. No transforms, no visibility tricks. */
+  .mobile-nav { display: none !important; }
 
-  /* Scrollable inner content — takes all remaining vertical space */
+  /* Open = display:flex full-viewport drawer. */
+  .mobile-nav.open {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--paper) !important;
+    z-index: 999 !important;
+    overflow: hidden !important;
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    animation: mnavFade .22s var(--ease);
+  }
+
+  /* Hide the empty spacer <div></div> that sits inside the markup */
+  .mobile-nav > div:first-child,
+  .mobile-nav > div:empty { display: none !important; }
+
+  /* Top buffer so content starts below the topbar */
+  .mobile-nav.open {
+    padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+  }
+
+  /* Inner scrolls — takes all remaining vertical space */
   .mobile-nav-inner {
-    flex: 1 1 auto;
-    min-height: 0;
-    padding: 1.25rem var(--pad) 1.25rem;
-    overflow-y: auto;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    width: 100%;
+    padding: 1.25rem var(--pad) 1rem !important;
+    overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    box-sizing: border-box;
   }
 
-  /* Group heading */
-  .mnav-group h5 {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-weight: 500;
-    padding-bottom: 0.6rem;
-    margin-bottom: 0.3rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  /* Primary group links */
-  .mnav-group:not(.secondary) a {
-    font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    color: var(--ink);
-    padding: 14px 0;
-    min-height: 48px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .mnav-group.secondary a {
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--ink-3);
-    padding: 11px 0;
-    min-height: 40px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .mnav-group a .ar {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--muted);
-    transition: transform .2s var(--ease), color .15s;
-  }
-  .mnav-group a.is-active {
-    color: var(--accent);
-    font-weight: 600;
-  }
-  .mnav-group a.is-active .ar { color: var(--accent); }
-
-  /* Foot: CTA button + meta — fixed-height bar at bottom */
+  /* Foot: pinned bottom, CTA + meta */
   .mobile-nav-foot {
-    flex: 0 0 auto;
-    padding: 1rem var(--pad) calc(1.1rem + env(safe-area-inset-bottom, 0px));
+    flex: 0 0 auto !important;
+    width: 100%;
+    padding: 1rem var(--pad) calc(1.1rem + env(safe-area-inset-bottom, 0px)) !important;
     border-top: 1px solid var(--line);
     background: var(--paper);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    box-sizing: border-box;
   }
   .mobile-nav-foot .btn {
-    width: 100%;
-    justify-content: center;
+    width: 100% !important;
+    justify-content: center !important;
     min-height: 48px;
   }
   .mobile-nav-foot .mfoot-meta {
@@ -681,36 +564,91 @@ body.nav-locked {
     flex-wrap: wrap;
   }
   .mobile-nav-foot .mfoot-meta a { color: var(--accent); }
+
+  /* Group heading */
+  .mnav-group h5 {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px solid var(--line);
+  }
+  /* Primary group links */
+  .mnav-group:not(.secondary) a {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    padding: 14px 0;
+    min-height: 48px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+  }
+  .mnav-group.secondary a {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink-3);
+    padding: 11px 0;
+    min-height: 40px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+  }
+  .mnav-group a .ar {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .mnav-group a.is-active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .mnav-group a.is-active .ar { color: var(--accent); }
 }
 
-/* Narrow phones — tighter everywhere */
+@keyframes mnavFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Narrow phones */
 @media (max-width: 520px) {
-  .topbar-inner { padding: 0.55rem var(--pad); min-height: 52px; }
-  .menu-toggle { width: 40px; height: 40px; }
-  .brand-name { font-size: 13px; max-width: 54vw; }
-  .mobile-nav { padding-top: calc(52px + env(safe-area-inset-top, 0px)); }
-  .topbar.is-scrolled .mobile-nav { padding-top: calc(52px + env(safe-area-inset-top, 0px)); }
-  .mobile-nav-inner { padding: 1rem 16px; gap: 1.25rem; }
+  .topbar-inner { padding: 0.55rem var(--pad) !important; min-height: 52px !important; }
+  .menu-toggle { width: 40px !important; height: 40px !important; }
+  .brand-name { font-size: 13px !important; max-width: 54vw; }
+  .mobile-nav.open { padding-top: calc(52px + env(safe-area-inset-top, 0px)) !important; }
+  .mobile-nav-inner { padding: 1rem 16px !important; gap: 1.25rem !important; }
   .mnav-group:not(.secondary) a { font-size: 20px; padding: 12px 0; }
   .mnav-group.secondary a { font-size: 14px; padding: 10px 0; }
-  .mobile-nav-foot { padding-left: 16px; padding-right: 16px; }
+  .mobile-nav-foot { padding-left: 16px !important; padding-right: 16px !important; }
 }
 
-/* Ultra-narrow (iPhone SE 1st gen etc.) */
+/* Ultra-narrow */
 @media (max-width: 360px) {
-  .topbar-inner { gap: 0.5rem; }
-  .brand-name { font-size: 12.5px; max-width: 50vw; letter-spacing: -0.015em; }
+  .topbar-inner { gap: 0.5rem !important; }
+  .brand-name { font-size: 12.5px !important; max-width: 50vw; }
   .mnav-group:not(.secondary) a { font-size: 18px; padding: 11px 0; }
   .mnav-group.secondary a { font-size: 13.5px; padding: 9px 0; }
 }
 
-/* Landscape phones: compact the menu so it fits */
+/* Landscape phones */
 @media (max-width: 1024px) and (max-height: 500px) {
-  .mobile-nav-inner { gap: 0.75rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  .mobile-nav-inner { gap: 0.75rem !important; padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
   .mnav-group:not(.secondary) a { font-size: 16px; padding: 8px 0; min-height: 40px; }
   .mnav-group.secondary a { font-size: 13px; padding: 7px 0; min-height: 34px; }
   .mnav-group h5 { margin-bottom: 0.25rem; padding-bottom: 0.4rem; }
-  .mobile-nav-foot { padding-top: 0.6rem; padding-bottom: 0.6rem; }
+  .mobile-nav-foot { padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; }
   .mobile-nav-foot .btn { min-height: 40px; }
 }
 
