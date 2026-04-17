@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Autopilot Labs</title>
+<meta name="description" content="Three pricing models — subscription, outcome, hybrid. Outcome pricing is our flagship: pay only for SLA-passing work.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* Model comparison */
+.models {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.model {
+  background: var(--bg);
+  padding: 2.5rem 2rem;
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.model.flagship {
+  background: var(--bg-elev);
+  position: relative;
+}
+.model.flagship::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, var(--accent-glow) 0%, transparent 60%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+.model-ribbon {
+  position: absolute; top: 0; right: 0;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-fg);
+  background: var(--accent);
+  font-weight: 600;
+  z-index: 2;
+}
+.model > * { position: relative; z-index: 1; }
+.model-tier {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.model-name {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 3.5vw, 52px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  margin-bottom: 0.75rem;
+}
+.model.flagship .model-name { color: var(--accent); font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.025em; }
+.model-tag {
+  font-size: 14px;
+  color: var(--ink-dim);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  min-height: 3em;
+  max-width: 32ch;
+}
+.model-price {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 6vw, 88px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.25rem;
+}
+.model-price .cur { font-size: 0.35em; color: var(--muted); margin-right: 6px; vertical-align: 18%; }
+.model-price .range { font-size: 0.38em; color: var(--muted); letter-spacing: 0; }
+.model.flagship .model-price em { color: var(--accent); font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.03em; }
+.model-unit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
+}
+.model-feat { list-style: none; margin-bottom: 2rem; flex: 1; }
+.model-feat li {
+  padding: 0.65rem 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 13.5px;
+  color: var(--ink-dim);
+  display: grid; grid-template-columns: 16px 1fr;
+  gap: 10px;
+  line-height: 1.5;
+}
+.model-feat li:last-child { border: 0; }
+.model-feat li::before { content: '◆'; color: var(--accent); font-size: 9px; line-height: 1.7; }
+.model-feat li.dim { color: var(--muted-2); }
+.model-feat li.dim::before { content: '—'; color: var(--muted-2); }
+
+.model-best {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--ink-2);
+  font-style: italic;
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+  border-radius: 4px;
+  letter-spacing: -0.01em;
+}
+.model-best b {
+  display: block;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+@media (max-width: 950px) {
+  .models { grid-template-columns: 1fr; }
+}
+
+/* Outcome rate table */
+.rates {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.rates-head {
+  display: grid;
+  grid-template-columns: 240px 1fr 140px 140px;
+  background: var(--bg-elev);
+  padding: 1rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+.rates-head .right { text-align: right; }
+.rate-row {
+  display: grid;
+  grid-template-columns: 240px 1fr 140px 140px;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px dashed var(--line);
+  align-items: center;
+  transition: background .2s;
+}
+.rate-row:last-child { border: 0; }
+.rate-row:hover { background: var(--bg-elev); }
+.rate-vert {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.rate-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+.rate-name span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 3px;
+  font-weight: 400;
+}
+.rate-unit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+.rate-price {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--accent);
+  font-style: italic;
+  text-align: right;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 800px) {
+  .rates-head, .rate-row { grid-template-columns: 1fr auto; }
+  .rates-head .col-vert, .rates-head .col-unit, .rate-vert, .rate-unit { display: none; }
+}
+
+/* Calculator */
+.calc {
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  background: var(--paper-3);
+}
+.calc-left { padding: 2.5rem; border-right: 1px solid var(--line); }
+.calc-right { padding: 2.5rem; background: var(--ink); color: var(--paper); display: flex; flex-direction: column; justify-content: center; }
+.calc-right .co-label { color: rgba(255,255,255,0.5); }
+.calc-right .co-big { color: var(--paper); }
+.calc-right .co-big em { color: #E0ECFF; }
+.calc-right .co-big .cur { color: rgba(255,255,255,0.4); }
+.calc-right .co-row { border-bottom-color: rgba(255,255,255,0.15); }
+.calc-right .co-row .l { color: rgba(255,255,255,0.55); }
+.calc-right .co-row .r { color: var(--paper); }
+.calc-right .co-row .r.big { color: var(--highlight); }
+.calc-input { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px dashed var(--line); }
+.calc-input:last-child { border: 0; margin: 0; padding: 0; }
+.calc-label {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.calc-label .k { color: var(--muted); }
+.calc-label .v { color: var(--accent); font-weight: 600; font-size: 13px; }
+.calc input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--line-strong);
+  outline: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.calc input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  background: var(--accent);
+  border: 3px solid var(--paper);
+  box-shadow: 0 0 0 1px var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.calc input[type=range]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  background: var(--accent);
+  border: 3px solid var(--paper);
+  box-shadow: 0 0 0 1px var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.calc-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 1rem;
+}
+.calc-tier {
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  cursor: pointer;
+  text-align: center;
+  background: transparent;
+  transition: all .2s;
+}
+.calc-tier:hover { color: var(--ink); border-color: var(--line-strong); }
+.calc-tier.active { color: var(--accent-fg); background: var(--accent); border-color: var(--accent); }
+
+.co-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.co-big {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 9vw, 128px);
+  line-height: 0.85;
+  letter-spacing: -0.045em;
+  font-weight: 400;
+  margin-bottom: 2rem;
+  color: var(--ink);
+}
+.co-big .cur { color: var(--muted); font-size: 0.3em; margin-right: 8px; vertical-align: 20%; }
+.co-big em { color: var(--accent); font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.03em; }
+.co-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 0.65rem 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 13px;
+}
+.co-row:last-child { border: 0; }
+.co-row .l { color: var(--muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.co-row .r { font-family: var(--font-mono); color: var(--ink); font-size: 13px; font-weight: 500; }
+.co-row .r.big { font-family: var(--font-serif); font-size: 22px; color: var(--accent); font-style: italic; font-weight: 400; letter-spacing: -0.015em; }
+
+@media (max-width: 900px) {
+  .calc { grid-template-columns: 1fr; }
+  .calc-left { border-right: 0; border-bottom: 1px solid var(--line); }
+}
+
+/* FAQ */
+.faq {
+  max-width: 880px;
+  margin: 0 auto;
+}
+.faq-item {
+  border-bottom: 1px solid var(--line);
+}
+.faq-item:first-child { border-top: 1px solid var(--line); }
+.faq-q {
+  display: grid;
+  grid-template-columns: 48px 1fr 24px;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--accent); }
+.faq-q .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.faq-item.open .faq-q .num { color: var(--accent); }
+.faq-q .text {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.7vw, 24px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.faq-q .plus {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--muted);
+  transition: transform .3s, color .3s;
+}
+.faq-item.open .faq-q .plus { transform: rotate(45deg); color: var(--accent); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s var(--ease);
+  padding-left: calc(48px + 1rem);
+}
+.faq-item.open .faq-a { max-height: 500px; }
+.faq-a-inner {
+  padding-bottom: 1.75rem;
+  font-size: 15px;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  max-width: 62ch;
+}
+.faq-a-inner em { color: var(--ink); font-family: var(--font-serif); font-style: italic; letter-spacing: -0.01em; }
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ Pricing · AUD default</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>USD / GBP on request · effective Q2 2026</span></div>
+      </div>
+
+      <h1 class="hero-title reveal delay-1">
+        Pay for <em>outcomes</em>,<br>
+        not <span class="strike">seats</span>.
+      </h1>
+
+      <div class="hero-lower reveal delay-2">
+        <p class="hero-dek">
+          Three ways to pay Autopilot Labs to <em>automate your work with AI</em>. The default — and what most teams pick — is per-outcome: you pay only when the AI finishes a job that passes the SLA. No seats. No tokens. No platform fees.
+        </p>
+        <div class="hero-actions">
+          <a href="#calc" class="btn btn-primary btn-lg">Run the calculator <span class="arrow">↓</span></a>
+          <a href="contact.html" class="btn btn-lg">Book a free audit</a>
+          <a href="#faq" class="btn btn-ghost btn-lg">Read the fine print</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MODELS ========== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section I · Models</span>
+          <span class="big">01</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Three options · one philosophy</div>
+          <h2 class="section-title">Pick the <em>shape</em> of the line<br>on your P&amp;L.</h2>
+          <p class="dek">Same SLA, same infrastructure, same team. The difference is how you prefer to budget. We default everyone to outcome pricing unless there's a reason not to.</p>
+        </div>
+      </div>
+
+      <div class="models reveal delay-2">
+        <div class="model" id="subscription">
+          <div class="model-tier">01 · Subscription</div>
+          <h3 class="model-name">Retainer</h3>
+          <p class="model-tag">A flat monthly for teams that need predictability and a single line item for the board.</p>
+          <div class="model-price"><span class="cur">A$</span>9,800</div>
+          <div class="model-unit">/ month · from · billed monthly</div>
+          <ul class="model-feat">
+            <li>Up to 3 agents running in parallel</li>
+            <li>Unlimited outcomes within scope</li>
+            <li>SLA: 98.0% on-time</li>
+            <li>Quarterly scope &amp; volume re-negotiation</li>
+            <li>Dedicated Slack channel · 2 ops reviews / month</li>
+            <li class="dim">No per-task overage · capped by scope</li>
+            <li class="dim">Not available below 10k outcomes / mo</li>
+          </ul>
+          <div class="model-best">
+            <b>Best for</b>
+            Teams who need AI as a stable budget line — enterprise procurement, public-sector contracts, and operators who track opex to the dollar.
+          </div>
+          <a href="contact.html?plan=subscription" class="btn">Choose retainer</a>
+        </div>
+
+        <div class="model flagship" id="outcome">
+          <div class="model-ribbon">◆ Flagship</div>
+          <div class="model-tier">02 · Outcome</div>
+          <h3 class="model-name">Per-task</h3>
+          <p class="model-tag">Our default. Zero base fee. You pay only when an outcome ships and passes the SLA. If we miss, you don't pay.</p>
+          <div class="model-price"><span class="cur">A$</span><em>0.40</em> <span class="range">– A$12</span></div>
+          <div class="model-unit">/ outcome · tiered by complexity</div>
+          <ul class="model-feat">
+            <li>Pay only for SLA-passing outcomes</li>
+            <li>SLA: 99.1% on-time · credit-back on miss</li>
+            <li>No token, seat or infra pass-through</li>
+            <li>Scales from 100 / mo to 2M+ / mo</li>
+            <li>Real-time ops dashboard · auto credit-back</li>
+            <li>Quarterly rate review · margin passed on</li>
+            <li>30-day off-ramp · data &amp; weights go with you</li>
+          </ul>
+          <div class="model-best">
+            <b>Best for</b>
+            Teams whose workload genuinely varies, CFOs who want variable cost tied to variable value, and anyone tired of paying for idle seats.
+          </div>
+          <a href="contact.html?plan=outcome" class="btn btn-primary">Start here <span class="arrow">↗</span></a>
+        </div>
+
+        <div class="model" id="hybrid">
+          <div class="model-tier">03 · Hybrid</div>
+          <h3 class="model-name">Base + outcome</h3>
+          <p class="model-tag">A small monthly base to keep agents warm-pathed, plus a discounted per-outcome rate. The most popular plan at volume.</p>
+          <div class="model-price"><span class="cur">A$</span>1,800</div>
+          <div class="model-unit">/ mo base · + A$1.95 – A$8 / outcome</div>
+          <ul class="model-feat">
+            <li>Up to 35% discount on per-task rate</li>
+            <li>SLA: 99.3% · priority routing &amp; retry</li>
+            <li>500 warm-path credits included / mo</li>
+            <li>Most popular at 20k+ outcomes / mo</li>
+            <li>Volume-tier rate-card re-indexed quarterly</li>
+            <li>Shared ops review · dedicated solutions engineer</li>
+            <li class="dim">Base is non-refundable · outcomes are pay-as-ship</li>
+          </ul>
+          <div class="model-best">
+            <b>Best for</b>
+            Growing teams with a predictable floor and a variable ceiling — most clients migrate here around month three.
+          </div>
+          <a href="contact.html?plan=hybrid" class="btn">Choose hybrid</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RATE CARD ========== -->
+  <section class="section" style="background:var(--bg-elev);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section II · Rate card</span>
+          <span class="big">02</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Published · live · in AUD</div>
+          <h2 class="section-title">Sample <em>per-outcome</em> rates<br>across the thirteen verticals.</h2>
+          <p class="dek">These are starting rates before volume tiers and hybrid discounts. Every rate is in writing, every invoice itemised, every SLA miss auto-credited. <a href="solutions.html" style="color:var(--accent);border-bottom:1px solid var(--line-accent);">See the full agent catalogue →</a></p>
+        </div>
+      </div>
+
+      <div class="rates reveal delay-2">
+        <div class="rates-head">
+          <div class="col-vert">Vertical</div>
+          <div>Agent / outcome</div>
+          <div class="col-unit right">Unit</div>
+          <div class="right">From</div>
+        </div>
+        <div class="rate-row"><div class="rate-vert">Healthcare</div><div class="rate-name">Patient intake normaliser<span>Fax / PDF / email → structured</span></div><div class="rate-unit">per intake</div><div class="rate-price">A$1.80</div></div>
+        <div class="rate-row"><div class="rate-vert">Healthcare</div><div class="rate-name">ICD / CPT coder<span>Note → coded claim</span></div><div class="rate-unit">per claim</div><div class="rate-price">A$2.20</div></div>
+        <div class="rate-row"><div class="rate-vert">Legal</div><div class="rate-name">Discovery tagger<span>Privilege · relevance · issue-code</span></div><div class="rate-unit">per 1k docs</div><div class="rate-price">A$68</div></div>
+        <div class="rate-row"><div class="rate-vert">Legal</div><div class="rate-name">Contract diligence<span>Redline · risk flags · summary</span></div><div class="rate-unit">per contract</div><div class="rate-price">A$24</div></div>
+        <div class="rate-row"><div class="rate-vert">Finance</div><div class="rate-name">Reconciliation agent<span>Bank · card · Stripe · wallet</span></div><div class="rate-unit">per entry</div><div class="rate-price">A$0.41</div></div>
+        <div class="rate-row"><div class="rate-vert">Finance</div><div class="rate-name">Invoice coder<span>PDF · email → ERP with GL code</span></div><div class="rate-unit">per invoice</div><div class="rate-price">A$0.85</div></div>
+        <div class="rate-row"><div class="rate-vert">Real estate</div><div class="rate-name">Listing copywriter<span>Features · photos → copy</span></div><div class="rate-unit">per listing</div><div class="rate-price">A$4.40</div></div>
+        <div class="rate-row"><div class="rate-vert">Real estate</div><div class="rate-name">Lease abstractor<span>Key dates · rent review · options</span></div><div class="rate-unit">per lease</div><div class="rate-price">A$14.00</div></div>
+        <div class="rate-row"><div class="rate-vert">E-commerce</div><div class="rate-name">Refund &amp; dispute agent<span>Policy-aware · tone-matched</span></div><div class="rate-unit">per resolved</div><div class="rate-price">A$3.80</div></div>
+        <div class="rate-row"><div class="rate-vert">E-commerce</div><div class="rate-name">Chargeback fighter<span>Evidence pack · submission</span></div><div class="rate-unit">per pack</div><div class="rate-price">A$22.00</div></div>
+        <div class="rate-row"><div class="rate-vert">HR &amp; hiring</div><div class="rate-name">CV shortlister<span>JD-aligned · bias-audited</span></div><div class="rate-unit">per CV</div><div class="rate-price">A$0.60</div></div>
+        <div class="rate-row"><div class="rate-vert">HR &amp; hiring</div><div class="rate-name">Onboarding dispatcher<span>Docs · systems · first-week agenda</span></div><div class="rate-unit">per hire</div><div class="rate-price">A$28.00</div></div>
+        <div class="rate-row"><div class="rate-vert">Marketing</div><div class="rate-name">Campaign variant engine<span>Hero · social · email · SMS</span></div><div class="rate-unit">per variant</div><div class="rate-price">A$2.20</div></div>
+        <div class="rate-row"><div class="rate-vert">Marketing</div><div class="rate-name">Blog drafter<span>Outline · draft · SEO · cited</span></div><div class="rate-unit">per post</div><div class="rate-price">A$26.00</div></div>
+        <div class="rate-row"><div class="rate-vert">Manufacturing</div><div class="rate-name">Work-order reconciler<span>Plan vs actual · delta · cause</span></div><div class="rate-unit">per WO</div><div class="rate-price">A$0.95</div></div>
+        <div class="rate-row"><div class="rate-vert">Manufacturing</div><div class="rate-name">CAPA writer<span>Root-cause · corrective actions</span></div><div class="rate-unit">per CAPA</div><div class="rate-price">A$34.00</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CALCULATOR ========== -->
+  <section class="section" id="calc">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section III · Calculator</span>
+          <span class="big">03</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Live · tune it yourself · AUD · USD · GBP · AED · SAR</div>
+          <h2 class="section-title">See what a <em>month</em> would<br>actually cost you.</h2>
+          <p class="dek">Drag the dial. Switch the plan. Switch the currency. We compare against a local human baseline — adjust in your head for your actual loaded cost, and decide whether the shape of the line matches your budget. <em>Melbourne, Dubai, Riyadh pricing all on one card.</em></p>
+        </div>
+      </div>
+
+      <div class="calc reveal delay-2" data-calculator>
+        <div class="calc-left">
+          <div class="calc-input">
+            <div class="calc-label">
+              <span class="k">◆ Monthly outcomes</span>
+              <span class="v"><span data-val="volume">5,000</span> / mo</span>
+            </div>
+            <input type="range" name="volume" min="500" max="200000" step="500" value="5000">
+          </div>
+
+          <div class="calc-input">
+            <div class="calc-label">
+              <span class="k">◆ Plan</span>
+              <span class="v" data-val="tier-label">—</span>
+            </div>
+            <div class="calc-tiers">
+              <button type="button" class="calc-tier" data-tier="starter">Outcome</button>
+              <button type="button" class="calc-tier active" data-tier="growth">Hybrid</button>
+              <button type="button" class="calc-tier" data-tier="scale">Hybrid · volume</button>
+            </div>
+            <select name="tier" class="sr" tabindex="-1" aria-hidden="true">
+              <option value="starter">Outcome</option>
+              <option value="growth" selected>Hybrid</option>
+              <option value="scale">Hybrid · volume</option>
+            </select>
+          </div>
+
+          <div class="calc-input">
+            <div class="calc-label">
+              <span class="k">◆ Currency</span>
+              <span class="v" data-cur-label>AUD · Australian Dollar</span>
+            </div>
+            <div class="calc-tiers calc-cur">
+              <button type="button" class="calc-tier active" data-cur="AUD">AUD</button>
+              <button type="button" class="calc-tier" data-cur="USD">USD</button>
+              <button type="button" class="calc-tier" data-cur="GBP">GBP</button>
+              <button type="button" class="calc-tier" data-cur="AED">AED</button>
+              <button type="button" class="calc-tier" data-cur="SAR">SAR</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-right">
+          <div class="co-label">◆ Estimated monthly · <span data-val="cur">AUD</span></div>
+          <div class="co-big"><span class="cur" data-cur-sym>A$</span><em data-val="price">17,800</em></div>
+          <div class="co-row"><span class="l">Base fee</span><span class="r"><span data-cur-sym2>A$</span><span data-val="base">1,800</span></span></div>
+          <div class="co-row"><span class="l">Per-outcome rate</span><span class="r"><span data-cur-sym3>A$</span><span data-val="per-task">3.20</span></span></div>
+          <div class="co-row"><span class="l">Volume</span><span class="r"><span data-val="volume-mirror">5,000</span> outcomes</span></div>
+          <div class="co-row"><span class="l">Vs human baseline (<span data-cur-sym4>A$</span><span data-baseline>18</span>/outcome)</span><span class="r big">saves <span data-cur-sym5>A$</span><span data-val="savings">72,200</span></span></div>
+        </div>
+      </div>
+
+      <style>
+        .calc-cur { flex-wrap: wrap; gap: 6px; }
+        .calc-cur .calc-tier {
+          flex: 0 0 auto;
+          padding: 8px 14px;
+          min-width: 60px;
+          text-align: center;
+        }
+      </style>
+    </div>
+  </section>
+
+  <!-- ========== FAQ ========== -->
+  <section class="section" style="background:var(--bg-elev);" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section IV · The fine print</span>
+          <span class="big">04</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Frequently asked</div>
+          <h2 class="section-title">Questions we <em>want</em><br>you to ask.</h2>
+          <p class="dek">Ten answers to the questions every CFO asks before they'll sign a variable-cost line. If your question isn't here, email us — we publish new answers monthly.</p>
+        </div>
+      </div>
+
+      <div class="faq reveal delay-2" data-accordion>
+        <div class="faq-item open" data-item>
+          <button class="faq-q" data-q><span class="num">01</span><span class="text">What exactly is an "outcome"?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">An outcome is a finished unit of work, defined in the statement of work before we start. For a discovery agent, it's a document tagged and written to Relativity. For a reconciliation agent, it's a ledger entry drafted and approved. <em>Every outcome has a pass/fail SLA criterion</em> — we don't bill the fails.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">02</span><span class="text">What happens if an agent misses the SLA?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">The outcome doesn't count. It's automatically credited back on your next invoice — no ticket, no dispute. Our SLA also includes a cumulative clause: <em>if we miss 2% or more in a calendar month,</em> the whole month's run is credited back, not just the misses.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">03</span><span class="text">Do you pass on inference / model costs?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">No. Token cost is our problem, not yours. If models get cheaper, we keep the margin — and lower our published rate card at the next quarterly review. We publish the rate-card change history so you can hold us to it.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">04</span><span class="text">Currency? We're not in Australia.</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Default is AUD. We publish USD and GBP rate cards for clients domiciled there — same underlying rates, converted monthly at OANDA mid. We invoice in your base currency so you don't eat FX volatility.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">05</span><span class="text">Minimum term &amp; exit terms?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">30-day rolling after the first 90 days. You can churn in month four, no notice period, no exit fee. <em>On churn we hand over agent weights, logs, and export artefacts within 30 days</em> — and purge our side. That's in the contract, not a goodwill policy.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">06</span><span class="text">How do you handle regulated data?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">We're ISO 27001, SOC 2 Type II, HIPAA-aligned and Privacy-Act-compliant. Data residency is contracted per-region: AU, EU, UK, US, SG. We never train shared models on your corpus — every vertical agent is a per-tenant fine-tune you own.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">07</span><span class="text">What's the minimum volume?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">100 outcomes / month for outcome pricing. Below that, the engineering cost doesn't clear — we'll tell you so during the audit and point you at better-suited tools.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">08</span><span class="text">Do you charge for the audit if we don't proceed?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">No. Audits are free whether you hire us, hire someone else, or do nothing. We do cap audits at 18 / quarter — so they're first-come, first-served.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">09</span><span class="text">Can you build a bespoke agent outside the catalogue?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">If it's inside our twelve verticals, usually yes. Bespoke agents carry a one-time build fee (A$18k–A$48k) <em>plus</em> the same per-outcome rate card. Outside the twelve verticals, we'll politely decline.</div></div>
+        </div>
+        <div class="faq-item" data-item>
+          <button class="faq-q" data-q><span class="num">10</span><span class="text">Who owns the IP?</span><span class="plus">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">You own: the agent weights trained on your data, the logs, and anything the agent produces. We own: the base framework and the tenant-agnostic tooling. On exit, your agent runs on your infra without us — we leave you with a container, a README, and a phone number.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="endcta">
+    <div class="container">
+      <div class="endcta-wrap reveal">
+        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">Pricing is meaningless without a workflow</div>
+        <h2>Let's see what your<br><em>outcomes</em> should cost.</h2>
+        <p class="dek">The audit is free. The quote is published. The SLA is in writing. Book two weeks with us and you'll leave with a per-outcome rate for your most painful workflow — or a very polite no.</p>
+        <div class="actions">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
+          <a href="process.html" class="btn btn-lg">How the audit works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow agency based in Melbourne, Australia. We build vertical agents across thirteen practice areas — twelve industries plus an always-on voice desk in 14 languages — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Plans</h5>
+        <ul>
+          <li><a href="#subscription">Retainer</a></li>
+          <li><a href="#outcome">Per-outcome</a></li>
+          <li><a href="#hybrid">Hybrid</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left"><span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span></div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+  // Calculator tier-button + hidden select sync
+  (function () {
+    const plans = document.querySelectorAll('.calc-tier[data-tier]');
+    const sel = document.querySelector('select[name="tier"]');
+    const label = document.querySelector('[data-val="tier-label"]');
+    const vm = document.querySelector('[data-val="volume-mirror"]');
+    const v = document.querySelector('input[name="volume"]');
+    if (!plans.length || !sel) return;
+    const labelText = { starter: 'Outcome', growth: 'Hybrid', scale: 'Hybrid · volume' };
+    const setTier = (key) => {
+      plans.forEach(b => b.classList.toggle('active', b.dataset.tier === key));
+      sel.value = key;
+      if (label) label.textContent = labelText[key];
+      sel.dispatchEvent(new Event('input', { bubbles: true }));
+    };
+    plans.forEach(b => b.addEventListener('click', () => setTier(b.dataset.tier)));
+    setTier(sel.value || 'growth');
+
+    if (v && vm) {
+      const sync = () => { vm.textContent = parseInt(v.value, 10).toLocaleString('en-AU'); };
+      v.addEventListener('input', sync);
+      sync();
+    }
+  })();
+
+  // Currency switch — multiplies the AUD values computed by site.js
+  (function () {
+    const CURRENCIES = {
+      AUD: { sym: 'A$',   rate: 1.00, label: 'AUD · Australian Dollar', locale: 'en-AU' },
+      USD: { sym: '$',    rate: 0.65, label: 'USD · US Dollar',          locale: 'en-US' },
+      GBP: { sym: '£',    rate: 0.51, label: 'GBP · British Pound',      locale: 'en-GB' },
+      AED: { sym: 'AED ', rate: 2.40, label: 'AED · UAE Dirham',         locale: 'en-AE' },
+      SAR: { sym: 'SAR ', rate: 2.45, label: 'SAR · Saudi Riyal',        locale: 'en-SA' },
+    };
+    const curBtns = document.querySelectorAll('.calc-tier[data-cur]');
+    const curLabel = document.querySelector('[data-cur-label]');
+    const curName  = document.querySelector('[data-val="cur"]');
+    const curBigSym   = document.querySelector('[data-cur-sym]');
+    const curSym2     = document.querySelector('[data-cur-sym2]');
+    const curSym3     = document.querySelector('[data-cur-sym3]');
+    const curSym4     = document.querySelector('[data-cur-sym4]');
+    const curSym5     = document.querySelector('[data-cur-sym5]');
+    const priceEl = document.querySelector('[data-val="price"]');
+    const baseEl  = document.querySelector('[data-val="base"]');
+    const perEl   = document.querySelector('[data-val="per-task"]');
+    const savEl   = document.querySelector('[data-val="savings"]');
+    const baselineEl = document.querySelector('[data-baseline]');
+    if (!curBtns.length) return;
+
+    let currentCur = 'AUD';
+    let audSnapshot = { price: 17800, base: 1800, per: 3.20, savings: 72200, baseline: 18 };
+
+    // Watch site.js's compute() — it writes AUD-formatted numbers into the DOM.
+    // We snapshot those AUD numbers and re-render in the selected currency.
+    const parseN = (s) => parseFloat(String(s).replace(/,/g, '')) || 0;
+    const fmtInt = (n, loc) => n.toLocaleString(loc, { maximumFractionDigits: 0 });
+    const fmtRate = (n) => n.toFixed(2);
+
+    const renderCur = () => {
+      const c = CURRENCIES[currentCur];
+      if (curLabel) curLabel.textContent = c.label;
+      if (curName)  curName.textContent  = currentCur;
+      [curBigSym, curSym2, curSym3, curSym4, curSym5].forEach(el => { if (el) el.textContent = c.sym; });
+      if (priceEl) priceEl.textContent = fmtInt(audSnapshot.price * c.rate, c.locale);
+      if (baseEl)  baseEl.textContent  = fmtInt(audSnapshot.base  * c.rate, c.locale);
+      if (perEl)   perEl.textContent   = fmtRate(audSnapshot.per  * c.rate);
+      if (savEl)   savEl.textContent   = fmtInt(Math.max(0, audSnapshot.savings * c.rate), c.locale);
+      if (baselineEl) baselineEl.textContent = fmtRate(audSnapshot.baseline * c.rate);
+    };
+
+    // Observe changes to the AUD numbers written by site.js and capture them
+    const capture = () => {
+      // Flip currency to AUD briefly to read the raw AUD numbers back out reliably
+      // Actually simpler: read whatever is currently there and back out to AUD using rate
+      const c = CURRENCIES[currentCur];
+      if (priceEl) audSnapshot.price = parseN(priceEl.textContent) / c.rate;
+      if (baseEl)  audSnapshot.base  = parseN(baseEl.textContent)  / c.rate;
+      if (perEl)   audSnapshot.per   = parseN(perEl.textContent)   / c.rate;
+      if (savEl)   audSnapshot.savings = parseN(savEl.textContent) / c.rate;
+    };
+
+    // Hook: re-render after site.js's compute runs. site.js fires on input events — we listen on the same events.
+    const vol = document.querySelector('input[name="volume"]');
+    const selTier = document.querySelector('select[name="tier"]');
+    const onChange = () => {
+      currentCur = 'AUD';  // force AUD snapshot first
+      // After DOM update by site.js, re-render with the selected currency
+      requestAnimationFrame(() => {
+        capture();
+        currentCur = activeCur();
+        renderCur();
+      });
+    };
+    const activeCur = () => {
+      const act = document.querySelector('.calc-tier[data-cur].active');
+      return act ? act.dataset.cur : 'AUD';
+    };
+    if (vol) vol.addEventListener('input', onChange);
+    if (selTier) selTier.addEventListener('input', onChange);
+
+    // Currency button clicks
+    curBtns.forEach(b => {
+      b.addEventListener('click', () => {
+        curBtns.forEach(x => x.classList.toggle('active', x === b));
+        currentCur = b.dataset.cur;
+        // Snapshot at AUD is valid; re-render from current snapshot
+        renderCur();
+      });
+    });
+
+    // Kick off
+    requestAnimationFrame(() => { capture(); renderCur(); });
+  })();
+</script>
+</body>
+</html>
