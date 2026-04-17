@@ -432,13 +432,20 @@ em, .italic {
   position: fixed; inset: 0;
   background: var(--paper);
   z-index: 99;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   transform: translateY(-100%);
   transition: transform .38s var(--ease);
   pointer-events: none;
+  visibility: hidden;
 }
-.mobile-nav.open { transform: translateY(0); pointer-events: auto; }
+.mobile-nav.open {
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+}
+/* Ignore the empty spacer <div> the markup has as first child */
+.mobile-nav > div:first-child:empty { display: none; }
 .mobile-nav-inner {
   padding: 1.5rem var(--pad) 1rem;
   overflow-y: auto;
@@ -553,32 +560,40 @@ body.nav-locked {
     max-width: 58vw;
   }
 
-  /* Mobile fullscreen menu — positioned from top edge cleanly */
+  /* Mobile fullscreen menu — flex column, never relies on grid auto-placement */
   .mobile-nav {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     background: var(--paper);
-    z-index: 99;
+    z-index: 98;
     transform: translateY(-100%);
-    transition: transform .35s var(--ease);
+    transition: transform .35s var(--ease), visibility 0s linear .35s;
     pointer-events: none;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
     padding-top: calc(56px + env(safe-area-inset-top, 0px));
   }
-  /* is-scrolled no longer changes padding since ticker is hidden on mobile */
   .topbar.is-scrolled .mobile-nav {
     padding-top: calc(56px + env(safe-area-inset-top, 0px));
   }
   .mobile-nav.open {
     transform: translateY(0);
     pointer-events: auto;
+    visibility: visible;
+    transition: transform .35s var(--ease), visibility 0s linear 0s;
   }
-  .mobile-nav > div:first-child { display: none; }
+  /* Hide the empty spacer div in the markup (first child of .mobile-nav) */
+  .mobile-nav > div:first-child { display: none !important; }
 
-  /* Scrollable inner content */
+  /* Scrollable inner content — takes all remaining vertical space */
   .mobile-nav-inner {
+    flex: 1 1 auto;
+    min-height: 0;
     padding: 1.25rem var(--pad) 1.25rem;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -639,8 +654,9 @@ body.nav-locked {
   }
   .mnav-group a.is-active .ar { color: var(--accent); }
 
-  /* Foot: CTA button + meta */
+  /* Foot: CTA button + meta — fixed-height bar at bottom */
   .mobile-nav-foot {
+    flex: 0 0 auto;
     padding: 1rem var(--pad) calc(1.1rem + env(safe-area-inset-bottom, 0px));
     border-top: 1px solid var(--line);
     background: var(--paper);
