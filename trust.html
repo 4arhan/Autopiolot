@@ -715,9 +715,27 @@
   color: var(--muted);
 }
 .tc-nav__meta b { color: var(--accent); font-weight: 500; }
+@media (max-width: 900px) {
+  .trust-section__head { grid-template-columns: 1fr; gap: 0.75rem; margin-bottom: 2rem; }
+  .trust-hero h1 { font-size: clamp(44px, 12vw, 88px); }
+  .vuln__left, .vuln__right { padding: 1.5rem 1.25rem; }
+  .incident__left, .incident__right { padding: 1.5rem 1.25rem; }
+  .incident__stats { grid-template-columns: 1fr; gap: 1rem; }
+  .sub-purpose { font-size: 13px; }
+}
 @media (max-width: 700px) {
   .tc-nav { position: relative; }
   .tc-nav__meta { display: none; }
+  .tc-nav__links { gap: 0.75rem 1rem; }
+  .trust-hero .hero-meta { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .pgp { font-size: 10px; padding: 0.75rem; }
+  .footnote { gap: 0.5rem; }
+  .footnote span { max-width: 100%; }
+}
+@media (max-width: 520px) {
+  .trust-endcta h2 { font-size: 32px; }
+  .trust-endcta .actions { flex-direction: column; align-items: stretch; }
+  .trust-endcta .actions .btn { width: 100%; justify-content: center; }
 }
 
 /* End CTA override */

@@ -393,9 +393,21 @@
   .cl-foot-rail { grid-template-columns: 1fr; text-align: center; }
   .cl-foot-rail .right { text-align: center; }
 }
+@media (max-width: 720px) {
+  .cl-hero-coord { grid-template-columns: 1fr; gap: 0.5rem; }
+  .cl-hero-coord .line { display: none; }
+  .cl-filters { position: static; padding: 1.25rem 0; }
+  .cl-sub { gap: 0.75rem; }
+  .cl-sub .sep { display: none; }
+}
 @media (max-width: 600px) {
-  .cl-hero h1 { font-size: clamp(56px, 18vw, 96px); }
+  .cl-hero h1 { font-size: clamp(48px, 16vw, 88px); }
   .cl-list li { grid-template-columns: 1fr; gap: 0.25rem; }
+  .cl-foot-rail { font-size: 10px; }
+  .cl-headline { font-size: 20px; }
+}
+@media (max-width: 520px) {
+  .cl-pill { padding: 0.45rem 0.75rem; font-size: 10px; }
 }
 </style>
 </head>

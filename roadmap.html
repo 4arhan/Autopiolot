@@ -621,6 +621,24 @@
   .suggest-wrap { grid-template-columns: 1fr; }
   .suggest-form .row { grid-template-columns: 1fr; }
 }
+@media (max-width: 720px) {
+  .roadmap-hero h1 { font-size: clamp(44px, 12vw, 84px); }
+  .roadmap-meta { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .roadmap-meta em { font-size: 13px; }
+  .shipped-lbl { padding: 0.85rem 1rem; font-size: 10px; }
+  .shipped-item, .shipped-more { padding: 0.85rem 1rem; }
+  .suggest-form { padding: 1.25rem; }
+  .suggest-stats { grid-template-columns: 1fr; }
+  .suggest-stats .s { border-right: 0; border-bottom: 1px solid var(--line); }
+  .suggest-stats .s:last-child { border-bottom: 0; }
+  .suggest-form .foot { flex-direction: column; align-items: stretch; }
+  .suggest-form button[type="submit"] { width: 100%; justify-content: center; }
+}
+@media (max-width: 520px) {
+  .kanban-intro h2 { font-size: 28px; }
+  .col-head h3 { font-size: 22px; }
+  .card-title { font-size: 14px; }
+}
 
 /* End cta on roadmap */
 .roadmap-endcta {

@@ -763,6 +763,31 @@
   fill: var(--ink);
 }
 
+@media (max-width: 720px) {
+  .arch-head { grid-template-columns: 1fr; gap: 0.5rem; }
+  .arch-head .right { text-align: left; }
+  .arch-chrome .bar { flex-wrap: wrap; gap: 6px; font-size: 10px; }
+  .arch-chrome .bar .url { margin-left: 0; word-break: break-all; }
+  .arch-chrome .bar .live { margin-left: auto; }
+  .bounty-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  .rt-ledger-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  .faq .faq-body { padding: 0.75rem 0 0.5rem; }
+  .ctrl { font-size: 11.5px; }
+  .ctrl thead th, .ctrl tbody td { padding: 0.75rem 0.9rem; }
+}
+@media (max-width: 520px) {
+  .sec-hero h1 { font-size: clamp(38px, 12vw, 72px); }
+  .sec-hero .hero-meta { font-size: 10px; gap: 0.5rem; }
+  .princ-cell { padding: 1.5rem 1.25rem; min-height: 0; }
+  .ai-ctrl-cell { padding: 1.5rem 1.25rem; }
+  .bounty-left { padding: 1.5rem 1.25rem; }
+  .bounty-row { padding: 0.85rem 1rem; }
+  .sec-contact > div { padding: 1.5rem 1.25rem; }
+  .lc-row > div { padding: 1rem; }
+  .rt-body h2 { font-size: clamp(30px, 9vw, 48px); }
+  .bounty-left h3 { font-size: clamp(26px, 8vw, 40px); }
+}
+
 </style>
 </head>
 <body>

@@ -799,6 +799,36 @@
   .col-head .dot-live::before { animation: none !important; }
   .metric-v.flash { transition: none !important; }
 }
+
+@media (max-width: 720px) {
+  .demo-hero .hero-coord { grid-template-columns: 1fr; gap: 0.35rem; text-align: left; }
+  .demo-hero .hero-coord .line { display: none; }
+  .demo-hero .hero-coord .right { text-align: left; }
+  .terminal { min-height: 0; }
+  .term-body { max-height: 360px; padding: 1rem 1.1rem; font-size: 11.5px; line-height: 1.65; }
+  .log-line { grid-template-columns: 58px 1fr; gap: 10px; }
+  .log-line.ship { grid-template-columns: 58px 1fr; padding: 0.65rem 0.75rem; }
+  .metric { padding: 1.25rem 1.1rem 1rem; }
+  .metric-v { font-size: 30px; }
+  .phase { padding: 1.75rem 1.25rem; }
+  .phase-name { font-size: 22px; }
+  .faq-item { padding: 1.25rem 1.1rem; }
+}
+@media (max-width: 520px) {
+  .scen { padding: 0.9rem 0.95rem; }
+  .scen-name { font-size: 15px; }
+  .term-chrome { padding: 9px 10px; font-size: 9px; }
+  .term-chrome .path { margin-left: 8px; font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .term-btn { padding: 0.95rem 0.5rem; font-size: 13px; min-height: 44px; }
+  .demo-cta-actions { gap: 0.65rem; }
+  .cta-btn { padding: 1rem 1.1rem; font-size: 14px; }
+  .faq-head { padding-bottom: 1rem; margin-bottom: 1.25rem; }
+}
+@media (max-width: 380px) {
+  .term-controls { flex-direction: column; }
+  .term-btn { border-right: 0; border-bottom: 1px solid rgba(250,250,250,0.08); }
+  .term-btn:last-child { border-bottom: 0; }
+}
 </style>
 </head>
 <body>

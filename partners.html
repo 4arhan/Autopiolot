@@ -634,6 +634,22 @@
   .apply-head { grid-template-columns: 1fr; }
   .apply-head .rule { display: none; }
 }
+@media (max-width: 720px) {
+  .hero-partners h1 { font-size: clamp(36px, 11vw, 64px); }
+  .hero-meta { grid-template-columns: 1fr; }
+  .hero-meta .m { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
+  .hero-meta .m:last-child { border-bottom: 0; }
+  .track { padding: 1.5rem 1.25rem; }
+  .track-name { font-size: clamp(32px, 9vw, 52px); }
+  .apply-title { font-size: clamp(32px, 9vw, 56px); }
+  .apply-submit { flex-direction: column; align-items: stretch; }
+  .apply-submit .btn-apply { width: 100%; justify-content: center; }
+}
+@media (max-width: 520px) {
+  .ptype { padding: 1.5rem 1.25rem; min-height: 0; }
+  .tstep { padding: 2rem 0 1.5rem 0; }
+  .faq-a-inner { font-size: 14.5px; }
+}
 </style>
 </head>
 <body>

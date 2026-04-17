@@ -1135,3 +1135,254 @@ body.nav-locked {
 @media (prefers-reduced-motion: reduce) {
   .mobile-nav { transition: none; }
 }
+
+/* =========================================================
+   MOBILE ENHANCEMENT PASS (2026-04)
+   Navbar, menu, typography, forms, tables, and overflow
+   fixes applied globally so every page benefits.
+   ========================================================= */
+
+/* Prevent iOS tap-zoom on form fields (requires >=16px) */
+@media (max-width: 820px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  input[type="url"],
+  input[type="password"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+  /* Form controls feel tappable */
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select,
+  button {
+    min-height: 44px;
+  }
+}
+
+/* === TOPBAR / NAV — mobile refinements ==================== */
+@media (max-width: 1024px) {
+  /* Tighter topbar chrome on narrower viewports */
+  .topbar-inner {
+    padding: 0.7rem var(--pad);
+    min-height: 60px;
+    gap: 0.5rem;
+  }
+  /* Keep the CTA visible on tablets but compact it */
+  .topbar-cta { gap: 0.4rem; }
+  .topbar-cta .btn-cta-desktop { display: none; }
+
+  /* Brand should never eat the whole row */
+  .brand { min-width: 0; flex-shrink: 1; }
+  .brand-name {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60vw;
+  }
+
+  /* Respect iOS safe areas at the very top */
+  .topbar { padding-top: env(safe-area-inset-top, 0px); }
+}
+
+@media (max-width: 640px) {
+  /* Shorten brand on very small screens to avoid nav wrap */
+  .brand-name { font-size: 13px; letter-spacing: -0.01em; }
+  .ticker { font-size: 9.5px; letter-spacing: 0.1em; }
+  .ticker-track { gap: 1.75rem; padding-left: 1.75rem; }
+  /* Make the hamburger obviously tappable */
+  .menu-toggle { width: 44px; height: 44px; }
+}
+
+/* Mobile nav panel refinements */
+@media (max-width: 1024px) {
+  .mobile-nav {
+    /* Remove top clamp so it fills reliably under the topbar */
+    padding-top: 0;
+    top: 0;
+    /* Keep the menu under the topbar so the hamburger stays tappable */
+    padding-top: calc(93px + env(safe-area-inset-top, 0px));
+  }
+  .topbar.is-scrolled .mobile-nav {
+    padding-top: calc(61px + env(safe-area-inset-top, 0px));
+  }
+  .mobile-nav-inner {
+    padding: 1.25rem var(--pad) 1.25rem;
+    gap: 1.25rem;
+  }
+  /* Hairline separation between groups reads better than big gaps */
+  .mnav-group + .mnav-group { padding-top: 0.5rem; }
+  /* Primary group type scales proportional to viewport */
+  .mnav-group:first-child a {
+    font-size: clamp(20px, 5.5vw, 28px);
+    padding: 13px 0;
+  }
+  .mnav-group.secondary a {
+    font-size: clamp(14px, 3.6vw, 16px);
+    padding: 11px 0;
+  }
+  /* Active state is more visible on mobile */
+  .mnav-group a.is-active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .mnav-group a.is-active .ar { color: var(--accent); }
+
+  .mobile-nav-foot {
+    padding: 1rem var(--pad) calc(1.15rem + env(safe-area-inset-bottom, 0px));
+    gap: 0.75rem;
+  }
+  .mobile-nav-foot .btn { min-height: 48px; }
+  .mobile-nav-foot .mfoot-meta { font-size: 10px; }
+}
+
+/* Ultra-narrow phones: compact the mobile nav more */
+@media (max-width: 380px) {
+  .mobile-nav-inner { padding: 1rem 16px; gap: 1rem; }
+  .mnav-group h5 { font-size: 10px; margin-bottom: 0.35rem; padding-bottom: 0.5rem; }
+  .mnav-group:first-child a { font-size: 20px; padding: 11px 0; }
+  .mnav-group.secondary a { font-size: 14px; padding: 9px 0; }
+  .mobile-nav-foot { padding-left: 16px; padding-right: 16px; }
+}
+
+/* === GLOBAL MOBILE POLISH ================================= */
+@media (max-width: 820px) {
+  /* Hide desktop-only ticker text on tight screens when requested */
+  .hide-on-mobile { display: none !important; }
+
+  /* Sections + containers breathe less, never overflow */
+  .container,
+  .container-wide {
+    padding-left: clamp(16px, 4.5vw, 24px);
+    padding-right: clamp(16px, 4.5vw, 24px);
+  }
+  .section { padding: clamp(3rem, 8vw, 5rem) 0; }
+
+  /* Heading scale caps to prevent giant text on mobile */
+  h1 { font-size: clamp(40px, 10vw, 60px); letter-spacing: -0.04em; }
+  h2 { font-size: clamp(28px, 7vw, 44px); letter-spacing: -0.03em; }
+  h3 { font-size: clamp(20px, 4.6vw, 26px); }
+
+  /* CTA rows: stack, full-width */
+  .hero-actions,
+  .endcta .actions { width: 100%; }
+  .hero-actions .btn,
+  .endcta .actions .btn {
+    width: 100%;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  /* Any 2+ col grid should collapse to 1 by default when tagged */
+  .grid-auto-collapse { grid-template-columns: 1fr !important; }
+
+  /* Section head stacks cleanly */
+  .section-head { grid-template-columns: 1fr; gap: 0.75rem; }
+
+  /* Reveal spacing tighter */
+  .reveal { transform: translateY(10px); }
+
+  /* Images/SVGs never force horizontal scroll */
+  img, svg, video, iframe, canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Wide tables become horizontally scrollable containers */
+  .table-wrap,
+  .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  /* Code / pre never blows the layout */
+  pre, code {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    word-wrap: break-word;
+  }
+
+  /* Pullquotes fit */
+  .pullquote {
+    padding: 1.25rem 0 1.25rem 1.25rem;
+    font-size: clamp(20px, 5vw, 28px);
+  }
+}
+
+/* Phone-sized screens: one-column defaults for common grids */
+@media (max-width: 720px) {
+  /* Any grid that declared 2–4 columns inline falls back to a single col
+     when it opts-in via .m-stack. Safe for layouts that need it. */
+  .m-stack { grid-template-columns: 1fr !important; gap: 1rem !important; }
+
+  /* Cards pad tighter */
+  .card { padding: 1.25rem; }
+
+  /* Footer: give links more breathing room and larger tap targets */
+  .footer-col a { padding: 6px 0; }
+  .footer-col h5 { margin-bottom: 0.85rem; }
+
+  /* Footer grid becomes 2-col then stacks */
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 1.25rem;
+    padding-bottom: 2.5rem;
+  }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-brand h3 { font-size: clamp(36px, 9vw, 56px); }
+  .footer-brand p { font-size: 14px; }
+  .site-footer { padding: 3rem 0 1.5rem; }
+
+  /* Stat strip: 2 columns, balanced */
+  .stat-strip { grid-template-columns: 1fr 1fr; }
+  .stat-cell { padding: 1.5rem 1.25rem; }
+
+  /* Stat on very small devices with long values */
+  .stat-v { font-size: clamp(32px, 9vw, 48px); }
+
+  /* Tags & pills should wrap not overflow */
+  .tag { font-size: 9.5px; padding: 4px 8px; }
+}
+
+/* Extra-small (iPhone SE 1st gen etc.) */
+@media (max-width: 420px) {
+  .footer-top { grid-template-columns: 1fr; }
+  .stat-strip { grid-template-columns: 1fr; }
+  .stat-cell { border-right: 0; border-bottom: 1px solid var(--line); }
+  .stat-cell:last-child { border-bottom: 0; }
+  .btn { padding: 0.85rem 1rem; font-size: 13.5px; }
+  .btn-sm { padding: 0.55rem 0.85rem; font-size: 12px; }
+  .btn-lg { padding: 1rem 1.35rem; font-size: 14px; }
+}
+
+/* Make the mobile menu scrollable on short screens (landscape phones) */
+@media (max-width: 1024px) and (max-height: 560px) {
+  .mobile-nav-inner { gap: 0.75rem; }
+  .mnav-group:first-child a { font-size: 18px; padding: 9px 0; }
+  .mnav-group.secondary a { font-size: 13px; padding: 8px 0; }
+  .mobile-nav-foot { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+}
+
+/* Ensure hover-on-touch doesn't leave sticky states */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover { transform: none; }
+  .btn:hover { background: transparent; color: var(--ink); }
+  .btn-primary:hover { background: var(--accent); color: var(--accent-fg); }
+  .btn-primary:active { background: var(--accent-3); }
+  .btn:active { background: var(--ink); color: var(--paper); }
+  .primary-nav a:hover { background: transparent; color: var(--ink-3); }
+  /* Larger targets for footer + secondary links */
+  .footer-col a,
+  .mfoot-meta a { min-height: 40px; display: inline-flex; align-items: center; }
+}

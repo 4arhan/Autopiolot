@@ -209,6 +209,26 @@
 .cs-cta p { font-size: clamp(16px, 1.2vw, 19px); color: var(--ink-3);
   line-height: 1.5; max-width: 46rem; margin: 0 auto 2.5rem; }
 .cs-cta .acts { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+
+@media (max-width: 520px) {
+  .cs-hero h1 { font-size: clamp(40px, 12vw, 64px); letter-spacing: -0.045em; }
+  .cs-hero .acts .btn { width: 100%; justify-content: center; }
+  .cs-stats .s { padding: 1rem 1rem 1rem 0; }
+  .cs-stats .n { font-size: 26px; }
+  .cs-item { padding: 1.5rem 1.25rem; }
+  .vf-head h2 { font-size: clamp(36px, 11vw, 60px); letter-spacing: -0.045em; }
+  .vf-sku { padding: 1.25rem; }
+  .vf-cta .btn { width: 100%; justify-content: center; }
+  .lev-step { padding: 1.5rem 1.25rem; }
+  .cs-cta h2 { font-size: clamp(32px, 11vw, 56px); letter-spacing: -0.04em; }
+  .cs-cta .acts { display: flex; }
+  .cs-cta .acts .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 380px) {
+  .cs-stats { grid-template-columns: 1fr; }
+  .cs-stats .s { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
+  .cs-stats .s:last-child { border-bottom: 0; }
+}
 </style>
 </head>
 <body>

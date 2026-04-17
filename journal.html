@@ -550,6 +550,25 @@
   display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
 }
 
+@media (max-width: 720px) {
+  .hero-journal h1.hero-title { font-size: clamp(44px, 13vw, 80px); }
+  .hero-journal .hero-dek { font-size: clamp(17px, 4.5vw, 22px); }
+  .hero-journal .masthead { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .hero-journal .masthead .mast-r { flex-wrap: wrap; gap: 0.75rem; }
+  .featured h2.f-title { font-size: clamp(36px, 10vw, 64px); }
+  .featured .byline { flex-wrap: wrap; }
+  .featured .byline .bl-meta { margin-left: 0; text-align: left; width: 100%; padding-top: 0.5rem; border-top: 1px dashed var(--line); }
+  .archive .section-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .end-journal h2 { font-size: clamp(34px, 11vw, 64px); }
+  .end-journal .actions { display: flex; flex-direction: column; align-items: stretch; }
+  .end-journal .actions .btn { justify-content: center; }
+}
+@media (max-width: 520px) {
+  .j-card { padding: 1.5rem 1.25rem; min-height: 0; }
+  .j-card .foot { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .j-card .foot .bits { text-align: left; }
+  .dispatch .form-card .facts { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>

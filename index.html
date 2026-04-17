@@ -221,6 +221,10 @@
   .ledger-row .p { font-size: 12px; }
   .ledger-row .s { font-size: 9px; }
   .home-headline { font-size: clamp(40px, 12vw, 72px) !important; }
+  .home-proof { grid-template-columns: 1fr; }
+  .home-proof .p { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
+  .home-proof .p:last-child { border-bottom: 0; }
+  .home-cta .btn { width: 100%; }
 }
 
 /* ---------- WHAT WE DO — 14 practice areas ---------- */
@@ -827,6 +831,11 @@
   .press-cell { border-right: 0; }
   .press-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
   .press-cell:last-child { border-bottom: 0; }
+}
+@media (max-width: 520px) {
+  .case-card { padding: 1.5rem 1.25rem; }
+  .press-cell { padding: 1.5rem 1.25rem; }
+  .end-cta .btns .btn { width: 100%; }
 }
 
 /* ---------- END CTA ---------- */

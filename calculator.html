@@ -587,7 +587,7 @@
 
 /* ===== Responsive ===== */
 @media (max-width: 1000px) {
-  .calc-panel { grid-template-columns: 1fr; }
+  .calc-panel { grid-template-columns: 1fr; min-height: 0; }
   .calc-controls { border-right: 0; border-bottom: 1px solid var(--line-strong); }
   .deal { grid-template-columns: repeat(2, 1fr); }
   .deal-cell:nth-child(2) { border-right: 0; }
@@ -596,12 +596,34 @@
   .calc-cta-side { border-left: 0; padding-left: 0; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.14); }
   .assumptions-head { grid-template-columns: 1fr; gap: 1rem; }
 }
+@media (max-width: 720px) {
+  .big-fig { font-size: clamp(56px, 14vw, 88px); }
+  .chart { overflow-x: auto; }
+  .chart svg { min-width: 420px; }
+}
 @media (max-width: 600px) {
   .calc-controls, .calc-out { padding: 1.75rem 1.25rem; }
   .deal { grid-template-columns: 1fr; }
   .deal-cell { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
   .deal-cell:last-child { border-bottom: 0; }
   .acc-a-body { margin-left: 0; }
+  .calc-head { flex-wrap: wrap; gap: 0.5rem; }
+  .range-slider { height: 44px; background: transparent; }
+  .range-slider::-webkit-slider-runnable-track { height: 2px; background: var(--line-strong); }
+  .range-slider::-moz-range-track { height: 2px; background: var(--line-strong); }
+  .range-slider::-webkit-slider-thumb { margin-top: -10px; width: 22px; height: 22px; }
+  .range-slider::-moz-range-thumb { width: 22px; height: 22px; }
+  .input-text, .select { min-height: 44px; font-size: 16px; }
+  .chip { padding: 0.95rem 0.35rem; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+  .out-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  .out-row .v { font-size: 18px; }
+  .chart-head { flex-wrap: wrap; gap: 0.5rem; }
+  .chart-head .legend { flex-wrap: wrap; gap: 0.5rem; font-size: 10px; }
+  .calc-cta .actions .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 380px) {
+  .chip-group { grid-template-columns: repeat(2, 1fr); }
+  .chip:nth-child(3) { grid-column: 1 / -1; border-top: 1px solid var(--line); border-right: 0; }
 }
 </style>
 </head>

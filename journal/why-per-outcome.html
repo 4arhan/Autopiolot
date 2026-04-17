@@ -502,6 +502,23 @@
   .art-bio .avatar { width: 72px; height: 72px; font-size: 32px; }
   .art-comment { grid-template-columns: 1fr; }
 }
+@media (max-width: 720px) {
+  .art-head h1 { font-size: clamp(32px, 10vw, 60px); }
+  .art-dek { font-size: clamp(17px, 5vw, 22px); }
+  .art-byline { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .art-body p { font-size: 16.5px; }
+  .art-body h2 { font-size: clamp(24px, 7vw, 34px); }
+  .art-body blockquote.pull { font-size: clamp(22px, 6.5vw, 30px); padding-left: 1rem; }
+  .art-chart { padding: 1.25rem 1rem 1rem; overflow-x: auto; }
+  .art-chart .c-head { flex-direction: column; align-items: flex-start; }
+  .art-bio { padding: 1.5rem 1.25rem; }
+  .stat-call { padding: 1rem 1.25rem; }
+  .stat-call .v { font-size: 28px; }
+}
+@media (max-width: 520px) {
+  .art-body .dropcap::first-letter { font-size: 4.2em; padding: 4px 10px 0 0; }
+  .art-related .r-card { min-height: 0; padding: 1.5rem 1.25rem; }
+}
 </style>
 </head>
 <body>

@@ -668,11 +668,21 @@
   .docs-hero-inner { grid-template-columns: 1fr; }
   .docs-toolbar { justify-content: flex-start; }
   .docs-search { min-width: 0; width: 100%; }
-  .params-table { font-size: 12.5px; }
+  .params-table { font-size: 12.5px; display: block; overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
   .params-table td, .params-table th { padding: 8px; }
+  .status-table { display: block; overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
   .err-row { grid-template-columns: 1fr; gap: 4px; }
   .err-row .kind { text-align: left; }
   .changelog-entry { grid-template-columns: 1fr; gap: 0.5rem; }
+  .endpoint-meta { grid-template-columns: 1fr; gap: 0.5rem; }
+  .code, .code pre { font-size: 11.5px; }
+  .code { padding: 0.85rem 1rem; }
+}
+@media (max-width: 520px) {
+  .docs-hero h1 { font-size: clamp(36px, 12vw, 64px); }
+  .docs-section h2 { font-size: clamp(26px, 7vw, 36px); }
+  .docs-section h3 { font-size: 19px; }
+  .docs-version, .docs-search input { font-size: 16px; }
 }
 </style>
 </head>
