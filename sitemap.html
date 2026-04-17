@@ -281,16 +281,39 @@
   .smrow { grid-template-columns: 1rem 1fr; }
   .smrow-href { display: none; }
 }
-@media (max-width: 520px) {
-  .smrow-mark { display: none; }
-  .smrow { grid-template-columns: 1fr; gap: 0.25rem; }
-}
 @media (max-width: 720px) {
   .hero-sitemap h1 { font-size: clamp(38px, 11vw, 72px); }
   .sitemap-masthead { gap: 0.5rem; }
   .sitemap-masthead .m { font-size: 9.5px; }
   .smgroup { padding: 1.5rem 1.25rem; }
   .smgroup-title { font-size: 24px; }
+  .smgroup-lede { font-size: 13px; }
+  .smrow { padding: 0.75rem 0; }
+  .smrow-title { font-size: 15px; }
+  .smrow-desc { font-size: 10.5px; line-height: 1.4; }
+}
+@media (max-width: 520px) {
+  .smrow-mark { display: none; }
+  .smrow { grid-template-columns: 1fr; gap: 0.2rem; padding: 0.7rem 0; }
+  .hero-sitemap { padding: clamp(3rem, 9vw, 5rem) 0 clamp(2rem, 5vw, 3rem); }
+  .hero-sitemap h1 { font-size: clamp(32px, 13vw, 54px); letter-spacing: -0.04em; }
+  .hero-sitemap .dek { font-size: 15px; line-height: 1.45; }
+  .sitemap-masthead { font-size: 9px; letter-spacing: 0.1em; }
+  .smgroup { padding: 1.25rem 1rem; }
+  .smgroup-head { padding-bottom: 0.85rem; margin-bottom: 0.85rem; }
+  .smgroup-title { font-size: 22px; }
+  .smgroup-lede { font-size: 12.5px; max-width: 100%; }
+  .smgroup-no, .smgroup-count { font-size: 9.5px; letter-spacing: 0.1em; }
+  .smrow-title { font-size: 14.5px; }
+  .smrow-desc { font-size: 10px; }
+  .sitemap-foot .cell { padding: 1.25rem 1rem; }
+  .sitemap-foot .cell h3 { font-size: 19px; }
+  .sitemap-foot .cell p { font-size: 13px; }
+}
+@media (max-width: 380px) {
+  .hero-sitemap h1 { font-size: 28px; }
+  .smgroup-title { font-size: 19px; }
+  .smrow-title { font-size: 13.5px; }
 }
 </style>
 </head>
