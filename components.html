@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Components — Autopilot Labs design system</title>
+<meta name="description" content="Every reusable component in the Autopilot Labs design system. A specimen sheet for designers and engineers.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* =========================================================
+   components.html — specimen sheet
+   Archival kit-of-parts page. Pure white, hairline rules,
+   mono spec captions. Every tile is a spec card.
+   ========================================================= */
+
+/* ---- page hero tweaks ---- */
+.hero-kit {
+  padding: clamp(5rem, 10vw, 8rem) 0 clamp(3.5rem, 7vw, 6rem);
+}
+.hero-kit h1 {
+  font-size: clamp(64px, 13vw, 180px);
+  line-height: 0.86;
+  letter-spacing: -0.054em;
+  max-width: 16ch;
+  margin-bottom: 2rem;
+}
+.hero-kit h1 em {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.054em;
+}
+.hero-kit .hero-lower { grid-template-columns: 1.4fr 1fr; }
+.hero-kit-meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem 1.5rem;
+  align-items: start;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--line);
+}
+.hero-kit-meta .k { color: var(--muted); }
+.hero-kit-meta .v { color: var(--ink); font-weight: 500; letter-spacing: 0.08em; }
+
+/* ---- section shell ---- */
+.section-kit {
+  padding: clamp(5rem, 8vw, 7rem) 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.section-kit:nth-of-type(even) { background: var(--paper-3); }
+
+.kit-head {
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr auto;
+  gap: clamp(2rem, 5vw, 4rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  align-items: end;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+.kit-head .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--accent);
+}
+.kit-head .num .big {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 58px;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  color: var(--accent);
+  line-height: 1;
+  margin-top: 0.75rem;
+}
+.kit-head .title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.6vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--ink);
+}
+.kit-head .title em {
+  color: var(--accent);
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+}
+.kit-head .title-sub {
+  margin-top: 0.75rem;
+  font-size: 15px;
+  color: var(--ink-3);
+  line-height: 1.55;
+  max-width: 52ch;
+  letter-spacing: -0.005em;
+}
+.kit-head .legend {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.8;
+}
+.kit-head .legend b { display: block; color: var(--ink); font-weight: 500; }
+
+@media (max-width: 900px) {
+  .kit-head { grid-template-columns: 1fr; gap: 1rem; }
+  .kit-head .legend { text-align: left; }
+}
+
+/* ---- specimen grid ---- */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.section-kit:nth-of-type(even) .spec-grid { background: var(--paper); }
+
+.cell {
+  grid-column: span 3;
+  padding: 2.25rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  gap: 2rem;
+  position: relative;
+  transition: background .3s var(--ease);
+}
+.cell:hover { background: var(--paper-3); }
+.cell > .stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.cell > .stage.center { justify-content: center; }
+.cell > .stage.stack { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+
+/* Spec caption — the mono label beneath every tile */
+.spec {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.6;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+}
+.spec .name { color: var(--ink); font-weight: 500; letter-spacing: 0.1em; }
+.spec .no {
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  font-size: 10px;
+}
+
+.cell-w4 { grid-column: span 4; }
+.cell-w6 { grid-column: span 6; }
+.cell-w12 { grid-column: span 12; }
+
+@media (max-width: 1100px) {
+  .cell { grid-column: span 4; }
+  .cell-w4 { grid-column: span 6; }
+  .cell-w6 { grid-column: span 12; }
+}
+@media (max-width: 700px) {
+  .cell { grid-column: span 12 !important; }
+}
+
+/* Remove trailing borders nicely */
+.spec-grid > .cell:nth-child(4n) { border-right: 0; }
+.spec-grid > .cell.cell-w4:nth-child(3n) { border-right: 0; }
+.spec-grid > .cell.cell-w6:nth-child(2n) { border-right: 0; }
+.spec-grid > .cell.cell-w12 { border-right: 0; }
+
+/* ---- type specimen (vertical, full bleed within container) ---- */
+.type-spec {
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.type-row {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 320px);
+  gap: 2rem;
+  padding: 2.5rem 2.25rem;
+  align-items: end;
+  border-bottom: 1px solid var(--line);
+}
+.type-row:last-child { border-bottom: 0; }
+.type-row .sample { color: var(--ink); }
+.type-row .sample .emph { color: var(--accent); font-weight: 500; }
+.type-row .spec-line {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.8;
+}
+.type-row .spec-line b { color: var(--ink); font-weight: 500; display: block; }
+.type-row .spec-line .tok { color: var(--accent); font-weight: 500; }
+
+.t-h1 { font-family: var(--font-display); font-size: clamp(52px, 10vw, 140px); font-weight: 500; letter-spacing: -0.048em; line-height: 0.9; }
+.t-h2 { font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 72px); font-weight: 500; letter-spacing: -0.04em; line-height: 0.95; }
+.t-h3 { font-family: var(--font-display); font-size: 32px; font-weight: 500; letter-spacing: -0.025em; line-height: 1.1; }
+.t-h4 { font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: -0.015em; }
+.t-body { font-family: var(--font-display); font-size: 15.5px; line-height: 1.55; color: var(--ink); letter-spacing: -0.01em; max-width: 60ch; }
+.t-dek { font-family: var(--font-display); font-size: 20px; color: var(--ink-3); line-height: 1.5; max-width: 58ch; }
+.t-mono { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.t-bracket { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--accent); font-weight: 500; }
+
+@media (max-width: 800px) {
+  .type-row { grid-template-columns: 1fr; gap: 1rem; }
+  .type-row .spec-line { text-align: left; }
+}
+
+/* ---- color swatches ---- */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  border: 1px solid var(--line);
+}
+.swatch {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 1.5rem 1.5rem 1.25rem;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.swatch:nth-child(6n) { border-right: 0; }
+.swatch:nth-last-child(-n+6) { border-bottom: 0; }
+.swatch .chip {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.swatch .chip::after {
+  content: attr(data-label);
+  position: absolute; right: 8px; bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(9,9,11,0.35);
+}
+.swatch .chip.dark::after { color: rgba(255,255,255,0.45); }
+.swatch .meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.swatch .meta .hex { color: var(--ink); font-weight: 500; display: block; }
+.swatch .meta .var { color: var(--accent); font-weight: 500; display: block; letter-spacing: 0.08em; }
+.swatch .meta .use { display: block; font-size: 10px; color: var(--muted-2); letter-spacing: 0.08em; margin-top: 3px; }
+
+@media (max-width: 1000px) {
+  .swatches { grid-template-columns: repeat(4, 1fr); }
+  .swatch:nth-child(6n) { border-right: 1px solid var(--line); }
+  .swatch:nth-child(4n) { border-right: 0; }
+  .swatch:nth-last-child(-n+6) { border-bottom: 1px solid var(--line); }
+  .swatch:nth-last-child(-n+4) { border-bottom: 0; }
+}
+@media (max-width: 600px) {
+  .swatches { grid-template-columns: repeat(2, 1fr); }
+  .swatch:nth-child(n) { border-right: 1px solid var(--line); }
+  .swatch:nth-child(2n) { border-right: 0; }
+  .swatch:nth-last-child(-n+2) { border-bottom: 0; }
+}
+
+/* ---- form elements ---- */
+.fe-input, .fe-textarea, .fe-select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  transition: border-color .2s var(--ease), background .2s var(--ease);
+  outline: none;
+  font-weight: 400;
+}
+.fe-input:focus, .fe-textarea:focus, .fe-select:focus {
+  border-color: var(--accent);
+  background: var(--paper);
+}
+.fe-input::placeholder, .fe-textarea::placeholder { color: var(--muted-2); font-weight: 400; }
+.fe-textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.fe-input:disabled, .fe-textarea:disabled, .fe-select:disabled {
+  background: var(--paper-2);
+  color: var(--muted-2);
+  cursor: not-allowed;
+  border-color: var(--line);
+}
+.fe-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 500;
+}
+.fe-chip-row { display: inline-flex; gap: 0; border: 1px solid var(--line-strong); }
+.fe-chip {
+  padding: 0.6rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-right: 1px solid var(--line-strong);
+  background: var(--paper);
+  cursor: pointer;
+  transition: all .2s var(--ease);
+  font-weight: 500;
+}
+.fe-chip:last-child { border-right: 0; }
+.fe-chip.is-on { background: var(--accent); color: var(--accent-fg); }
+.fe-chip:hover:not(.is-on) { background: var(--paper-2); color: var(--ink); }
+
+.fe-check {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  color: var(--ink-2);
+  cursor: pointer;
+  user-select: none;
+  letter-spacing: -0.005em;
+}
+.fe-check input { position: absolute; opacity: 0; pointer-events: none; }
+.fe-check .box {
+  width: 16px; height: 16px;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  position: relative;
+  flex-shrink: 0;
+  transition: all .2s var(--ease);
+}
+.fe-check input:checked + .box { background: var(--accent); border-color: var(--accent); }
+.fe-check input:checked + .box::after {
+  content: '';
+  position: absolute; left: 4px; top: 1px;
+  width: 5px; height: 9px;
+  border: solid var(--accent-fg);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ---- card variants ---- */
+.card-var {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 1.75rem;
+  display: flex; flex-direction: column; gap: 0.75rem;
+  min-height: 220px;
+  transition: all .25s var(--ease);
+}
+.card-var:hover { border-color: var(--ink); transform: translateY(-2px); }
+.card-var.is-selected {
+  border-color: var(--accent);
+  box-shadow: inset 2px 0 0 var(--accent);
+  background: var(--accent-soft);
+}
+.card-var .num {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.card-var .t {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-top: 0.25rem;
+}
+.card-var .b {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  line-height: 1.55;
+  flex: 1;
+  letter-spacing: -0.005em;
+}
+.card-var .link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  display: inline-flex; gap: 8px;
+  align-items: center;
+}
+
+/* ---- stat strip demo ---- */
+.stat-demo {
+  border: 1px solid var(--line);
+}
+
+/* ---- callouts ---- */
+.eyebrow-demo-row {
+  display: flex; flex-wrap: wrap; gap: 2rem 3rem;
+  align-items: center;
+}
+
+/* ---- dividers row ---- */
+.div-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 1px solid var(--line);
+}
+.div-cell {
+  padding: 2rem 2.25rem;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, 320px);
+  gap: 2rem;
+  align-items: center;
+}
+.div-cell:last-child { border-bottom: 0; }
+.div-cell .sample { width: 100%; }
+.div-cell .spec-line {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.8;
+}
+.div-cell .spec-line b { color: var(--ink); font-weight: 500; display: block; }
+.div-cell .spec-line .tok { color: var(--accent); font-weight: 500; }
+
+.rule-dashed { height: 1px; width: 100%; border-top: 1px dashed var(--line-strong); }
+.rule-dotted { height: 1px; width: 100%; border-top: 1px dotted var(--line-strong); }
+.rule-accent { height: 1px; width: 100%; background: var(--accent); }
+.rule-double { height: 5px; width: 100%; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+
+@media (max-width: 700px) {
+  .div-cell { grid-template-columns: 1fr; gap: 1rem; }
+  .div-cell .spec-line { text-align: left; }
+}
+
+/* ---- motion demos ---- */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--line);
+}
+.motion-cell {
+  padding: 2.25rem;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 1.25rem;
+  min-height: 280px;
+}
+.motion-cell:last-child { border-right: 0; }
+.motion-cell .head {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.motion-cell .sub {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+.motion-cell .stage {
+  flex: 1;
+  padding: 1.5rem;
+  background: var(--paper-3);
+  border: 1px dashed var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+.motion-cell .controls { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* Reveal demo */
+.reveal-demo {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  text-align: center;
+  line-height: 1.25;
+}
+.reveal-demo em { color: var(--accent); font-family: inherit; font-style: normal; font-weight: 500; }
+.reveal-demo.is-visible { opacity: 1; transform: translateY(0); }
+
+/* Stat bar demo */
+.stat-demo-cell {
+  position: relative;
+  padding: 1.5rem 1.75rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  width: 100%;
+}
+.stat-demo-cell::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 0; height: 1px; background: var(--accent);
+  transition: width .6s var(--ease);
+}
+.stat-demo-cell:hover::before { width: 100%; }
+.stat-demo-cell .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.stat-demo-cell .v { font-family: var(--font-display); font-size: 44px; font-weight: 500; letter-spacing: -0.04em; color: var(--ink); margin-top: 0.25rem; line-height: 1; }
+.stat-demo-cell .v em { color: var(--accent); font-family: inherit; font-style: normal; font-weight: 500; }
+
+@media (max-width: 900px) {
+  .motion-grid { grid-template-columns: 1fr; }
+  .motion-cell { border-right: 0; border-bottom: 1px solid var(--line); }
+  .motion-cell:last-child { border-bottom: 0; }
+}
+
+/* ---- pullquote demo ---- */
+.pq-demo { padding: 1rem 0; }
+
+/* ---- icon button ---- */
+.btn-icon {
+  width: 42px; height: 42px;
+  padding: 0;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  transition: all .2s var(--ease);
+  cursor: pointer;
+}
+.btn-icon:hover { background: var(--ink); color: var(--paper); }
+.btn-icon svg { width: 16px; height: 16px; display: block; }
+
+/* ---- disabled button ---- */
+.btn.is-disabled,
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btn-primary.is-disabled,
+.btn-primary:disabled {
+  background: var(--muted-2);
+  border-color: var(--muted-2);
+  color: var(--paper);
+  opacity: 0.5;
+}
+
+/* ---- page header / intro strip under hero ---- */
+.kit-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.kit-strip .cell-x {
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.kit-strip .cell-x:last-child { border-right: 0; }
+.kit-strip .cell-x b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  text-transform: none;
+}
+.kit-strip .cell-x b em { color: var(--accent); font-family: inherit; font-style: normal; font-weight: 500; }
+
+@media (max-width: 900px) {
+  .kit-strip { grid-template-columns: repeat(2, 1fr); }
+  .kit-strip .cell-x:nth-child(2) { border-right: 0; }
+  .kit-strip .cell-x:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+
+/* ---- anchor nav (sticky mini index) ---- */
+.toc {
+  position: sticky; top: 78px; z-index: 50;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.toc-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0.85rem var(--pad);
+  display: flex; flex-wrap: wrap;
+  gap: 1.25rem 1.75rem;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.toc-inner .lead { color: var(--accent); font-weight: 500; }
+.toc-inner a {
+  color: var(--muted);
+  transition: color .2s;
+  font-weight: 500;
+}
+.toc-inner a:hover { color: var(--ink); }
+.toc-inner a b { color: var(--accent); margin-right: 6px; font-weight: 500; }
+
+/* ---- end cta adjust ---- */
+.endcta h2 em { font-family: inherit; }
+
+/* ---- utility status-pill variants ---- */
+.status-pill.warn { color: var(--warn); border-color: rgba(184,76,2,0.25); }
+.status-pill.warn .status-dot { background: var(--warn); }
+.status-pill.warn .status-dot::after { border-color: var(--warn); }
+
+.status-pill.ink { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.status-pill.ink .status-dot { background: #4A8BFF; }
+.status-pill.ink .status-dot::after { border-color: #4A8BFF; }
+
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero hero-kit">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ Autopilot Labs · Design system / v4.6</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>No. 012 — Kit of parts</span></div>
+      </div>
+
+      <h1 class="hero-title reveal delay-1">
+        Kit of <em>parts</em>.
+      </h1>
+
+      <div class="hero-lower reveal delay-2">
+        <p class="hero-dek">
+          Every reusable component in the Autopilot Labs system, cataloged for reuse. Buttons, badges, type, colour, forms, cards, motion — a single scrollable specimen sheet for designers and engineers. Same rules, applied once, applied everywhere.
+        </p>
+        <div class="hero-kit-meta">
+          <span class="k">◆ System</span><span class="v">Autopilot Labs · v4.6 · build 2026.Q2</span>
+          <span class="k">◆ Source</span><span class="v">assets/site.css · assets/motion.css</span>
+          <span class="k">◆ Type</span><span class="v">Geist + JetBrains Mono</span>
+          <span class="k">◆ Accent</span><span class="v" style="color:var(--accent)">#0052FF — cobalt</span>
+          <span class="k">◆ Grid</span><span class="v">12 · hairline · sharp corners</span>
+          <span class="k">◆ Count</span><span class="v">11 sections · 60+ specimens</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STRIP ========== -->
+  <section class="kit-strip">
+    <div class="cell-x"><b>60+<em></em></b>specimens cataloged</div>
+    <div class="cell-x"><b>11</b>grouped sections</div>
+    <div class="cell-x"><b><em>1</em> cobalt</b>#0052FF accent, only</div>
+    <div class="cell-x"><b>0 italics</b>weight-500 + colour, instead</div>
+  </section>
+
+  <!-- ========== TOC ========== -->
+  <div class="toc">
+    <div class="toc-inner">
+      <span class="lead">◆ Index</span>
+      <a href="#buttons"><b>02</b>Buttons</a>
+      <a href="#tags"><b>03</b>Tags</a>
+      <a href="#type"><b>04</b>Type</a>
+      <a href="#colour"><b>05</b>Colour</a>
+      <a href="#forms"><b>06</b>Forms</a>
+      <a href="#cards"><b>07</b>Cards</a>
+      <a href="#stats"><b>08</b>Stats</a>
+      <a href="#callouts"><b>09</b>Callouts</a>
+      <a href="#rules"><b>10</b>Rules</a>
+      <a href="#motion"><b>11</b>Motion</a>
+    </div>
+  </div>
+
+  <!-- ========== 02 · BUTTONS ========== -->
+  <section class="section-kit" id="buttons">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 02 · Buttons</span>
+          <span class="big">02</span>
+        </div>
+        <div>
+          <h2 class="title">Buttons &amp; <em>actions</em>.</h2>
+          <p class="title-sub">Rectangular, hairline-bordered, no rounded corners, no shadows. The primary action is always cobalt, the secondary is always ink, the tertiary is always ghost. Ten variants, one grammar.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>.btn · site.css L177</span>
+        </div>
+      </div>
+
+      <div class="spec-grid">
+        <!-- 1 · default btn -->
+        <div class="cell">
+          <div class="stage"><button class="btn">Default button</button></div>
+          <div class="spec"><span class="name">.btn</span><span class="no">01 / 12</span></div>
+        </div>
+        <!-- 2 · default with arrow -->
+        <div class="cell">
+          <div class="stage"><a href="#" class="btn">With arrow <span class="arrow">↗</span></a></div>
+          <div class="spec"><span class="name">.btn · arrow</span><span class="no">02 / 12</span></div>
+        </div>
+        <!-- 3 · primary -->
+        <div class="cell">
+          <div class="stage"><button class="btn btn-primary">Primary action</button></div>
+          <div class="spec"><span class="name">.btn.btn-primary</span><span class="no">03 / 12</span></div>
+        </div>
+        <!-- 4 · primary with arrow -->
+        <div class="cell">
+          <div class="stage"><a href="#" class="btn btn-primary">Book audit <span class="arrow">↗</span></a></div>
+          <div class="spec"><span class="name">.btn-primary · arrow</span><span class="no">04 / 12</span></div>
+        </div>
+        <!-- 5 · primary large -->
+        <div class="cell">
+          <div class="stage"><a href="#" class="btn btn-primary btn-lg">Large primary <span class="arrow">↗</span></a></div>
+          <div class="spec"><span class="name">.btn-primary.btn-lg</span><span class="no">05 / 12</span></div>
+        </div>
+        <!-- 6 · primary small -->
+        <div class="cell">
+          <div class="stage"><button class="btn btn-primary btn-sm">Small primary</button></div>
+          <div class="spec"><span class="name">.btn-primary.btn-sm</span><span class="no">06 / 12</span></div>
+        </div>
+        <!-- 7 · ghost -->
+        <div class="cell">
+          <div class="stage"><button class="btn btn-ghost">Ghost button</button></div>
+          <div class="spec"><span class="name">.btn.btn-ghost</span><span class="no">07 / 12</span></div>
+        </div>
+        <!-- 8 · ghost large -->
+        <div class="cell">
+          <div class="stage"><button class="btn btn-ghost btn-lg">Large ghost</button></div>
+          <div class="spec"><span class="name">.btn-ghost.btn-lg</span><span class="no">08 / 12</span></div>
+        </div>
+        <!-- 9 · default large -->
+        <div class="cell">
+          <div class="stage"><button class="btn btn-lg">Large default</button></div>
+          <div class="spec"><span class="name">.btn.btn-lg</span><span class="no">09 / 12</span></div>
+        </div>
+        <!-- 10 · default small -->
+        <div class="cell">
+          <div class="stage"><button class="btn btn-sm">Small default</button></div>
+          <div class="spec"><span class="name">.btn.btn-sm</span><span class="no">10 / 12</span></div>
+        </div>
+        <!-- 11 · disabled primary -->
+        <div class="cell">
+          <div class="stage"><button class="btn btn-primary is-disabled" disabled>Disabled primary</button></div>
+          <div class="spec"><span class="name">.btn-primary:disabled</span><span class="no">11 / 12</span></div>
+        </div>
+        <!-- 12 · icon only -->
+        <div class="cell">
+          <div class="stage">
+            <button class="btn-icon" aria-label="Search">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M10.5 10.5 14 14"/></svg>
+            </button>
+            <button class="btn-icon" aria-label="Copy">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9"/><path d="M3 11V2h9"/></svg>
+            </button>
+            <button class="btn-icon" aria-label="Settings">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M2.9 2.9l1.5 1.5M11.6 11.6l1.5 1.5M2.9 13.1l1.5-1.5M11.6 4.4l1.5-1.5"/></svg>
+            </button>
+          </div>
+          <div class="spec"><span class="name">.btn-icon · 42px</span><span class="no">12 / 12</span></div>
+        </div>
+      </div>
+
+      <!-- second row: link-style buttons -->
+      <div class="spec-grid" style="margin-top:-1px;">
+        <div class="cell cell-w4">
+          <div class="stage"><a href="#" class="btn-link">Inline link · btn-link</a></div>
+          <div class="spec"><span class="name">.btn-link</span><span class="no">13 / 16</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage"><a href="#" class="btn-link">Read the manifesto ↗</a></div>
+          <div class="spec"><span class="name">.btn-link · arrow</span><span class="no">14 / 16</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage" style="gap:0.5rem;">
+            <a href="#" class="btn btn-sm">Cancel</a>
+            <a href="#" class="btn btn-primary btn-sm">Save</a>
+          </div>
+          <div class="spec"><span class="name">.btn-group</span><span class="no">15 / 16</span></div>
+        </div>
+        <div class="cell cell-w12">
+          <div class="stage" style="gap:0.75rem;">
+            <a href="#" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
+            <a href="#" class="btn btn-lg">See pricing</a>
+            <a href="#" class="btn btn-ghost btn-lg">Browse solutions</a>
+          </div>
+          <div class="spec"><span class="name">hero-actions · composed row</span><span class="no">16 / 16</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 03 · TAGS & BADGES ========== -->
+  <section class="section-kit" id="tags">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 03 · Tags &amp; badges</span>
+          <span class="big">03</span>
+        </div>
+        <div>
+          <h2 class="title">Tags, badges, <em>pills</em>.</h2>
+          <p class="title-sub">Sharp-cornered, mono-set, always uppercase. Used for vertical labels, status, SLA markers, and cohort tags. One neutral, one accent, one warn — never more.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>.tag / .status-pill</span>
+        </div>
+      </div>
+
+      <div class="spec-grid">
+        <div class="cell">
+          <div class="stage"><span class="tag">Default tag</span></div>
+          <div class="spec"><span class="name">.tag</span><span class="no">01 / 08</span></div>
+        </div>
+        <div class="cell">
+          <div class="stage"><span class="tag accent">Accent tag</span></div>
+          <div class="spec"><span class="name">.tag.accent</span><span class="no">02 / 08</span></div>
+        </div>
+        <div class="cell">
+          <div class="stage"><span class="tag warn">Warn tag</span></div>
+          <div class="spec"><span class="name">.tag.warn</span><span class="no">03 / 08</span></div>
+        </div>
+        <div class="cell">
+          <div class="stage"><span class="tag accent"><span class="dot"></span> Live · ping</span></div>
+          <div class="spec"><span class="name">.tag.accent · dot</span><span class="no">04 / 08</span></div>
+        </div>
+        <div class="cell">
+          <div class="stage"><span class="status-pill"><span class="status-dot"></span> AEST · 14:22</span></div>
+          <div class="spec"><span class="name">.status-pill</span><span class="no">05 / 08</span></div>
+        </div>
+        <div class="cell">
+          <div class="stage"><span class="status-pill ink"><span class="status-dot"></span> Build · 2026.Q2</span></div>
+          <div class="spec"><span class="name">.status-pill.ink</span><span class="no">06 / 08</span></div>
+        </div>
+        <div class="cell">
+          <div class="stage"><span class="status-pill warn"><span class="status-dot"></span> Degraded</span></div>
+          <div class="spec"><span class="name">.status-pill.warn</span><span class="no">07 / 08</span></div>
+        </div>
+        <div class="cell">
+          <div class="stage" style="gap:0.5rem; flex-wrap:wrap;">
+            <span class="tag">Healthcare</span>
+            <span class="tag accent">Q2 · 99.4%</span>
+            <span class="tag">v4.6</span>
+          </div>
+          <div class="spec"><span class="name">.tag · composed</span><span class="no">08 / 08</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 04 · TYPE SCALE ========== -->
+  <section class="section-kit" id="type">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 04 · Typography</span>
+          <span class="big">04</span>
+        </div>
+        <div>
+          <h2 class="title">Type scale &amp; <em>rules</em>.</h2>
+          <p class="title-sub">Geist for everything display, JetBrains Mono for labels and numerics. No serif. No italic — emphasis is cobalt plus weight-500. Negative tracking opens up with size.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>site.css L132 — L172</span>
+        </div>
+      </div>
+
+      <div class="type-spec">
+        <!-- H1 -->
+        <div class="type-row">
+          <div class="sample t-h1">Agents that <span class="emph">finish</span>.</div>
+          <div class="spec-line">
+            <b>h1 · display</b>
+            Geist · <span class="tok">500</span><br>
+            clamp(52px · 8vw · <span class="tok">140px</span>)<br>
+            tracking <span class="tok">-0.048em</span> · leading 0.9
+          </div>
+        </div>
+        <!-- H2 -->
+        <div class="type-row">
+          <div class="sample t-h2">Three things every other AI agency gets <span class="emph">wrong</span>.</div>
+          <div class="spec-line">
+            <b>h2 · section</b>
+            Geist · <span class="tok">500</span><br>
+            clamp(34px · 4.4vw · <span class="tok">72px</span>)<br>
+            tracking <span class="tok">-0.04em</span> · leading 0.95
+          </div>
+        </div>
+        <!-- H3 -->
+        <div class="type-row">
+          <div class="sample t-h3">We audit <span class="emph">before</span> we build.</div>
+          <div class="spec-line">
+            <b>h3 · card title</b>
+            Geist · <span class="tok">500</span><br>
+            <span class="tok">32px</span> (clamp 22 → 32)<br>
+            tracking <span class="tok">-0.025em</span> · leading 1.1
+          </div>
+        </div>
+        <!-- H4 -->
+        <div class="type-row">
+          <div class="sample t-h4">Section sub-header · H4</div>
+          <div class="spec-line">
+            <b>h4 · sub</b>
+            Geist · <span class="tok">500</span><br>
+            <span class="tok">18px</span><br>
+            tracking <span class="tok">-0.015em</span>
+          </div>
+        </div>
+        <!-- Body -->
+        <div class="type-row">
+          <div class="sample t-body">
+            Body prose — Autopilot Labs builds vertical AI agents for thirteen industries. You pay when the work ships, not for seats or tokens. Every engagement starts with a workflow audit, not a product demo. This is the default body copy used in paragraphs, card bodies, and long-form editorial.
+          </div>
+          <div class="spec-line">
+            <b>body · prose</b>
+            Geist · <span class="tok">400</span><br>
+            <span class="tok">15.5px</span> · leading 1.55<br>
+            tracking <span class="tok">-0.01em</span>
+          </div>
+        </div>
+        <!-- Dek -->
+        <div class="type-row">
+          <div class="sample t-dek">.dek — a larger introduction paragraph used beneath section titles, colour <span style="color:var(--ink-3);">ink-3</span>.</div>
+          <div class="spec-line">
+            <b>.dek · intro</b>
+            Geist · <span class="tok">400</span><br>
+            <span class="tok">20px</span> · leading 1.5<br>
+            colour <span class="tok">--ink-3</span>
+          </div>
+        </div>
+        <!-- Mono label -->
+        <div class="type-row">
+          <div class="sample t-mono">◆ Mono label · set in JetBrains Mono 10.5px · tracking 0.14em</div>
+          <div class="spec-line">
+            <b>.mono / eyebrow</b>
+            JetBrains Mono · <span class="tok">500</span><br>
+            <span class="tok">10.5px</span> uppercase<br>
+            tracking <span class="tok">0.14em</span>
+          </div>
+        </div>
+        <!-- Bracket num -->
+        <div class="type-row">
+          <div class="sample t-bracket">[ 001 / 008 ] · BRACKET NUMERAL · MONO · ACCENT</div>
+          <div class="spec-line">
+            <b>.bracket-num</b>
+            JetBrains Mono · <span class="tok">500</span><br>
+            <span class="tok">10.5px</span> · colour accent<br>
+            tracking <span class="tok">0.12em</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 05 · COLOUR ========== -->
+  <section class="section-kit" id="colour">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 05 · Colour palette</span>
+          <span class="big">05</span>
+        </div>
+        <div>
+          <h2 class="title">The <em>palette</em>.</h2>
+          <p class="title-sub">Three papers, three inks, two mutes, one cobalt. Colour is structural, not decorative — every accent is #0052FF, and it's only used to lead the eye.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>:root · site.css L7 — L34</span>
+        </div>
+      </div>
+
+      <div class="swatches">
+        <!-- paper -->
+        <div class="swatch">
+          <div class="chip" style="background:#FFFFFF" data-label="paper"></div>
+          <div class="meta">
+            <span class="hex">#FFFFFF</span>
+            <span class="var">--paper</span>
+            <span class="use">Canvas · page ground</span>
+          </div>
+        </div>
+        <!-- paper-2 -->
+        <div class="swatch">
+          <div class="chip" style="background:#F6F6F7" data-label="paper-2"></div>
+          <div class="meta">
+            <span class="hex">#F6F6F7</span>
+            <span class="var">--paper-2</span>
+            <span class="use">Elevation · card bg</span>
+          </div>
+        </div>
+        <!-- paper-3 -->
+        <div class="swatch">
+          <div class="chip" style="background:#FAFAFB" data-label="paper-3"></div>
+          <div class="meta">
+            <span class="hex">#FAFAFB</span>
+            <span class="var">--paper-3</span>
+            <span class="use">Subtle bg · hover</span>
+          </div>
+        </div>
+        <!-- ink -->
+        <div class="swatch">
+          <div class="chip dark" style="background:#09090B" data-label="ink"></div>
+          <div class="meta">
+            <span class="hex">#09090B</span>
+            <span class="var">--ink</span>
+            <span class="use">Primary text · border</span>
+          </div>
+        </div>
+        <!-- ink-2 -->
+        <div class="swatch">
+          <div class="chip dark" style="background:#18181B" data-label="ink-2"></div>
+          <div class="meta">
+            <span class="hex">#18181B</span>
+            <span class="var">--ink-2</span>
+            <span class="use">Secondary text</span>
+          </div>
+        </div>
+        <!-- ink-3 -->
+        <div class="swatch">
+          <div class="chip dark" style="background:#3F3F46" data-label="ink-3"></div>
+          <div class="meta">
+            <span class="hex">#3F3F46</span>
+            <span class="var">--ink-3</span>
+            <span class="use">Body prose · dim</span>
+          </div>
+        </div>
+        <!-- muted -->
+        <div class="swatch">
+          <div class="chip dark" style="background:#71717A" data-label="muted"></div>
+          <div class="meta">
+            <span class="hex">#71717A</span>
+            <span class="var">--muted</span>
+            <span class="use">Mono labels · meta</span>
+          </div>
+        </div>
+        <!-- muted-2 -->
+        <div class="swatch">
+          <div class="chip" style="background:#A1A1AA" data-label="muted-2"></div>
+          <div class="meta">
+            <span class="hex">#A1A1AA</span>
+            <span class="var">--muted-2</span>
+            <span class="use">Dim · placeholders</span>
+          </div>
+        </div>
+        <!-- line -->
+        <div class="swatch">
+          <div class="chip" style="background:#FFFFFF; border:1px solid rgba(9,9,11,0.08);" data-label="line (frame)"></div>
+          <div class="meta">
+            <span class="hex">rgba(9,9,11,.08)</span>
+            <span class="var">--line</span>
+            <span class="use">Hairline · divider</span>
+          </div>
+        </div>
+        <!-- accent -->
+        <div class="swatch">
+          <div class="chip dark" style="background:#0052FF" data-label="accent"></div>
+          <div class="meta">
+            <span class="hex">#0052FF</span>
+            <span class="var">--accent</span>
+            <span class="use">Cobalt · emphasis</span>
+          </div>
+        </div>
+        <!-- accent-soft -->
+        <div class="swatch">
+          <div class="chip" style="background:rgba(0,82,255,0.06); border:1px solid rgba(0,82,255,0.18);" data-label="accent-soft"></div>
+          <div class="meta">
+            <span class="hex">rgba(0,82,255,.06)</span>
+            <span class="var">--accent-soft</span>
+            <span class="use">Accent tint · tag bg</span>
+          </div>
+        </div>
+        <!-- accent-fg -->
+        <div class="swatch">
+          <div class="chip" style="background:#FFFFFF; border:1px solid var(--line-strong);" data-label="accent-fg"></div>
+          <div class="meta">
+            <span class="hex">#FFFFFF</span>
+            <span class="var">--accent-fg</span>
+            <span class="use">Text on cobalt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 06 · FORMS ========== -->
+  <section class="section-kit" id="forms">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 06 · Form elements</span>
+          <span class="big">06</span>
+        </div>
+        <div>
+          <h2 class="title">Inputs, selects, <em>chips</em>.</h2>
+          <p class="title-sub">Rectangular, hairline, mono label above. Focus ring is cobalt border-colour — no outline halo, no rounded edges. Disabled states fall to paper-2 / muted-2.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>fe-* · inline spec</span>
+        </div>
+      </div>
+
+      <div class="spec-grid">
+        <div class="cell cell-w4">
+          <div class="stage stack" style="width:100%;">
+            <label class="fe-label">Work email</label>
+            <input type="email" class="fe-input" placeholder="you@company.com" value="">
+          </div>
+          <div class="spec"><span class="name">.fe-input</span><span class="no">01 / 06</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage stack" style="width:100%;">
+            <label class="fe-label">Workflow notes</label>
+            <textarea class="fe-textarea" placeholder="Describe the manual loop you want automated…"></textarea>
+          </div>
+          <div class="spec"><span class="name">.fe-textarea</span><span class="no">02 / 06</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage stack" style="width:100%;">
+            <label class="fe-label">Vertical</label>
+            <select class="fe-select">
+              <option>Healthcare</option>
+              <option>Legal</option>
+              <option>Finance</option>
+              <option>Real estate</option>
+              <option>E-commerce</option>
+              <option>HR &amp; hiring</option>
+              <option>Marketing</option>
+              <option>Manufacturing</option>
+            </select>
+          </div>
+          <div class="spec"><span class="name">.fe-select</span><span class="no">03 / 06</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage stack" style="width:100%;">
+            <label class="fe-label">Plan</label>
+            <div class="fe-chip-row" role="tablist">
+              <button class="fe-chip" type="button">Retainer</button>
+              <button class="fe-chip is-on" type="button">Per-task</button>
+              <button class="fe-chip" type="button">Hybrid</button>
+            </div>
+          </div>
+          <div class="spec"><span class="name">.fe-chip-row · .is-on</span><span class="no">04 / 06</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage stack" style="gap:0.75rem;">
+            <label class="fe-check">
+              <input type="checkbox" checked>
+              <span class="box"></span>
+              <span>I'm ready to book an audit</span>
+            </label>
+            <label class="fe-check">
+              <input type="checkbox">
+              <span class="box"></span>
+              <span>Subscribe to the Q2 cohort note</span>
+            </label>
+            <label class="fe-check">
+              <input type="checkbox" checked>
+              <span class="box"></span>
+              <span>SLA-backed engagement</span>
+            </label>
+          </div>
+          <div class="spec"><span class="name">.fe-check</span><span class="no">05 / 06</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage stack" style="width:100%;">
+            <label class="fe-label">Disabled · read-only</label>
+            <input type="text" class="fe-input" value="hello@autopilotlabs.io" disabled>
+          </div>
+          <div class="spec"><span class="name">.fe-input:disabled</span><span class="no">06 / 06</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 07 · CARDS ========== -->
+  <section class="section-kit" id="cards">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 07 · Cards</span>
+          <span class="big">07</span>
+        </div>
+        <div>
+          <h2 class="title">Cards &amp; <em>containers</em>.</h2>
+          <p class="title-sub">Three states: default, hover, selected. Always hairline border, always sharp corners. Selected binds a 2px cobalt inset on the left edge — no glow, no lift.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>.card / .card-var</span>
+        </div>
+      </div>
+
+      <div class="spec-grid">
+        <div class="cell cell-w4">
+          <div class="stage" style="width:100%;">
+            <div class="card-var" style="width:100%;">
+              <div class="num">01 · Default</div>
+              <div class="t">Retainer</div>
+              <div class="b">A flat monthly fee for teams that need a predictable line item on the P&amp;L. Best for regulated industries with clear scope.</div>
+              <a href="#" class="link">Compare plan →</a>
+            </div>
+          </div>
+          <div class="spec"><span class="name">.card-var · default</span><span class="no">01 / 03</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage" style="width:100%;">
+            <div class="card-var" style="width:100%; border-color:var(--ink); transform:translateY(-2px);">
+              <div class="num">02 · Hover</div>
+              <div class="t">Per-task</div>
+              <div class="b">Our default engagement. Zero base fee. You pay a rate per completed outcome that passes SLA — nothing else.</div>
+              <a href="#" class="link">Compare plan →</a>
+            </div>
+          </div>
+          <div class="spec"><span class="name">.card-var · :hover</span><span class="no">02 / 03</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage" style="width:100%;">
+            <div class="card-var is-selected" style="width:100%;">
+              <div class="num">03 · Selected</div>
+              <div class="t">Hybrid</div>
+              <div class="b">A small monthly base plus discounted per-outcome pricing. Chosen by 68% of our clients at 20K+ outcomes / month.</div>
+              <a href="#" class="link">Compare plan →</a>
+            </div>
+          </div>
+          <div class="spec"><span class="name">.card-var.is-selected</span><span class="no">03 / 03</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 08 · STATS ========== -->
+  <section class="section-kit" id="stats">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 08 · Stat strip</span>
+          <span class="big">08</span>
+        </div>
+        <div>
+          <h2 class="title">Numbers, <em>strip-set</em>.</h2>
+          <p class="title-sub">A four-column strip of quantified outcomes. Cobalt bar draws across the top on hover. Used on every vertical page once, never more.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>.stat-strip · site.css L558</span>
+        </div>
+      </div>
+
+      <div class="stat-demo">
+        <div class="stat-strip">
+          <div class="stat-cell">
+            <div class="stat-k">◆ Outcomes shipped / month</div>
+            <div class="stat-v"><em>2.41M</em></div>
+            <div class="stat-foot"><span class="up">↑ +38%</span> vs Q1 · Ø clients</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-k">◆ Median SLA</div>
+            <div class="stat-v"><em>99.1<span class="unit">%</span></em></div>
+            <div class="stat-foot">On-time over 90 days</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-k">◆ Time-to-deploy</div>
+            <div class="stat-v"><em>14<span class="unit">d</span></em></div>
+            <div class="stat-foot">Audit → agent in production</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-k">◆ Avg cost / task</div>
+            <div class="stat-v"><em>A$3.20</em></div>
+            <div class="stat-foot">vs A$18 human baseline</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec" style="margin-top:1.25rem; padding:0.75rem 0; border-top:1px solid var(--line); border-bottom:0;">
+        <span class="name">.stat-strip &gt; .stat-cell ·  4 cols · hairline rules · cobalt top-draw on hover</span>
+        <span class="no">01 / 01</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 09 · CALLOUTS & QUOTES ========== -->
+  <section class="section-kit" id="callouts">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 09 · Callouts</span>
+          <span class="big">09</span>
+        </div>
+        <div>
+          <h2 class="title">Quotes &amp; <em>eyebrows</em>.</h2>
+          <p class="title-sub">Pullquotes set in display Geist 500, left-ruled with a 2px cobalt. Eyebrows are tiny mono labels that lead into every section — three variants: default, accent, plain.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>.pullquote · .eyebrow</span>
+        </div>
+      </div>
+
+      <div class="spec-grid">
+        <div class="cell cell-w12">
+          <div class="stage" style="width:100%;">
+            <blockquote class="pullquote pq-demo" style="margin:0;">
+              Our agent ships <em>240</em> reviewed contracts in a paralegal hour.<br>
+              Same hour, same desk.
+              <cite>— Partner, [legal client] (Sydney)</cite>
+            </blockquote>
+          </div>
+          <div class="spec"><span class="name">.pullquote · left-rule · cite</span><span class="no">01 / 04</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage"><span class="eyebrow">◆ Default eyebrow</span></div>
+          <div class="spec"><span class="name">.eyebrow</span><span class="no">02 / 04</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage"><span class="eyebrow accent">◆ Accent eyebrow</span></div>
+          <div class="spec"><span class="name">.eyebrow.accent</span><span class="no">03 / 04</span></div>
+        </div>
+        <div class="cell cell-w4">
+          <div class="stage"><span class="eyebrow plain">Plain eyebrow · no bar</span></div>
+          <div class="spec"><span class="name">.eyebrow.plain</span><span class="no">04 / 04</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 10 · RULES & DIVIDERS ========== -->
+  <section class="section-kit" id="rules">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 10 · Rules</span>
+          <span class="big">10</span>
+        </div>
+        <div>
+          <h2 class="title">Rules &amp; <em>dividers</em>.</h2>
+          <p class="title-sub">Hairlines at 1px, drawn in line-token colour. Six variants: solid-line, solid-faint, dashed, dotted, cobalt, and the ink double-rule reserved for footer separators.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>.divider · .divider-hair</span>
+        </div>
+      </div>
+
+      <div class="div-row">
+        <div class="div-cell">
+          <div class="sample"><div class="divider"></div></div>
+          <div class="spec-line">
+            <b>.divider</b>
+            height <span class="tok">1px</span><br>
+            background <span class="tok">--line</span><br>
+            rgba(9,9,11,<span class="tok">.08</span>)
+          </div>
+        </div>
+        <div class="div-cell">
+          <div class="sample"><div class="divider-hair"></div></div>
+          <div class="spec-line">
+            <b>.divider-hair</b>
+            height <span class="tok">1px</span><br>
+            background <span class="tok">--line-faint</span><br>
+            rgba(9,9,11,<span class="tok">.04</span>)
+          </div>
+        </div>
+        <div class="div-cell">
+          <div class="sample"><div class="rule-dashed"></div></div>
+          <div class="spec-line">
+            <b>dashed rule</b>
+            border-top <span class="tok">1px dashed</span><br>
+            colour <span class="tok">--line-strong</span><br>
+            editorial · logo wall
+          </div>
+        </div>
+        <div class="div-cell">
+          <div class="sample"><div class="rule-dotted"></div></div>
+          <div class="spec-line">
+            <b>dotted rule</b>
+            border-top <span class="tok">1px dotted</span><br>
+            colour <span class="tok">--line-strong</span><br>
+            feature lists · pricing
+          </div>
+        </div>
+        <div class="div-cell">
+          <div class="sample"><div class="rule-accent"></div></div>
+          <div class="spec-line">
+            <b>accent rule</b>
+            height <span class="tok">1px</span><br>
+            background <span class="tok">--accent</span><br>
+            section-num top border
+          </div>
+        </div>
+        <div class="div-cell">
+          <div class="sample"><div class="rule-double"></div></div>
+          <div class="spec-line">
+            <b>ink double-rule</b>
+            top + bottom <span class="tok">1px</span><br>
+            colour <span class="tok">--ink</span><br>
+            reserved · section break
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 11 · MOTION ========== -->
+  <section class="section-kit" id="motion">
+    <div class="container">
+      <div class="kit-head">
+        <div class="num">
+          <span>§ 11 · Motion</span>
+          <span class="big">11</span>
+        </div>
+        <div>
+          <h2 class="title">Motion <em>primitives</em>.</h2>
+          <p class="title-sub">Three live demos — reveal-on-scroll, button hover, and the stat cobalt-bar draw. Every easing curve is <span style="font-family:var(--font-mono); color:var(--accent);">cubic-bezier(.22,.61,.36,1)</span>. No bounce, no spring.</p>
+        </div>
+        <div class="legend">
+          <b>◆ Source</b>
+          <span>motion.css · .reveal</span>
+        </div>
+      </div>
+
+      <div class="motion-grid">
+        <div class="motion-cell">
+          <span class="head">◆ Demo 01</span>
+          <div class="sub">Reveal on trigger</div>
+          <div class="stage">
+            <div class="reveal-demo" id="rev-demo">
+              A specimen block that<br>fades and <em>rises</em> into view.
+            </div>
+          </div>
+          <div class="controls">
+            <button class="btn btn-sm" id="rev-trigger">Trigger reveal</button>
+            <button class="btn btn-ghost btn-sm" id="rev-reset">Reset</button>
+          </div>
+          <div class="spec" style="padding-top:0.75rem; border-top:1px dashed var(--line);">
+            <span class="name">.reveal + .is-visible</span>
+            <span class="no">800ms · ease-out</span>
+          </div>
+        </div>
+
+        <div class="motion-cell">
+          <span class="head">◆ Demo 02</span>
+          <div class="sub">Button hover transition</div>
+          <div class="stage" style="gap:0.5rem; flex-direction:column;">
+            <a href="#" class="btn">Hover me · default</a>
+            <a href="#" class="btn btn-primary">Hover me · primary <span class="arrow">↗</span></a>
+            <a href="#" class="btn btn-ghost">Hover me · ghost</a>
+          </div>
+          <div class="spec" style="padding-top:0.75rem; border-top:1px dashed var(--line);">
+            <span class="name">.btn :hover · inkfill + arrow translate</span>
+            <span class="no">250ms · ease</span>
+          </div>
+        </div>
+
+        <div class="motion-cell">
+          <span class="head">◆ Demo 03</span>
+          <div class="sub">Stat cobalt-bar draw</div>
+          <div class="stage" style="padding:0.75rem;">
+            <div class="stat-demo-cell">
+              <div class="k">◆ Hover me — bar draws</div>
+              <div class="v"><em>99.1<span style="font-size:0.5em; color:var(--muted);">%</span></em></div>
+            </div>
+          </div>
+          <div class="spec" style="padding-top:0.75rem; border-top:1px dashed var(--line);">
+            <span class="name">.stat-cell::before → width 0 → 100%</span>
+            <span class="no">600ms · ease</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="endcta">
+    <div class="container">
+      <div class="endcta-wrap reveal">
+        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">§ 12 · Addendum</div>
+        <h2>The rules, in writing.<br>Read the <em>manifesto</em>.</h2>
+        <p class="dek">Every decision in this kit of parts comes from a single principle document. Twelve rules, one page, no exceptions. If you're going to build with this system, start there.</p>
+        <div class="actions">
+          <a href="manifesto.html" class="btn btn-primary btn-lg">Open the manifesto <span class="arrow">↗</span></a>
+          <a href="index.html" class="btn btn-lg">Back to home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+/* Reveal demo — manual trigger */
+(function(){
+  var el = document.getElementById('rev-demo');
+  var go = document.getElementById('rev-trigger');
+  var rs = document.getElementById('rev-reset');
+  if (!el || !go || !rs) return;
+  go.addEventListener('click', function(){ el.classList.add('is-visible'); });
+  rs.addEventListener('click', function(){ el.classList.remove('is-visible'); });
+})();
+
+/* Chip row toggle (forms) */
+(function(){
+  document.querySelectorAll('.fe-chip-row').forEach(function(row){
+    row.addEventListener('click', function(e){
+      var b = e.target.closest('.fe-chip');
+      if (!b) return;
+      row.querySelectorAll('.fe-chip').forEach(function(x){ x.classList.remove('is-on'); });
+      b.classList.add('is-on');
+    });
+  });
+})();
+</script>
+</body>
+</html>

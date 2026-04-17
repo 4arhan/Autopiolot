@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 · Route not found — Autopilot Labs</title>
+<meta name="description" content="You've arrived at a workflow we haven't automated yet. Find your way back to Autopilot Labs.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ====== 404 page ====== */
+.nf {
+  padding: clamp(4rem, 9vw, 8rem) 0 clamp(4rem, 8vw, 7rem);
+  position: relative;
+  overflow: hidden;
+}
+.nf-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.nf-coord {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 2.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed var(--line);
+}
+.nf-coord .accent { color: var(--accent); }
+
+.nf-dash {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(60px, 10vw, 140px);
+  line-height: 0.7;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  margin-top: 2.5rem;
+  margin-bottom: -0.1em;
+  opacity: 0.85;
+  user-select: none;
+}
+
+.nf-numeral {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(180px, 30vw, 480px);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  color: var(--accent);
+  margin: 0;
+  display: block;
+}
+
+.nf-punch {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 34px);
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+  color: var(--ink);
+  max-width: 28ch;
+  margin: 1.75rem auto 1rem;
+}
+.nf-punch em {
+  color: var(--accent);
+}
+
+.nf-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 3rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4em 0.8em;
+}
+.nf-sub .sep { color: var(--accent); }
+
+.nf-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 4rem;
+}
+
+.nf-lookfor {
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: center;
+  text-align: left;
+  margin-bottom: 3.5rem;
+}
+.nf-lookfor .k {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.nf-lookfor .k em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+  display: block;
+  margin-top: 4px;
+}
+.nf-lookfor ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
+  justify-content: flex-end;
+}
+.nf-lookfor li {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+}
+.nf-lookfor a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color .2s, border-color .2s;
+}
+.nf-lookfor a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.nf-sig {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.nf-sig .mark {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-style: normal;
+  padding-right: 4px;
+}
+
+@media (max-width: 720px) {
+  .nf-lookfor {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .nf-lookfor ul {
+    justify-content: flex-start;
+  }
+  .nf-coord {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="nf">
+    <div class="container">
+      <div class="nf-inner">
+        <div class="nf-coord">
+          <span>◎ Autopilot Labs · Error state</span>
+          <span class="accent">HTTP 404 · Route undefined</span>
+        </div>
+
+        <span class="nf-dash" aria-hidden="true">—</span>
+        <span class="nf-numeral" aria-label="404">404</span>
+
+        <p class="nf-punch">
+          You've arrived at a workflow we haven't automated. <em>Yet.</em>
+        </p>
+
+        <div class="nf-sub">
+          <span>ERR</span><span class="sep">·</span>
+          <span>404</span><span class="sep">·</span>
+          <span>route not found</span><span class="sep">·</span>
+          <span>Melbourne · <span data-clock>—</span></span>
+        </div>
+
+        <div class="nf-actions">
+          <a href="index.html" class="btn btn-primary btn-lg">Return home <span class="arrow">↗</span></a>
+          <a href="solutions.html" class="btn btn-lg">Browse solutions</a>
+          <a href="contact.html" class="btn btn-ghost btn-lg">Book an audit</a>
+        </div>
+
+        <div class="nf-lookfor">
+          <div class="k">
+            <span>— Maybe you were looking for</span>
+            <em>Popular routes</em>
+          </div>
+          <ul>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="solutions.html">Solutions</a></li>
+            <li><a href="process.html">Process</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html">Home</a></li>
+          </ul>
+        </div>
+
+        <p class="nf-sig">
+          <span class="mark">—</span> Status: still shipping, just not this page.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

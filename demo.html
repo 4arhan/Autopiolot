@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live demo — Watch an AI agent run · Autopilot Labs</title>
+<meta name="description" content="Press start. We simulate one of our healthcare-intake AI agents processing a real (anonymised) incoming fax. 12 seconds. No signup.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* =========================================================
+   DEMO PAGE — "Watch an AI agent run"
+   Modernist Swiss · cobalt · sans-only
+   ========================================================= */
+
+.demo-hero {
+  padding: clamp(5.5rem, 10vw, 9rem) 0 clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--line);
+}
+.demo-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(44px, 8vw, 108px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  max-width: 16ch;
+  margin-bottom: 1.75rem;
+  color: var(--ink);
+}
+.demo-hero h1 em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+.demo-hero .dek {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.5;
+  color: var(--ink-3);
+  max-width: 58ch;
+  margin-bottom: 2rem;
+}
+.demo-hero .hero-coord {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.25rem;
+  align-items: center;
+  padding-bottom: 2rem;
+  margin-bottom: 2.25rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.demo-hero .hero-coord .line {
+  height: 1px;
+  background: var(--line-strong);
+  min-width: 0;
+}
+.demo-hero .hero-coord .right { text-align: right; }
+
+/* =========================================================
+   DEMO PANEL — 3 columns (scenarios · terminal · metrics)
+   ========================================================= */
+.demo-stage {
+  padding: clamp(1rem, 3vw, 2.5rem) 0 clamp(3rem, 6vw, 5rem);
+}
+.demo-panel {
+  display: grid;
+  grid-template-columns: 280px 1fr 300px;
+  gap: 0;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+@media (max-width: 1100px) {
+  .demo-panel { grid-template-columns: 1fr; }
+}
+
+/* Column headers */
+.col-head {
+  padding: 0.85rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 42px;
+}
+.col-head strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.col-head .dot-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--accent);
+  font-weight: 500;
+}
+.col-head .dot-live::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ----- LEFT: scenario picker ----- */
+.scenarios {
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 1100px) {
+  .scenarios { border-right: 0; border-bottom: 1px solid var(--line); }
+}
+.scenarios-list {
+  padding: 0.75rem 0.75rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+.scen {
+  display: block;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  cursor: pointer;
+  position: relative;
+  transition: border-color 180ms var(--ease), background 180ms var(--ease);
+}
+.scen:hover { border-color: var(--line-strong); background: var(--paper-3); }
+.scen input { position: absolute; opacity: 0; pointer-events: none; }
+.scen.is-active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.scen.is-active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--accent);
+}
+.scen-no {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.scen.is-active .scen-no { color: var(--accent); }
+.scen-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+.scen-desc {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.45;
+}
+.scen-radio {
+  position: absolute;
+  right: 1.1rem;
+  top: 1rem;
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--paper);
+}
+.scen.is-active .scen-radio {
+  border-color: var(--accent);
+}
+.scen.is-active .scen-radio::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.scen-foot {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+.scen-foot b {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ----- CENTER: terminal log ----- */
+.terminal {
+  background: #09090B;
+  color: #FAFAFA;
+  display: flex;
+  flex-direction: column;
+  min-height: 540px;
+}
+.terminal .col-head {
+  background: #111114;
+  color: rgba(250,250,250,0.5);
+  border-bottom: 1px solid rgba(250,250,250,0.1);
+}
+.terminal .col-head strong { color: #FAFAFA; }
+.terminal .col-head .dot-live { color: #4A8BFF; }
+.terminal .col-head .dot-live::before { background: #4A8BFF; }
+
+.term-chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #111114;
+  border-bottom: 1px solid rgba(250,250,250,0.08);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(250,250,250,0.4);
+}
+.term-chrome .lamp {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  border: 1px solid rgba(250,250,250,0.2);
+  background: transparent;
+}
+.term-chrome .lamp.on { background: #4A8BFF; border-color: #4A8BFF; }
+.term-chrome .path {
+  margin-left: 14px;
+  color: rgba(250,250,250,0.55);
+  letter-spacing: 0.02em;
+  flex: 1;
+}
+.term-chrome .right {
+  color: #4A8BFF;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.term-body {
+  padding: 1.25rem 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 480px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  scroll-behavior: smooth;
+}
+.term-body::-webkit-scrollbar { width: 8px; }
+.term-body::-webkit-scrollbar-track { background: transparent; }
+.term-body::-webkit-scrollbar-thumb {
+  background: rgba(250,250,250,0.12);
+  border-radius: 4px;
+}
+
+.log-line {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 14px;
+  color: rgba(250,250,250,0.82);
+  padding: 2px 0;
+  opacity: 0;
+  animation: line-in 220ms var(--ease) forwards;
+}
+@keyframes line-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.log-line .t {
+  color: rgba(250,250,250,0.38);
+  font-variant-numeric: tabular-nums;
+}
+.log-line .msg { color: rgba(250,250,250,0.82); }
+.log-line.info .msg { color: rgba(250,250,250,0.82); }
+.log-line.warn .msg { color: #F59E0B; }
+.log-line.ok .msg   { color: #34D399; }
+.log-line.ship {
+  margin-top: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  background: rgba(0,82,255,0.14);
+  border-left: 2px solid #4A8BFF;
+  grid-template-columns: 76px 1fr;
+}
+.log-line.ship .msg {
+  color: #4A8BFF;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.log-line .msg b {
+  color: #FAFAFA;
+  font-weight: 500;
+}
+.log-line .msg .dim { color: rgba(250,250,250,0.48); }
+
+.term-cursor {
+  display: inline-block;
+  width: 7px; height: 14px;
+  background: #4A8BFF;
+  vertical-align: -2px;
+  margin-left: 4px;
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.term-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 1.25rem;
+  padding: 2rem;
+  text-align: center;
+  color: rgba(250,250,250,0.5);
+}
+.term-empty .glyph {
+  width: 56px; height: 56px;
+  border: 1.5px solid rgba(250,250,250,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4A8BFF;
+}
+.term-empty .msg {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  color: rgba(250,250,250,0.82);
+  max-width: 32ch;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+.term-empty .sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(250,250,250,0.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.term-controls {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid rgba(250,250,250,0.08);
+  background: #111114;
+}
+.term-btn {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid rgba(250,250,250,0.08);
+  color: #FAFAFA;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 160ms var(--ease), color 160ms var(--ease);
+}
+.term-btn:last-child { border-right: 0; }
+.term-btn:hover { background: rgba(250,250,250,0.05); }
+.term-btn:disabled {
+  color: rgba(250,250,250,0.32);
+  cursor: not-allowed;
+}
+.term-btn:disabled:hover { background: transparent; }
+.term-btn.primary {
+  background: #0052FF;
+  color: #FFFFFF;
+}
+.term-btn.primary:hover { background: #1A6BFF; }
+.term-btn.primary:disabled {
+  background: rgba(0,82,255,0.3);
+  color: rgba(255,255,255,0.5);
+}
+.term-btn .icon {
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+/* ----- RIGHT: metrics ----- */
+.metrics {
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+@media (max-width: 1100px) {
+  .metrics { border-left: 0; border-top: 1px solid var(--line); }
+}
+.metrics-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.metric {
+  padding: 1.5rem 1.4rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.metric:last-child { border-bottom: 0; }
+.metric-k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+.metric-k .trend {
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.metric-v {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.35rem;
+  transition: color 200ms var(--ease);
+}
+.metric-v.flash { color: var(--accent); }
+.metric-v .u {
+  font-size: 0.42em;
+  color: var(--muted);
+  font-weight: 400;
+  margin-left: 4px;
+  letter-spacing: 0;
+}
+.metric-sub {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.metric .spark {
+  position: absolute;
+  right: 0.8rem;
+  bottom: 0.75rem;
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 20px;
+}
+.metric .spark .bar {
+  width: 3px;
+  background: var(--line-strong);
+  transition: height 240ms var(--ease), background 240ms var(--ease);
+}
+.metric.is-live .spark .bar { background: var(--accent); }
+
+.metrics-foot {
+  padding: 1rem 1.4rem;
+  border-top: 1px solid var(--line);
+  background: var(--paper-3);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.metrics-foot b {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* =========================================================
+   WHAT JUST HAPPENED — 3 phase explainer
+   ========================================================= */
+.phases-section {
+  background: var(--paper-3);
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.phases-head {
+  max-width: 64rem;
+  margin-bottom: 3.5rem;
+}
+.phases-head .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+.phases-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+.phases-head h2 em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+.phases-head p {
+  font-size: 16px;
+  color: var(--ink-3);
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
+.phases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+@media (max-width: 900px) {
+  .phases { grid-template-columns: 1fr; }
+}
+.phase {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--line);
+  position: relative;
+  transition: background 240ms var(--ease);
+}
+.phase:last-child { border-right: 0; }
+@media (max-width: 900px) {
+  .phase { border-right: 0; border-bottom: 1px solid var(--line); }
+  .phase:last-child { border-bottom: 0; }
+}
+.phase:hover { background: var(--paper-3); }
+.phase::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 360ms var(--ease);
+}
+.phase:hover::before { transform: scaleX(1); }
+.phase-no {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+.phase-icon {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1.75rem;
+  color: var(--ink);
+}
+.phase-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.phase-body {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  margin-bottom: 1.5rem;
+}
+.phase-kv {
+  padding: 0.85rem 1rem;
+  background: var(--paper-3);
+  border-left: 2px solid var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+}
+.phase-kv b {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+/* =========================================================
+   CTA row
+   ========================================================= */
+.demo-cta {
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.demo-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 45% at 15% 0%, rgba(0,82,255,0.12), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 85% 100%, rgba(0,82,255,0.08), transparent 55%);
+  pointer-events: none;
+}
+.demo-cta-inner {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+}
+@media (max-width: 900px) {
+  .demo-cta-inner { grid-template-columns: 1fr; }
+}
+.demo-cta-kicker {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(250,250,250,0.5);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(250,250,250,0.14);
+}
+.demo-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5.5vw, 68px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+}
+.demo-cta h2 em {
+  color: #4A8BFF;
+  font-style: normal;
+  font-weight: 500;
+}
+.demo-cta p {
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: rgba(250,250,250,0.7);
+  max-width: 52ch;
+}
+.demo-cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.15rem 1.5rem;
+  border: 1px solid rgba(250,250,250,0.24);
+  color: var(--paper);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: background 180ms var(--ease), border-color 180ms var(--ease), color 180ms var(--ease);
+}
+.cta-btn:hover {
+  background: #0052FF;
+  border-color: #0052FF;
+  color: #FFFFFF;
+}
+.cta-btn.primary {
+  background: #0052FF;
+  border-color: #0052FF;
+}
+.cta-btn.primary:hover {
+  background: #1A6BFF;
+  border-color: #1A6BFF;
+}
+.cta-btn .arrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  transition: transform 180ms var(--ease);
+}
+.cta-btn:hover .arrow { transform: translate(4px, -4px); }
+
+/* =========================================================
+   FAQ strip
+   ========================================================= */
+.faq-strip {
+  padding: clamp(4rem, 6vw, 5.5rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+.faq-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.faq-head .t {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.faq-head .t em { color: var(--accent); font-style: normal; font-weight: 500; }
+.faq-head .m {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.faq-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 900px) { .faq-list { grid-template-columns: 1fr; } }
+.faq-item {
+  padding: 1.75rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.faq-item:nth-child(3n) { border-right: 0; }
+.faq-item:nth-last-child(-n+3) { border-bottom: 0; }
+@media (max-width: 900px) {
+  .faq-item { border-right: 0; border-bottom: 1px solid var(--line); }
+  .faq-item:last-child { border-bottom: 0; }
+}
+.faq-q {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  line-height: 1.35;
+}
+.faq-a {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  .log-line { animation: none !important; opacity: 1 !important; }
+  .term-cursor { animation: none !important; }
+  .col-head .dot-live::before { animation: none !important; }
+  .metric-v.flash { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="demo-hero">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div><span>◎ Live demo · no signup · no card</span></div>
+        <div class="line"></div>
+        <div class="right"><span>No. 009 — See an agent finish the job</span></div>
+      </div>
+      <h1 class="reveal delay-1">
+        Watch an AI agent<br>
+        <em>automate a workflow</em> — live.
+      </h1>
+      <p class="dek reveal delay-2">
+        Press start. We will simulate one of our healthcare-intake agents processing a real (anonymised) incoming fax. 12 seconds. No signup required. Pick a different workflow from the left if you'd rather see legal, finance, or hiring.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== DEMO PANEL ========== -->
+  <section class="demo-stage">
+    <div class="container">
+      <div class="demo-panel reveal delay-1" aria-label="Interactive agent demo">
+
+        <!-- LEFT: scenario picker -->
+        <aside class="scenarios" aria-label="Pick a workflow to simulate">
+          <div class="col-head">
+            <strong>Scenario</strong>
+            <span>Step 1 of 2</span>
+          </div>
+          <div class="scenarios-list" role="radiogroup" aria-label="Workflow scenarios">
+            <label class="scen is-active" data-scenario="healthcare">
+              <input type="radio" name="scenario" value="healthcare" checked>
+              <div class="scen-radio" aria-hidden="true"></div>
+              <div class="scen-no"><span>01 · Default</span><span>12s</span></div>
+              <div class="scen-name">Healthcare intake</div>
+              <div class="scen-desc">Process an incoming patient fax: extract fields, cross-check the EMR, flag exceptions.</div>
+            </label>
+            <label class="scen" data-scenario="legal">
+              <input type="radio" name="scenario" value="legal">
+              <div class="scen-radio" aria-hidden="true"></div>
+              <div class="scen-no"><span>02</span><span>12s</span></div>
+              <div class="scen-name">Legal discovery</div>
+              <div class="scen-desc">Triage, tag, and privilege-flag a freshly uploaded litigation exhibit.</div>
+            </label>
+            <label class="scen" data-scenario="finance">
+              <input type="radio" name="scenario" value="finance">
+              <div class="scen-radio" aria-hidden="true"></div>
+              <div class="scen-no"><span>03</span><span>12s</span></div>
+              <div class="scen-name">Finance reconciliation</div>
+              <div class="scen-desc">Match a bank statement line to the correct GL entry and post the journal.</div>
+            </label>
+            <label class="scen" data-scenario="hr">
+              <input type="radio" name="scenario" value="hr">
+              <div class="scen-radio" aria-hidden="true"></div>
+              <div class="scen-no"><span>04</span><span>12s</span></div>
+              <div class="scen-name">HR · CV shortlist</div>
+              <div class="scen-desc">Read a CV, score it against the job spec, and draft a shortlist note for the hiring manager.</div>
+            </label>
+          </div>
+          <div class="scen-foot">
+            <b>Note.</b> Inputs are anonymised samples from real production traffic — the agent logic that runs against them is the exact same code we ship to clients.
+          </div>
+        </aside>
+
+        <!-- CENTER: terminal -->
+        <section class="terminal" aria-label="Agent log stream">
+          <div class="col-head">
+            <strong>Agent log · live stream</strong>
+            <span class="dot-live" data-live-label>idle</span>
+          </div>
+          <div class="term-chrome" aria-hidden="true">
+            <span class="lamp"></span><span class="lamp"></span><span class="lamp on"></span>
+            <span class="path" data-term-path>autopilotlabs@ops ~ /agents/intake.01/run</span>
+            <span class="right">Secure · TLS 1.3</span>
+          </div>
+          <div class="term-body" id="termBody" role="log" aria-live="polite" aria-atomic="false">
+            <div class="term-empty" data-empty>
+              <div class="glyph" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="6,4 20,12 6,20" fill="currentColor"/></svg>
+              </div>
+              <div class="msg">Press <b style="color:#4A8BFF;">start demo</b> to watch the agent parse, validate, and ship an outcome. Takes about 12 seconds.</div>
+              <div class="sub">No signup · anonymised input · 1 outcome per run</div>
+            </div>
+          </div>
+          <div class="term-controls">
+            <button class="term-btn primary" id="btnStart" type="button" aria-label="Start the demo">
+              <span class="icon" aria-hidden="true">▶</span> Start demo
+            </button>
+            <button class="term-btn" id="btnReset" type="button" disabled aria-label="Reset the demo">
+              <span class="icon" aria-hidden="true">↻</span> Reset
+            </button>
+          </div>
+        </section>
+
+        <!-- RIGHT: metrics -->
+        <aside class="metrics" aria-label="Live metrics">
+          <div class="col-head">
+            <strong>Metrics</strong>
+            <span>Live</span>
+          </div>
+          <div class="metrics-list">
+            <div class="metric" data-metric="outcomes">
+              <div class="metric-k"><span>Outcomes shipped</span><span class="trend">+1</span></div>
+              <div class="metric-v"><span data-val="outcomes">0</span></div>
+              <div class="metric-sub">This session</div>
+              <div class="spark" aria-hidden="true"></div>
+            </div>
+            <div class="metric" data-metric="latency">
+              <div class="metric-k"><span>Avg latency</span><span class="trend" data-trend="latency">—</span></div>
+              <div class="metric-v"><span data-val="latency">0</span><span class="u">ms</span></div>
+              <div class="metric-sub">Fax received → outcome</div>
+              <div class="spark" aria-hidden="true"></div>
+            </div>
+            <div class="metric" data-metric="cost">
+              <div class="metric-k"><span>Cost · per outcome</span><span class="trend" data-trend="cost">—</span></div>
+              <div class="metric-v"><span class="u" style="font-size:0.55em;margin:0;">A$</span><span data-val="cost">0.00</span></div>
+              <div class="metric-sub">vs A$18 human baseline</div>
+              <div class="spark" aria-hidden="true"></div>
+            </div>
+            <div class="metric" data-metric="confidence">
+              <div class="metric-k"><span>Confidence</span><span class="trend" data-trend="confidence">—</span></div>
+              <div class="metric-v"><span data-val="confidence">0.00</span></div>
+              <div class="metric-sub">Agent self-assessed</div>
+              <div class="spark" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="metrics-foot">
+            <span>◆ Local session</span>
+            <b data-run-label>Run 00</b>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHAT JUST HAPPENED ========== -->
+  <section class="phases-section">
+    <div class="container">
+      <div class="phases-head reveal">
+        <div class="eyebrow">§ 02 — What just happened</div>
+        <h2>Three phases. <em>Twelve seconds.</em> One finished job.</h2>
+        <p>What you watched is the same three-phase loop every Autopilot Labs agent runs. No chatbot, no prompt engineering by you — the AI reads the input, checks itself against your system of record, then ships the outcome to wherever it needs to go. In plain English, here is what it does, and why it matters.</p>
+      </div>
+      <div class="phases reveal delay-1">
+
+        <!-- PHASE 01 · PARSE -->
+        <article class="phase">
+          <div class="phase-no">— 01 · Parse</div>
+          <div class="phase-icon" aria-hidden="true">
+            <svg viewBox="0 0 52 52" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="8" y="6" width="28" height="36" stroke="currentColor"/>
+              <line x1="14" y1="14" x2="30" y2="14"/>
+              <line x1="14" y1="20" x2="30" y2="20"/>
+              <line x1="14" y1="26" x2="26" y2="26"/>
+              <line x1="14" y1="32" x2="24" y2="32"/>
+              <circle cx="40" cy="36" r="8" stroke="#0052FF"/>
+              <line x1="46" y1="42" x2="50" y2="46" stroke="#0052FF" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="phase-name">Read the input, field by field.</h3>
+          <p class="phase-body">The agent opens the incoming document — a fax, an email attachment, a bank CSV, a CV — and pulls out structured fields. Names, dates, amounts, references. Built-in OCR, vision, and table extraction are all handled by the AI. Nothing for you to configure.</p>
+          <div class="phase-kv">
+            <b>In plain English</b>
+            Think of a very fast, very careful intern who can read anything, in any layout, in about a second — and never mistypes.
+          </div>
+        </article>
+
+        <!-- PHASE 02 · VALIDATE -->
+        <article class="phase">
+          <div class="phase-no">— 02 · Validate</div>
+          <div class="phase-icon" aria-hidden="true">
+            <svg viewBox="0 0 52 52" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="6" y="12" width="18" height="28" stroke="currentColor"/>
+              <rect x="28" y="12" width="18" height="28" stroke="#0052FF"/>
+              <line x1="24" y1="26" x2="28" y2="26" stroke="currentColor" stroke-width="2"/>
+              <line x1="10" y1="20" x2="20" y2="20"/>
+              <line x1="10" y1="26" x2="18" y2="26"/>
+              <line x1="10" y1="32" x2="20" y2="32"/>
+              <line x1="32" y1="20" x2="42" y2="20" stroke="#0052FF"/>
+              <line x1="32" y1="26" x2="40" y2="26" stroke="#0052FF"/>
+              <polyline points="32,34 36,38 44,30" stroke="#0052FF" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="phase-name">Cross-check against your system of record.</h3>
+          <p class="phase-body">The AI does not just guess. It checks every extracted field against your source of truth — the EMR, the ledger, the ATS, the warehouse. If anything disagrees, it flags the exception, scores its own confidence, and routes low-confidence items to a human. The rest, it finishes.</p>
+          <div class="phase-kv">
+            <b>In plain English</b>
+            Before the agent ships anything, it asks: "Do I agree with this? Does my database agree with this? Am I sure?" If no, a human sees it. If yes, it ships.
+          </div>
+        </article>
+
+        <!-- PHASE 03 · SHIP -->
+        <article class="phase">
+          <div class="phase-no">— 03 · Ship</div>
+          <div class="phase-icon" aria-hidden="true">
+            <svg viewBox="0 0 52 52" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="26,6 44,16 44,36 26,46 8,36 8,16" stroke="currentColor"/>
+              <line x1="26" y1="6" x2="26" y2="26"/>
+              <line x1="26" y1="26" x2="8" y2="16"/>
+              <line x1="26" y1="26" x2="44" y2="16"/>
+              <circle cx="26" cy="30" r="6" fill="#0052FF" stroke="none"/>
+            </svg>
+          </div>
+          <h3 class="phase-name">Post the outcome where it belongs.</h3>
+          <p class="phase-body">The finished job — a normalised record, a posted journal entry, a tagged document, a draft email — lands in your existing system. No new UI for your team to learn. The agent logs every action, timestamps the outcome, and bills only if the SLA passed. Miss the SLA, you do not pay.</p>
+          <div class="phase-kv">
+            <b>In plain English</b>
+            The work shows up in the tool your team already uses — Epic, NetSuite, Relativity, your ATS — as if a very diligent teammate did it while you were asleep.
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="demo-cta">
+    <div class="container">
+      <div class="demo-cta-inner">
+        <div>
+          <div class="demo-cta-kicker">§ 03 — Stop watching. Start shipping.</div>
+          <h2>Want one of these<br><em>automating your workflow?</em></h2>
+          <p>We will spend ten working days inside your team, map the path end-to-end, and come back with a shortlist of workflows we can automate with AI — priced per finished outcome. If nothing fits, you walk away with a free diagnostic report.</p>
+        </div>
+        <div class="demo-cta-actions">
+          <a href="contact.html" class="cta-btn primary">Book a free audit <span class="arrow" aria-hidden="true">↗</span></a>
+          <a href="pricing.html" class="cta-btn">See outcome pricing <span class="arrow" aria-hidden="true">↗</span></a>
+          <a href="solutions.html" class="cta-btn">Browse our agents <span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FAQ STRIP ========== -->
+  <section class="faq-strip">
+    <div class="container">
+      <div class="faq-head">
+        <div class="t">About the <em>demo</em>, in plain English.</div>
+        <div class="m">§ 04 — FAQ</div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">Is this the actual AI running, or a recording?</div>
+          <div class="faq-a">The log stream is scripted for the demo so you see the full story in 12 seconds. The phases, fields, and timings mirror a real production run. Want to watch the real one? Book an audit and we will give you a read-only seat on the ops console.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you see my data?</div>
+          <div class="faq-a">No. Every byte on this page runs locally in your browser. Nothing is sent to us, logged, or stored. Pick a scenario, press start, close the tab. We never know you were here unless you book.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What if I want a different workflow simulated?</div>
+          <div class="faq-a">The four scenarios cover our most common agent shapes. If yours is different — a claim triage, a lease abstraction, a return dispute — we will build a bespoke demo on the audit call, with your own sample data.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How accurate are the latency and cost figures?</div>
+          <div class="faq-a">They match the 90-day rolling medians from our production ops console. Healthcare-intake actually runs a hair faster; legal discovery a hair slower on very large exhibits. Everything within a couple of hundred milliseconds.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can the AI be wrong? What happens then?</div>
+          <div class="faq-a">Yes — and it is built to know when. Every agent scores its own confidence. Below a per-workflow threshold, the outcome is routed to a human reviewer before it ships. You never pay for an outcome that did not pass the SLA.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How soon could something like this run on my workflow?</div>
+          <div class="faq-a">Median audit-to-production is 14 days after contract. The audit itself is 10 working days, so from first call to finished agent you are looking at about a month — no new hires, no new SaaS, no new training.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#hr">HR &amp; hiring</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== DEMO SCRIPT ========== -->
+<script>
+(function () {
+  'use strict';
+
+  // =========================================================
+  // Scenario scripts — each is an array of [timeMs, kind, message]
+  // kind: 'info' | 'warn' | 'ok' | 'ship'
+  // =========================================================
+  var SCENARIOS = {
+    healthcare: {
+      label: 'Healthcare intake',
+      path: 'autopilotlabs@ops ~ /agents/intake.01/run --scenario=healthcare',
+      runtimeMs: 12000,
+      outcome: { latencyMs: 1247, costAud: 1.80, confidence: 0.94 },
+      lines: [
+        [  40, 'info', "AGENT.INTAKE.01 initialised \u00b7 <span class='dim'>model=autopilotlabs-vertical-health / v4.6</span>"],
+        [ 180, 'info', "Connected to EMR \u00b7 <span class='dim'>tenant=meridian-brisbane</span>"],
+        [ 410, 'info', "Received input: <b>fax_04.pdf</b> <span class='dim'>(2.1MB \u00b7 4 pages)</span>"],
+        [ 790, 'info', "Routing to <b>Parse</b> phase \u2192 OCR + vision"],
+        [1120, 'info', "Extracted 14 fields \u00b7 confidence <b>0.94</b>"],
+        [1610, 'info', "Fields: name, DOB, Medicare#, referral_source, ICD-10, \u2026"],
+        [2050, 'info', "Routing to <b>Validate</b> phase"],
+        [2440, 'info', "Cross-checked MRN against EMR \u2192 <b>match found</b>"],
+        [2980, 'warn', "Referral_source blank \u2192 filling from fax letterhead"],
+        [3640, 'info', "Self-score: <b>confidence 0.94</b> (threshold 0.80) \u2192 ok"],
+        [4680, 'info', "Routing to <b>Ship</b> phase"],
+        [5420, 'info', "Posting normalised record to EMR intake queue"],
+        [6120, 'ok'  , "EMR acknowledged \u00b7 record_id <b>INT-8821-04</b>"],
+        [6710, 'info', "Draft clinician note appended"],
+        [7340, 'info', "Audit log sealed \u00b7 hash <span class='dim'>9a4\u2026f7c</span>"],
+        [9200, 'ship', "\u2713 Outcome shipped \u00b7 <b>1247ms</b> \u00b7 <b>A$1.80</b> \u00b7 SLA pass"]
+      ]
+    },
+    legal: {
+      label: 'Legal discovery',
+      path: 'autopilotlabs@ops ~ /agents/discovery.03/run --scenario=legal',
+      runtimeMs: 12000,
+      outcome: { latencyMs: 2188, costAud: 3.40, confidence: 0.91 },
+      lines: [
+        [  35, 'info', "AGENT.DISCOVERY.03 initialised \u00b7 <span class='dim'>model=autopilotlabs-vertical-legal / v4.6</span>"],
+        [ 210, 'info', "Connected to Relativity workspace <span class='dim'>WF-2026-114</span>"],
+        [ 490, 'info', "Received exhibit: <b>exhibit_A_47.pdf</b> <span class='dim'>(18.4MB \u00b7 62 pages)</span>"],
+        [ 880, 'info', "Routing to <b>Parse</b> phase \u2192 OCR + layout"],
+        [1410, 'info', "Detected: letter, contract, email thread, hand-annotated page"],
+        [1980, 'info', "Extracted 142 entities \u00b7 parties, dates, clauses, \u2026"],
+        [2610, 'info', "Routing to <b>Validate</b> phase"],
+        [3090, 'info', "Cross-ref'd parties against matter.entities \u2192 4 new aliases"],
+        [3720, 'warn', "Page 41 flagged potentially privileged \u2192 confirming"],
+        [4480, 'info', "Privilege model: <b>WORK_PRODUCT</b> \u00b7 confidence 0.88"],
+        [5140, 'info', "Applied tags: <b>RESPONSIVE</b>, <b>PRIV:WP</b>, key_doc"],
+        [5860, 'info', "Routing to <b>Ship</b> phase"],
+        [6540, 'info', "Uploading to Relativity folder <b>/priv/2026-114</b>"],
+        [7280, 'ok'  , "Relativity accepted \u00b7 doc_id <b>RLT-8821-041</b>"],
+        [7980, 'info', "Notified reviewing associate <span class='dim'>(S. Reviewer)</span>"],
+        [8610, 'info', "Audit log sealed \u00b7 chain-of-custody hash recorded"],
+        [10400, 'ship', "\u2713 Outcome shipped \u00b7 <b>2188ms</b> \u00b7 <b>A$3.40</b> \u00b7 SLA pass"]
+      ]
+    },
+    finance: {
+      label: 'Finance reconciliation',
+      path: 'autopilotlabs@ops ~ /agents/recon.02/run --scenario=finance',
+      runtimeMs: 12000,
+      outcome: { latencyMs: 884, costAud: 0.41, confidence: 0.98 },
+      lines: [
+        [  30, 'info', "AGENT.RECON.02 initialised \u00b7 <span class='dim'>model=autopilotlabs-vertical-fin / v4.6</span>"],
+        [ 150, 'info', "Connected to NetSuite \u00b7 tenant <span class='dim'>halcyon-london</span>"],
+        [ 360, 'info', "Received input: <b>stmt_2026-04-15.csv</b> <span class='dim'>(312 rows)</span>"],
+        [ 680, 'info', "Routing to <b>Parse</b> phase \u2192 tabular + NLP on memo"],
+        [1040, 'info', "Normalised 312 rows \u00b7 currency=GBP,AUD,USD"],
+        [1490, 'info', "Currency converted at 2026-04-15 close rates"],
+        [2120, 'info', "Routing to <b>Validate</b> phase"],
+        [2610, 'info', "Matched 298 / 312 lines to GL (<b>95.5%</b>)"],
+        [3240, 'warn', "14 unmatched \u2192 running fuzzy memo + amount match"],
+        [3920, 'ok'  , "Matched 13 more via memo \u00b7 1 routed to human"],
+        [4680, 'info', "Self-score: <b>confidence 0.98</b> (threshold 0.92) \u2192 ok"],
+        [5310, 'info', "Routing to <b>Ship</b> phase"],
+        [5940, 'info', "Drafting 311 journal entries \u00b7 posting batch"],
+        [6720, 'ok'  , "NetSuite accepted \u00b7 batch_id <b>JE-88214</b>"],
+        [7430, 'info', "Flagged row #244 for FP&amp;A review <span class='dim'>(\u00a39,402)</span>"],
+        [8080, 'info', "Audit log sealed \u00b7 SOX-ready snapshot stored"],
+        [9800, 'ship', "\u2713 Outcome shipped \u00b7 <b>884ms/line</b> \u00b7 <b>A$0.41</b> \u00b7 SLA pass"]
+      ]
+    },
+    hr: {
+      label: 'HR \u00b7 CV shortlist',
+      path: 'autopilotlabs@ops ~ /agents/shortlist.01/run --scenario=hr',
+      runtimeMs: 12000,
+      outcome: { latencyMs: 1504, costAud: 0.88, confidence: 0.89 },
+      lines: [
+        [  40, 'info', "AGENT.SHORTLIST.01 initialised \u00b7 <span class='dim'>model=autopilotlabs-vertical-hr / v4.6</span>"],
+        [ 170, 'info', "Connected to ATS \u00b7 job <b>SRE-SNR-041</b>"],
+        [ 400, 'info', "Received input: <b>cv_candidate_114.pdf</b> <span class='dim'>(308KB \u00b7 3 pages)</span>"],
+        [ 740, 'info', "Routing to <b>Parse</b> phase \u2192 layout + entity"],
+        [1120, 'info', "Extracted 42 fields: roles, skills, tenure, locations, \u2026"],
+        [1580, 'info', "Detected 8-year SRE history \u00b7 AWS, Terraform, k8s"],
+        [2100, 'info', "Routing to <b>Validate</b> phase"],
+        [2580, 'info', "Scoring against job spec \u2192 <b>must-haves 7/7</b>"],
+        [3180, 'info', "Scoring nice-to-haves \u2192 <b>4/6</b>"],
+        [3820, 'warn', "Employment gap 2023 detected \u2192 flagged for recruiter"],
+        [4460, 'info', "Fit score: <b>0.89</b> (shortlist threshold 0.75) \u2192 advance"],
+        [5210, 'info', "Routing to <b>Ship</b> phase"],
+        [5940, 'info', "Posting candidate to ATS shortlist \u00b7 stage=screen"],
+        [6620, 'ok'  , "ATS accepted \u00b7 candidate_id <b>CND-88204</b>"],
+        [7310, 'info', "Drafted recruiter note \u00b7 <span class='dim'>3 questions to cover gap</span>"],
+        [7980, 'info', "Notified hiring manager <span class='dim'>(R. Vasquez)</span>"],
+        [9600, 'ship', "\u2713 Outcome shipped \u00b7 <b>1504ms</b> \u00b7 <b>A$0.88</b> \u00b7 SLA pass"]
+      ]
+    }
+  };
+
+  // =========================================================
+  // State
+  // =========================================================
+  var state = {
+    scenario: 'healthcare',
+    running: false,
+    completed: false,
+    runCount: 0,
+    totalLatency: 0,
+    totalCost: 0,
+    bestConfidence: 0,
+    timers: []
+  };
+
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // =========================================================
+  // DOM refs
+  // =========================================================
+  var termBody = document.getElementById('termBody');
+  var btnStart = document.getElementById('btnStart');
+  var btnReset = document.getElementById('btnReset');
+  var liveLabel = document.querySelector('[data-live-label]');
+  var termPath = document.querySelector('[data-term-path]');
+  var runLabel = document.querySelector('[data-run-label]');
+  var scenCards = document.querySelectorAll('.scen');
+
+  // =========================================================
+  // Scenario picker
+  // =========================================================
+  scenCards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      if (state.running) return;
+      var s = card.getAttribute('data-scenario');
+      selectScenario(s);
+    });
+  });
+
+  function selectScenario(key) {
+    state.scenario = key;
+    scenCards.forEach(function (c) {
+      c.classList.toggle('is-active', c.getAttribute('data-scenario') === key);
+      var input = c.querySelector('input');
+      if (input) input.checked = (c.getAttribute('data-scenario') === key);
+    });
+    termPath.textContent = SCENARIOS[key].path;
+    resetPanel();
+  }
+
+  // =========================================================
+  // Terminal controls
+  // =========================================================
+  btnStart.addEventListener('click', function () {
+    if (state.running) return;
+    if (state.completed) resetPanel();
+    startRun();
+  });
+  btnReset.addEventListener('click', function () {
+    if (state.running) return;
+    resetPanel();
+  });
+
+  function resetPanel() {
+    clearTimers();
+    state.running = false;
+    state.completed = false;
+    termBody.innerHTML =
+      '<div class="term-empty" data-empty>' +
+        '<div class="glyph" aria-hidden="true">' +
+          '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="6,4 20,12 6,20" fill="currentColor"/></svg>' +
+        '</div>' +
+        '<div class="msg">Press <b style="color:#4A8BFF;">start demo</b> to watch the agent parse, validate, and ship an outcome. Takes about 12 seconds.</div>' +
+        '<div class="sub">No signup · anonymised input · 1 outcome per run</div>' +
+      '</div>';
+    btnStart.disabled = false;
+    btnReset.disabled = true;
+    liveLabel.textContent = 'idle';
+    btnStart.innerHTML = '<span class="icon" aria-hidden="true">\u25B6</span> Start demo';
+  }
+
+  function startRun() {
+    var scn = SCENARIOS[state.scenario];
+    state.running = true;
+    state.completed = false;
+    btnStart.disabled = true;
+    btnReset.disabled = true;
+    liveLabel.textContent = 'running';
+    btnStart.innerHTML = '<span class="icon" aria-hidden="true">\u25A0</span> Running\u2026';
+    termBody.innerHTML = '';
+    state.runCount += 1;
+    runLabel.textContent = 'Run ' + String(state.runCount).padStart(2, '0');
+
+    if (reduceMotion) {
+      // Dump all lines immediately
+      scn.lines.forEach(function (ln) { appendLine(ln[0], ln[1], ln[2]); });
+      finishRun(scn);
+      return;
+    }
+
+    // Stream lines
+    scn.lines.forEach(function (ln) {
+      var t = setTimeout(function () {
+        appendLine(ln[0], ln[1], ln[2]);
+        updateLiveMetrics(ln[0], scn);
+      }, ln[0]);
+      state.timers.push(t);
+    });
+
+    // Finalise after runtime
+    var tEnd = setTimeout(function () {
+      finishRun(scn);
+    }, scn.runtimeMs + 200);
+    state.timers.push(tEnd);
+  }
+
+  function finishRun(scn) {
+    state.running = false;
+    state.completed = true;
+    btnStart.disabled = false;
+    btnReset.disabled = false;
+    liveLabel.textContent = 'shipped';
+    btnStart.innerHTML = '<span class="icon" aria-hidden="true">\u25B6</span> Run again';
+
+    // Commit session totals
+    state.totalLatency += scn.outcome.latencyMs;
+    state.totalCost += scn.outcome.costAud;
+    if (scn.outcome.confidence > state.bestConfidence) {
+      state.bestConfidence = scn.outcome.confidence;
+    }
+    commitFinalMetrics(scn);
+  }
+
+  function clearTimers() {
+    state.timers.forEach(function (t) { clearTimeout(t); });
+    state.timers = [];
+  }
+
+  // =========================================================
+  // Log rendering
+  // =========================================================
+  function appendLine(ms, kind, html) {
+    var line = document.createElement('div');
+    line.className = 'log-line ' + (kind || 'info');
+    var t = (ms / 1000).toFixed(3);
+    line.innerHTML =
+      '<span class="t">[' + t + 's]</span>' +
+      '<span class="msg">' + html + '</span>';
+    termBody.appendChild(line);
+    termBody.scrollTop = termBody.scrollHeight;
+  }
+
+  // =========================================================
+  // Metrics
+  // =========================================================
+  var valOutcomes    = document.querySelector('[data-val="outcomes"]');
+  var valLatency     = document.querySelector('[data-val="latency"]');
+  var valCost        = document.querySelector('[data-val="cost"]');
+  var valConfidence  = document.querySelector('[data-val="confidence"]');
+  var trendLatency   = document.querySelector('[data-trend="latency"]');
+  var trendCost      = document.querySelector('[data-trend="cost"]');
+  var trendConfidence= document.querySelector('[data-trend="confidence"]');
+  var sparks         = document.querySelectorAll('.spark');
+
+  // Seed sparklines
+  initSparks();
+  function initSparks() {
+    sparks.forEach(function (s) {
+      s.innerHTML = '';
+      for (var i = 0; i < 10; i++) {
+        var b = document.createElement('span');
+        b.className = 'bar';
+        b.style.height = (2 + Math.random() * 4) + 'px';
+        s.appendChild(b);
+      }
+    });
+  }
+
+  function updateLiveMetrics(ms, scn) {
+    // Progress factor 0..1 through run
+    var p = Math.min(1, ms / scn.runtimeMs);
+    var latency = Math.round(scn.outcome.latencyMs * p);
+    var cost    = (scn.outcome.costAud * p);
+    var conf    = (0.50 + (scn.outcome.confidence - 0.50) * p);
+
+    writeMetric(valLatency,    latency,         'int');
+    writeMetric(valCost,       cost.toFixed(2), 'raw');
+    writeMetric(valConfidence, conf.toFixed(2), 'raw');
+
+    animateSparks(p);
+  }
+
+  function commitFinalMetrics(scn) {
+    var avgLatency = Math.round(state.totalLatency / state.runCount);
+    var avgCost = state.totalCost / state.runCount;
+
+    flash(valOutcomes);
+    writeMetric(valOutcomes,    state.runCount,          'int');
+    writeMetric(valLatency,     avgLatency,              'int');
+    writeMetric(valCost,        avgCost.toFixed(2),      'raw');
+    writeMetric(valConfidence,  scn.outcome.confidence.toFixed(2), 'raw');
+
+    trendLatency.textContent    = '\u25BC ' + Math.round(100 * (1 - avgLatency / 60000)) + '%';
+    trendCost.textContent       = '\u25BC ' + Math.round(100 * (1 - avgCost / 18)) + '%';
+    trendConfidence.textContent = '\u25B2 ' + Math.round(scn.outcome.confidence * 100) + '%';
+
+    flashAll();
+    document.querySelectorAll('.metric').forEach(function (m) { m.classList.add('is-live'); });
+    animateSparks(1);
+  }
+
+  function writeMetric(el, val, kind) {
+    if (!el) return;
+    if (kind === 'int') {
+      el.textContent = Number(val).toLocaleString();
+    } else {
+      el.textContent = val;
+    }
+  }
+
+  function flash(el) {
+    if (!el) return;
+    var parent = el.closest('.metric-v');
+    if (!parent) return;
+    parent.classList.add('flash');
+    setTimeout(function () { parent.classList.remove('flash'); }, 320);
+  }
+  function flashAll() {
+    document.querySelectorAll('.metric-v').forEach(function (el) {
+      el.classList.add('flash');
+      setTimeout(function () { el.classList.remove('flash'); }, 380);
+    });
+  }
+
+  function animateSparks(p) {
+    sparks.forEach(function (s) {
+      Array.prototype.forEach.call(s.children, function (bar, i) {
+        var base = 3 + Math.sin((i + 1) * 0.9 + p * 6) * 3;
+        var growth = 2 + p * 14 + Math.random() * 4;
+        bar.style.height = Math.max(2, base + growth) + 'px';
+      });
+    });
+  }
+
+  // =========================================================
+  // Init
+  // =========================================================
+  selectScenario('healthcare');
+
+  // =========================================================
+  // Clock (matches site chrome)
+  // =========================================================
+  function tickClock() {
+    var els = document.querySelectorAll('[data-clock]');
+    if (!els.length) return;
+    var now = new Date();
+    var h = String(now.getHours()).padStart(2, '0');
+    var m = String(now.getMinutes()).padStart(2, '0');
+    var s = String(now.getSeconds()).padStart(2, '0');
+    var txt = h + ':' + m + ':' + s;
+    els.forEach(function (el) { el.textContent = txt; });
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+})();
+</script>
+<script src="assets/site.js"></script>
+</body>
+</html>

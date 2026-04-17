@@ -1,0 +1,330 @@
+/* =========================================================
+   AUTOPILOT LABS — motion.css
+   Modernist Swiss × tech-luxury · sharp, fast, precise
+   Respects prefers-reduced-motion
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   0 · Motion tokens (local, sharp)
+   --------------------------------------------------------- */
+:root {
+  --ease-sharp: cubic-bezier(0.4, 0, 0.1, 1);
+  --ease-linear: linear;
+  --dur-xs: 150ms;
+  --dur-s: 180ms;
+  --dur-m: 240ms;
+  --dur-r: 280ms;
+  --dur-l: 420ms;
+  --dur-xl: 650ms;
+}
+
+/* ---------------------------------------------------------
+   1 · prefers-reduced-motion gate — hard stop for reduced users
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.sharp,
+  .hero-title,
+  .hero-coord,
+  .hero-byline,
+  .hero-lower,
+  .card,
+  .vert,
+  .mp-card,
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .ticker-track,
+  .scroll-prog,
+  .dir-panel,
+  .dir-panel.active,
+  .faq-item,
+  .faq-q,
+  .stat-cell::before,
+  .dek a::after,
+  .hero-dek a::after,
+  .mp-tagline a::after,
+  .faq-a-inner a::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .reveal,
+  .reveal.sharp {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero-title {
+    clip-path: none !important;
+  }
+  .hero-coord,
+  .hero-byline,
+  .hero-lower {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Everything below runs only when motion is allowed */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* -------------------------------------------------------
+     2 · .reveal refinements
+     ------------------------------------------------------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 600ms var(--ease-sharp),
+      transform 600ms var(--ease-sharp);
+    will-change: opacity, transform;
+  }
+  .reveal.in,
+  .reveal.visible,
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal.sharp {
+    transform: none;
+    transition: opacity 300ms var(--ease-linear);
+  }
+  .reveal.sharp.in,
+  .reveal.sharp.visible,
+  .reveal.sharp.is-visible {
+    opacity: 1;
+  }
+
+  /* -------------------------------------------------------
+     3 · Hero title wipe — clip-path, pure linear
+     ------------------------------------------------------- */
+  @keyframes heroWipe {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0 0 0); }
+  }
+  .hero-title {
+    clip-path: inset(0 100% 0 0);
+    animation: heroWipe 650ms 0s forwards linear;
+  }
+
+  /* -------------------------------------------------------
+     4 · Staggered hero entry sequence
+     ------------------------------------------------------- */
+  @keyframes heroEntry {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-coord,
+  .hero-byline,
+  .hero-lower {
+    opacity: 0;
+    animation: heroEntry 420ms var(--ease-sharp) forwards;
+  }
+  .hero-coord  { animation-delay: 0ms; }
+  .hero-byline { animation-delay: 180ms; }
+  .hero-lower  { animation-delay: 260ms; }
+  /* .hero-title runs its own 650ms wipe from (3) at 80ms via delay */
+  .hero-title { animation-delay: 80ms; }
+
+  /* -------------------------------------------------------
+     5 · Card hover — accent left rail, no lift
+     ------------------------------------------------------- */
+  .card,
+  .vert,
+  .mp-card {
+    transition:
+      box-shadow 250ms var(--ease-sharp),
+      background-color 250ms var(--ease-sharp),
+      border-color 250ms var(--ease-sharp);
+    box-shadow: inset 0 0 0 0 var(--accent);
+  }
+  .card:hover,
+  .vert:hover,
+  .mp-card:hover {
+    box-shadow: inset 2px 0 0 0 var(--accent);
+    background-color: var(--paper-3, #F4F4F5);
+  }
+
+  /* -------------------------------------------------------
+     6 · Button hover — fill flip, no scale, no shadow
+     ------------------------------------------------------- */
+  .btn,
+  .btn-primary,
+  .btn-secondary {
+    transition:
+      background-color 180ms var(--ease-sharp),
+      color 180ms var(--ease-sharp),
+      border-color 180ms var(--ease-sharp);
+  }
+  .btn-primary:hover {
+    background-color: var(--ink);
+    color: var(--accent-fg);
+  }
+  .btn-secondary:hover {
+    background-color: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  /* Arrow glyph — 3px right / -3px up on hover */
+  .btn .arrow,
+  .btn-primary .arrow,
+  .btn-secondary .arrow {
+    display: inline-block;
+    transition: transform 180ms var(--ease-sharp);
+  }
+  .btn:hover .arrow,
+  .btn-primary:hover .arrow,
+  .btn-secondary:hover .arrow {
+    transform: translate(3px, -3px);
+  }
+
+  /* -------------------------------------------------------
+     7 · Link underline — pseudo-element, left-to-right grow
+     ------------------------------------------------------- */
+  .dek a,
+  .hero-dek a,
+  .mp-tagline a,
+  .faq-a-inner a {
+    position: relative;
+    text-decoration: none;
+  }
+  .dek a::after,
+  .hero-dek a::after,
+  .mp-tagline a::after,
+  .faq-a-inner a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 280ms var(--ease-linear);
+  }
+  .dek a:hover::after,
+  .hero-dek a:hover::after,
+  .mp-tagline a:hover::after,
+  .faq-a-inner a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* -------------------------------------------------------
+     8 · Ticker — edge mask + pause on hover
+     ------------------------------------------------------- */
+  .ticker {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 3%,
+      black 97%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 3%,
+      black 97%,
+      transparent 100%
+    );
+  }
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+
+  /* -------------------------------------------------------
+     9 · Scroll progress bar — 2px, solid cobalt
+     ------------------------------------------------------- */
+  .scroll-prog {
+    height: 2px;
+    background: var(--accent);
+    background-image: none;
+  }
+
+  /* -------------------------------------------------------
+    12 · Directory panel switch — slide + fade
+     ------------------------------------------------------- */
+  .dir-panel {
+    opacity: 0;
+    transform: translateX(4px);
+    transition:
+      opacity 240ms var(--ease-linear),
+      transform 240ms var(--ease-linear);
+  }
+  .dir-panel.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* -------------------------------------------------------
+    13 · Accordion — cobalt left-border on open, hover color
+     ------------------------------------------------------- */
+  .faq-item {
+    border-left: 0 solid var(--accent);
+    transition: border-left-width 220ms var(--ease-sharp);
+  }
+  .faq-item.open {
+    border-left-width: 2px;
+  }
+  .faq-q {
+    transition: color 150ms var(--ease-sharp);
+  }
+  .faq-q:hover {
+    color: var(--accent);
+  }
+
+  /* -------------------------------------------------------
+    14 · Stat hover sweep — linear override
+     ------------------------------------------------------- */
+  .stat-cell::before {
+    transition: width 500ms var(--ease-linear) !important;
+  }
+  .stat-cell:hover::before {
+    width: 100%;
+  }
+
+} /* end @media (prefers-reduced-motion: no-preference) */
+
+/* ---------------------------------------------------------
+  10 · Tabular numerics — unconditional (not motion)
+   --------------------------------------------------------- */
+.stat-v,
+.math-side .v,
+.fs-v,
+.model-price {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+
+/* ---------------------------------------------------------
+  11 · :focus-visible standard — accessibility, unconditional
+   --------------------------------------------------------- */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible) {
+  outline: none;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------
+  15 · Editorial ::selection — direct, no fade
+   --------------------------------------------------------- */
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+::-moz-selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}

@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" role="img" aria-hidden="true" text-rendering="geometricPrecision">
+  <title>Autopilot Labs 4-phase workflow pipeline</title>
+  <desc>Autopilot Labs 4-phase workflow pipeline: Audit, Scope, Build, Operate — horizontal timeline from Day 0 through Day 14 and beyond.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0052FF"/>
+    </marker>
+    <marker id="arrowOpen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#0052FF" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <!-- BACKGROUND PLATE -->
+  <rect x="0" y="0" width="1200" height="480" fill="#FFFFFF"/>
+
+  <!-- SCHEMATIC TITLE (top-left) -->
+  <text x="24" y="28" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.2" fill="#71717A" text-rendering="geometricPrecision">§ WORKFLOW PIPELINE · v.4.6</text>
+
+  <!-- CLIENT CALENDAR BASELINE (y=100) -->
+  <line x1="0" y1="100" x2="1200" y2="100" stroke="#71717A" stroke-width="1" stroke-dasharray="2 4" opacity="0.45"/>
+  <text x="1176" y="94" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="9" letter-spacing="0.8" fill="#71717A" text-anchor="end" text-rendering="geometricPrecision">— client calendar</text>
+
+  <!-- PHASE LABEL BLOCKS (above timeline, centered on each node) -->
+  <!-- PHASE 1: AUDIT -->
+  <g>
+    <text x="150" y="120" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.2" fill="#71717A" text-anchor="middle" text-rendering="geometricPrecision">DAYS 1–5</text>
+    <text x="150" y="146" font-family="'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#09090B" text-anchor="middle" text-rendering="geometricPrecision">Audit</text>
+    <text x="150" y="162" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="11" letter-spacing="1.5" fill="#0052FF" text-anchor="middle" text-rendering="geometricPrecision">FREE</text>
+  </g>
+
+  <!-- PHASE 2: SCOPE -->
+  <g>
+    <text x="450" y="120" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.2" fill="#71717A" text-anchor="middle" text-rendering="geometricPrecision">DAYS 6–8</text>
+    <text x="450" y="146" font-family="'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#09090B" text-anchor="middle" text-rendering="geometricPrecision">Scope</text>
+    <text x="450" y="162" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="11" letter-spacing="1.5" fill="#0052FF" text-anchor="middle" text-rendering="geometricPrecision">QUOTE</text>
+  </g>
+
+  <!-- PHASE 3: BUILD -->
+  <g>
+    <text x="750" y="120" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.2" fill="#71717A" text-anchor="middle" text-rendering="geometricPrecision">DAYS 9–12</text>
+    <text x="750" y="146" font-family="'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#09090B" text-anchor="middle" text-rendering="geometricPrecision">Build</text>
+    <text x="750" y="162" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="11" letter-spacing="1.5" fill="#0052FF" text-anchor="middle" text-rendering="geometricPrecision">SHADOW</text>
+  </g>
+
+  <!-- PHASE 4: OPERATE -->
+  <g>
+    <text x="1050" y="120" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1.2" fill="#71717A" text-anchor="middle" text-rendering="geometricPrecision">DAY 14+</text>
+    <text x="1050" y="146" font-family="'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#09090B" text-anchor="middle" text-rendering="geometricPrecision">Operate</text>
+    <text x="1050" y="162" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="11" letter-spacing="1.5" fill="#0052FF" text-anchor="middle" text-rendering="geometricPrecision">LIVE</text>
+  </g>
+
+  <!-- TIMELINE RAIL (y=180) -->
+  <line x1="0" y1="180" x2="1200" y2="180" stroke="#09090B" stroke-width="1"/>
+
+  <!-- CONNECTOR SEGMENTS (dashed cobalt between nodes) with time annotations -->
+  <!-- Segment 1: 150 -> 450 -->
+  <line x1="164" y1="180" x2="436" y2="180" stroke="#0052FF" stroke-width="1" stroke-dasharray="4 4"/>
+  <path d="M 295 180 L 305 180" stroke="#0052FF" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="300" y="172" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="0.8" fill="#71717A" text-anchor="middle" text-rendering="geometricPrecision">4 days</text>
+
+  <!-- Segment 2: 450 -> 750 (targeting the rect at 738..762) -->
+  <line x1="464" y1="180" x2="738" y2="180" stroke="#0052FF" stroke-width="1" stroke-dasharray="4 4"/>
+  <path d="M 595 180 L 605 180" stroke="#0052FF" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="600" y="172" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="0.8" fill="#71717A" text-anchor="middle" text-rendering="geometricPrecision">3 days</text>
+
+  <!-- Segment 3: 750 -> 1050 (starting from rect edge at 762) -->
+  <line x1="762" y1="180" x2="1036" y2="180" stroke="#0052FF" stroke-width="1" stroke-dasharray="4 4"/>
+  <path d="M 895 180 L 905 180" stroke="#0052FF" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="900" y="172" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="0.8" fill="#71717A" text-anchor="middle" text-rendering="geometricPrecision">4 days</text>
+
+  <!-- TIMELINE NODES -->
+  <!-- Node 1: Audit — open circle, ink stroke 1.5, cobalt fill -->
+  <circle cx="150" cy="180" r="7" fill="#0052FF" stroke="#09090B" stroke-width="1.5"/>
+
+  <!-- Node 2: Scope — open circle, ink stroke 1.5, cobalt fill -->
+  <circle cx="450" cy="180" r="7" fill="#0052FF" stroke="#09090B" stroke-width="1.5"/>
+
+  <!-- Node 3: Build — cobalt-filled 24x24 rect (delivery moment) -->
+  <rect x="738" y="168" width="24" height="24" fill="#0052FF" stroke="#09090B" stroke-width="1.5"/>
+
+  <!-- Node 4: Operate — open circle, ink stroke 1.5, cobalt fill -->
+  <circle cx="1050" cy="180" r="7" fill="#0052FF" stroke="#09090B" stroke-width="1.5"/>
+
+  <!-- ONGOING ARROW extending right past canvas edge from Operate node -->
+  <line x1="1064" y1="180" x2="1196" y2="180" stroke="#0052FF" stroke-width="1" stroke-dasharray="2 2"/>
+  <path d="M 1186 180 L 1196 180" stroke="#0052FF" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="1180" y="172" font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="9" letter-spacing="0.8" fill="#71717A" text-anchor="end" text-rendering="geometricPrecision">ongoing →</text>
+
+  <!-- DELIVERABLE MARKERS — 12px vertical rhythm; start y=216 -->
+  <!-- PHASE 1: AUDIT deliverables -->
+  <g font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" fill="#09090B" text-rendering="geometricPrecision">
+    <g transform="translate(60, 210)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Time-and-motion</text>
+    </g>
+    <g transform="translate(60, 222)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">System inventory</text>
+    </g>
+    <g transform="translate(60, 234)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Agent shortlist</text>
+    </g>
+    <g transform="translate(60, 246)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">ROI model</text>
+    </g>
+  </g>
+
+  <!-- PHASE 2: SCOPE deliverables -->
+  <g font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" fill="#09090B" text-rendering="geometricPrecision">
+    <g transform="translate(360, 210)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Agent spec sheet</text>
+    </g>
+    <g transform="translate(360, 222)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Success metrics</text>
+    </g>
+    <g transform="translate(360, 234)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Outcome pricing</text>
+    </g>
+    <g transform="translate(360, 246)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">SOW signed</text>
+    </g>
+  </g>
+
+  <!-- PHASE 3: BUILD deliverables -->
+  <g font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" fill="#09090B" text-rendering="geometricPrecision">
+    <g transform="translate(660, 210)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Shadow deployment</text>
+    </g>
+    <g transform="translate(660, 222)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Evals + guardrails</text>
+    </g>
+    <g transform="translate(660, 234)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Human-in-loop</text>
+    </g>
+    <g transform="translate(660, 246)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Cutover plan</text>
+    </g>
+  </g>
+
+  <!-- PHASE 4: OPERATE deliverables -->
+  <g font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" fill="#09090B" text-rendering="geometricPrecision">
+    <g transform="translate(960, 210)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Live in production</text>
+    </g>
+    <g transform="translate(960, 222)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Weekly ops review</text>
+    </g>
+    <g transform="translate(960, 234)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Outcome billing</text>
+    </g>
+    <g transform="translate(960, 246)">
+      <rect x="0" y="0" width="8" height="8" fill="none" stroke="#09090B" stroke-width="1"/>
+      <text x="14" y="7">Continuous tuning</text>
+    </g>
+  </g>
+
+  <!-- BOTTOM COORDINATE BAR (y=440) -->
+  <line x1="0" y1="440" x2="1200" y2="440" stroke="#09090B" stroke-width="1"/>
+
+  <!-- TICK MARKS every 100px -->
+  <g stroke="#09090B" stroke-width="1">
+    <line x1="0" y1="440" x2="0" y2="446"/>
+    <line x1="100" y1="440" x2="100" y2="446"/>
+    <line x1="200" y1="440" x2="200" y2="446"/>
+    <line x1="300" y1="440" x2="300" y2="446"/>
+    <line x1="400" y1="440" x2="400" y2="446"/>
+    <line x1="500" y1="440" x2="500" y2="446"/>
+    <line x1="600" y1="440" x2="600" y2="446"/>
+    <line x1="700" y1="440" x2="700" y2="446"/>
+    <line x1="800" y1="440" x2="800" y2="446"/>
+    <line x1="900" y1="440" x2="900" y2="446"/>
+    <line x1="1000" y1="440" x2="1000" y2="446"/>
+    <line x1="1100" y1="440" x2="1100" y2="446"/>
+    <line x1="1200" y1="440" x2="1200" y2="446"/>
+  </g>
+
+  <!-- Minor interval ticks (lighter, every 50px) -->
+  <g stroke="#71717A" stroke-width="1" opacity="0.5">
+    <line x1="50" y1="440" x2="50" y2="443"/>
+    <line x1="150" y1="440" x2="150" y2="443"/>
+    <line x1="250" y1="440" x2="250" y2="443"/>
+    <line x1="350" y1="440" x2="350" y2="443"/>
+    <line x1="450" y1="440" x2="450" y2="443"/>
+    <line x1="550" y1="440" x2="550" y2="443"/>
+    <line x1="650" y1="440" x2="650" y2="443"/>
+    <line x1="750" y1="440" x2="750" y2="443"/>
+    <line x1="850" y1="440" x2="850" y2="443"/>
+    <line x1="950" y1="440" x2="950" y2="443"/>
+    <line x1="1050" y1="440" x2="1050" y2="443"/>
+    <line x1="1150" y1="440" x2="1150" y2="443"/>
+  </g>
+
+  <!-- DAY LABELS (mono 10px) -->
+  <g font-family="'JetBrains Mono', ui-monospace, 'SF Mono', monospace" font-size="10" letter-spacing="1" fill="#71717A" text-rendering="geometricPrecision">
+    <text x="0" y="462" text-anchor="start">DAY 0</text>
+    <text x="450" y="462" text-anchor="middle">DAY 5</text>
+    <text x="900" y="462" text-anchor="middle">DAY 10</text>
+    <text x="1200" y="462" text-anchor="end">DAY 14+</text>
+  </g>
+</svg>

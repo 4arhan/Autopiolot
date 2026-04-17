@@ -1,0 +1,370 @@
+<!-- Autopilot Labs — Ask the AI chat widget (Modernist Swiss) -->
+<div class="aix-chat" data-state="closed" aria-live="polite">
+
+  <!-- Collapsed pill -->
+  <button class="aix-chat__pill" type="button" aria-expanded="false" aria-controls="aix-chat-panel" data-aix-toggle>
+    <span class="aix-chat__mark" aria-hidden="true"></span>
+    <span class="aix-chat__label">Ask the AI</span>
+    <span class="aix-chat__dot" aria-hidden="true"></span>
+  </button>
+
+  <!-- Expanded panel -->
+  <section id="aix-chat-panel" class="aix-chat__panel" role="dialog" aria-label="Autopilot Labs AI assistant" aria-modal="false" tabindex="-1">
+    <header class="aix-chat__head">
+      <span class="aix-chat__title">Autopilot Labs <span class="aix-chat__sep">·</span> <span class="aix-chat__sub">AI assistant</span></span>
+      <button class="aix-chat__close" type="button" data-aix-close aria-label="Close chat">× Close</button>
+    </header>
+    <div class="aix-chat__rule" aria-hidden="true"></div>
+
+    <div class="aix-chat__log" data-aix-log aria-live="polite" aria-atomic="false">
+      <div class="aix-msg aix-msg--sys">
+        <span class="aix-msg__role">System</span>
+        <p class="aix-msg__body">Hi — I'm the Autopilot Labs AI. Ask me about automating work with AI agents, pricing, or anything else.</p>
+      </div>
+      <div class="aix-msg aix-msg--user">
+        <span class="aix-msg__role">You</span>
+        <p class="aix-msg__body">What do your agents automate?</p>
+      </div>
+      <div class="aix-msg aix-msg--agent">
+        <span class="aix-msg__role">Agent</span>
+        <p class="aix-msg__body">We build AI agents for 13 verticals — healthcare, legal, finance, real estate, e-commerce, HR, marketing, manufacturing. Tell me your workflow and I'll show you examples.</p>
+      </div>
+    </div>
+
+    <form class="aix-chat__form" data-aix-form autocomplete="off">
+      <input
+        class="aix-chat__input"
+        type="text"
+        name="msg"
+        placeholder="Type a message…"
+        aria-label="Type your message"
+        data-aix-input
+        maxlength="280"
+      />
+      <button class="aix-chat__send" type="submit" aria-label="Send message">Send</button>
+    </form>
+
+    <p class="aix-chat__note">Demo. For live support: hello@autopilotlabs.io</p>
+  </section>
+</div>
+
+<style>
+  :root{
+    --aix-paper: var(--paper, #FFFFFF);
+    --aix-paper-2: var(--paper-2, #F4F4F5);
+    --aix-ink: var(--ink, #09090B);
+    --aix-muted: var(--muted, #71717A);
+    --aix-cobalt: var(--cobalt, #0052FF);
+    --aix-hair: rgba(9,9,11,0.12);
+    --aix-geist: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --aix-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  .aix-chat{
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9999;
+    font-family: var(--aix-geist);
+    color: var(--aix-ink);
+    font-style: normal;
+  }
+
+  /* --- Collapsed pill --- */
+  .aix-chat__pill{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: var(--aix-paper);
+    color: var(--aix-ink);
+    border: 1px solid var(--aix-ink);
+    border-radius: 0;
+    font: 500 13px/1 var(--aix-geist);
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: background 160ms linear, color 160ms linear;
+  }
+  .aix-chat__pill:hover{ background: var(--aix-ink); color: var(--aix-paper); }
+  .aix-chat__pill:hover .aix-chat__mark{ background: var(--aix-paper); }
+  .aix-chat__pill:focus-visible{ outline: 2px solid var(--aix-cobalt); outline-offset: 2px; }
+
+  .aix-chat__mark{
+    width: 14px; height: 14px;
+    background: var(--aix-cobalt);
+    display: inline-block;
+  }
+  .aix-chat__label{ font-weight: 500; }
+  .aix-chat__dot{
+    width: 8px; height: 8px;
+    background: var(--aix-cobalt);
+    display: inline-block;
+    border-radius: 50%;
+    animation: aix-pulse 1800ms linear infinite;
+  }
+  @keyframes aix-pulse{
+    0%,100%{ opacity: 1; transform: scale(1); }
+    50%    { opacity: 0.45; transform: scale(0.7); }
+  }
+
+  /* --- Expanded panel --- */
+  .aix-chat__panel{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 380px;
+    height: 560px;
+    max-height: calc(100vh - 48px);
+    background: var(--aix-paper);
+    border: 1px solid var(--aix-ink);
+    border-top: 1px solid var(--aix-cobalt);
+    box-shadow: 0 20px 60px rgba(9,9,11,0.12);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: transform 220ms linear, opacity 220ms linear, visibility 220ms linear;
+    pointer-events: none;
+  }
+
+  .aix-chat[data-state="open"] .aix-chat__panel{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .aix-chat[data-state="open"] .aix-chat__pill{ display: none; }
+
+  /* Header */
+  .aix-chat__head{
+    height: 50px;
+    flex: 0 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: var(--aix-paper);
+  }
+  .aix-chat__title{
+    font: 500 13px/1 var(--aix-geist);
+    letter-spacing: -0.01em;
+    color: var(--aix-ink);
+  }
+  .aix-chat__sep{ color: var(--aix-muted); margin: 0 4px; }
+  .aix-chat__sub{ color: var(--aix-muted); font-weight: 400; }
+  .aix-chat__close{
+    background: transparent;
+    border: 1px solid var(--aix-hair);
+    color: var(--aix-ink);
+    font: 500 11px/1 var(--aix-mono);
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 0;
+    letter-spacing: 0.02em;
+    transition: border-color 160ms linear, background 160ms linear;
+  }
+  .aix-chat__close:hover{ border-color: var(--aix-ink); background: var(--aix-paper-2); }
+  .aix-chat__close:focus-visible{ outline: 2px solid var(--aix-cobalt); outline-offset: 2px; }
+
+  .aix-chat__rule{
+    height: 1px;
+    background: var(--aix-hair);
+    flex: 0 0 1px;
+  }
+
+  /* Log */
+  .aix-chat__log{
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--aix-paper);
+    scrollbar-width: thin;
+  }
+
+  .aix-msg{
+    display: flex;
+    flex-direction: column;
+    max-width: 82%;
+  }
+  .aix-msg__role{
+    font: 400 10px/1 var(--aix-mono);
+    color: var(--aix-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .aix-msg__body{
+    margin: 0;
+    padding: 10px 12px;
+    font: 400 14px/1.45 var(--aix-geist);
+    letter-spacing: -0.005em;
+    border-radius: 0;
+  }
+
+  .aix-msg--sys{ align-self: flex-start; }
+  .aix-msg--sys .aix-msg__body{
+    background: var(--aix-paper);
+    color: var(--aix-ink);
+    border: 1px solid var(--aix-hair);
+  }
+
+  .aix-msg--agent{ align-self: flex-start; }
+  .aix-msg--agent .aix-msg__body{
+    background: var(--aix-paper-2);
+    color: var(--aix-ink);
+  }
+
+  .aix-msg--user{ align-self: flex-end; align-items: flex-end; }
+  .aix-msg--user .aix-msg__body{
+    background: var(--aix-cobalt);
+    color: var(--aix-paper);
+  }
+
+  /* Form */
+  .aix-chat__form{
+    display: flex;
+    gap: 0;
+    border-top: 1px solid var(--aix-hair);
+    background: var(--aix-paper);
+    flex: 0 0 auto;
+  }
+  .aix-chat__input{
+    flex: 1 1 auto;
+    border: 0;
+    padding: 14px 16px;
+    font: 400 14px/1 var(--aix-geist);
+    color: var(--aix-ink);
+    background: var(--aix-paper);
+    outline: none;
+    border-radius: 0;
+  }
+  .aix-chat__input::placeholder{ color: var(--aix-muted); }
+  .aix-chat__input:focus{ background: var(--aix-paper-2); }
+
+  .aix-chat__send{
+    flex: 0 0 auto;
+    background: var(--aix-cobalt);
+    color: var(--aix-paper);
+    border: 0;
+    padding: 0 18px;
+    font: 500 13px/1 var(--aix-geist);
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 160ms linear;
+  }
+  .aix-chat__send:hover{ background: var(--aix-ink); }
+  .aix-chat__send:focus-visible{ outline: 2px solid var(--aix-ink); outline-offset: -2px; }
+
+  .aix-chat__note{
+    margin: 0;
+    padding: 8px 16px 10px;
+    font: 400 10px/1.4 var(--aix-mono);
+    color: var(--aix-muted);
+    background: var(--aix-paper);
+    border-top: 1px solid var(--aix-hair);
+    flex: 0 0 auto;
+  }
+
+  /* Small screens */
+  @media (max-width: 480px){
+    .aix-chat{ right: 12px; bottom: 12px; left: 12px; }
+    .aix-chat__panel{ width: auto; left: 0; right: 0; }
+  }
+</style>
+
+<script>
+(function(){
+  var root   = document.currentScript.previousElementSibling;
+  while (root && !root.classList.contains('aix-chat')) root = root.previousElementSibling;
+  if (!root) return;
+
+  var toggle = root.querySelector('[data-aix-toggle]');
+  var closeBtn = root.querySelector('[data-aix-close]');
+  var panel  = root.querySelector('.aix-chat__panel');
+  var log    = root.querySelector('[data-aix-log]');
+  var form   = root.querySelector('[data-aix-form]');
+  var input  = root.querySelector('[data-aix-input]');
+
+  var REPLIES = [
+    { keys: ['price','pricing','cost','quote','how much'],
+      text: 'We price on outcomes — you pay per automated task or per resolved ticket, not per seat. Share your volume and I\'ll estimate.' },
+    { keys: ['sla','uptime','support','response time'],
+      text: '99.9% uptime SLA and a human on-call within 24h. Enterprise tiers get a named engineer.' },
+    { keys: ['demo','trial','try','see it'],
+      text: 'Happy to show a live demo. Drop your email at hello@autopilotlabs.io and we\'ll book a 20-minute walkthrough.' },
+    { keys: ['industry','vertical','healthcare','legal','finance','real estate','ecommerce','e-commerce','hr','marketing','manufacturing'],
+      text: 'We ship reference agents across 13 verticals. Which one fits you? I can point you to a case study.' },
+    { keys: ['security','privacy','data','compliance','soc2','gdpr'],
+      text: 'SOC 2 Type II, GDPR-aligned, data residency options. We never train on your data.' },
+    { keys: ['integrate','integration','api','connect','slack','hubspot','salesforce'],
+      text: 'Agents connect to your stack via API, webhooks, or native plugins — Slack, HubSpot, Salesforce, Zendesk, and more.' }
+  ];
+  var FALLBACK = 'Great question — email hello@autopilotlabs.io and a human will answer within 24h.';
+
+  function pickReply(text){
+    var t = (text || '').toLowerCase();
+    for (var i = 0; i < REPLIES.length; i++){
+      for (var k = 0; k < REPLIES[i].keys.length; k++){
+        if (t.indexOf(REPLIES[i].keys[k]) !== -1) return REPLIES[i].text;
+      }
+    }
+    return FALLBACK;
+  }
+
+  function addMsg(kind, text){
+    var row = document.createElement('div');
+    row.className = 'aix-msg aix-msg--' + kind;
+    var role = document.createElement('span');
+    role.className = 'aix-msg__role';
+    role.textContent = kind === 'user' ? 'You' : (kind === 'agent' ? 'Agent' : 'System');
+    var body = document.createElement('p');
+    body.className = 'aix-msg__body';
+    body.textContent = text;
+    row.appendChild(role); row.appendChild(body);
+    log.appendChild(row);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function open(){
+    root.setAttribute('data-state','open');
+    toggle.setAttribute('aria-expanded','true');
+    setTimeout(function(){ input && input.focus(); }, 240);
+  }
+  function close(){
+    root.setAttribute('data-state','closed');
+    toggle.setAttribute('aria-expanded','false');
+    toggle.focus();
+  }
+
+  toggle.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && root.getAttribute('data-state') === 'open') close();
+  });
+
+  // Focus trap within open panel
+  panel.addEventListener('keydown', function(e){
+    if (e.key !== 'Tab') return;
+    var f = panel.querySelectorAll('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var val = (input.value || '').trim();
+    if (!val) return;
+    addMsg('user', val);
+    input.value = '';
+    setTimeout(function(){ addMsg('agent', pickReply(val)); }, 700);
+  });
+})();
+</script>

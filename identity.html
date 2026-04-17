@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autopilot Labs — Identity System · v4.6</title>
+<meta name="description" content="The Autopilot Labs visual identity system. Logomark, wordmark, typography, colour, grid, motion, voice — a rigorous kit of parts. Melbourne, 2026.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ====== identity-specific ====== */
+
+/* Hero treatment — archival, tight */
+.hero-id h1 {
+  font-size: clamp(56px, 10vw, 156px);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  max-width: 14ch;
+  margin-bottom: 2.25rem;
+}
+.hero-id .hero-dek { max-width: 52ch; }
+
+.id-legend {
+  margin-top: 2.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.id-legend .k { color: var(--ink-3); display: block; margin-bottom: 6px; }
+.id-legend .v { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+@media (max-width: 800px) { .id-legend { grid-template-columns: repeat(2, 1fr); } }
+
+/* Generic "spec" wrapper + hairline caption */
+.spec-cap {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex; align-items: baseline; gap: 10px;
+}
+.spec-cap .dim { color: var(--ink-2); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+/* ── LOGOMARK GRID ── */
+.mark-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.mark-cell {
+  background: var(--paper);
+  padding: 2.5rem 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 280px;
+  position: relative;
+}
+.mark-cell .mark-slot {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.mark-cell .lbl {
+  margin-top: 1.25rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.mark-cell .lbl .n { color: var(--ink-2); font-weight: 500; }
+.mark-cell .lbl .x { color: var(--muted-2); }
+.mark-cell .tick {
+  position: absolute; top: 10px; left: 12px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: var(--muted-2);
+  text-transform: uppercase;
+}
+
+.mark {
+  display: inline-block;
+  color: var(--ink);
+  width: var(--mark-sz, 96px);
+  height: var(--mark-sz, 96px);
+  aspect-ratio: 1 / 1;
+}
+.mark svg { width: 100%; height: 100%; display: block; }
+
+@media (max-width: 900px) {
+  .mark-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Clearspace diagram */
+.clearspace {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+.clearspace-diagram {
+  position: relative;
+  background: var(--paper-3);
+  border: 1px solid var(--line);
+  padding: 4rem;
+  aspect-ratio: 1 / 1;
+  max-width: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clearspace-diagram::before {
+  content: '';
+  position: absolute;
+  inset: 24px;
+  border: 1px dashed var(--line-strong);
+}
+.clearspace-diagram .cs-x {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.clearspace-diagram .cs-x.t { top: 6px; left: 50%; transform: translateX(-50%); }
+.clearspace-diagram .cs-x.b { bottom: 6px; left: 50%; transform: translateX(-50%); }
+.clearspace-diagram .cs-x.l { left: 6px; top: 50%; transform: translateY(-50%) rotate(-90deg); transform-origin: center; }
+.clearspace-diagram .cs-x.r { right: 6px; top: 50%; transform: translateY(-50%) rotate(90deg); transform-origin: center; }
+.clearspace-diagram .mark { width: 120px; height: 120px; }
+
+.clearspace-note h4 {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  max-width: 20ch;
+}
+.clearspace-note p {
+  color: var(--ink-3);
+  line-height: 1.55;
+  max-width: 48ch;
+  margin: 0 0 1rem;
+}
+.clearspace-note code {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+@media (max-width: 900px) { .clearspace { grid-template-columns: 1fr; } }
+
+/* On-surface variants */
+.surface-row {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.surface-cell {
+  padding: 3rem 2rem;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  position: relative;
+}
+.surface-cell.paper { background: var(--paper); }
+.surface-cell.ink { background: var(--ink); color: var(--paper); }
+.surface-cell.ink .mark { color: var(--paper); }
+.surface-cell.cobalt { background: var(--accent); color: var(--paper); }
+.surface-cell.cobalt .mark { color: var(--paper); }
+.surface-cell .tag-s {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.7;
+}
+.surface-cell.paper .tag-s { color: var(--muted); opacity: 1; }
+.surface-cell .mark { width: 96px; height: 96px; }
+.surface-cell .pin {
+  position: absolute; top: 10px; left: 12px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+@media (max-width: 900px) { .surface-row { grid-template-columns: 1fr; } }
+
+/* ── WORDMARK ── */
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+  display: inline-block;
+}
+.wordmark .dot { color: var(--accent); }
+
+.wm-scales {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.wm-scale-row {
+  background: var(--paper);
+  padding: 1.75rem 2rem;
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 2rem;
+  align-items: center;
+}
+.wm-scale-row .wm-cap {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.wm-scale-row .wm-cap .n { display: block; color: var(--ink-2); font-weight: 500; }
+.wm-scale-row .wm-spec {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  text-align: right;
+}
+
+.wm-sz-1 { font-size: 24px; }
+.wm-sz-2 { font-size: 48px; }
+.wm-sz-3 { font-size: 96px; letter-spacing: -0.035em; }
+.wm-sz-4 { font-size: 176px; letter-spacing: -0.04em; line-height: 0.9; }
+
+@media (max-width: 700px) {
+  .wm-scale-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .wm-scale-row .wm-spec { text-align: left; }
+  .wm-sz-4 { font-size: 88px; }
+  .wm-sz-3 { font-size: 56px; }
+}
+
+/* Lockups */
+.lockups {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.lockup-cell {
+  background: var(--paper);
+  padding: 2.5rem 2rem;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+}
+.lockup-cell .pin {
+  position: absolute; top: 10px; left: 12px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.lockup-cell .cap {
+  margin-top: 1.25rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line);
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.lockup-cell .cap span { color: var(--muted); }
+
+.lockup-horiz { display: flex; align-items: center; gap: 16px; }
+.lockup-horiz .mark { width: 48px; height: 48px; }
+.lockup-horiz .wordmark { font-size: 40px; letter-spacing: -0.035em; }
+
+.lockup-vert { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.lockup-vert .mark { width: 80px; height: 80px; }
+.lockup-vert .wordmark { font-size: 30px; letter-spacing: -0.03em; }
+
+.lockup-alone .wordmark { font-size: 44px; letter-spacing: -0.035em; }
+
+@media (max-width: 900px) { .lockups { grid-template-columns: 1fr; } }
+
+/* ── TYPOGRAPHY ── */
+.type-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(54px, 10vw, 120px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  margin: 0;
+  max-width: 14ch;
+}
+.type-display em {
+  color: var(--accent);
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: -0.045em;
+}
+
+.type-spec-rail {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0.9rem 0;
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.type-spec-rail .k { color: var(--muted); }
+.type-spec-rail .v { color: var(--ink); font-weight: 500; }
+@media (max-width: 800px) { .type-spec-rail { grid-template-columns: repeat(2, 1fr); } }
+
+.type-body-wrap {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.type-body-wrap .rail-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.type-body {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 68ch;
+}
+.type-body em {
+  color: var(--accent);
+  font-weight: 500;
+  font-style: normal;
+}
+.type-body-cap {
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.type-mono-sample {
+  margin-top: 2.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--paper-3);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  display: flex; gap: 1.25rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.type-mono-sample .pin {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Character specimen */
+.charset {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.charset-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  display: flex; justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.6rem;
+}
+.charset-row {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 4.2vw, 48px);
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  word-spacing: 0.18em;
+  margin: 0.75rem 0;
+}
+.charset-row.lower { font-weight: 300; color: var(--ink-2); }
+.charset-row.num   { font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.025em; }
+
+/* Weight stack */
+.weight-stack {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.weight-row {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.weight-row:last-child { border-bottom: 0; }
+.weight-row .wt-name {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.weight-row .wt-sample {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.weight-row .wt-num {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--muted-2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.w-300 { font-weight: 300; }
+.w-400 { font-weight: 400; }
+.w-500 { font-weight: 500; }
+.w-600 { font-weight: 600; }
+.w-700 { font-weight: 700; }
+
+@media (max-width: 700px) {
+  .weight-row { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+
+/* ── COLOUR ── */
+.swatch-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.swatch {
+  background: var(--paper);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+}
+.swatch .chip {
+  height: 120px;
+  width: 100%;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.swatch .chip .tl {
+  position: absolute;
+  top: 8px; left: 10px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.5;
+}
+.swatch .meta {
+  padding: 1rem 1rem 0;
+  flex: 1;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.swatch .name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.swatch .hex {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.swatch .use {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.45;
+  margin-top: 0.4rem;
+}
+.swatch .code {
+  margin-top: auto;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.chip-paper { background: #FFFFFF; border: 1px solid var(--line); }
+.chip-paper-3 { background: #FAFAFB; }
+.chip-ink { background: #09090B; color: var(--paper); }
+.chip-ink-2 { background: #18181B; color: var(--paper); }
+.chip-muted { background: #71717A; color: var(--paper); }
+.chip-line {
+  background: repeating-linear-gradient(45deg, #FFFFFF 0 6px, rgba(9,9,11,0.08) 6px 7px);
+}
+.chip-accent { background: #0052FF; color: var(--paper); }
+.chip-accent-soft {
+  background: rgba(0,82,255,0.06);
+  border: 1px solid var(--line);
+}
+
+@media (max-width: 1100px) { .swatch-strip { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 700px) { .swatch-strip { grid-template-columns: repeat(2, 1fr); } }
+
+/* Supplementary tokens rail */
+.token-rail {
+  margin-top: 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.token-rail .k { display: block; color: var(--ink-3); margin-bottom: 6px; }
+.token-rail .v { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; text-transform: none; letter-spacing: 0.08em; }
+@media (max-width: 800px) { .token-rail { grid-template-columns: repeat(2, 1fr); } }
+
+/* ── GRID SECTION ── */
+.grid-showcase {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--paper-3);
+  padding: 3rem clamp(1rem, 3vw, 2.5rem);
+  overflow: hidden;
+}
+.grid-overlay {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 32px;
+  min-height: 320px;
+}
+.grid-col {
+  background: var(--accent-soft);
+  border-left: 1px solid rgba(0,82,255,0.18);
+  border-right: 1px solid rgba(0,82,255,0.18);
+  position: relative;
+  min-height: 100%;
+}
+.grid-col .n {
+  position: absolute;
+  top: 8px; left: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+.grid-col .b {
+  position: absolute;
+  bottom: 8px; right: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+}
+.grid-annot {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.grid-annot .k { display: block; color: var(--ink-3); margin-bottom: 6px; }
+.grid-annot .v { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; text-transform: none; letter-spacing: 0.08em; }
+.grid-annot code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+@media (max-width: 900px) {
+  .grid-overlay { grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  .grid-annot { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── MOTION ── */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.motion-cell {
+  background: var(--paper);
+  padding: 2rem 1.75rem 1.5rem;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.motion-cell .pin {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.motion-cell h4 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+.motion-cell .stage {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--paper-3);
+  position: relative;
+  overflow: hidden;
+  min-height: 140px;
+}
+.motion-cell .cap {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Reveal demo */
+.m-reveal-box {
+  position: absolute;
+  inset: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem 0;
+}
+.m-reveal-box .block {
+  height: 14px;
+  margin-bottom: 8px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms linear, transform 600ms linear;
+}
+.m-reveal-box .block.go { opacity: 1; transform: none; }
+.m-reveal-box .block.a { width: 70%; background: var(--ink); }
+.m-reveal-box .block.b { width: 55%; background: var(--accent); }
+.m-reveal-box .block.c { width: 40%; background: var(--muted); }
+
+/* Hover demo */
+.m-hover-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--ink);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--paper);
+  cursor: pointer;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+}
+.m-hover-btn::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -1px; height: 2px; width: 0;
+  background: var(--accent);
+  transition: width 250ms linear;
+}
+.motion-cell .stage:hover .m-hover-btn::after { width: 100%; }
+
+/* Scroll-prog demo */
+.m-sprog {
+  position: absolute;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+.m-sprog-label {
+  position: absolute;
+  bottom: 14px; left: 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.m-sprog-val {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) { .motion-grid { grid-template-columns: 1fr; } }
+
+/* ── VOICE ── */
+.voice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.voice-card {
+  background: var(--paper);
+  padding: 1.75rem 1.5rem 1.75rem;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.voice-card .pair {
+  display: flex; flex-direction: column; gap: 0.35rem;
+}
+.voice-card .pair-lbl {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.voice-card .say {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.voice-card .dont {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--muted-2);
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+}
+.voice-card .dont::after {
+  content: '';
+  position: absolute;
+  left: -2%; right: -2%; top: 52%;
+  height: 2px;
+  background: var(--accent);
+}
+.voice-card .rule-no {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+.voice-card .note {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) { .voice-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .voice-grid { grid-template-columns: 1fr; } }
+
+/* ── DOWNLOAD KIT ── */
+.kit-block {
+  border: 1px solid var(--line);
+  background: var(--paper-3);
+  padding: clamp(2rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+}
+.kit-block h3 {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0 0 0.5rem;
+  max-width: 22ch;
+}
+.kit-block h3 em { color: var(--accent); font-weight: 500; font-style: normal; }
+.kit-block .meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.kit-block .kit-desc {
+  color: var(--ink-3);
+  max-width: 54ch;
+  line-height: 1.55;
+  margin: 0;
+  font-size: 15px;
+}
+.kit-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  grid-column: 1 / -1;
+}
+.kit-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 250ms linear;
+}
+.kit-link:hover { border-color: var(--accent); }
+.kit-link .t {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.kit-link .t .arr { color: var(--accent); }
+.kit-link .s {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 800px) {
+  .kit-block { grid-template-columns: 1fr; }
+  .kit-links { grid-template-columns: 1fr; }
+}
+
+/* End CTA overrides — keep the standard system */
+.endcta-id h2 { max-width: 18ch; }
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero hero-id">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>§ Identity system · version 4.6</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>Melbourne · 2026 · Archival</span></div>
+      </div>
+
+      <h1 class="hero-title reveal delay-1">
+        The Autopilot Labs<br>
+        <em>system</em>.
+      </h1>
+
+      <div class="hero-lower reveal delay-2">
+        <p class="hero-dek">
+          A brand is a contract. Here are the <em>terms</em>. The Autopilot Labs visual identity is a rigorous kit of parts — logomark, wordmark, typography, colour, grid, motion, voice — designed to stay consistent across a patient intake screen, a reconciliation report, a boardroom deck, and a business card. Keep to it.
+        </p>
+        <div class="hero-actions">
+          <a href="#download" class="btn btn-primary btn-lg">Download brand kit <span class="arrow">↓</span></a>
+          <a href="press.html" class="btn btn-lg">See press kit</a>
+        </div>
+      </div>
+
+      <div class="id-legend reveal delay-3">
+        <div>
+          <span class="k">Document</span>
+          <span class="v">IDS · 4.6 / 2026.Q2</span>
+        </div>
+        <div>
+          <span class="k">Custodian</span>
+          <span class="v">Autopilot Labs Design · Melbourne</span>
+        </div>
+        <div>
+          <span class="k">Status</span>
+          <span class="v"><span class="status-dot"></span> Live / binding</span>
+        </div>
+        <div>
+          <span class="k">Revision</span>
+          <span class="v">2026-04-16 · 06:42 AEST</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 01 — LOGOMARK ========== -->
+  <section class="section" id="logomark">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-num">
+          § Section 01
+          <span class="big">01</span>
+          Logomark
+        </div>
+        <div class="section-title-col">
+          <div class="eyebrow accent">Mark</div>
+          <h2 class="section-title">A square, a cobalt <em>cut</em>.</h2>
+          <p class="dek">The Autopilot Labs mark is a solid ink square with a single cobalt cut at the bottom-right. It reads as a checkbox — a job, marked done. Built on a 24-unit grid. Used at five canonical sizes.</p>
+        </div>
+      </div>
+
+      <div class="mark-grid reveal">
+        <div class="mark-cell">
+          <span class="tick">01.a</span>
+          <div class="mark-slot">
+            <span class="mark" style="--mark-sz: 24px;"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+          </div>
+          <div class="lbl"><span class="n">24 px</span><span class="x">Favicon</span></div>
+        </div>
+        <div class="mark-cell">
+          <span class="tick">01.b</span>
+          <div class="mark-slot">
+            <span class="mark" style="--mark-sz: 48px;"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+          </div>
+          <div class="lbl"><span class="n">48 px</span><span class="x">Inline</span></div>
+        </div>
+        <div class="mark-cell">
+          <span class="tick">01.c</span>
+          <div class="mark-slot">
+            <span class="mark" style="--mark-sz: 96px;"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+          </div>
+          <div class="lbl"><span class="n">96 px</span><span class="x">Default</span></div>
+        </div>
+        <div class="mark-cell">
+          <span class="tick">01.d</span>
+          <div class="mark-slot">
+            <span class="mark" style="--mark-sz: 160px;"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+          </div>
+          <div class="lbl"><span class="n">160 px</span><span class="x">Hero</span></div>
+        </div>
+        <div class="mark-cell">
+          <span class="tick">01.e</span>
+          <div class="mark-slot">
+            <span class="mark" style="--mark-sz: 256px;"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+          </div>
+          <div class="lbl"><span class="n">256 px</span><span class="x">Signage</span></div>
+        </div>
+      </div>
+
+      <div class="clearspace reveal">
+        <div class="clearspace-diagram">
+          <span class="cs-x t">1 ×</span>
+          <span class="cs-x b">1 ×</span>
+          <span class="cs-x l">1 ×</span>
+          <span class="cs-x r">1 ×</span>
+          <span class="mark"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+        </div>
+        <div class="clearspace-note">
+          <div class="spec-cap" style="margin-bottom: 1rem;"><span>Clearspace</span> <span class="dim">§ 01.f</span></div>
+          <h4>Give the mark one square of air on every side.</h4>
+          <p>The minimum clearspace around the logomark is equal to the width of the <em>cobalt cut</em> — one quarter of the mark's edge. No type, image, or edge may enter this zone. Treat it as an absolute boundary.</p>
+          <p>Expressed as <code>clearspace = mark-size × 0.25</code>. At 96px, clearspace is 24px. At 256px, clearspace is 64px.</p>
+        </div>
+      </div>
+
+      <div class="surface-row reveal">
+        <div class="surface-cell paper">
+          <span class="pin">01.g · paper</span>
+          <span class="mark"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+          <span class="tag-s">Default — ink on paper</span>
+        </div>
+        <div class="surface-cell ink">
+          <span class="pin">01.h · ink</span>
+          <span class="mark"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+          <span class="tag-s">Inverted — paper on ink</span>
+        </div>
+        <div class="surface-cell cobalt">
+          <span class="pin">01.i · cobalt</span>
+          <span class="mark"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="#FFFFFF"/><rect x="15" y="15" width="6" height="6" fill="#FFFFFF" fill-opacity="0.35"/></svg></span>
+          <span class="tag-s">Mono — paper, cut 35%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 02 — WORDMARK ========== -->
+  <section class="section" id="wordmark">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-num">
+          § Section 02
+          <span class="big">02</span>
+          Wordmark
+        </div>
+        <div class="section-title-col">
+          <div class="eyebrow accent">Wordmark</div>
+          <h2 class="section-title">Geist 600. Tracked <em>-0.03em</em>.</h2>
+          <p class="dek">The wordmark is set in Geist Semibold with tight negative tracking. Four canonical sizes cover everything from favicons to headline lockups. Always accompanied by a cobalt terminator dot.</p>
+        </div>
+      </div>
+
+      <div class="wm-scales reveal">
+        <div class="wm-scale-row">
+          <div class="wm-cap">§ 02.a <span class="n">24 px</span></div>
+          <div><span class="wordmark wm-sz-1">AUTOPILOT LABS<span class="dot">.</span></span></div>
+          <div class="wm-spec">Nav · footer</div>
+        </div>
+        <div class="wm-scale-row">
+          <div class="wm-cap">§ 02.b <span class="n">48 px</span></div>
+          <div><span class="wordmark wm-sz-2">AUTOPILOT LABS<span class="dot">.</span></span></div>
+          <div class="wm-spec">Card · tagline</div>
+        </div>
+        <div class="wm-scale-row">
+          <div class="wm-cap">§ 02.c <span class="n">96 px</span></div>
+          <div><span class="wordmark wm-sz-3">AUTOPILOT LABS<span class="dot">.</span></span></div>
+          <div class="wm-spec">Section · splash</div>
+        </div>
+        <div class="wm-scale-row">
+          <div class="wm-cap">§ 02.d <span class="n">176 px</span></div>
+          <div><span class="wordmark wm-sz-4">AUTOPILOT LABS<span class="dot">.</span></span></div>
+          <div class="wm-spec">Hero · print</div>
+        </div>
+      </div>
+
+      <div class="lockups reveal">
+        <div class="lockup-cell">
+          <span class="pin">02.e · horizontal lock</span>
+          <div class="lockup-horiz">
+            <span class="mark"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+            <span class="wordmark">AUTOPILOT LABS<span class="dot">.</span></span>
+          </div>
+          <div class="cap">Horizontal · mark leads <span>· default</span></div>
+        </div>
+        <div class="lockup-cell">
+          <span class="pin">02.f · vertical lock</span>
+          <div class="lockup-vert">
+            <span class="mark"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+            <span class="wordmark">AUTOPILOT LABS<span class="dot">.</span></span>
+          </div>
+          <div class="cap">Vertical · stacked <span>· square canvases</span></div>
+        </div>
+        <div class="lockup-cell">
+          <span class="pin">02.g · wordmark alone</span>
+          <div class="lockup-alone">
+            <span class="wordmark">AUTOPILOT LABS<span class="dot">.</span></span>
+          </div>
+          <div class="cap">Wordmark only <span>· running heads</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 03 — TYPOGRAPHY ========== -->
+  <section class="section" id="typography">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-num">
+          § Section 03
+          <span class="big">03</span>
+          Typography
+        </div>
+        <div class="section-title-col">
+          <div class="eyebrow accent">Type</div>
+          <h2 class="section-title">Geist &amp; JetBrains <em>Mono</em>.</h2>
+          <p class="dek">Two typefaces. Geist across the display and body range. JetBrains Mono for labels, coordinates, data. No serif. No italic — emphasis is cobalt weight-500, never slanted.</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <h3 class="type-display">Agents that finish the <em>job</em>.</h3>
+
+        <div class="type-spec-rail">
+          <div><span class="k">Family</span> <span class="v">Geist</span></div>
+          <div><span class="k">Weight</span> <span class="v">500 / medium</span></div>
+          <div><span class="k">Size</span> <span class="v">120 px</span></div>
+          <div><span class="k">Tracking</span> <span class="v">-0.045 em</span></div>
+        </div>
+
+        <div class="type-body-wrap">
+          <div class="rail-num">§ 03.a · body</div>
+          <div>
+            <p class="type-body">
+              Autopilot Labs builds vertical AI agents for thirteen industries — from patient intake to reconciliation to lease abstraction. You <em>pay when the work ships</em>, not for seats or tokens. Every engagement starts with a workflow audit, not a product demo. Our body text sits at sixteen pixels, line-height one point six-five, Geist Regular, ink-2. Paragraphs run no wider than sixty-eight characters for comfortable scanning. When a phrase needs weight, we shift it to cobalt-medium — never italic, never uppercase, never bold.
+            </p>
+            <div class="type-body-cap">§ 03.a · Geist 400 · 16 px · 1.65 lh · max 68ch</div>
+          </div>
+        </div>
+
+        <div class="type-mono-sample">
+          <span class="pin">§ 03.b</span>
+          <span>JETBRAINS MONO · 11PX · UPPERCASE · 0.16EM TRACKING</span>
+        </div>
+      </div>
+
+      <div class="charset reveal">
+        <div class="charset-label">
+          <span>§ 03.c · character specimen · Geist</span>
+          <span>400 / 300 / 500</span>
+        </div>
+        <p class="charset-row">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+        <p class="charset-row lower">abcdefghijklmnopqrstuvwxyz</p>
+        <p class="charset-row num">0 1 2 3 4 5 6 7 8 9 — $ + % &amp; . ,</p>
+      </div>
+
+      <div class="weight-stack reveal">
+        <div class="charset-label">
+          <span>§ 03.d · weight stack · Geist</span>
+          <span>300 → 700</span>
+        </div>
+        <div class="weight-row">
+          <div class="wt-name">Light <span style="color: var(--muted-2);">/ 300</span></div>
+          <div class="wt-sample w-300">Outcomes, not seats.</div>
+          <div class="wt-num">300</div>
+        </div>
+        <div class="weight-row">
+          <div class="wt-name">Regular <span style="color: var(--muted-2);">/ 400</span></div>
+          <div class="wt-sample w-400">Outcomes, not seats.</div>
+          <div class="wt-num">400</div>
+        </div>
+        <div class="weight-row">
+          <div class="wt-name">Medium <span style="color: var(--muted-2);">/ 500</span></div>
+          <div class="wt-sample w-500">Outcomes, not seats.</div>
+          <div class="wt-num">500</div>
+        </div>
+        <div class="weight-row">
+          <div class="wt-name">Semibold <span style="color: var(--muted-2);">/ 600</span></div>
+          <div class="wt-sample w-600">Outcomes, not seats.</div>
+          <div class="wt-num">600</div>
+        </div>
+        <div class="weight-row">
+          <div class="wt-name">Bold <span style="color: var(--muted-2);">/ 700</span></div>
+          <div class="wt-sample w-700">Outcomes, not seats.</div>
+          <div class="wt-num">700</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 04 — COLOUR ========== -->
+  <section class="section" id="colour">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-num">
+          § Section 04
+          <span class="big">04</span>
+          Colour
+        </div>
+        <div class="section-title-col">
+          <div class="eyebrow accent">Palette</div>
+          <h2 class="section-title">Paper, ink, a single <em>cobalt</em>.</h2>
+          <p class="dek">A near-monochromatic system. One accent — electric cobalt — carries every positive signal, every focus state, every piece of emphasis. No gradients. No secondary accent.</p>
+        </div>
+      </div>
+
+      <div class="swatch-strip reveal">
+        <div class="swatch">
+          <div class="chip chip-paper"><span class="tl" style="color: var(--muted);">§ 04.a</span></div>
+          <div class="meta">
+            <div class="name">Paper</div>
+            <div class="hex">#FFFFFF</div>
+            <div class="use">Primary surface. Backgrounds, cards, page body.</div>
+          </div>
+          <div class="code">--paper: #FFFFFF</div>
+        </div>
+        <div class="swatch">
+          <div class="chip chip-paper-3"><span class="tl" style="color: var(--muted);">§ 04.b</span></div>
+          <div class="meta">
+            <div class="name">Paper-3</div>
+            <div class="hex">#FAFAFB</div>
+            <div class="use">Recessed surface. Grid overlays, kit blocks.</div>
+          </div>
+          <div class="code">--paper-3: #FAFAFB</div>
+        </div>
+        <div class="swatch">
+          <div class="chip chip-ink"><span class="tl">§ 04.c</span></div>
+          <div class="meta">
+            <div class="name">Ink</div>
+            <div class="hex">#09090B</div>
+            <div class="use">Primary text. The logomark body. Footer ground.</div>
+          </div>
+          <div class="code">--ink: #09090B</div>
+        </div>
+        <div class="swatch">
+          <div class="chip chip-ink-2"><span class="tl">§ 04.d</span></div>
+          <div class="meta">
+            <div class="name">Ink-2</div>
+            <div class="hex">#18181B</div>
+            <div class="use">Body copy, dek text, strong labels.</div>
+          </div>
+          <div class="code">--ink-2: #18181B</div>
+        </div>
+        <div class="swatch">
+          <div class="chip chip-muted"><span class="tl">§ 04.e</span></div>
+          <div class="meta">
+            <div class="name">Muted</div>
+            <div class="hex">#71717A</div>
+            <div class="use">Secondary labels, mono captions, metadata.</div>
+          </div>
+          <div class="code">--muted: #71717A</div>
+        </div>
+        <div class="swatch">
+          <div class="chip chip-line"><span class="tl" style="color: var(--muted);">§ 04.f</span></div>
+          <div class="meta">
+            <div class="name">Line</div>
+            <div class="hex">rgba(9,9,11,0.08)</div>
+            <div class="use">Hairline rules, section borders, card edges.</div>
+          </div>
+          <div class="code">--line: rgba(9,9,11,0.08)</div>
+        </div>
+        <div class="swatch">
+          <div class="chip chip-accent"><span class="tl">§ 04.g</span></div>
+          <div class="meta">
+            <div class="name">Accent</div>
+            <div class="hex">#0052FF</div>
+            <div class="use">Electric cobalt. Emphasis, focus, positive signal.</div>
+          </div>
+          <div class="code">--accent: #0052FF</div>
+        </div>
+      </div>
+
+      <div class="token-rail">
+        <div>
+          <span class="k">Accent-soft</span>
+          <span class="v">rgba(0,82,255,0.06)</span>
+        </div>
+        <div>
+          <span class="k">Accent-fg</span>
+          <span class="v">#FFFFFF</span>
+        </div>
+        <div>
+          <span class="k">Line-strong</span>
+          <span class="v">rgba(9,9,11,0.18)</span>
+        </div>
+        <div>
+          <span class="k">Muted-2</span>
+          <span class="v">#A1A1AA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 05 — GRID ========== -->
+  <section class="section" id="grid">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-num">
+          § Section 05
+          <span class="big">05</span>
+          Grid
+        </div>
+        <div class="section-title-col">
+          <div class="eyebrow accent">Layout</div>
+          <h2 class="section-title">Twelve columns. Thirty-two <em>gutter</em>.</h2>
+          <p class="dek">Every page sits on a 12-column grid with 32px gutters, capped at 1320px. Page padding scales fluidly from 1.25rem to 2.5rem. Everything snaps to it.</p>
+        </div>
+      </div>
+
+      <div class="grid-showcase reveal">
+        <div class="grid-overlay">
+          <div class="grid-col"><span class="n">01</span><span class="b">col</span></div>
+          <div class="grid-col"><span class="n">02</span></div>
+          <div class="grid-col"><span class="n">03</span></div>
+          <div class="grid-col"><span class="n">04</span></div>
+          <div class="grid-col"><span class="n">05</span></div>
+          <div class="grid-col"><span class="n">06</span></div>
+          <div class="grid-col"><span class="n">07</span></div>
+          <div class="grid-col"><span class="n">08</span></div>
+          <div class="grid-col"><span class="n">09</span></div>
+          <div class="grid-col"><span class="n">10</span></div>
+          <div class="grid-col"><span class="n">11</span></div>
+          <div class="grid-col"><span class="n">12</span><span class="b">col</span></div>
+        </div>
+      </div>
+
+      <div class="grid-annot">
+        <div>
+          <span class="k">Columns</span>
+          <span class="v">12</span>
+        </div>
+        <div>
+          <span class="k">Gutter</span>
+          <span class="v">32 px · fixed</span>
+        </div>
+        <div>
+          <span class="k">Max width</span>
+          <span class="v">1320 px · centered</span>
+        </div>
+        <div>
+          <span class="k">Page padding</span>
+          <span class="v"><code>clamp(1.25rem, 3.5vw, 2.5rem)</code></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 06 — MOTION ========== -->
+  <section class="section" id="motion">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-num">
+          § Section 06
+          <span class="big">06</span>
+          Motion
+        </div>
+        <div class="section-title-col">
+          <div class="eyebrow accent">Motion</div>
+          <h2 class="section-title">Linear only. No <em>bounce</em>.</h2>
+          <p class="dek">All motion uses linear timing. Reveal is 600ms. Hover is 250ms. Scroll progress tracks 1:1. Motion is structural, not decorative — it tells you where you are, not how clever we are.</p>
+        </div>
+      </div>
+
+      <div class="motion-grid reveal">
+        <div class="motion-cell" id="m-reveal">
+          <div class="pin">§ 06.a</div>
+          <h4>Reveal</h4>
+          <div class="stage">
+            <div class="m-reveal-box">
+              <div class="block a" data-mreveal></div>
+              <div class="block b" data-mreveal></div>
+              <div class="block c" data-mreveal></div>
+            </div>
+          </div>
+          <div class="cap">600 ms · linear · 12 px rise</div>
+        </div>
+        <div class="motion-cell">
+          <div class="pin">§ 06.b</div>
+          <h4>Hover</h4>
+          <div class="stage">
+            <a href="#motion" class="m-hover-btn">Hover me</a>
+          </div>
+          <div class="cap">250 ms · linear · cobalt rail</div>
+        </div>
+        <div class="motion-cell">
+          <div class="pin">§ 06.c</div>
+          <h4>Scroll-prog</h4>
+          <div class="stage">
+            <div class="m-sprog" data-sprog></div>
+            <div class="m-sprog-label">Scroll page to animate</div>
+            <div class="m-sprog-val" data-sprog-val>000 %</div>
+          </div>
+          <div class="cap">1 : 1 scroll · 3 px cobalt rail</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 07 — VOICE ========== -->
+  <section class="section" id="voice">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-num">
+          § Section 07
+          <span class="big">07</span>
+          Voice
+        </div>
+        <div class="section-title-col">
+          <div class="eyebrow accent">Voice</div>
+          <h2 class="section-title">Plain, exact, <em>accountable</em>.</h2>
+          <p class="dek">We write like we ship: precisely, without hedging. Six lexical rules. Struck-through words are blacklisted — use the cobalt replacement.</p>
+        </div>
+      </div>
+
+      <div class="voice-grid reveal">
+
+        <div class="voice-card">
+          <div class="rule-no">§ 07.a</div>
+          <div class="pair">
+            <span class="pair-lbl">We say</span>
+            <span class="say">Seats</span>
+          </div>
+          <div class="pair">
+            <span class="pair-lbl">We don't say</span>
+            <span class="dont">Licences</span>
+          </div>
+          <div class="note">"Seats" keeps the conversation about humans. "Licences" is procurement-speak.</div>
+        </div>
+
+        <div class="voice-card">
+          <div class="rule-no">§ 07.b</div>
+          <div class="pair">
+            <span class="pair-lbl">We say</span>
+            <span class="say">Outcome</span>
+          </div>
+          <div class="pair">
+            <span class="pair-lbl">We don't say</span>
+            <span class="dont">Deliverable</span>
+          </div>
+          <div class="note">We bill per outcome. Deliverables are what agencies invoice when work isn't done.</div>
+        </div>
+
+        <div class="voice-card">
+          <div class="rule-no">§ 07.c</div>
+          <div class="pair">
+            <span class="pair-lbl">We say</span>
+            <span class="say">Ship</span>
+          </div>
+          <div class="pair">
+            <span class="pair-lbl">We don't say</span>
+            <span class="dont">Launch</span>
+          </div>
+          <div class="note">"Ship" is verb-first. "Launch" is marketing theatre.</div>
+        </div>
+
+        <div class="voice-card">
+          <div class="rule-no">§ 07.d</div>
+          <div class="pair">
+            <span class="pair-lbl">We say</span>
+            <span class="say">Agent</span>
+          </div>
+          <div class="pair">
+            <span class="pair-lbl">We don't say</span>
+            <span class="dont">Copilot</span>
+          </div>
+          <div class="note">Agents finish jobs. Copilots sit shotgun and hedge.</div>
+        </div>
+
+        <div class="voice-card">
+          <div class="rule-no">§ 07.e</div>
+          <div class="pair">
+            <span class="pair-lbl">We say</span>
+            <span class="say">Workflow</span>
+          </div>
+          <div class="pair">
+            <span class="pair-lbl">We don't say</span>
+            <span class="dont">Solution</span>
+          </div>
+          <div class="note">A workflow has steps, owners, and SLAs. A "solution" is a slide.</div>
+        </div>
+
+        <div class="voice-card">
+          <div class="rule-no">§ 07.f</div>
+          <div class="pair">
+            <span class="pair-lbl">We say</span>
+            <span class="say">Audit</span>
+          </div>
+          <div class="pair">
+            <span class="pair-lbl">We don't say</span>
+            <span class="dont">Discovery</span>
+          </div>
+          <div class="note">Audits end in a number — hours saved, errors cut. Discovery ends in a deck.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 08 — DOWNLOAD KIT ========== -->
+  <section class="section" id="download">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-num">
+          § Section 08
+          <span class="big">08</span>
+          Kit
+        </div>
+        <div class="section-title-col">
+          <div class="eyebrow accent">Download</div>
+          <h2 class="section-title">The Autopilot Labs <em>brand kit</em>.</h2>
+          <p class="dek">Everything on this page, packaged. SVG logomark, favicon, Geist font spec sheet, colour tokens (CSS / JSON / ASE), and a 40-page PDF guide.</p>
+        </div>
+      </div>
+
+      <div class="kit-block reveal">
+        <div>
+          <h3>Download the Autopilot Labs <em>brand kit</em> <span style="color: var(--muted-2);">↓</span></h3>
+          <div class="meta">.zip · 24 MB · v4.6 / 2026.Q2 · SHA-256 verified</div>
+          <p class="kit-desc">Includes the logomark in SVG + PNG (1×/2×/3×), the favicon set, Geist and JetBrains Mono licence references, colour tokens in three formats, and a 40-page PDF manual that mirrors this page.</p>
+        </div>
+        <div>
+          <a href="#" class="btn btn-primary btn-lg">Download .zip <span class="arrow">↓</span></a>
+        </div>
+        <div class="kit-links">
+          <a href="#" class="kit-link">
+            <span class="t">Logomark <span class="arr">↓</span></span>
+            <span class="s">SVG + PNG · 420 kb</span>
+          </a>
+          <a href="#" class="kit-link">
+            <span class="t">Favicon set <span class="arr">↓</span></span>
+            <span class="s">.ico + .svg · 14 kb</span>
+          </a>
+          <a href="#" class="kit-link">
+            <span class="t">Geist spec sheet <span class="arr">↓</span></span>
+            <span class="s">PDF · 8 pages · 1.2 mb</span>
+          </a>
+          <a href="#" class="kit-link">
+            <span class="t">Colour tokens <span class="arr">↓</span></span>
+            <span class="s">CSS + JSON + ASE · 22 kb</span>
+          </a>
+          <a href="#" class="kit-link">
+            <span class="t">Full PDF manual <span class="arr">↓</span></span>
+            <span class="s">40 pages · 18 mb</span>
+          </a>
+          <a href="#" class="kit-link">
+            <span class="t">Figma library <span class="arr">↗</span></span>
+            <span class="s">Community · read-only</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="endcta">
+    <div class="container">
+      <div class="endcta-wrap endcta-id reveal">
+        <div class="eyebrow accent" style="justify-content: center; display: inline-flex;">End · 09</div>
+        <h2>Design a <em>system</em>. Live by it.</h2>
+        <p class="dek">A brand is not a logo — it is the set of decisions you refuse to make again. This is ours. Use it, audit us against it, call us out when we drift.</p>
+        <div class="actions">
+          <a href="press.html" class="btn btn-primary btn-lg">See the press kit <span class="arrow">↗</span></a>
+          <a href="https://autopilotlabs.io" class="btn btn-lg">Visit autopilotlabs.io <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+  /* ── Motion demos ─────────────────────────────────────── */
+  (function() {
+    // Reveal demo: fire on scroll into view
+    var revealCell = document.getElementById('m-reveal');
+    var blocks = revealCell ? revealCell.querySelectorAll('[data-mreveal]') : [];
+    function fireReveal() {
+      blocks.forEach(function(b, i) {
+        b.classList.remove('go');
+        setTimeout(function() { b.classList.add('go'); }, i * 140);
+      });
+    }
+    if (revealCell) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) fireReveal();
+        });
+      }, { threshold: 0.4 });
+      io.observe(revealCell);
+      revealCell.addEventListener('click', fireReveal);
+    }
+
+    // Scroll-prog demo: track page scroll 1:1
+    var sprog = document.querySelector('[data-sprog]');
+    var sprogVal = document.querySelector('[data-sprog-val]');
+    function updateSprog() {
+      var doc = document.documentElement;
+      var scrollTop = doc.scrollTop || document.body.scrollTop;
+      var scrollH = doc.scrollHeight - doc.clientHeight;
+      var pct = scrollH > 0 ? Math.min(100, (scrollTop / scrollH) * 100) : 0;
+      if (sprog) sprog.style.width = pct.toFixed(1) + '%';
+      if (sprogVal) sprogVal.textContent = String(Math.round(pct)).padStart(3, '0') + ' %';
+    }
+    window.addEventListener('scroll', updateSprog, { passive: true });
+    updateSprog();
+  })();
+</script>
+</body>
+</html>

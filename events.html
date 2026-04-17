@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events — Autopilot Labs · Breakfasts, webinars, workflow audits in the open</title>
+<meta name="description" content="Where to meet Autopilot Labs. In-person AI automation breakfasts in Melbourne, Sydney, Brisbane. Webinars, conference talks, and invite-only roundtables for operators running AI agents in production.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ====== events page ====== */
+.hero-events { padding: clamp(5rem, 10vw, 9rem) 0 clamp(2rem, 4vw, 3.5rem); }
+.hero-events h1 {
+  font-size: clamp(48px, 8.5vw, 132px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  max-width: 18ch;
+  margin-bottom: 1.75rem;
+  font-weight: 500;
+}
+.hero-events h1 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.hero-events .dek {
+  font-size: clamp(17px, 1.4vw, 21px);
+  color: var(--ink-3);
+  max-width: 62ch;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+/* Filter pills */
+.ev-filters {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  padding: 1.25rem 0 1.5rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  align-items: center;
+}
+.ev-filters .lbl {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 0.75rem;
+}
+.ev-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.55rem 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  text-transform: uppercase;
+}
+.ev-pill:hover { color: var(--ink); border-color: var(--ink); }
+.ev-pill.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.ev-pill .count {
+  font-size: 10px; color: var(--muted); letter-spacing: 0.06em;
+  padding-left: 6px; border-left: 1px solid currentColor; opacity: 0.6;
+}
+.ev-pill.active .count { color: var(--paper); opacity: 0.65; }
+
+/* Featured event card */
+.ev-featured {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  min-height: 420px;
+}
+.ev-featured::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 90% 100%, rgba(0,82,255,0.05), transparent 55%);
+  pointer-events: none;
+}
+.ev-f-main {
+  padding: clamp(2rem, 3.5vw, 3.25rem);
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 2rem;
+  position: relative;
+}
+.ev-f-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.ev-f-tag .dot {
+  width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+  animation: ev-pulse 1.8s infinite;
+}
+@keyframes ev-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.4); }
+}
+.ev-f-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.ev-f-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+.ev-f-dek {
+  font-size: 15.5px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  max-width: 52ch;
+}
+.ev-f-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+
+.ev-f-side {
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(2rem, 3.5vw, 3.25rem);
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 1.5rem;
+  position: relative;
+}
+.ev-f-side::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 100%;
+  opacity: 0.5; pointer-events: none;
+}
+.ev-f-date-display {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  position: relative; z-index: 2;
+}
+.ev-f-date-display .d {
+  font-family: var(--font-display);
+  font-size: clamp(96px, 14vw, 176px);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  font-weight: 500;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+.ev-f-date-display .m {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+.ev-f-meta {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  padding-top: 1.5rem;
+  position: relative; z-index: 2;
+}
+.ev-f-meta-cell { padding: 0.5rem 1rem 0.5rem 0; border-right: 1px solid rgba(255,255,255,0.12); }
+.ev-f-meta-cell:nth-child(2) { border-right: 0; padding-left: 1rem; }
+.ev-f-meta-cell:nth-child(3), .ev-f-meta-cell:nth-child(4) { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.12); }
+.ev-f-meta-cell .k {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+.ev-f-meta-cell .v {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--paper);
+}
+.ev-f-meta-cell .v.accent { color: #4A8BFF; }
+
+@media (max-width: 900px) {
+  .ev-featured { grid-template-columns: 1fr; }
+  .ev-f-date-display .d { font-size: clamp(80px, 20vw, 120px); }
+}
+
+/* Full events table */
+.ev-section-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ink);
+}
+.ev-section-head .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ev-section-head .title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.ev-section-head .title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+}
+.ev-section-head .meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ev-list {
+  border-top: 1px solid var(--line);
+}
+.ev-row {
+  display: grid;
+  grid-template-columns: 110px 1fr auto auto auto;
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+  transition: background 0.25s var(--ease), padding 0.3s var(--ease);
+  position: relative;
+  cursor: pointer;
+}
+.ev-row:hover {
+  background: var(--paper-3);
+  padding-left: clamp(0.75rem, 2vw, 1.25rem);
+  padding-right: clamp(0.75rem, 2vw, 1.25rem);
+}
+.ev-row::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 0.3s var(--ease);
+}
+.ev-row:hover::before { transform: scaleY(1); }
+.ev-row.hidden { display: none; }
+
+.ev-date {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  line-height: 0.95;
+}
+.ev-date .d {
+  display: block;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.ev-date .m {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.ev-body { min-width: 0; }
+.ev-name {
+  font-family: var(--font-display);
+  font-size: 18.5px;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.ev-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.ev-sub .sep { color: var(--line-strong); padding: 0 6px; }
+
+.ev-format-tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0.35rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  background: var(--paper);
+  white-space: nowrap;
+}
+.ev-format-tag .g {
+  width: 7px; height: 7px; background: var(--ink-3); border-radius: 1px;
+}
+.ev-format-tag.inperson .g { background: var(--accent); }
+.ev-format-tag.virtual .g { background: #B84C02; border-radius: 50%; }
+.ev-format-tag.talk .g { width: 0; height: 0; background: transparent; border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 7px solid var(--ink); border-radius: 0; }
+.ev-format-tag.client .g { background: var(--muted); transform: rotate(45deg); }
+
+.ev-status {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0.35rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.ev-status .dot { width: 6px; height: 6px; border-radius: 50%; }
+.ev-status.open { color: var(--accent); border-color: rgba(0,82,255,0.28); background: rgba(0,82,255,0.06); }
+.ev-status.open .dot { background: var(--accent); }
+.ev-status.waitlist { color: #B84C02; border-color: rgba(184,76,2,0.28); background: rgba(184,76,2,0.06); }
+.ev-status.waitlist .dot { background: #B84C02; }
+.ev-status.closed { color: var(--muted); border-color: var(--line-strong); background: var(--paper-2); }
+.ev-status.closed .dot { background: var(--muted); }
+.ev-status.replay { color: var(--ink); border-color: var(--line-strong); background: var(--paper); }
+.ev-status.replay .dot { background: var(--ink); }
+
+.ev-cta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+  transition: gap 0.25s var(--ease);
+}
+.ev-cta:hover { gap: 10px; }
+
+@media (max-width: 900px) {
+  .ev-row { grid-template-columns: 90px 1fr; grid-template-rows: auto auto; gap: 0.75rem 1rem; align-items: start; }
+  .ev-date { grid-row: 1 / 3; }
+  .ev-body { grid-column: 2; }
+  .ev-format-tag, .ev-status, .ev-cta { grid-column: 2; justify-self: start; }
+  .ev-status { grid-row: 2; }
+  .ev-format-tag, .ev-cta { margin-top: 0.5rem; }
+  .ev-date .d { font-size: 38px; }
+}
+
+/* Past events */
+.past-block {
+  margin-top: clamp(4rem, 7vw, 6rem);
+  padding-top: clamp(3rem, 5vw, 4rem);
+  border-top: 1px solid var(--line);
+}
+.past-toggle {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 1rem; flex-wrap: wrap;
+  padding-bottom: 1.25rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.25s var(--ease);
+}
+.past-toggle:hover { color: var(--accent); }
+.past-toggle .lbl {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.past-toggle h3 {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.past-toggle h3 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+}
+.past-toggle .tog-arrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  transition: transform 0.3s var(--ease);
+}
+.past-block.open .past-toggle .tog-arrow { transform: rotate(90deg); }
+
+.past-grid {
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  margin-top: 2rem;
+}
+.past-block.open .past-grid { display: grid; }
+.past-card {
+  padding: 1.75rem 1.5rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink);
+  display: flex; flex-direction: column; gap: 0.65rem;
+  min-height: 180px;
+  transition: background 0.25s var(--ease);
+  position: relative;
+}
+.past-card:hover { background: var(--paper-3); }
+.past-card .p-date {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.past-card .p-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  flex: 1;
+}
+.past-card .p-foot {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--line);
+}
+.past-card .p-foot .dur { color: var(--muted); text-transform: uppercase; }
+
+@media (max-width: 900px) {
+  .past-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .past-grid { grid-template-columns: 1fr; }
+}
+
+/* Submit talk form */
+.talk-form-section {
+  margin-top: clamp(5rem, 8vw, 7rem);
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  border-top: 1px solid var(--ink);
+  background: var(--paper-3);
+}
+.talk-form-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.talk-intro h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+.talk-intro h2 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+}
+.talk-intro p {
+  font-size: 15.5px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  max-width: 42ch;
+  margin-bottom: 1.5rem;
+}
+.talk-intro ul { list-style: none; padding: 0; margin: 0; }
+.talk-intro ul li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--line);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  display: flex; gap: 12px;
+}
+.talk-intro ul li::before {
+  content: '◆'; color: var(--accent); font-size: 9px;
+  padding-top: 3px;
+}
+
+.talk-form {
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+.talk-form h3 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.talk-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+.talk-row.full { grid-template-columns: 1fr; }
+.talk-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.talk-field label .req { color: var(--accent); margin-left: 4px; }
+.talk-field input, .talk-field select, .talk-field textarea {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.talk-field input:focus, .talk-field select:focus, .talk-field textarea:focus {
+  outline: 0; border-color: var(--accent); background: var(--paper);
+}
+.talk-field textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
+.talk-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.talk-chip {
+  display: inline-flex; align-items: center;
+  padding: 0.5rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+.talk-chip input { position: absolute; opacity: 0; pointer-events: none; }
+.talk-chip:hover { color: var(--ink); border-color: var(--ink); }
+.talk-chip:has(input:checked) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.talk-submit {
+  margin-top: 1.5rem;
+  display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+}
+.talk-submit .note {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .talk-form-wrap { grid-template-columns: 1fr; }
+  .talk-row { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero hero-events">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ Autopilot Labs · Events &amp; talks</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>No. 007 — What we're running, where we'll be</span></div>
+      </div>
+
+      <h1 class="reveal delay-1">
+        Events, talks, and <em>workflow audits</em> in the open.
+      </h1>
+
+      <p class="dek reveal delay-2">
+        Where to meet us, where to learn from us, what we're running in Melbourne and abroad. Small rooms, honest numbers, and AI agents you can actually see finish a job — not a demo reel.
+      </p>
+
+      <!-- Filter pills -->
+      <div class="ev-filters reveal delay-3" role="tablist" aria-label="Filter events">
+        <span class="lbl">Filter —</span>
+        <button class="ev-pill active" data-filter="all">All <span class="count">11</span></button>
+        <button class="ev-pill" data-filter="inperson">In-person <span class="count">5</span></button>
+        <button class="ev-pill" data-filter="virtual">Virtual <span class="count">3</span></button>
+        <button class="ev-pill" data-filter="talk">Conference talks <span class="count">2</span></button>
+        <button class="ev-pill" data-filter="client">Client-only <span class="count">1</span></button>
+      </div>
+
+      <!-- Featured event -->
+      <article class="ev-featured reveal delay-3" aria-label="Featured upcoming event">
+        <div class="ev-f-main">
+          <div>
+            <span class="ev-f-tag"><span class="dot"></span> Featured · Flagship breakfast · Melbourne</span>
+            <h2 class="ev-f-title">The AI Automation Breakfast — what we <em>actually</em> shipped this quarter.</h2>
+            <p class="ev-f-dek">
+              A two-hour, closed-room breakfast for Melbourne operators. We'll walk three production AI agents live — a legal discovery agent, a clinic intake agent, and a reconciliation agent — show the receipts, the SLA credits, and the ugly bits we had to fix. No slides about "AI transformation." Just the last 90 days, numbers up, questions welcome. Breakfast by Higher Ground.
+            </p>
+          </div>
+          <div class="ev-f-actions">
+            <a href="#rsvp" class="btn btn-primary btn-lg">Reserve a seat <span class="arrow">↗</span></a>
+            <a href="#full-list" class="btn btn-lg">See all events</a>
+            <span style="font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;">Free · Operators only</span>
+          </div>
+        </div>
+        <aside class="ev-f-side">
+          <div class="ev-f-date-display">
+            <span class="d">12</span>
+            <span class="m">May 2026 · Tuesday</span>
+          </div>
+          <div class="ev-f-meta">
+            <div class="ev-f-meta-cell">
+              <div class="k">◆ Time</div>
+              <div class="v">08:00 AEST</div>
+            </div>
+            <div class="ev-f-meta-cell">
+              <div class="k">◆ Duration</div>
+              <div class="v">2 hours</div>
+            </div>
+            <div class="ev-f-meta-cell">
+              <div class="k">◆ Location</div>
+              <div class="v">Higher Ground<br><span style="font-size:12px;color:rgba(255,255,255,0.55);font-family:var(--font-mono);letter-spacing:0.06em;">650 Little Bourke St</span></div>
+            </div>
+            <div class="ev-f-meta-cell">
+              <div class="k">◆ Seats</div>
+              <div class="v accent">34 / 40 claimed</div>
+            </div>
+          </div>
+        </aside>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========== FULL EVENTS LIST ========== -->
+  <section class="section" id="full-list">
+    <div class="container">
+      <div class="ev-section-head reveal">
+        <span class="num">§ 01 — Upcoming</span>
+        <h2 class="title">The full <em>calendar</em>, through Q3.</h2>
+        <span class="meta">Updated weekly · All times local</span>
+      </div>
+
+      <div class="ev-list reveal delay-1" id="ev-list">
+
+        <!-- Event 1: Melbourne breakfast (featured, in-person) -->
+        <article class="ev-row" data-type="inperson">
+          <div class="ev-date"><span class="d">12</span><span class="m">May · Tue</span></div>
+          <div class="ev-body">
+            <div class="ev-name">AI Automation Breakfast — Melbourne</div>
+            <div class="ev-sub">Higher Ground · 650 Little Bourke St <span class="sep">·</span> 08:00–10:00 AEST <span class="sep">·</span> Operators only</div>
+          </div>
+          <span class="ev-format-tag inperson"><span class="g"></span> In-person</span>
+          <span class="ev-status open"><span class="dot"></span> Open · 6 left</span>
+          <a href="#rsvp" class="ev-cta">RSVP <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 2: Webinar intake clinic -->
+        <article class="ev-row" data-type="virtual">
+          <div class="ev-date"><span class="d">21</span><span class="m">May · Thu</span></div>
+          <div class="ev-body">
+            <div class="ev-name">Webinar — Intake agents in a real clinic (live tour of the ops console)</div>
+            <div class="ev-sub">Zoom <span class="sep">·</span> 13:00–14:00 AEST <span class="sep">·</span> With —, [healthcare client]</div>
+          </div>
+          <span class="ev-format-tag virtual"><span class="g"></span> Virtual</span>
+          <span class="ev-status open"><span class="dot"></span> Open</span>
+          <a href="#rsvp" class="ev-cta">Register <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 3: Sydney breakfast -->
+        <article class="ev-row" data-type="inperson">
+          <div class="ev-date"><span class="d">04</span><span class="m">Jun · Thu</span></div>
+          <div class="ev-body">
+            <div class="ev-name">AI Automation Breakfast — Sydney</div>
+            <div class="ev-sub">The Grounds of the City · 500 George St <span class="sep">·</span> 07:30–09:30 AEST <span class="sep">·</span> Operators only</div>
+          </div>
+          <span class="ev-format-tag inperson"><span class="g"></span> In-person</span>
+          <span class="ev-status waitlist"><span class="dot"></span> Waitlist</span>
+          <a href="#rsvp" class="ev-cta">Join list <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 4: SXSW Sydney talk -->
+        <article class="ev-row" data-type="talk">
+          <div class="ev-date"><span class="d">09</span><span class="m">Jun · Tue</span></div>
+          <div class="ev-body">
+            <div class="ev-name">SXSW Sydney — "Outcome pricing: what happens when the agency eats the token bill"</div>
+            <div class="ev-sub">ICC Sydney · Darling Harbour <span class="sep">·</span> 14:30 AEST <span class="sep">·</span> 40-min talk + Q&amp;A</div>
+          </div>
+          <span class="ev-format-tag talk"><span class="g"></span> Conference talk</span>
+          <span class="ev-status open"><span class="dot"></span> Open · Badge req.</span>
+          <a href="#" class="ev-cta">Schedule <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 5: Webinar finance -->
+        <article class="ev-row" data-type="virtual">
+          <div class="ev-date"><span class="d">18</span><span class="m">Jun · Thu</span></div>
+          <div class="ev-body">
+            <div class="ev-name">Webinar — Closing the books with a reconciliation agent (reconciliation teardown)</div>
+            <div class="ev-sub">Zoom <span class="sep">·</span> 12:00–13:00 AEST <span class="sep">·</span> With —, VP Finance</div>
+          </div>
+          <span class="ev-format-tag virtual"><span class="g"></span> Virtual</span>
+          <span class="ev-status open"><span class="dot"></span> Open</span>
+          <a href="#rsvp" class="ev-cta">Register <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 6: Brisbane breakfast -->
+        <article class="ev-row" data-type="inperson">
+          <div class="ev-date"><span class="d">25</span><span class="m">Jun · Thu</span></div>
+          <div class="ev-body">
+            <div class="ev-name">AI Automation Breakfast — Brisbane</div>
+            <div class="ev-sub">Gerard's Bistro · James St <span class="sep">·</span> 07:30–09:30 AEST <span class="sep">·</span> First Brisbane edition</div>
+          </div>
+          <span class="ev-format-tag inperson"><span class="g"></span> In-person</span>
+          <span class="ev-status open"><span class="dot"></span> Open · 22 left</span>
+          <a href="#rsvp" class="ev-cta">RSVP <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 7: Legal roundtable client-only -->
+        <article class="ev-row" data-type="client">
+          <div class="ev-date"><span class="d">02</span><span class="m">Jul · Thu</span></div>
+          <div class="ev-body">
+            <div class="ev-name">Legal AI roundtable — privilege flags, discovery agents, Relativity in 2026</div>
+            <div class="ev-sub">Private room, Melbourne CBD <span class="sep">·</span> 17:00–19:30 AEST <span class="sep">·</span> By invitation</div>
+          </div>
+          <span class="ev-format-tag client"><span class="g"></span> Client-only</span>
+          <span class="ev-status closed"><span class="dot"></span> Invite-only</span>
+          <a href="#rsvp" class="ev-cta">Request invite <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 8: Webinar AI agents for real estate -->
+        <article class="ev-row" data-type="virtual">
+          <div class="ev-date"><span class="d">14</span><span class="m">Jul · Tue</span></div>
+          <div class="ev-body">
+            <div class="ev-name">Webinar — Listing agents, lease tagging, and the 98.8% SLA story</div>
+            <div class="ev-sub">Zoom <span class="sep">·</span> 11:00–12:00 AEST <span class="sep">·</span> With [real-estate client] ops lead</div>
+          </div>
+          <span class="ev-format-tag virtual"><span class="g"></span> Virtual</span>
+          <span class="ev-status open"><span class="dot"></span> Open</span>
+          <a href="#rsvp" class="ev-cta">Register <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 9: Melbourne second breakfast -->
+        <article class="ev-row" data-type="inperson">
+          <div class="ev-date"><span class="d">28</span><span class="m">Jul · Tue</span></div>
+          <div class="ev-body">
+            <div class="ev-name">AI Automation Breakfast — Melbourne (Round II)</div>
+            <div class="ev-sub">Higher Ground · 650 Little Bourke St <span class="sep">·</span> 08:00–10:00 AEST <span class="sep">·</span> New workflows, same format</div>
+          </div>
+          <span class="ev-format-tag inperson"><span class="g"></span> In-person</span>
+          <span class="ev-status open"><span class="dot"></span> Open · 38 left</span>
+          <a href="#rsvp" class="ev-cta">RSVP <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 10: London conference talk -->
+        <article class="ev-row" data-type="talk">
+          <div class="ev-date"><span class="d">13</span><span class="m">Aug · Thu</span></div>
+          <div class="ev-body">
+            <div class="ev-name">AI Summit London — "Vertical agents: why depth beats horizontal platforms"</div>
+            <div class="ev-sub">ExCeL London · Royal Victoria Dock <span class="sep">·</span> 10:15 BST <span class="sep">·</span> 30-min keynote</div>
+          </div>
+          <span class="ev-format-tag talk"><span class="g"></span> Conference talk</span>
+          <span class="ev-status open"><span class="dot"></span> Open · Badge req.</span>
+          <a href="#" class="ev-cta">Schedule <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Event 11: Sydney second breakfast -->
+        <article class="ev-row" data-type="inperson">
+          <div class="ev-date"><span class="d">27</span><span class="m">Aug · Thu</span></div>
+          <div class="ev-body">
+            <div class="ev-name">AI Automation Breakfast — Sydney (Round II)</div>
+            <div class="ev-sub">The Grounds of the City · 500 George St <span class="sep">·</span> 07:30–09:30 AEST <span class="sep">·</span> Operators only</div>
+          </div>
+          <span class="ev-format-tag inperson"><span class="g"></span> In-person</span>
+          <span class="ev-status open"><span class="dot"></span> Open · 40 left</span>
+          <a href="#rsvp" class="ev-cta">RSVP <span aria-hidden="true">→</span></a>
+        </article>
+
+      </div>
+
+      <!-- ========== PAST EVENTS ========== -->
+      <div class="past-block reveal" id="past">
+        <div class="past-toggle" role="button" tabindex="0" aria-expanded="false">
+          <div>
+            <div class="lbl">§ 02 — Archive</div>
+            <h3>Past events &nbsp;<em>— watch replays (12)</em></h3>
+          </div>
+          <span class="tog-arrow">► Expand</span>
+        </div>
+        <div class="past-grid">
+          <a href="#" class="past-card">
+            <div class="p-date">27 Mar 2026 · Webinar</div>
+            <div class="p-title">Benchmarking an AI triage agent against a 12-person claims team</div>
+            <div class="p-foot"><span>Replay ↗</span><span class="dur">48 min</span></div>
+          </a>
+          <a href="#" class="past-card">
+            <div class="p-date">06 Mar 2026 · Melbourne</div>
+            <div class="p-title">AI Automation Breakfast · Round I — the launch edition</div>
+            <div class="p-foot"><span>Replay + notes ↗</span><span class="dur">2 hr</span></div>
+          </a>
+          <a href="#" class="past-card">
+            <div class="p-date">20 Feb 2026 · Webinar</div>
+            <div class="p-title">HR agent walk-through: 4.1 days to 11 minutes on candidate screening</div>
+            <div class="p-foot"><span>Replay ↗</span><span class="dur">52 min</span></div>
+          </a>
+          <a href="#" class="past-card">
+            <div class="p-date">05 Feb 2026 · Sydney</div>
+            <div class="p-title">Client roundtable — legal discovery agents across 3 firms</div>
+            <div class="p-foot"><span>Notes only ↗</span><span class="dur">Chatham</span></div>
+          </a>
+          <a href="#" class="past-card">
+            <div class="p-date">14 Jan 2026 · Conf talk</div>
+            <div class="p-title">Pause Fest · "What outcome pricing looks like on a balance sheet"</div>
+            <div class="p-foot"><span>Replay ↗</span><span class="dur">34 min</span></div>
+          </a>
+          <a href="#" class="past-card">
+            <div class="p-date">28 Nov 2025 · Webinar</div>
+            <div class="p-title">The anatomy of a free workflow audit — start to signed SLA</div>
+            <div class="p-foot"><span>Replay + deck ↗</span><span class="dur">1 hr</span></div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SUBMIT A TALK REQUEST ========== -->
+  <section class="talk-form-section" id="rsvp">
+    <div class="container">
+      <div class="talk-form-wrap reveal">
+        <div class="talk-intro">
+          <div class="eyebrow accent" style="margin-bottom: 1.5rem;">§ 03 — Invite us</div>
+          <h2>Invite an Autopilot Labs <em>speaker</em>.</h2>
+          <p>Running a conference, a meetup, a client dinner, a vertical roundtable? Our founders and a handful of our senior engineers speak on AI agents, outcome pricing, and what it actually takes to put automation in production. We accept about one in four requests — honest audiences, real operators preferred.</p>
+          <ul>
+            <li>Keynotes, panels, fireside chats, or live agent tear-downs</li>
+            <li>Topics: AI automation, outcome pricing, vertical agents, SLA design</li>
+            <li>AU &amp; NZ free · elsewhere if the crowd is right</li>
+            <li>Lead time: 4 weeks minimum · we'll reply within 3 business days</li>
+          </ul>
+        </div>
+
+        <form class="talk-form" novalidate>
+          <h3>◆ Speaker request form</h3>
+
+          <div class="talk-row">
+            <div class="talk-field">
+              <label for="t-name">Your name<span class="req">*</span></label>
+              <input id="t-name" type="text" placeholder="Jamie Chen" required>
+            </div>
+            <div class="talk-field">
+              <label for="t-role">Role / org<span class="req">*</span></label>
+              <input id="t-role" type="text" placeholder="Program chair, AI Summit Sydney" required>
+            </div>
+          </div>
+
+          <div class="talk-row">
+            <div class="talk-field">
+              <label for="t-email">Work email<span class="req">*</span></label>
+              <input id="t-email" type="email" placeholder="jamie@summit.example" required>
+            </div>
+            <div class="talk-field">
+              <label for="t-event">Event name<span class="req">*</span></label>
+              <input id="t-event" type="text" placeholder="AI Summit Sydney 2026" required>
+            </div>
+          </div>
+
+          <div class="talk-row">
+            <div class="talk-field">
+              <label for="t-date">Event date</label>
+              <input id="t-date" type="date">
+            </div>
+            <div class="talk-field">
+              <label for="t-city">City / format</label>
+              <input id="t-city" type="text" placeholder="Sydney · In-person · 400 seats">
+            </div>
+          </div>
+
+          <div class="talk-row full">
+            <div class="talk-field">
+              <label>Format<span class="req">*</span></label>
+              <div class="talk-chips">
+                <label class="talk-chip"><input type="radio" name="format" value="keynote"><span>Keynote</span></label>
+                <label class="talk-chip"><input type="radio" name="format" value="panel"><span>Panel</span></label>
+                <label class="talk-chip"><input type="radio" name="format" value="fireside"><span>Fireside</span></label>
+                <label class="talk-chip"><input type="radio" name="format" value="teardown"><span>Live agent teardown</span></label>
+                <label class="talk-chip"><input type="radio" name="format" value="workshop"><span>Workshop</span></label>
+                <label class="talk-chip"><input type="radio" name="format" value="other"><span>Other</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="talk-row full">
+            <div class="talk-field">
+              <label for="t-topic">Topic you'd like us to cover<span class="req">*</span></label>
+              <textarea id="t-topic" placeholder="e.g. Running vertical AI agents under an SLA. Real failure modes. How an agency eats the token bill." required></textarea>
+            </div>
+          </div>
+
+          <div class="talk-submit">
+            <button type="submit" class="btn btn-primary btn-lg">Send request <span class="arrow">↗</span></button>
+            <span class="note">◆ We reply within 3 business days. Honest audiences preferred.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="endcta">
+    <div class="container">
+      <div class="endcta-wrap reveal">
+        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">Can't make a date? Start with an audit.</div>
+        <h2>Two weeks. One workflow.<br><em>No obligation.</em></h2>
+        <p class="dek">If none of the dates fit, skip the room and book a private workflow audit. Same receipts, just in your office. We spend 10 working days mapping your team's work and tell you exactly which AI agents we can ship.</p>
+        <div class="actions">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
+          <a href="process.html" class="btn btn-lg">How it works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+// Filter pills
+(function() {
+  const pills = document.querySelectorAll('.ev-pill');
+  const rows = document.querySelectorAll('#ev-list .ev-row');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      const f = pill.dataset.filter;
+      rows.forEach(r => {
+        if (f === 'all' || r.dataset.type === f) {
+          r.classList.remove('hidden');
+        } else {
+          r.classList.add('hidden');
+        }
+      });
+    });
+  });
+})();
+
+// Past events toggle
+(function() {
+  const block = document.getElementById('past');
+  if (!block) return;
+  const tog = block.querySelector('.past-toggle');
+  const arrow = block.querySelector('.tog-arrow');
+  const toggle = () => {
+    const open = block.classList.toggle('open');
+    tog.setAttribute('aria-expanded', open);
+    arrow.textContent = open ? '▼ Collapse' : '► Expand';
+  };
+  tog.addEventListener('click', toggle);
+  tog.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  });
+})();
+</script>
+</body>
+</html>

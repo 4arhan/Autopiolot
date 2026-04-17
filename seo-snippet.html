@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Autopilot Labs — SEO & metadata snippets (reference)</title>
+  <meta name="robots" content="noindex">
+  <style>
+    :root {
+      --paper: #FFFFFF;
+      --ink: #14181A;
+      --muted: #5C5A54;
+      --green: #14402F;
+      --rule: rgba(20,24,26,0.14);
+    }
+    html, body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.55;
+    }
+    main { max-width: 900px; margin: 0 auto; padding: 72px 32px 160px; }
+    h1 { font-size: 40px; letter-spacing: -1px; margin: 0 0 8px; }
+    h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin: 56px 0 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+      font-weight: 600;
+    }
+    .lede { color: var(--muted); font-size: 17px; max-width: 62ch; }
+    .lede code {
+      background: rgba(20,64,47,0.08);
+      color: var(--green);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    pre {
+      background: #11140F;
+      color: #E9E4D3;
+      border-radius: 6px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.55;
+      margin: 0 0 8px;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+      color: inherit;
+    }
+    .note { font-size: 13px; color: var(--muted); margin: 0 0 24px; }
+    .divider {
+      border: 0;
+      border-top: 1px solid var(--rule);
+      margin: 48px 0 0;
+    }
+    .tag-green { color: #9BD4B8; }
+    .tag-name  { color: #E5B86A; }
+    .tag-attr  { color: #C7C2B0; }
+    .tag-str   { color: #9BD4B8; }
+    .tag-comment { color: #6F7268; font-style: italic; }
+  </style>
+</head>
+<body>
+<main>
+
+  <h1>Autopilot Labs — SEO & metadata kit</h1>
+  <p class="lede">
+    Reference only. Paste the relevant block into each page's <code>&lt;head&gt;</code> before
+    <code>&lt;/head&gt;</code>. One block per page; the JSON-LD Organization block at the bottom
+    goes on the home page only. OG image defaults to <code>/assets/og-default.svg</code> — swap
+    to per-page raster OG cards (1200&times;630 PNG/JPG) once they exist.
+  </p>
+  <p class="note">
+    Conventions: canonical URLs use the <code>.html</code> path except the home page
+    (<code>https://autopilotlabs.io/</code>). Descriptions are 140–160 chars, hand-written per page.
+    All OG images are absolute URLs. <code>twitter:card</code> is always
+    <code>summary_large_image</code>.
+  </p>
+
+
+  <!-- ========== index.html ========== -->
+  <h2>index.html &mdash; Home</h2>
+  <pre><code>&lt;!-- Primary meta --&gt;
+&lt;meta name="description" content="Autopilot Labs is a Melbourne AI workflow agency that ships production agents with outcome-based pricing. Thirteen verticals. Fixed scope. Measurable handoffs."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/"&gt;
+
+&lt;!-- Open Graph --&gt;
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Autopilot Labs — Agents that finish the job."&gt;
+&lt;meta property="og:description" content="A Melbourne agency building production AI agents across thirteen verticals. Outcome pricing, fixed scope, measurable handoffs."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;!-- Twitter --&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Autopilot Labs — Agents that finish the job."&gt;
+&lt;meta name="twitter:description" content="Melbourne AI workflow agency. Thirteen verticals, outcome pricing, production agents that ship."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== solutions.html ========== -->
+  <h2>solutions.html &mdash; Verticals & offers</h2>
+  <pre><code>&lt;meta name="description" content="Eight Autopilot Labs verticals: sales ops, support triage, claims, underwriting, clinical intake, logistics dispatch, compliance review, and back-office finance. See the scope of each."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/solutions.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Solutions — Thirteen verticals, one delivery model"&gt;
+&lt;meta property="og:description" content="Where Autopilot Labs ships: sales, support, claims, underwriting, clinical intake, dispatch, compliance, and finance ops. Scoped by outcome, not by seat."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/solutions.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Solutions — Eight Autopilot Labs verticals"&gt;
+&lt;meta name="twitter:description" content="Sales, support, claims, underwriting, clinical intake, dispatch, compliance, finance ops. Scoped by outcome."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== process.html ========== -->
+  <h2>process.html &mdash; How we work</h2>
+  <pre><code>&lt;meta name="description" content="The Autopilot Labs engagement: a two-week diagnostic, a signed outcome contract, six to ten weeks to production, and a 90-day reliability warranty on every agent we ship."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/process.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Process — Diagnostic, contract, ship, warranty"&gt;
+&lt;meta property="og:description" content="Two-week diagnostic. Signed outcome contract. Six to ten weeks to production. 90-day warranty. How Autopilot Labs engagements actually run."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/process.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Process — Diagnostic to production in 6–10 weeks"&gt;
+&lt;meta name="twitter:description" content="Two-week diagnostic, outcome contract, production handoff, 90-day warranty."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== pricing.html ========== -->
+  <h2>pricing.html &mdash; Outcome pricing</h2>
+  <pre><code>&lt;meta name="description" content="Autopilot Labs prices on outcomes, not seats or tokens. Three tiers: Pilot, Program, and Partner. Fixed fee plus a success component tied to a metric you name upfront."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/pricing.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Pricing — Paid on the outcome, not the seat"&gt;
+&lt;meta property="og:description" content="Pilot, Program, Partner. A fixed fee plus a success component tied to the metric you name. No seat math, no token billing, no surprises."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/pricing.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Autopilot Labs pricing — outcome-based, three tiers"&gt;
+&lt;meta name="twitter:description" content="Pilot, Program, Partner. Fixed fee plus success component tied to a named metric."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== contact.html ========== -->
+  <h2>contact.html &mdash; Start a conversation</h2>
+  <pre><code>&lt;meta name="description" content="Talk to Autopilot Labs about a diagnostic. Brief us on the workflow, the team running it, and the metric you want to move. We reply within one business day, Melbourne time."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/contact.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Contact — Brief us on the workflow"&gt;
+&lt;meta property="og:description" content="Tell us the workflow, the team running it, and the metric you want to move. One business day reply, Melbourne time."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/contact.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Contact Autopilot Labs"&gt;
+&lt;meta name="twitter:description" content="Brief us on a workflow. We reply within one business day, Melbourne time."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== cases.html ========== -->
+  <h2>cases.html &mdash; Case studies</h2>
+  <pre><code>&lt;meta name="description" content="Autopilot Labs case studies: the agent, the baseline, the handoff, and the number that moved. Anonymised where required, dated, and written with the client's numbers attached."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/cases.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Cases — Baselines, handoffs, and numbers that moved"&gt;
+&lt;meta property="og:description" content="Real Autopilot Labs engagements with the client's numbers attached. Agent, baseline, handoff, outcome. Anonymised where the contract required."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/cases.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Autopilot Labs cases — the numbers that moved"&gt;
+&lt;meta name="twitter:description" content="Engagements with baselines, handoffs, and the metric that moved."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== journal.html ========== -->
+  <h2>journal.html &mdash; Writing</h2>
+  <pre><code>&lt;meta name="description" content="The Autopilot Labs journal: field notes on agent reliability, evaluation, outcome pricing, and the economics of running production AI. Written by the people doing the work."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/journal.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Journal — Field notes from the agent floor"&gt;
+&lt;meta property="og:description" content="Reliability, evaluation, outcome pricing, and the economics of production AI. Notes from the people doing the work."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/journal.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Autopilot Labs journal"&gt;
+&lt;meta name="twitter:description" content="Field notes on agent reliability, evals, and outcome pricing."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== about.html ========== -->
+  <h2>about.html &mdash; The firm</h2>
+  <pre><code>&lt;meta name="description" content="Autopilot Labs was founded in 2024 by Elena Okafor, Ravi Chen, and Priya Walsh. A small Melbourne firm that treats agent delivery as craft, not platform sales."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/about.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="About — A small Melbourne firm, founded 2024"&gt;
+&lt;meta property="og:description" content="Founded by Elena Okafor, Ravi Chen, and Priya Walsh. Agent delivery as craft, not platform sales."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/about.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="About Autopilot Labs"&gt;
+&lt;meta name="twitter:description" content="Founded 2024 in Melbourne by Okafor, Chen, and Walsh. Agent delivery as craft."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== press.html ========== -->
+  <h2>press.html &mdash; Media & press kit</h2>
+  <pre><code>&lt;meta name="description" content="Autopilot Labs press kit: company background, founder bios, brand marks, high-resolution imagery, and a direct line to media inquiries. Embargoed briefings on request."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/press.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Press — Kit, bios, and media contact"&gt;
+&lt;meta property="og:description" content="Company background, founder bios, brand marks, and high-resolution imagery. Embargoed briefings on request."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/press.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Autopilot Labs press kit"&gt;
+&lt;meta name="twitter:description" content="Founder bios, brand marks, imagery, and a direct line for media."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== careers.html ========== -->
+  <h2>careers.html &mdash; Who we hire</h2>
+  <pre><code>&lt;meta name="description" content="Careers at Autopilot Labs: a small bench of agent engineers, evaluation leads, and delivery partners. We hire for taste, rigour, and the patience to ship production systems."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/careers.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Careers — Agent engineers, eval leads, delivery partners"&gt;
+&lt;meta property="og:description" content="A small bench hiring for taste, rigour, and the patience to ship production systems. Open roles and how we run interviews."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/careers.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Careers at Autopilot Labs"&gt;
+&lt;meta name="twitter:description" content="Agent engineers, eval leads, delivery partners. Melbourne-based, remote-friendly."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== manifesto.html ========== -->
+  <h2>manifesto.html &mdash; What we believe</h2>
+  <pre><code>&lt;meta name="description" content="The Autopilot Labs manifesto. Twelve positions on agents, evaluation, pricing, and the responsibility of shipping autonomous software to people whose jobs depend on it."&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/manifesto.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="article"&gt;
+&lt;meta property="og:title" content="Manifesto — Twelve positions on shipping agents"&gt;
+&lt;meta property="og:description" content="Twelve positions on agents, evaluation, pricing, and the responsibility of shipping autonomous software."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/manifesto.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="The Autopilot Labs manifesto"&gt;
+&lt;meta name="twitter:description" content="Twelve positions on agents, evaluation, pricing, and shipping autonomous software."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <!-- ========== 404.html ========== -->
+  <h2>404.html &mdash; Not found</h2>
+  <pre><code>&lt;meta name="description" content="The page you asked for is not here. Try the home page, solutions, or the journal index — or email hello@autopilotlabs.io and we will point you at what you were looking for."&gt;
+&lt;meta name="robots" content="noindex"&gt;
+&lt;link rel="canonical" href="https://autopilotlabs.io/404.html"&gt;
+
+&lt;meta property="og:site_name" content="Autopilot Labs"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:title" content="Not found — Autopilot Labs"&gt;
+&lt;meta property="og:description" content="The page you asked for is not here. Try the home page, solutions, or the journal index."&gt;
+&lt;meta property="og:url" content="https://autopilotlabs.io/404.html"&gt;
+&lt;meta property="og:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:title" content="Not found — Autopilot Labs"&gt;
+&lt;meta name="twitter:description" content="The page you asked for is not here."&gt;
+&lt;meta name="twitter:image" content="https://autopilotlabs.io/assets/og-default.svg"&gt;</code></pre>
+
+
+  <hr class="divider">
+
+
+  <!-- ========== JSON-LD (home page only) ========== -->
+  <h2>JSON-LD — Organization (index.html only)</h2>
+  <p class="note">
+    Add a single <code>&lt;script type="application/ld+json"&gt;</code> block to the home page
+    only. Do not duplicate on subpages.
+  </p>
+  <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Autopilot Labs",
+  "legalName": "Autopilot Labs Pty Ltd",
+  "description": "Autopilot Labs is a Melbourne AI workflow agency that ships production agents across thirteen verticals, priced on the outcomes it moves.",
+  "url": "https://autopilotlabs.io",
+  "logo": "https://autopilotlabs.io/assets/logomark.svg",
+  "image": "https://autopilotlabs.io/assets/og-default.svg",
+  "foundingDate": "2024-03-01",
+  "founder": [
+    { "@type": "Person", "name": "Elena Okafor" },
+    { "@type": "Person", "name": "Ravi Chen" },
+    { "@type": "Person", "name": "Priya Walsh" }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Level 14, 459 Collins Street",
+    "addressLocality": "Melbourne",
+    "addressRegion": "VIC",
+    "postalCode": "3000",
+    "addressCountry": "AU"
+  },
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "contactType": "business inquiries",
+    "email": "hello@autopilotlabs.io",
+    "areaServed": "AU",
+    "availableLanguage": ["en"]
+  }],
+  "sameAs": [
+    "https://www.linkedin.com/company/autopilotlabs-co",
+    "https://x.com/autopilotlabs_co",
+    "https://github.com/autopilotlabs-co"
+  ]
+}
+&lt;/script&gt;</code></pre>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autopilot Labs — Agents that finish the job</title>
+<meta name="description" content="Autopilot Labs builds vertical AI agents that do your team's most repetitive work — intake, reconciliation, diligence, inbound calls. You pay per completed outcome. Not per seat. Not per token.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+
+<style>
+/* =========================================================
+   HOMEPAGE — 2026 rewrite
+   Load-bearing: HERO live ledger, 9 practice-area grid,
+   3 pillars with inline stats, ops console, press+cases,
+   end CTA. Minimal chrome; the content does the work.
+   ========================================================= */
+
+/* ---------- HERO ---------- */
+.home-hero {
+  padding: clamp(3.5rem, 7vw, 6.5rem) 0 clamp(3rem, 5vw, 5rem);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.home-hero .meta-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 1.25rem; margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap; gap: 1rem;
+}
+.home-hero .meta-row b { color: var(--ink); font-weight: 500; letter-spacing: 0.14em; }
+.home-hero .meta-row .accent { color: var(--accent); }
+
+.home-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.home-headline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(48px, 9vw, 148px);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+  color: var(--ink);
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  text-wrap: balance;
+}
+.home-headline em { color: var(--accent); }
+
+.home-dek {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.35vw, 21px);
+  line-height: 1.5;
+  color: var(--ink-3);
+  max-width: 58ch;
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+.home-dek em { color: var(--ink); font-weight: 500; }
+
+.home-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+
+.home-proof {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.home-proof .p {
+  padding: 1.25rem 1.25rem 1.25rem 0;
+  border-right: 1px solid var(--line);
+}
+.home-proof .p:last-child { border-right: 0; padding-right: 0; }
+.home-proof .n {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 2.6vw, 40px);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+.home-proof .n em { color: var(--accent); }
+.home-proof .l {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- LIVE LEDGER (hero right) ---------- */
+.ledger {
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  position: sticky; top: 104px;
+  display: flex; flex-direction: column;
+  max-height: 640px;
+  overflow: hidden;
+}
+.ledger-chrome {
+  display: flex; align-items: center; gap: 8px;
+  height: 36px; padding: 0 14px;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 10.5px; color: var(--muted);
+  background: var(--paper);
+}
+.ledger-chrome .d { width: 7px; height: 7px; border: 1px solid var(--ink); }
+.ledger-chrome .u { margin-left: 14px; color: var(--ink); letter-spacing: 0.02em; }
+.ledger-chrome .r {
+  margin-left: auto; color: var(--accent); font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.ledger-chrome .r .status-dot {
+  width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+  animation: pulse 1.8s infinite ease-in-out;
+}
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+.ledger-head {
+  display: grid;
+  grid-template-columns: 72px 1fr 82px 74px;
+  gap: 0.75rem;
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-3);
+}
+
+.ledger-body {
+  flex: 1; overflow: hidden;
+  position: relative;
+}
+.ledger-list {
+  list-style: none; margin: 0; padding: 0;
+}
+.ledger-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 82px 74px;
+  gap: 0.75rem; align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px dashed var(--line);
+  font-size: 13px;
+  animation: rowIn .5s var(--ease-out);
+}
+@keyframes rowIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ledger-row .t {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.ledger-row .w {
+  font-family: var(--font-display);
+  font-weight: 500; color: var(--ink);
+  letter-spacing: -0.01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ledger-row .w span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-top: 2px;
+}
+.ledger-row .p {
+  font-family: var(--font-display);
+  font-weight: 500; color: var(--accent);
+  font-size: 13.5px; letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums; text-align: right;
+}
+.ledger-row .s {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); text-align: right;
+  display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end;
+}
+.ledger-row .s .tick { color: var(--accent); }
+
+.ledger-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); background: var(--paper-3);
+}
+.ledger-foot a { color: var(--accent); font-weight: 600; }
+.ledger-foot a:hover { text-decoration: underline; }
+
+@media (max-width: 1000px) {
+  .home-grid { grid-template-columns: 1fr; }
+  .ledger { position: static; max-height: 520px; order: -1; }
+  .home-proof { grid-template-columns: repeat(2, 1fr); }
+  .home-proof .p:nth-child(2n) { border-right: 0; }
+  .home-proof .p:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+
+/* ---------- WHAT WE DO — 14 practice areas ---------- */
+.do-section { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); }
+.do-head {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--line-strong);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  align-items: end;
+}
+.do-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  margin-bottom: 1rem;
+}
+.do-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.do-head h2 em { color: var(--accent); }
+.do-head p {
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 46ch;
+}
+.do-head p em { color: var(--ink); font-weight: 500; }
+
+.grid-9 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line-strong);
+  background: var(--line-strong);
+  gap: 1px;
+}
+.cell {
+  background: var(--paper);
+  padding: 2rem 1.75rem 1.75rem;
+  min-height: 260px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+  transition: background .25s var(--ease);
+  text-decoration: none; color: inherit;
+  overflow: hidden;
+}
+.cell:hover { background: var(--paper-3); }
+.cell::after {
+  content: ''; position: absolute; inset: auto 0 0 0; height: 2px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.cell:hover::after { transform: scaleX(1); }
+
+.cell-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.cell-num {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.cell-glyph {
+  width: 52px; height: 52px;
+  background: currentColor;
+  color: var(--ink);
+  opacity: 0.88;
+  -webkit-mask: var(--glyph) center/contain no-repeat;
+  mask: var(--glyph) center/contain no-repeat;
+  transition: color .25s, transform .3s var(--ease);
+}
+.cell:hover .cell-glyph { color: var(--accent); transform: translate(2px, -2px); }
+
+.cell-name {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 1.9vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin-top: 1.75rem;
+}
+.cell-work {
+  margin-top: 0.6rem;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-3);
+  max-width: 28ch;
+}
+.cell-meta {
+  margin-top: 1.25rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted);
+}
+.cell-meta .go { color: var(--accent); font-weight: 500; }
+
+.cell.voice { background: var(--ink); color: var(--paper); }
+.cell.voice .cell-num,
+.cell.voice .cell-meta { color: rgba(255,255,255,0.55); }
+.cell.voice .cell-meta { border-top-color: rgba(255,255,255,0.16); }
+.cell.voice .cell-glyph { color: var(--paper); }
+.cell.voice .cell-work { color: rgba(255,255,255,0.7); }
+.cell.voice .cell-meta .go { color: var(--accent-2); }
+.cell.voice:hover { background: #0b0b0f; }
+.cell.voice:hover .cell-glyph { color: var(--accent); }
+
+.grid-9 .cell:nth-child(3n) { border-right: 0; }
+@media (max-width: 900px) {
+  .do-head { grid-template-columns: 1fr; }
+  .grid-9 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .grid-9 { grid-template-columns: 1fr; }
+}
+
+/* ---------- GRID-12 — new 4×3 industries grid ---------- */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line-strong);
+  background: var(--line-strong);
+  gap: 1px;
+}
+.grid-12 .cell {
+  background: var(--paper);
+  padding: 1.75rem 1.5rem 1.5rem;
+  min-height: 230px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+  transition: background .25s var(--ease);
+  text-decoration: none; color: inherit;
+  overflow: hidden;
+}
+.grid-12 .cell:hover { background: var(--paper-3); }
+.grid-12 .cell::after {
+  content: ''; position: absolute; inset: auto 0 0 0; height: 2px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.grid-12 .cell:hover::after { transform: scaleX(1); }
+@media (max-width: 1100px) { .grid-12 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 780px)  { .grid-12 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px)  { .grid-12 { grid-template-columns: 1fr; } }
+
+/* 13th cell — full-width feature card */
+.grid-12 .cell-wide {
+  grid-column: 1 / -1;
+  background: var(--ink); color: var(--paper);
+  padding: 2rem 2.25rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: center;
+  min-height: 0;
+  position: relative;
+}
+.grid-12 .cell-wide::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 60% at 100% 50%, rgba(0,82,255,0.12), transparent 60%);
+  pointer-events: none;
+}
+.grid-12 .cell-wide::after { background: var(--accent); }
+.grid-12 .cell-wide:hover { background: #0b0b0f; }
+.grid-12 .cell-wide .cell-top {
+  flex-direction: column; align-items: flex-start; gap: 1rem;
+  display: flex; min-width: 260px;
+  border-right: 1px solid rgba(255,255,255,0.14);
+  padding-right: clamp(1.25rem, 3vw, 2.5rem);
+}
+.grid-12 .cell-wide .cell-num { color: rgba(255,255,255,0.55); }
+.grid-12 .cell-wide .cell-glyph { color: var(--paper); width: 64px; height: 64px; }
+.grid-12 .cell-wide:hover .cell-glyph { color: var(--accent-2); }
+.grid-12 .cell-wide .cell-wide-body .cell-name {
+  font-size: clamp(28px, 2.6vw, 38px);
+  margin-top: 0;
+}
+.grid-12 .cell-wide .cell-wide-body .cell-work {
+  color: rgba(255,255,255,0.75); max-width: 68ch; margin-top: 0.6rem;
+}
+.grid-12 .cell-wide .cell-meta {
+  flex-direction: column; align-items: flex-end; gap: 0.6rem;
+  border-top: 0; padding-top: 0;
+  color: rgba(255,255,255,0.55); margin-top: 0;
+  white-space: nowrap;
+}
+.grid-12 .cell-wide .cell-meta .go { color: var(--accent-2); font-size: 14px; }
+@media (max-width: 900px) {
+  .grid-12 .cell-wide { grid-template-columns: 1fr; }
+  .grid-12 .cell-wide .cell-top { flex-direction: row; border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.14); padding-right: 0;
+    padding-bottom: 1rem; min-width: 0; }
+  .grid-12 .cell-wide .cell-meta { align-items: flex-start; }
+}
+
+/* ---------- VOICE FLAGSHIP — full-width dark band ---------- */
+.voice-flag {
+  padding: clamp(5rem, 9vw, 9rem) 0;
+  background: var(--ink); color: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  position: relative; overflow: hidden;
+}
+.voice-flag::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 0%, rgba(0,82,255,0.14), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 90% 100%, rgba(0,82,255,0.10), transparent 55%);
+  pointer-events: none;
+}
+.voice-flag::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 96px 100%; pointer-events: none;
+}
+.voice-flag .container { position: relative; z-index: 1; }
+.vf-head {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  align-items: end;
+}
+.vf-head .vf-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #4A8BFF; font-weight: 500; margin-bottom: 1rem;
+}
+.vf-head h2 {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(44px, 7vw, 108px);
+  line-height: 0.92; letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+.vf-head h2 em { color: #4A8BFF; }
+.vf-head p {
+  font-size: clamp(16px, 1.2vw, 19px); line-height: 1.55;
+  color: rgba(255,255,255,0.75); max-width: 48ch;
+  margin-bottom: 1rem;
+}
+.vf-head p em { color: var(--paper); font-weight: 500; }
+@media (max-width: 900px) { .vf-head { grid-template-columns: 1fr; } }
+
+/* language chips */
+.vf-langs {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 1.25rem 0; margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-top: 1px dashed rgba(255,255,255,0.14);
+  border-bottom: 1px dashed rgba(255,255,255,0.14);
+}
+.vf-langs .lg {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.02);
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  transition: background .2s, border-color .2s, color .2s;
+}
+.vf-langs .lg:hover { background: rgba(0,82,255,0.18); border-color: #4A8BFF; color: var(--paper); }
+.vf-langs .lg .code { color: #4A8BFF; font-weight: 500; }
+
+/* voice SKU grid */
+.vf-skus {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06); gap: 1px;
+}
+.vf-sku {
+  background: var(--ink); padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+  transition: background .2s;
+}
+.vf-sku:hover { background: #0b0b0f; }
+.vf-sku .sn {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.vf-sku h4 {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 17px; letter-spacing: -0.02em; line-height: 1.1;
+  color: var(--paper);
+}
+.vf-sku p {
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.06em; color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+}
+.vf-sku .ft {
+  margin-top: auto; padding-top: 0.75rem;
+  border-top: 1px dashed rgba(255,255,255,0.12);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.vf-sku .ft .p {
+  color: #4A8BFF; font-weight: 500;
+  letter-spacing: -0.005em; text-transform: none;
+  font-family: var(--font-display); font-size: 13.5px;
+}
+@media (max-width: 1000px) { .vf-skus { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .vf-skus { grid-template-columns: 1fr; } }
+
+.vf-cta {
+  margin-top: clamp(2rem, 3vw, 3rem);
+  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+}
+.vf-cta .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.vf-cta .btn:hover { background: #4A8BFF; color: var(--paper); border-color: #4A8BFF; }
+.vf-cta .note { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); }
+
+/* ---------- HOW IT'S DIFFERENT — 3 pillars ---------- */
+.diff { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); background: var(--paper-3); }
+.diff-head { max-width: 48rem; margin-bottom: clamp(3rem, 5vw, 4.5rem); }
+.diff-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500; margin-bottom: 1rem;
+}
+.diff-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.02; letter-spacing: -0.04em; color: var(--ink);
+  text-wrap: balance;
+}
+.diff-head h2 em { color: var(--accent); }
+.diff-head p {
+  margin-top: 1.25rem;
+  font-size: clamp(15px, 1.1vw, 17px);
+  color: var(--ink-3); max-width: 46ch; line-height: 1.55;
+}
+
+.diff-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line-strong);
+  background: var(--line-strong); gap: 1px;
+}
+.diff-card {
+  background: var(--paper);
+  padding: clamp(2rem, 3vw, 2.75rem);
+  display: flex; flex-direction: column;
+}
+.diff-card .no {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.5rem;
+}
+.diff-card .fig {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(54px, 7vw, 104px);
+  line-height: 0.92; letter-spacing: -0.055em;
+  color: var(--ink); margin-bottom: 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.diff-card .fig em { color: var(--accent); }
+.diff-card .fig sub { font-size: 0.34em; color: var(--muted); letter-spacing: 0; font-weight: 400; vertical-align: 22%; margin-left: 4px; }
+.diff-card .figLabel {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 1.25rem; margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.diff-card h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2vw, 30px);
+  letter-spacing: -0.03em; line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.diff-card h3 em { color: var(--accent); }
+.diff-card p {
+  font-size: 14.5px; line-height: 1.6; color: var(--ink-3);
+}
+.diff-card .vs {
+  margin-top: auto; padding-top: 1.5rem;
+  border-top: 1px dashed var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px; line-height: 1.6;
+  color: var(--muted); letter-spacing: 0;
+}
+.diff-card .vs b { display: block; color: var(--accent); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; font-size: 10px; margin-bottom: 0.5rem; }
+
+@media (max-width: 900px) { .diff-row { grid-template-columns: 1fr; } }
+
+/* ---------- OPS CONSOLE — moved up, trimmed ---------- */
+.ops { padding: clamp(5rem, 9vw, 9rem) 0; background: var(--ink); color: var(--paper); border-bottom: 1px solid var(--ink); position: relative; overflow: hidden; }
+.ops::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 45% at 15% 0%, rgba(0,82,255,0.10), transparent 55%),
+    radial-gradient(ellipse 55% 40% at 90% 100%, rgba(0,82,255,0.07), transparent 55%);
+  pointer-events: none;
+}
+.ops::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 96px 100%;
+  pointer-events: none;
+}
+.ops .container { position: relative; z-index: 1; }
+.ops-head { max-width: 58rem; margin-bottom: clamp(3rem, 5vw, 4.5rem); }
+.ops-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #4A8BFF; margin-bottom: 1rem;
+}
+.ops-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.02; letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.ops-head h2 em { color: #4A8BFF; }
+.ops-head p {
+  margin-top: 1.25rem;
+  font-size: clamp(15px, 1.1vw, 17px);
+  color: rgba(255,255,255,0.65);
+  max-width: 48ch; line-height: 1.55;
+}
+.ops-device {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: var(--paper);
+  overflow: hidden;
+  margin-bottom: clamp(2rem, 3vw, 3rem);
+}
+.ops-chrome {
+  display: flex; align-items: center; gap: 8px;
+  height: 36px; padding: 0 14px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 10.5px; color: var(--muted);
+}
+.ops-chrome .d { width: 7px; height: 7px; border: 1px solid var(--ink); }
+.ops-chrome .u { margin-left: 14px; color: var(--ink); }
+.ops-chrome .r {
+  margin-left: auto; color: var(--accent); font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.ops-canvas { display: block; width: 100%; aspect-ratio: 1200/720; border: 0; background: var(--paper); }
+
+.ops-bullets {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(255,255,255,0.14);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  list-style: none;
+}
+.ops-bullets li {
+  padding: 1.4rem clamp(1rem, 2vw, 1.75rem);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  font-family: var(--font-display);
+  font-size: 15px; color: rgba(255,255,255,0.88);
+}
+.ops-bullets li:last-child { border-right: 0; }
+.ops-bullets li b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #4A8BFF; font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.ops-cta { margin-top: 2rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.ops-cta .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.ops-cta .btn:hover { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+.ops-cta .note { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); }
+
+@media (max-width: 900px) {
+  .ops-bullets { grid-template-columns: 1fr; }
+  .ops-bullets li { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .ops-bullets li:last-child { border-bottom: 0; }
+}
+
+/* ---------- PROOF: CASES + PRESS combined ---------- */
+.proof { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); }
+.proof-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(2rem, 4vw, 4rem); align-items: end; padding-bottom: clamp(2.5rem, 5vw, 4rem); margin-bottom: clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid var(--line-strong); }
+.proof-head .l .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500; margin-bottom: 1rem;
+}
+.proof-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.02; letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.proof-head h2 em { color: var(--accent); }
+.proof-head .r p {
+  font-size: clamp(15px, 1.1vw, 17px); color: var(--ink-3); line-height: 1.55;
+  max-width: 48ch;
+}
+.proof-head .r p em { color: var(--ink); font-weight: 500; }
+
+.cases-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line-strong);
+  background: var(--line-strong); gap: 1px;
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+}
+.case-card { background: var(--paper); padding: 2.25rem 2rem; display: flex; flex-direction: column; gap: 1.25rem; }
+.case-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.case-tag .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+.case-card blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.4; letter-spacing: -0.018em;
+  font-weight: 500; color: var(--ink);
+  border-left: 2px solid var(--accent); padding-left: 1rem;
+  text-wrap: balance;
+}
+.case-card blockquote em { color: var(--accent); }
+.case-by { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+.case-by b { display: block; color: var(--ink); font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: -0.005em; margin-bottom: 2px; text-transform: none; }
+.case-kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: auto; border: 1px solid var(--line); }
+.case-kpi > div { padding: 0.9rem 1rem; border-right: 1px solid var(--line); }
+.case-kpi > div:last-child { border-right: 0; }
+.case-kpi .k { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.case-kpi .v { font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: -0.025em; color: var(--accent); }
+
+.press-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; border-top: 1px solid var(--line-strong);
+}
+.press-cell {
+  padding: 2rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 1.25rem;
+  transition: background .25s;
+}
+.press-cell:nth-child(3n) { border-right: 0; }
+.press-cell:nth-last-child(-n+3) { border-bottom: 0; }
+.press-cell:hover { background: var(--paper-3); }
+.press-mark {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700; letter-spacing: -0.025em;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--ink);
+}
+.press-mark.afr { text-transform: uppercase; font-stretch: condensed; font-weight: 800; }
+.press-mark.bloomberg { letter-spacing: -0.035em; }
+.press-mark.tc { font-family: var(--font-mono); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; text-transform: lowercase; }
+.press-mark.forbes small { font-size: 10px; letter-spacing: 0.12em; margin-left: 4px; color: var(--muted); text-transform: uppercase; font-weight: 400; }
+.press-mark.capital { font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; }
+.press-mark.smart { font-weight: 400; font-size: 16px; letter-spacing: -0.025em; }
+.press-mark.smart b { font-weight: 700; }
+.press-quote {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.3; letter-spacing: -0.02em; font-weight: 500;
+  color: var(--ink); text-wrap: balance;
+}
+.press-quote::before { content: '\201C'; margin-right: 0.05em; }
+.press-quote::after { content: '\201D'; margin-left: 0.05em; }
+.press-quote em { color: var(--accent); }
+.press-by {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 1rem; border-top: 1px solid var(--line);
+}
+.press-by .author { color: var(--ink); font-weight: 500; }
+
+@media (max-width: 900px) {
+  .proof-head { grid-template-columns: 1fr; }
+  .cases-row, .press-row { grid-template-columns: 1fr; }
+  .press-cell { border-right: 0; }
+  .press-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .press-cell:last-child { border-bottom: 0; }
+}
+
+/* ---------- END CTA ---------- */
+.end-cta { padding: clamp(6rem, 10vw, 10rem) 0 clamp(5rem, 8vw, 8rem); background: var(--paper); }
+.end-cta .inner {
+  max-width: 68rem; margin: 0 auto; text-align: center;
+}
+.end-cta .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500; margin-bottom: 1.5rem;
+}
+.end-cta h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(44px, 7vw, 108px);
+  line-height: 0.96; letter-spacing: -0.05em;
+  color: var(--ink); margin-bottom: 1.75rem;
+  text-wrap: balance;
+}
+.end-cta h2 em { color: var(--accent); }
+.end-cta p {
+  font-size: clamp(16px, 1.2vw, 19px);
+  color: var(--ink-3); line-height: 1.5;
+  max-width: 46rem; margin: 0 auto 2.5rem;
+}
+.end-cta .btns { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ========== HERO ========== -->
+  <section class="home-hero">
+    <div class="container">
+      <div class="meta-row reveal">
+        <span>◎ <b>Autopilot Labs</b> · Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <span>Vertical AI agents · Per-outcome pricing · <span class="accent">14 languages · Arabic included</span></span>
+      </div>
+
+      <div class="home-grid">
+        <div class="home-left">
+          <h1 class="home-headline reveal delay-1">
+            Agents that<br><em>finish</em> the job.
+          </h1>
+
+          <p class="home-dek reveal delay-2">
+            Autopilot Labs builds <em>vertical AI agents</em> that do your team's most repetitive work — patient intake, invoice reconciliation, lease abstraction, case-file drafting, inbound phone calls <em>in 14 languages, Arabic included</em>. Hubs in <em>Melbourne, Dubai and Riyadh</em>, deployed globally. You pay when the AI ships the outcome. Not per seat. Not per token.
+          </p>
+
+          <div class="home-cta reveal delay-2">
+            <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+            <a href="cases.html" class="btn btn-lg">What you can achieve</a>
+          </div>
+
+          <div class="home-proof reveal delay-3">
+            <div class="p">
+              <div class="n">14</div>
+              <div class="l">Practice areas</div>
+            </div>
+            <div class="p">
+              <div class="n">150<em>+</em></div>
+              <div class="l">Agents in catalogue</div>
+            </div>
+            <div class="p">
+              <div class="n">14</div>
+              <div class="l">Voice languages · incl. Arabic</div>
+            </div>
+            <div class="p">
+              <div class="n">3</div>
+              <div class="l">Hubs · MEL · DXB · RUH</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="ledger reveal delay-3" aria-label="Sample outcomes ledger">
+          <div class="ledger-chrome" aria-hidden="true">
+            <span class="d"></span><span class="d"></span><span class="d"></span>
+            <span class="u">ops.autopilotlabs.io / outcomes / sample</span>
+            <span class="r"><span class="status-dot"></span> PREVIEW</span>
+          </div>
+          <div class="ledger-head">
+            <span>Time</span>
+            <span>Outcome</span>
+            <span style="text-align:right">Billed</span>
+            <span style="text-align:right">SLA</span>
+          </div>
+          <div class="ledger-body">
+            <ul class="ledger-list" id="ledger-list" role="list" aria-live="polite"></ul>
+          </div>
+          <div class="ledger-foot">
+            <span>FIG. 01 — Sample console · illustrative</span>
+            <a href="solutions.html">See the catalogue →</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHAT WE DO — 13 industries + voice ========== -->
+  <section class="do-section">
+    <div class="container">
+      <div class="do-head reveal">
+        <div>
+          <div class="do-eyebrow">What we do · § 01</div>
+          <h2>Thirteen industries.<br><em>One-hundred-fifty+</em> ready agents.</h2>
+        </div>
+        <p>
+          We don't build horizontal AI. Each practice area ships a <em>pre-priced catalogue</em> of agents, a target SLA, and a shortlist of workflows we're ready to audit, build and run — plus an always-on <em>voice desk in 14 languages</em> (Arabic included) that slots into Aircall, Twilio, RingCentral, or your existing phone stack. <em>Melbourne · Dubai · Riyadh · global.</em>
+        </p>
+      </div>
+
+      <div class="grid-12 reveal delay-1">
+        <a href="solutions.html#healthcare" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">01 · Healthcare</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/healthcare.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Healthcare</div>
+            <p class="cell-work">Intake, prior-auth, ICD/CPT coding, refill voice, denial appeals.</p>
+          </div>
+          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#legal" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">02 · Legal</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/legal.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Legal</div>
+            <p class="cell-work">Discovery, leases, client intake voice, depo summaries.</p>
+          </div>
+          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#finance" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">03 · Finance</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/finance.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Finance</div>
+            <p class="cell-work">Reconciliation, AR voice, close drafter, KYC voice.</p>
+          </div>
+          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#real-estate" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">04 · Real estate</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/real-estate.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Real estate</div>
+            <p class="cell-work">Listings, enquiry voice, inspection booking, settlements.</p>
+          </div>
+          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#ecommerce" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">05 · E-commerce</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/ecommerce.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">E-commerce</div>
+            <p class="cell-work">Refunds, chargebacks, WISMO voice, restock, review replies.</p>
+          </div>
+          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#hr" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">06 · HR &amp; hiring</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/hr.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">HR &amp; hiring</div>
+            <p class="cell-work">Shortlist, phone-screen voice, offer, exit interview voice.</p>
+          </div>
+          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#marketing" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">07 · Marketing</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/marketing.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Marketing</div>
+            <p class="cell-work">Briefs, ad-creative, outbound SDR voice, PR monitor.</p>
+          </div>
+          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#manufacturing" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">08 · Manufacturing</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/manufacturing.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Manufacturing</div>
+            <p class="cell-work">QA-log, CAPA, supplier-chase voice, near-miss intake.</p>
+          </div>
+          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#education" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">09 · Education</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/education.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Education</div>
+            <p class="cell-work">Admissions triage, student-services voice, tutor dispatch.</p>
+          </div>
+          <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#insurance" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">10 · Insurance</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/insurance.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Insurance</div>
+            <p class="cell-work">FNOL voice, claims triage, fraud flags, underwriting packs.</p>
+          </div>
+          <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#hospitality" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">11 · Hospitality</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/hospitality.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Hospitality</div>
+            <p class="cell-work">Booking voice, concierge, upsell, review replies, overflow.</p>
+          </div>
+          <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#logistics" class="cell">
+          <div class="cell-top">
+            <span class="cell-num">12 · Logistics</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/logistics.svg')" aria-hidden="true"></span>
+          </div>
+          <div>
+            <div class="cell-name">Logistics</div>
+            <p class="cell-work">Dispatch voice, track &amp; trace, exception packs, POD capture.</p>
+          </div>
+          <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#public-safety" class="cell cell-wide">
+          <div class="cell-top">
+            <span class="cell-num">13 · Public safety &amp; justice</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/public-safety.svg')" aria-hidden="true"></span>
+          </div>
+          <div class="cell-wide-body">
+            <div class="cell-name">Public safety &amp; justice</div>
+            <p class="cell-work">Incident reports, evidence inventory with chain-of-custody, court filings, FOI triage, AML scoring, witness-statement voice, fraud case-builder. On-prem or sovereign-region deploy.</p>
+          </div>
+          <div class="cell-meta"><span>NEW · 10 agents · sovereign-region deploy</span><span class="go">Open →</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VOICE FLAGSHIP ========== -->
+  <section class="voice-flag">
+    <div class="container">
+      <div class="vf-head reveal">
+        <div>
+          <div class="vf-eyebrow">Flagship · cross-cutting · § 02</div>
+          <h2>A voice desk.<br>In <em>14 languages</em>.<br>That never misses a ring.</h2>
+        </div>
+        <div>
+          <p>One AI phone desk that plugs into <em>Aircall · Twilio · RingCentral · Zoom Phone · GoTo</em>. Answers inbound in under two rings, runs outbound against your list, warm-transfers on edge cases, <em>writes the CRM note</em> and the action items. Every call transcribed, scored and replayable on the ops console.</p>
+          <p>Fluent, not translated: real-time conversation in the caller's language, regional accents supported, tone-matched to your brand voice.</p>
+        </div>
+      </div>
+
+      <div class="vf-langs reveal delay-1" aria-label="Languages">
+        <span class="lg"><span class="code">EN</span> English</span>
+        <span class="lg"><span class="code">ES</span> Spanish</span>
+        <span class="lg"><span class="code">ZH</span> Mandarin</span>
+        <span class="lg"><span class="code">AR</span> Arabic</span>
+        <span class="lg"><span class="code">HI</span> Hindi</span>
+        <span class="lg"><span class="code">VI</span> Vietnamese</span>
+        <span class="lg"><span class="code">PT</span> Portuguese</span>
+        <span class="lg"><span class="code">FR</span> French</span>
+        <span class="lg"><span class="code">DE</span> German</span>
+        <span class="lg"><span class="code">JA</span> Japanese</span>
+        <span class="lg"><span class="code">KO</span> Korean</span>
+        <span class="lg"><span class="code">TH</span> Thai</span>
+        <span class="lg"><span class="code">ID</span> Indonesian</span>
+        <span class="lg"><span class="code">IT</span> Italian</span>
+      </div>
+
+      <div class="vf-skus reveal delay-2">
+        <article class="vf-sku"><span class="sn">01</span><h4>Inbound receptionist</h4><p>24/7 greet · route · capture</p><div class="ft"><span>per answered</span><span class="p">A$0.38</span></div></article>
+        <article class="vf-sku"><span class="sn">02</span><h4>Outbound SDR</h4><p>List → meeting booked</p><div class="ft"><span>per meeting</span><span class="p">A$38</span></div></article>
+        <article class="vf-sku"><span class="sn">03</span><h4>Appointment booker</h4><p>Live calendar · confirm</p><div class="ft"><span>per booked</span><span class="p">A$1.60</span></div></article>
+        <article class="vf-sku"><span class="sn">04</span><h4>Tier-1 support</h4><p>KB · deflect · warm-transfer</p><div class="ft"><span>per resolved</span><span class="p">A$1.80</span></div></article>
+        <article class="vf-sku"><span class="sn">05</span><h4>Multilingual interpreter</h4><p>Live EN ↔ 13 others</p><div class="ft"><span>per minute</span><span class="p">A$0.22</span></div></article>
+        <article class="vf-sku"><span class="sn">06</span><h4>FNOL claims intake</h4><p>First-notice-of-loss · scored</p><div class="ft"><span>per FNOL</span><span class="p">A$6.80</span></div></article>
+        <article class="vf-sku"><span class="sn">07</span><h4>Collections &amp; payments</h4><p>Promise-to-pay · Stripe link</p><div class="ft"><span>recovered</span><span class="p">3.4%</span></div></article>
+        <article class="vf-sku"><span class="sn">08</span><h4>Overflow concierge</h4><p>Spike handler · hotel / clinic</p><div class="ft"><span>per minute</span><span class="p">A$0.18</span></div></article>
+      </div>
+
+      <div class="vf-cta">
+        <a href="cases.html" class="btn btn-primary btn-lg">See all 16 voice SKUs <span class="arrow">↗</span></a>
+        <span class="note">2-week audit → live in your phone stack in week 3.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT'S DIFFERENT ========== -->
+  <section class="diff">
+    <div class="container">
+      <div class="diff-head reveal">
+        <div class="diff-eyebrow">Why we exist · § 03</div>
+        <h2>Three things every other<br>AI agency gets <em>wrong</em>.</h2>
+        <p>Most AI agencies sell a chatbot and a subscription. We sell finished work, measured in units your CFO already tracks.</p>
+      </div>
+
+      <div class="diff-row reveal delay-1">
+        <article class="diff-card">
+          <div class="no">— 01 · Workflow-first</div>
+          <div class="fig">14<sub>days</sub></div>
+          <div class="figLabel">Free audit · no obligation</div>
+          <h3>We audit <em>before</em> we build.</h3>
+          <p>Every engagement starts with a two-week workflow audit. We map the manual path end-to-end, find the bottlenecks, and price only the jobs we can confidently automate. No audit, no build.</p>
+          <div class="vs">
+            <b>Versus</b>
+            Most agencies open with a 90-slide "AI transformation roadmap" and a six-figure retainer. Ours opens with a pen, a whiteboard, and your own people.
+          </div>
+        </article>
+
+        <article class="diff-card">
+          <div class="no">— 02 · Outcome pricing</div>
+          <div class="fig"><em>A$</em>0.40<sub>from · per outcome</sub></div>
+          <div class="figLabel">Tiered by complexity</div>
+          <h3>You pay <em>per completed task</em>.</h3>
+          <p>Tokens are our cost, not yours. Seats are a rounding error. You pay a rate per finished unit — a triaged claim, a tagged lease, a resolved ticket, an answered call — with an SLA in the contract. Miss the SLA, you don't pay.</p>
+          <div class="vs">
+            <b>Versus</b>
+            SaaS vendors charge per seat whether the work happens or not. We only get paid when the outcome does.
+          </div>
+        </article>
+
+        <article class="diff-card">
+          <div class="no">— 03 · Vertical depth</div>
+          <div class="fig">14<sub>practice areas</sub></div>
+          <div class="figLabel">Nothing else</div>
+          <h3>Fourteen areas. <em>Nothing else.</em></h3>
+          <p>We don't do "AI for everything." Thirteen industries plus an always-on voice desk in 14 languages — and we turn down work outside them. Depth beats breadth, every single quarter.</p>
+          <div class="vs">
+            <b>Versus</b>
+            Horizontal AI consultancies relearn your domain on every project. We already know what a SOAP note is, what a FNOL packet needs, what a chain-of-custody log requires, and why your LegalHold tag matters.
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== OPS CONSOLE ========== -->
+  <section class="ops">
+    <div class="container">
+      <div class="ops-head reveal">
+        <div class="ops-eyebrow">What you see · § 04</div>
+        <h2>Every outcome, <em>audited</em>.<br>Every SLA, <em>live</em>.</h2>
+        <p>One console, live, for every seat on your team. No screenshots, no PDFs, no "ask your CSM." A read-only seat lands in your inbox within 24 hours of signing the audit letter.</p>
+      </div>
+
+      <figure class="ops-device reveal delay-1">
+        <div class="ops-chrome" aria-hidden="true">
+          <span class="d"></span><span class="d"></span><span class="d"></span>
+          <span class="u">your-team.autopilotlabs.io / ops / patient-intake</span>
+          <span class="r">LIVE · 14:27 AEST</span>
+        </div>
+        <object class="ops-canvas" type="image/svg+xml" data="assets/ops-dashboard.svg" aria-label="Autopilot Labs operations console showing live outcomes, SLA meter, and cost-per-outcome"></object>
+      </figure>
+
+      <ul class="ops-bullets reveal delay-2">
+        <li><b>+ Live stream</b>Every outcome, timestamped and billed in real time.</li>
+        <li><b>+ SLA credit-back</b>Miss the SLA, the outcome is free. Automatic on the invoice.</li>
+        <li><b>+ Full audit log</b>Every agent action, every document, every call — replayable.</li>
+      </ul>
+
+      <div class="ops-cta">
+        <a href="contact.html" class="btn btn-primary btn-lg">Request a read-only seat <span class="arrow">↗</span></a>
+        <span class="note">Issued within 24 hours. No sales call.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW WE WORK — principles ========== -->
+  <section class="proof">
+    <style>
+      .principles-row {
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--line-strong);
+        background: var(--line-strong); gap: 1px;
+      }
+      .principle {
+        background: var(--paper);
+        padding: clamp(1.75rem, 2.4vw, 2.25rem);
+        display: flex; flex-direction: column; gap: 0.75rem;
+      }
+      .principle .pn {
+        font-family: var(--font-mono);
+        font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+        color: var(--accent); font-weight: 500;
+        padding-bottom: 0.75rem; border-bottom: 1px solid var(--line);
+      }
+      .principle h3 {
+        font-family: var(--font-display);
+        font-weight: 500; font-size: clamp(20px, 1.7vw, 26px);
+        line-height: 1.1; letter-spacing: -0.025em;
+        margin-top: 0.5rem;
+      }
+      .principle h3 em { color: var(--accent); }
+      .principle p {
+        font-size: 14px; line-height: 1.55; color: var(--ink-3);
+      }
+      @media (max-width: 900px) { .principles-row { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 600px) { .principles-row { grid-template-columns: 1fr; } }
+    </style>
+
+    <div class="container">
+      <div class="proof-head reveal">
+        <div class="l">
+          <div class="eyebrow">How we work · § 05</div>
+          <h2>Four principles on<br>every <em>contract</em>.</h2>
+        </div>
+        <div class="r">
+          <p>The rules we won't negotiate — in writing, on every statement of work we sign. Audit-first, outcomes-only, vertical-deep, and always with a named human accountable for the agent that runs the job.</p>
+        </div>
+      </div>
+
+      <div class="principles-row reveal delay-1">
+        <article class="principle">
+          <span class="pn">— 01 · Audit-first</span>
+          <h3>Two weeks <em>free</em>.</h3>
+          <p>Every engagement starts with a 10-working-day workflow audit — observing, measuring, mapping. We only propose what we can ship.</p>
+        </article>
+        <article class="principle">
+          <span class="pn">— 02 · No audit, no build</span>
+          <h3>We'll say <em>no</em>.</h3>
+          <p>If we can't confidently automate a workflow to SLA, we decline the work and hand you the diagnostic. No retainers for vapour.</p>
+        </article>
+        <article class="principle">
+          <span class="pn">— 03 · Paid on outcomes</span>
+          <h3>Miss SLA, <em>free</em>.</h3>
+          <p>Every outcome ships against a contract SLA. If the agent misses, the outcome is credited back automatically on the invoice.</p>
+        </article>
+        <article class="principle">
+          <span class="pn">— 04 · Vertical-only</span>
+          <h3>Fourteen areas. <em>Full stop.</em></h3>
+          <p>Thirteen industries plus a voice desk in 14 languages — and we turn down work outside them. You hire people who already speak the domain.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="end-cta">
+    <div class="container">
+      <div class="inner reveal">
+        <div class="eyebrow">Start with an audit, not a pitch</div>
+        <h2>Two weeks.<br>One workflow.<br><em>No obligation.</em></h2>
+        <p>We spend 10 working days inside your team — observing, measuring, mapping. If we find a workflow we can ship agents for, we price it. If we don't, you walk away with a full diagnostic report, on us.</p>
+        <div class="btns">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
+          <a href="process.html" class="btn btn-lg">How it works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat. Not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Work</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="calculator.html">Calculator</a></li>
+          <li><a href="integrations.html">Integrations</a></li>
+          <li><a href="demo.html">Live demo</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="docs.html">API docs</a></li>
+          <li><a href="watch.html">Watch</a></li>
+          <li><a href="status.html">Status</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="trust.html">Trust</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="roadmap.html">Roadmap</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Learn</h5>
+        <ul>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="help.html">Help center</a></li>
+          <li><a href="glossary.html">Glossary</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="report-2026.html">H1 2026 report</a></li>
+          <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd</span>
+        <span>·</span>
+        <span>L14 · 459 Collins St · Melbourne VIC 3000</span>
+        <span>·</span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+/* ---------- Live outcomes ledger ---------- */
+(function () {
+  const list = document.getElementById('ledger-list');
+  if (!list) return;
+
+  const pool = [
+    { w: 'Patient intake normaliser', s: 'Healthcare',     p: 'A$1.80' },
+    { w: 'Prior-auth packet',          s: 'Healthcare',     p: 'A$6.40' },
+    { w: 'ICD / CPT coder',            s: 'Healthcare',     p: 'A$2.20' },
+    { w: 'Discovery tagger',           s: 'Legal',          p: 'A$68' },
+    { w: 'Lease abstractor',           s: 'Legal',          p: 'A$14' },
+    { w: 'Reconciliation entry',       s: 'Finance',        p: 'A$0.41' },
+    { w: 'Invoice coder',              s: 'Finance',        p: 'A$0.85' },
+    { w: 'Month-end draft',            s: 'Finance',        p: 'A$240' },
+    { w: 'Inbound receptionist',       s: 'Voice · EN',     p: 'A$0.38' },
+    { w: 'AR collections voice',       s: 'Voice · ES',     p: 'A$12' },
+    { w: 'Chargeback evidence pack',   s: 'E-commerce',     p: 'A$22' },
+    { w: 'CV shortlister',             s: 'HR & hiring',    p: 'A$0.60' },
+    { w: 'Phone-screener voice',       s: 'Voice · ZH',     p: 'A$5.80' },
+    { w: 'Ad-creative variant',        s: 'Marketing',      p: 'A$2.20' },
+    { w: 'QA-log watcher',             s: 'Manufacturing',  p: 'A$12' },
+    { w: 'Appointment booker voice',   s: 'Voice · AR',     p: 'A$1.60' },
+    { w: 'WISMO voice call',           s: 'Voice · EN',     p: 'A$0.95' },
+    { w: 'Listing copywriter',         s: 'Real estate',    p: 'A$4.40' },
+    { w: 'Refund resolution',          s: 'E-commerce',     p: 'A$3.80' },
+    { w: 'Interview scheduler',        s: 'HR & hiring',    p: 'A$1.40' },
+    { w: 'Admissions triage',          s: 'Education',      p: 'A$2.40' },
+    { w: 'Student-services voice',     s: 'Voice · HI',     p: 'A$1.20' },
+    { w: 'FNOL claims intake',         s: 'Insurance',      p: 'A$6.80' },
+    { w: 'Claims fraud scorer',        s: 'Insurance',      p: 'A$0.85' },
+    { w: 'Hotel booking voice',        s: 'Voice · JA',     p: 'A$1.60' },
+    { w: 'Concierge upsell',           s: 'Hospitality',    p: 'A$2.80' },
+    { w: 'Dispatch voice',             s: 'Voice · VI',     p: 'A$0.42' },
+    { w: 'POD exception packet',       s: 'Logistics',      p: 'A$3.60' },
+    { w: 'Driver ETA update',          s: 'Logistics',      p: 'A$0.18' },
+    { w: 'Translation hotline',        s: 'Voice · FR',     p: 'A$0.28' },
+  ];
+
+  function now() {
+    const d = new Date();
+    const p = n => String(n).padStart(2, '0');
+    return `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+  }
+
+  const MAX_ROWS = 7;
+
+  function addRow() {
+    const r = pool[Math.floor(Math.random() * pool.length)];
+    const li = document.createElement('li');
+    li.className = 'ledger-row';
+    li.innerHTML = `
+      <span class="t">${now()}</span>
+      <span class="w">${r.w}<span>${r.s}</span></span>
+      <span class="p">${r.p}</span>
+      <span class="s"><span class="tick">✓</span> Pass</span>
+    `;
+    list.insertBefore(li, list.firstChild);
+    while (list.children.length > MAX_ROWS) list.removeChild(list.lastChild);
+  }
+
+  // Seed with 5 rows
+  for (let i = 0; i < 5; i++) addRow();
+  // Then tick
+  setInterval(addRow, 2800);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-hidden="true" shape-rendering="geometricPrecision">
+  <!-- Autopilot Labs · Hero workflow diagram · Swiss modernist · v.001 -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#09090B" stroke="none"/>
+    </marker>
+    <marker id="arrowCobalt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0052FF" stroke="none"/>
+    </marker>
+    <style>
+      .mono { font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace; letter-spacing: 0.08em; }
+      .ink  { fill: #09090B; }
+      .inv  { fill: #FFFFFF; }
+      .acc  { fill: #0052FF; }
+      text  { font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace; letter-spacing: 0.08em; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="640" height="400" fill="#FFFFFF"/>
+
+  <!-- Outer frame rules (Swiss editorial) -->
+  <line x1="24"  y1="24"  x2="616" y2="24"  stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+  <line x1="24"  y1="376" x2="616" y2="376" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+  <line x1="24"  y1="24"  x2="24"  y2="376" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+  <line x1="616" y1="24"  x2="616" y2="376" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+
+  <!-- Top header strip -->
+  <text x="32"  y="18" class="mono ink" font-size="8">§ 01 / AUTOPILOT LABS · AUTONOMOUS WORKFLOW</text>
+  <text x="608" y="18" class="mono ink" font-size="8" text-anchor="end">FIG. 001 — MELBOURNE</text>
+
+  <!-- Column markers -->
+  <text x="40"  y="52" class="mono ink" font-size="9" font-weight="700">INBOUND →</text>
+  <text x="232" y="52" class="mono ink" font-size="9" font-weight="700">AGENT →</text>
+  <text x="400" y="52" class="mono ink" font-size="9" font-weight="700">VALIDATE →</text>
+  <text x="528" y="52" class="mono ink" font-size="9" font-weight="700">OUTCOME</text>
+
+  <!-- Column rule ticks (grid hints) -->
+  <line x1="40"  y1="58" x2="168" y2="58" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+  <line x1="232" y1="58" x2="360" y2="58" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+  <line x1="400" y1="58" x2="504" y2="58" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+  <line x1="528" y1="58" x2="600" y2="58" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+
+  <!-- ============ INBOUND column (3 stacked input tiles) ============ -->
+  <!-- Tile: FAX -->
+  <rect x="40" y="88" width="120" height="52" fill="#FFFFFF" stroke="#09090B" stroke-width="1.5" stroke-linecap="square"/>
+  <text x="48" y="104" class="mono ink" font-size="8">01 · INPUT</text>
+  <text x="48" y="128" class="mono ink" font-size="12" font-weight="700">FAX</text>
+  <text x="152" y="128" class="mono ink" font-size="8" text-anchor="end">07:14</text>
+
+  <!-- Tile: PDF -->
+  <rect x="40" y="152" width="120" height="52" fill="#FFFFFF" stroke="#09090B" stroke-width="1.5" stroke-linecap="square"/>
+  <text x="48" y="168" class="mono ink" font-size="8">02 · INPUT</text>
+  <text x="48" y="192" class="mono ink" font-size="12" font-weight="700">PDF</text>
+  <text x="152" y="192" class="mono ink" font-size="8" text-anchor="end">07:16</text>
+
+  <!-- Tile: EMAIL -->
+  <rect x="40" y="216" width="120" height="52" fill="#FFFFFF" stroke="#09090B" stroke-width="1.5" stroke-linecap="square"/>
+  <text x="48" y="232" class="mono ink" font-size="8">03 · INPUT</text>
+  <text x="48" y="256" class="mono ink" font-size="12" font-weight="700">EMAIL</text>
+  <text x="152" y="256" class="mono ink" font-size="8" text-anchor="end">07:18</text>
+
+  <!-- Stack count annotation -->
+  <text x="40" y="288" class="mono ink" font-size="8">Σ N = 3 / QUEUED</text>
+
+  <!-- ============ Connectors INBOUND → AGENT (dashed, with arrows) ============ -->
+  <line x1="162" y1="114" x2="230" y2="180" stroke="#09090B" stroke-width="1" stroke-dasharray="3 3" stroke-linecap="square" marker-end="url(#arrow)"/>
+  <line x1="162" y1="178" x2="230" y2="195" stroke="#09090B" stroke-width="1" stroke-dasharray="3 3" stroke-linecap="square" marker-end="url(#arrow)"/>
+  <line x1="162" y1="242" x2="230" y2="210" stroke="#09090B" stroke-width="1" stroke-dasharray="3 3" stroke-linecap="square" marker-end="url(#arrow)"/>
+
+  <!-- Latency callout on connector -->
+  <text x="186" y="148" class="mono ink" font-size="8">14ms</text>
+
+  <!-- ============ AGENT node (central, cobalt fill, white text) ============ -->
+  <rect x="232" y="88" width="128" height="180" fill="#0052FF" stroke="#0052FF" stroke-width="1.5" stroke-linecap="square"/>
+  <!-- inner hairline frame in white -->
+  <rect x="240" y="96" width="112" height="164" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-linecap="square"/>
+
+  <!-- Agent labels -->
+  <text x="248" y="112" class="mono inv" font-size="8">NODE · CORE</text>
+  <text x="248" y="136" class="mono inv" font-size="14" font-weight="700">AGENT</text>
+  <text x="248" y="152" class="mono inv" font-size="10" font-weight="700">v4.6</text>
+
+  <!-- divider inside agent -->
+  <line x1="248" y1="164" x2="344" y2="164" stroke="#FFFFFF" stroke-width="1" stroke-linecap="square"/>
+
+  <!-- agent sub-labels -->
+  <text x="248" y="180" class="mono inv" font-size="8">PARSE</text>
+  <text x="344" y="180" class="mono inv" font-size="8" text-anchor="end">OK</text>
+  <text x="248" y="196" class="mono inv" font-size="8">PLAN</text>
+  <text x="344" y="196" class="mono inv" font-size="8" text-anchor="end">OK</text>
+  <text x="248" y="212" class="mono inv" font-size="8">ACT</text>
+  <text x="344" y="212" class="mono inv" font-size="8" text-anchor="end">OK</text>
+  <text x="248" y="228" class="mono inv" font-size="8">CHECK</text>
+  <text x="344" y="228" class="mono inv" font-size="8" text-anchor="end">OK</text>
+
+  <!-- one intentional circle — status dot -->
+  <circle cx="252" cy="250" r="3" fill="#FFFFFF"/>
+  <text x="262" y="253" class="mono inv" font-size="8">LIVE · 99.4%</text>
+
+  <!-- Connector annotations outside -->
+  <text x="232" y="286" class="mono ink" font-size="8">⌁ COST / RUN  A$0.41</text>
+
+  <!-- ============ Connector AGENT → VALIDATE ============ -->
+  <line x1="362" y1="178" x2="398" y2="178" stroke="#09090B" stroke-width="1.5" stroke-linecap="square" marker-end="url(#arrow)"/>
+
+  <!-- ============ VALIDATE checklist output block ============ -->
+  <rect x="400" y="88" width="112" height="180" fill="#FFFFFF" stroke="#09090B" stroke-width="1.5" stroke-linecap="square"/>
+  <text x="408" y="104" class="mono ink" font-size="8">04 · CHECK</text>
+  <text x="408" y="124" class="mono ink" font-size="11" font-weight="700">PASSED</text>
+  <text x="408" y="138" class="mono ink" font-size="8">SLA 99.1%</text>
+
+  <!-- horizontal divider -->
+  <line x1="408" y1="146" x2="504" y2="146" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+
+  <!-- checklist rows -->
+  <rect x="408" y="156" width="8" height="8" fill="#0052FF" stroke="#0052FF" stroke-width="1"/>
+  <text x="422" y="164" class="mono ink" font-size="8">SCHEMA</text>
+  <text x="504" y="164" class="mono ink" font-size="8" text-anchor="end">PASS</text>
+
+  <rect x="408" y="172" width="8" height="8" fill="#0052FF" stroke="#0052FF" stroke-width="1"/>
+  <text x="422" y="180" class="mono ink" font-size="8">POLICY</text>
+  <text x="504" y="180" class="mono ink" font-size="8" text-anchor="end">PASS</text>
+
+  <rect x="408" y="188" width="8" height="8" fill="#0052FF" stroke="#0052FF" stroke-width="1"/>
+  <text x="422" y="196" class="mono ink" font-size="8">AUDIT</text>
+  <text x="504" y="196" class="mono ink" font-size="8" text-anchor="end">PASS</text>
+
+  <rect x="408" y="204" width="8" height="8" fill="#FFFFFF" stroke="#09090B" stroke-width="1.5"/>
+  <text x="422" y="212" class="mono ink" font-size="8">HUMAN · OPT</text>
+  <text x="504" y="212" class="mono ink" font-size="8" text-anchor="end">N/A</text>
+
+  <!-- bottom divider inside validate -->
+  <line x1="408" y1="228" x2="504" y2="228" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+  <text x="408" y="244" class="mono ink" font-size="8">CONF · 0.987</text>
+  <text x="504" y="244" class="mono ink" font-size="8" text-anchor="end">OK</text>
+  <text x="408" y="258" class="mono ink" font-size="8">Δ t   · 312ms</text>
+  <text x="504" y="258" class="mono ink" font-size="8" text-anchor="end">OK</text>
+
+  <!-- ============ Connectors VALIDATE → OUTCOME ============ -->
+  <line x1="514" y1="132" x2="526" y2="120" stroke="#09090B" stroke-width="1" stroke-dasharray="3 3" stroke-linecap="square" marker-end="url(#arrow)"/>
+  <line x1="514" y1="220" x2="526" y2="232" stroke="#09090B" stroke-width="1" stroke-dasharray="3 3" stroke-linecap="square" marker-end="url(#arrow)"/>
+
+  <!-- ============ OUTCOME column (2 stacked tiles) ============ -->
+  <rect x="528" y="96" width="72" height="60" fill="#FFFFFF" stroke="#09090B" stroke-width="1.5" stroke-linecap="square"/>
+  <text x="534" y="112" class="mono ink" font-size="8">05 · OUT</text>
+  <text x="534" y="132" class="mono ink" font-size="10" font-weight="700">ERP</text>
+  <text x="534" y="146" class="mono ink" font-size="8">ENTRY</text>
+
+  <rect x="528" y="208" width="72" height="60" fill="#FFFFFF" stroke="#09090B" stroke-width="1.5" stroke-linecap="square"/>
+  <text x="534" y="224" class="mono ink" font-size="8">06 · OUT</text>
+  <text x="534" y="244" class="mono ink" font-size="10" font-weight="700">AUDIT</text>
+  <text x="534" y="258" class="mono ink" font-size="8">LOG</text>
+
+  <!-- small cobalt logomark echo (block + inset block bottom-right) -->
+  <rect x="568" y="168" width="28" height="28" fill="#0052FF" stroke="#0052FF" stroke-width="1"/>
+  <rect x="584" y="184" width="12" height="12" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+  <text x="528" y="182" class="mono ink" font-size="8">MARK</text>
+  <text x="528" y="194" class="mono ink" font-size="8">· AGX ·</text>
+
+  <!-- ============ Technical callouts scattered ============ -->
+  <!-- top -->
+  <text x="232" y="76" class="mono acc" font-size="8">◤ THROUGHPUT 14,204 / DAY</text>
+
+  <!-- bottom numeric annotations -->
+  <text x="40"  y="304" class="mono ink" font-size="8">RATE 3 / s</text>
+  <text x="232" y="304" class="mono ink" font-size="8">PEAK 99.4% · MEAN 14ms</text>
+  <text x="400" y="304" class="mono ink" font-size="8">PASS 99.1% · A$0.41 / RUN</text>
+  <text x="528" y="304" class="mono ink" font-size="8">N = 2 / SYNC</text>
+
+  <!-- ============ Horizontal coordinate strip at bottom ============ -->
+  <line x1="24" y1="332" x2="616" y2="332" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+
+  <!-- tick marks -->
+  <g stroke="#09090B" stroke-width="1" stroke-linecap="square">
+    <line x1="40"  y1="332" x2="40"  y2="340"/>
+    <line x1="120" y1="332" x2="120" y2="336"/>
+    <line x1="200" y1="332" x2="200" y2="340"/>
+    <line x1="280" y1="332" x2="280" y2="336"/>
+    <line x1="360" y1="332" x2="360" y2="340"/>
+    <line x1="440" y1="332" x2="440" y2="336"/>
+    <line x1="520" y1="332" x2="520" y2="340"/>
+    <line x1="600" y1="332" x2="600" y2="336"/>
+  </g>
+
+  <!-- coordinate readout (cobalt marker under AGENT) -->
+  <rect x="292" y="336" width="8" height="8" fill="#0052FF" stroke="#0052FF" stroke-width="1"/>
+
+  <!-- bottom strip text -->
+  <text x="40"  y="360" class="mono ink" font-size="9">§ AUTOPILOT LABS · WORKFLOW v.001 — MELBOURNE</text>
+  <text x="600" y="360" class="mono ink" font-size="9" text-anchor="end">LAT −37.8136 / LON 144.9631</text>
+
+  <!-- bottom meta -->
+  <line x1="24" y1="368" x2="616" y2="368" stroke="#09090B" stroke-width="1" stroke-linecap="square"/>
+  <text x="40"  y="390" class="mono ink" font-size="8">OUTCOME-PRICED · A$0.41 / UNIT</text>
+  <text x="320" y="390" class="mono ink" font-size="8" text-anchor="middle">— FIG. 001 —</text>
+  <text x="600" y="390" class="mono ink" font-size="8" text-anchor="end">© AGX 2026</text>
+</svg>

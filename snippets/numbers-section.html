@@ -1,0 +1,228 @@
+<!-- ========== NUMBERS ========== -->
+<section class="numbers" aria-label="The numbers">
+  <div class="container">
+
+    <!-- Section head: § 04 on left, descriptor on right, hairline beneath -->
+    <header class="numbers__head">
+      <span class="numbers__section">§ 04 &nbsp;—&nbsp; By the numbers</span>
+      <span class="numbers__desc">A quiet ledger. Audited, dated, unembellished.</span>
+    </header>
+
+    <!-- Primary 4-cell board of massive figures -->
+    <div class="numbers__grid" role="list">
+
+      <article class="numbers__cell reveal reveal--1" role="listitem">
+        <div class="numbers__kicker">&#9670;&nbsp;Outcomes shipped &middot; YTD</div>
+        <div class="numbers__figure">2.41<em>M</em></div>
+        <div class="numbers__context">Billable outcomes, 2026 to date</div>
+      </article>
+
+      <article class="numbers__cell reveal reveal--2" role="listitem">
+        <div class="numbers__kicker">&#9670;&nbsp;Median on-time SLA</div>
+        <div class="numbers__figure">99.1<em>%</em></div>
+        <div class="numbers__context">Rolling 90 days &middot; all verticals</div>
+      </article>
+
+      <article class="numbers__cell reveal reveal--3" role="listitem">
+        <div class="numbers__kicker">&#9670;&nbsp;Audit to production</div>
+        <div class="numbers__figure">14<em>d</em></div>
+        <div class="numbers__context">Median deployment, signed contract</div>
+      </article>
+
+      <article class="numbers__cell reveal reveal--4" role="listitem">
+        <div class="numbers__kicker">&#9670;&nbsp;Clients in good standing</div>
+        <div class="numbers__figure"><em>[</em>38<em>]</em></div>
+        <div class="numbers__context">Across 22 countries &middot; Apr 2026</div>
+      </article>
+
+    </div>
+
+    <!-- Footer data strip: 4 mini proofs -->
+    <div class="numbers__strip" role="note">
+      <span>&#9670;&nbsp;Source: client ops console</span>
+      <span>&#9670;&nbsp;Window: Q2 2026</span>
+      <span>&#9670;&nbsp;Published monthly</span>
+      <span>&#9670;&nbsp;Independently audited</span>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ---------- Section frame ---------- */
+  .numbers {
+    background: var(--paper);
+    color: var(--ink);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 9rem 0;
+  }
+  .numbers .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+
+  /* ---------- Head row: section no. + descriptor ---------- */
+  .numbers__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 32px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 72px;
+  }
+  .numbers__section {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .numbers__desc {
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    letter-spacing: -0.005em;
+    color: var(--accent);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  /* ---------- 4-column grid ---------- */
+  .numbers__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .numbers__cell {
+    padding: 8px clamp(18px, 2vw, 36px) 8px 0;
+    margin-right: clamp(18px, 2vw, 36px);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    position: relative;
+  }
+  .numbers__cell:last-child { border-right: 0; }
+
+  /* Kicker */
+  .numbers__kicker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    padding-bottom: 10px;
+    position: relative;
+    margin-bottom: 22px;
+  }
+  .numbers__kicker::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 400ms linear;
+  }
+  .numbers__cell:hover .numbers__kicker::after { width: 100%; }
+
+  /* The figure — massive */
+  .numbers__figure {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(80px, 10vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    margin: 0 0 22px;
+    white-space: nowrap;
+  }
+  .numbers__figure em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Context line */
+  .numbers__context {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    margin-top: auto;
+  }
+
+  /* ---------- Footer data strip ---------- */
+  .numbers__strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 40px;
+    margin-top: 72px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .numbers__strip span { white-space: nowrap; }
+
+  /* ---------- Reveal stagger ---------- */
+  .numbers .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 600ms ease-out, transform 600ms ease-out;
+  }
+  .numbers .reveal.is-visible,
+  .numbers .reveal.in-view {
+    opacity: 1;
+    transform: none;
+  }
+  .numbers .reveal--1 { transition-delay: 0ms; }
+  .numbers .reveal--2 { transition-delay: 80ms; }
+  .numbers .reveal--3 { transition-delay: 160ms; }
+  .numbers .reveal--4 { transition-delay: 240ms; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .numbers { padding: 6rem 0; }
+    .numbers__grid { grid-template-columns: repeat(2, 1fr); }
+    .numbers__cell { padding-bottom: 36px; }
+    .numbers__cell:nth-child(2) { border-right: 0; margin-right: 0; }
+    .numbers__cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); margin-bottom: 36px; }
+    .numbers__figure { font-size: clamp(72px, 14vw, 140px); }
+    .numbers__head { flex-wrap: wrap; gap: 12px; }
+    .numbers__desc { text-align: left; }
+  }
+  @media (max-width: 600px) {
+    .numbers { padding: 5rem 0; }
+    .numbers__grid { grid-template-columns: 1fr; }
+    .numbers__cell {
+      border-right: 0;
+      margin-right: 0;
+      border-bottom: 1px solid var(--line);
+      padding: 24px 0 28px;
+      margin-bottom: 0;
+    }
+    .numbers__cell:last-child { border-bottom: 0; }
+    .numbers__figure { font-size: clamp(64px, 20vw, 120px); }
+    .numbers__strip { gap: 14px 28px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .numbers .reveal { transition: none; opacity: 1; transform: none; }
+    .numbers__kicker::after { transition: none; }
+  }
+</style>
+<!-- ========== /NUMBERS ========== -->

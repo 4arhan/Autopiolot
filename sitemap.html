@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitemap — Autopilot Labs</title>
+<meta name="description" content="Every page on the Autopilot Labs site, grouped for humans. Core, Trust, Learn, Product, Work, Other. Machine version at /sitemap.xml.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ====== sitemap-specific ====== */
+.hero-sitemap {
+  padding: clamp(4.5rem, 9vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
+}
+.hero-sitemap h1 {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 8vw, 128px);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  margin-bottom: 1.75rem;
+}
+.hero-sitemap h1 .dot { color: var(--accent); }
+.hero-sitemap .dek {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 58ch;
+  letter-spacing: -0.01em;
+}
+.hero-sitemap .dek code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  padding: 1px 7px;
+  border-radius: 2px;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+
+/* Masthead above groups */
+.sitemap-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+  padding-top: 0.75rem;
+  flex-wrap: wrap;
+}
+.sitemap-masthead .m {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sitemap-masthead .m strong { color: var(--ink); font-weight: 500; }
+
+/* Groups — 2-col grid of group cards */
+.sitemap-groups {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+.smgroup {
+  padding: clamp(2rem, 3vw, 2.75rem) clamp(1.5rem, 2.5vw, 2.5rem);
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  position: relative;
+  background: var(--paper);
+  transition: background 220ms var(--ease);
+}
+.smgroup:nth-child(2n) { border-right: 0; }
+.smgroup:hover { background: var(--paper-3); }
+.smgroup::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.smgroup:hover::before { transform: scaleX(1); }
+
+.smgroup-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.smgroup-no {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.smgroup-count {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.smgroup-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.smgroup-lede {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  letter-spacing: -0.005em;
+  max-width: 44ch;
+}
+
+/* Link list */
+.smlist { list-style: none; margin: 0; padding: 0; }
+.smrow {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr auto;
+  gap: 0.9rem;
+  align-items: baseline;
+  padding: 0.9rem 0;
+  border-bottom: 1px dotted var(--line);
+  text-decoration: none;
+  color: var(--ink);
+  transition: padding 220ms var(--ease), background 220ms var(--ease);
+}
+.smrow:last-child { border-bottom: 0; }
+.smrow:hover {
+  padding-left: 0.35rem;
+  background: linear-gradient(90deg, var(--accent-soft) 0%, transparent 80%);
+}
+.smrow-mark {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted-2);
+  line-height: 1.6;
+  transition: color 220ms var(--ease);
+}
+.smrow:hover .smrow-mark { color: var(--accent); }
+.smrow-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.smrow-title {
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.smrow-desc {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.smrow-href {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted-2);
+  text-align: right;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: color 220ms var(--ease);
+}
+.smrow:hover .smrow-href { color: var(--accent); }
+.smrow-href::after {
+  content: ' →';
+  opacity: 0;
+  margin-left: 2px;
+  transition: opacity 220ms var(--ease), margin-left 220ms var(--ease);
+}
+.smrow:hover .smrow-href::after {
+  opacity: 1;
+  margin-left: 6px;
+}
+
+/* Footnote strip */
+.sitemap-foot {
+  margin-top: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.sitemap-foot .cell {
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.5rem, 2.5vw, 2.5rem);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.sitemap-foot .cell:last-child { border-right: 0; }
+.sitemap-foot .cell .k {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sitemap-foot .cell h3 {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+.sitemap-foot .cell h3 em { color: var(--accent); }
+.sitemap-foot .cell p {
+  font-family: var(--font-display);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 44ch;
+}
+.sitemap-foot .cell a.mail {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-accent);
+  padding-bottom: 1px;
+  align-self: flex-start;
+}
+.sitemap-foot .cell a.mail:hover { border-color: var(--accent); }
+.sitemap-foot .cell .sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.sitemap-foot .cell .sub a {
+  color: var(--ink-3);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--line-strong);
+}
+.sitemap-foot .cell .sub a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sitemap-groups { grid-template-columns: 1fr; }
+  .smgroup { border-right: 0; }
+  .sitemap-foot { grid-template-columns: 1fr; }
+  .sitemap-foot .cell { border-right: 0; border-bottom: 1px solid var(--line); }
+  .sitemap-foot .cell:last-child { border-bottom: 0; }
+  .smrow { grid-template-columns: 1rem 1fr; }
+  .smrow-href { display: none; }
+}
+@media (max-width: 520px) {
+  .smrow-mark { display: none; }
+  .smrow { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero hero-sitemap">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ /sitemap · human edition</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>No. 038 — 34 pages, 6 groups</span></div>
+      </div>
+
+      <h1 class="reveal delay-1">Sitemap<span class="dot">.</span></h1>
+
+      <p class="dek reveal delay-2">
+        Every page on the site, grouped. For humans. The machine version is at <code>/sitemap.xml</code>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== GROUPS ========== -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <div class="sitemap-masthead reveal">
+        <span class="m"><strong>§ Index</strong> · 06 groups · 34 pages</span>
+        <span class="m">Updated 16 Apr 2026</span>
+      </div>
+
+      <div class="sitemap-groups">
+
+        <!-- ===== CORE ===== -->
+        <div class="smgroup reveal">
+          <div class="smgroup-head">
+            <span class="smgroup-no">— 01 · Core</span>
+            <span class="smgroup-count">06 pages</span>
+          </div>
+          <h2 class="smgroup-title">Core.</h2>
+          <p class="smgroup-lede">The spine of the site. Start here if you've never met us.</p>
+          <ul class="smlist">
+            <li><a class="smrow" href="index.html">
+              <span class="smrow-mark">◆ 01</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Home</span>
+                <span class="smrow-desc">Agents that finish the job. Outcome-priced.</span>
+              </span>
+              <span class="smrow-href">/</span>
+            </a></li>
+            <li><a class="smrow" href="solutions.html">
+              <span class="smrow-mark">◆ 02</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Solutions</span>
+                <span class="smrow-desc">Thirteen verticals, one agent catalogue</span>
+              </span>
+              <span class="smrow-href">/solutions</span>
+            </a></li>
+            <li><a class="smrow" href="process.html">
+              <span class="smrow-mark">◆ 03</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Process</span>
+                <span class="smrow-desc">Audit → build → ship. Fourteen-day median.</span>
+              </span>
+              <span class="smrow-href">/process</span>
+            </a></li>
+            <li><a class="smrow" href="pricing.html">
+              <span class="smrow-mark">◆ 04</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Pricing</span>
+                <span class="smrow-desc">Retainer, per-outcome, hybrid. No seat fees.</span>
+              </span>
+              <span class="smrow-href">/pricing</span>
+            </a></li>
+            <li><a class="smrow" href="contact.html">
+              <span class="smrow-mark">◆ 05</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Contact</span>
+                <span class="smrow-desc">Book a free two-week workflow audit</span>
+              </span>
+              <span class="smrow-href">/contact</span>
+            </a></li>
+            <li><a class="smrow" href="journal.html">
+              <span class="smrow-mark">◆ 06</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Journal</span>
+                <span class="smrow-desc">Field notes on agents, ops, and outcome pricing</span>
+              </span>
+              <span class="smrow-href">/journal</span>
+            </a></li>
+          </ul>
+        </div>
+
+        <!-- ===== TRUST ===== -->
+        <div class="smgroup reveal delay-1">
+          <div class="smgroup-head">
+            <span class="smgroup-no">— 02 · Trust</span>
+            <span class="smgroup-count">07 pages</span>
+          </div>
+          <h2 class="smgroup-title">Trust.</h2>
+          <p class="smgroup-lede">Who we are, how we behave, and how you can verify it without a sales call.</p>
+          <ul class="smlist">
+            <li><a class="smrow" href="about.html">
+              <span class="smrow-mark">◆ 01</span>
+              <span class="smrow-body">
+                <span class="smrow-title">About</span>
+                <span class="smrow-desc">Melbourne-built. 38 clients. 22 countries.</span>
+              </span>
+              <span class="smrow-href">/about</span>
+            </a></li>
+            <li><a class="smrow" href="manifesto.html">
+              <span class="smrow-mark">◆ 02</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Manifesto</span>
+                <span class="smrow-desc">What we will and won't build. In plain English.</span>
+              </span>
+              <span class="smrow-href">/manifesto</span>
+            </a></li>
+            <li><a class="smrow" href="press.html">
+              <span class="smrow-mark">◆ 03</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Press</span>
+                <span class="smrow-desc">Coverage, press kit, reporter contacts</span>
+              </span>
+              <span class="smrow-href">/press</span>
+            </a></li>
+            <li><a class="smrow" href="security.html">
+              <span class="smrow-mark">◆ 04</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Security</span>
+                <span class="smrow-desc">Data handling, encryption, DPA, pen tests</span>
+              </span>
+              <span class="smrow-href">/security</span>
+            </a></li>
+            <li><a class="smrow" href="trust.html">
+              <span class="smrow-mark">◆ 05</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Trust center</span>
+                <span class="smrow-desc">SOC 2, ISO 27001, sub-processors, SLA</span>
+              </span>
+              <span class="smrow-href">/trust</span>
+            </a></li>
+            <li><a class="smrow" href="status.html">
+              <span class="smrow-mark">◆ 06</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Status</span>
+                <span class="smrow-desc">Live uptime per agent, per vertical, per region</span>
+              </span>
+              <span class="smrow-href">/status</span>
+            </a></li>
+            <li><a class="smrow" href="changelog.html">
+              <span class="smrow-mark">◆ 07</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Changelog</span>
+                <span class="smrow-desc">Weekly. Every agent, every SLA, every release.</span>
+              </span>
+              <span class="smrow-href">/changelog</span>
+            </a></li>
+          </ul>
+        </div>
+
+        <!-- ===== LEARN ===== -->
+        <div class="smgroup reveal">
+          <div class="smgroup-head">
+            <span class="smgroup-no">— 03 · Learn</span>
+            <span class="smgroup-count">06 pages</span>
+          </div>
+          <h2 class="smgroup-title">Learn.</h2>
+          <p class="smgroup-lede">Docs, definitions, recordings. Enough to form an opinion without a demo.</p>
+          <ul class="smlist">
+            <li><a class="smrow" href="help.html">
+              <span class="smrow-mark">◆ 01</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Help center</span>
+                <span class="smrow-desc">How-to guides, FAQs, onboarding checklists</span>
+              </span>
+              <span class="smrow-href">/help</span>
+            </a></li>
+            <li><a class="smrow" href="glossary.html">
+              <span class="smrow-mark">◆ 02</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Glossary</span>
+                <span class="smrow-desc">Plain definitions: outcome, warm path, SLA credit</span>
+              </span>
+              <span class="smrow-href">/glossary</span>
+            </a></li>
+            <li><a class="smrow" href="watch.html">
+              <span class="smrow-mark">◆ 03</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Watch</span>
+                <span class="smrow-desc">10-min walkthroughs, no gated webinars</span>
+              </span>
+              <span class="smrow-href">/watch</span>
+            </a></li>
+            <li><a class="smrow" href="events.html">
+              <span class="smrow-mark">◆ 04</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Events</span>
+                <span class="smrow-desc">Melbourne office hours, meetups, conferences</span>
+              </span>
+              <span class="smrow-href">/events</span>
+            </a></li>
+            <li><a class="smrow" href="research.html">
+              <span class="smrow-mark">◆ 05</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Research</span>
+                <span class="smrow-desc">Benchmarks, white papers, cost studies</span>
+              </span>
+              <span class="smrow-href">/research</span>
+            </a></li>
+            <li><a class="smrow" href="roadmap.html">
+              <span class="smrow-mark">◆ 06</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Roadmap</span>
+                <span class="smrow-desc">What's shipping this quarter. Dated, not promised.</span>
+              </span>
+              <span class="smrow-href">/roadmap</span>
+            </a></li>
+          </ul>
+        </div>
+
+        <!-- ===== PRODUCT ===== -->
+        <div class="smgroup reveal delay-1">
+          <div class="smgroup-head">
+            <span class="smgroup-no">— 04 · Product</span>
+            <span class="smgroup-count">05 pages</span>
+          </div>
+          <h2 class="smgroup-title">Product.</h2>
+          <p class="smgroup-lede">The software surface. Try before you talk to a human.</p>
+          <ul class="smlist">
+            <li><a class="smrow" href="demo.html">
+              <span class="smrow-mark">◆ 01</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Demo</span>
+                <span class="smrow-desc">Interactive tour of a live agent run</span>
+              </span>
+              <span class="smrow-href">/demo</span>
+            </a></li>
+            <li><a class="smrow" href="calculator.html">
+              <span class="smrow-mark">◆ 02</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Calculator</span>
+                <span class="smrow-desc">Outcome-cost estimator for your volume</span>
+              </span>
+              <span class="smrow-href">/calculator</span>
+            </a></li>
+            <li><a class="smrow" href="ops.html">
+              <span class="smrow-mark">◆ 03</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Ops console</span>
+                <span class="smrow-desc">Live outcomes, SLA, audit log, per-seat views</span>
+              </span>
+              <span class="smrow-href">/ops</span>
+            </a></li>
+            <li><a class="smrow" href="integrations.html">
+              <span class="smrow-mark">◆ 04</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Integrations</span>
+                <span class="smrow-desc">Epic, Relativity, Xero, Shopify, Workday + 40</span>
+              </span>
+              <span class="smrow-href">/integrations</span>
+            </a></li>
+            <li><a class="smrow" href="api.html">
+              <span class="smrow-mark">◆ 05</span>
+              <span class="smrow-body">
+                <span class="smrow-title">API docs</span>
+                <span class="smrow-desc">REST, webhooks, SDKs in TypeScript + Python</span>
+              </span>
+              <span class="smrow-href">/api</span>
+            </a></li>
+          </ul>
+        </div>
+
+        <!-- ===== WORK ===== -->
+        <div class="smgroup reveal">
+          <div class="smgroup-head">
+            <span class="smgroup-no">— 05 · Work</span>
+            <span class="smgroup-count">02 pages</span>
+          </div>
+          <h2 class="smgroup-title">Work.</h2>
+          <p class="smgroup-lede">Join us, or build with us. Short list on purpose.</p>
+          <ul class="smlist">
+            <li><a class="smrow" href="careers.html">
+              <span class="smrow-mark">◆ 01</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Careers</span>
+                <span class="smrow-desc">Open roles, hiring bar, comp philosophy</span>
+              </span>
+              <span class="smrow-href">/careers</span>
+            </a></li>
+            <li><a class="smrow" href="partners.html">
+              <span class="smrow-mark">◆ 02</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Partners</span>
+                <span class="smrow-desc">Implementation, referral, and vertical partners</span>
+              </span>
+              <span class="smrow-href">/partners</span>
+            </a></li>
+          </ul>
+        </div>
+
+        <!-- ===== OTHER ===== -->
+        <div class="smgroup reveal delay-1">
+          <div class="smgroup-head">
+            <span class="smgroup-no">— 06 · Other</span>
+            <span class="smgroup-count">06 pages</span>
+          </div>
+          <h2 class="smgroup-title">Other.</h2>
+          <p class="smgroup-lede">The shelves most visitors never need — but designers, journalists, and auditors do.</p>
+          <ul class="smlist">
+            <li><a class="smrow" href="identity.html">
+              <span class="smrow-mark">◆ 01</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Identity system</span>
+                <span class="smrow-desc">Logo, type, colour, voice — with usage rules</span>
+              </span>
+              <span class="smrow-href">/identity</span>
+            </a></li>
+            <li><a class="smrow" href="components.html">
+              <span class="smrow-mark">◆ 02</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Components gallery</span>
+                <span class="smrow-desc">Every UI pattern we ship, live and inspectable</span>
+              </span>
+              <span class="smrow-href">/components</span>
+            </a></li>
+            <li><a class="smrow" href="cases.html">
+              <span class="smrow-mark">◆ 03</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Case studies</span>
+                <span class="smrow-desc">Named clients, numbered outcomes, dated</span>
+              </span>
+              <span class="smrow-href">/cases</span>
+            </a></li>
+            <li><a class="smrow" href="report-h1-2026.html">
+              <span class="smrow-mark">◆ 04</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Report H1 2026</span>
+                <span class="smrow-desc">Half-year outcomes, SLAs, and the book ahead</span>
+              </span>
+              <span class="smrow-href">/report-h1-2026</span>
+            </a></li>
+            <li><a class="smrow" href="404.html">
+              <span class="smrow-mark">◆ 05</span>
+              <span class="smrow-body">
+                <span class="smrow-title">404</span>
+                <span class="smrow-desc">Page not found. A tidy dead end.</span>
+              </span>
+              <span class="smrow-href">/404</span>
+            </a></li>
+            <li><a class="smrow" href="sitemap.html">
+              <span class="smrow-mark">◆ 06</span>
+              <span class="smrow-body">
+                <span class="smrow-title">Sitemap</span>
+                <span class="smrow-desc">This page. For humans. Machines: /sitemap.xml</span>
+              </span>
+              <span class="smrow-href">/sitemap</span>
+            </a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- ========== FOOT ========== -->
+      <div class="sitemap-foot reveal">
+        <div class="cell">
+          <span class="k">◆ Can't find what you need?</span>
+          <h3>Email <em>hello@autopilotlabs.io</em> — a human reads it.</h3>
+          <p>If the page you wanted isn't in the list, it probably doesn't exist yet. Tell us what you were looking for and we'll either build it, point you to the right shelf, or admit we don't have it.</p>
+          <a class="mail" href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io →</a>
+        </div>
+        <div class="cell">
+          <span class="k">◆ For machines</span>
+          <h3>The XML version is at <em>/sitemap.xml</em>.</h3>
+          <p>Crawlers, indexers, and monitoring bots should use the machine-readable file. It's regenerated on every deploy and lists every canonical URL with a last-modified date.</p>
+          <span class="sub">Also useful: <a href="/robots.txt">/robots.txt</a> · <a href="/sitemap.xml">/sitemap.xml</a> · <a href="changelog.html">/changelog</a></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research — Autopilot Labs Working Papers</title>
+<meta name="description" content="Working papers on AI automation economics. Applied research from Autopilot Labs and our academic collaborators. Plain-English preprints, open data where possible.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ====== research page — working-paper series ====== */
+
+/* Hero — tall, quiet, academic */
+.hero-research {
+  padding: clamp(5rem, 10vw, 8.5rem) 0 clamp(3rem, 6vw, 5rem);
+}
+.hero-research h1 {
+  font-size: clamp(44px, 7.5vw, 128px);
+  line-height: 0.9;
+  letter-spacing: -0.048em;
+  max-width: 16ch;
+  margin-bottom: 2.25rem;
+  font-weight: 500;
+}
+.hero-research h1 em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+.hero-research .hero-dek {
+  max-width: 64ch;
+}
+
+/* Masthead — "Autopilot Labs Working Papers" style plate */
+.wp-masthead {
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 1.25rem 0 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wp-masthead .m-brand {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-transform: none;
+}
+.wp-masthead .m-brand em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+.wp-masthead .m-issn { color: var(--ink-2); }
+.wp-masthead .m-series strong { color: var(--ink); font-weight: 500; }
+.wp-masthead .m-date strong { color: var(--ink); font-weight: 500; }
+
+@media (max-width: 800px) {
+  .wp-masthead { grid-template-columns: 1fr; gap: 0.5rem; }
+}
+
+/* Editorial board strip */
+.wp-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4rem;
+}
+.wp-board-cell {
+  padding: 1.25rem 1.5rem;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.wp-board-cell:last-child { border-right: 0; }
+.wp-board-k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wp-board-v {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.wp-board-v small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  margin-top: 2px;
+}
+@media (max-width: 900px) {
+  .wp-board { grid-template-columns: repeat(2, 1fr); }
+  .wp-board-cell:nth-child(2) { border-right: 0; }
+  .wp-board-cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 500px) {
+  .wp-board { grid-template-columns: 1fr; }
+  .wp-board-cell { border-right: 0; border-bottom: 1px solid var(--line); }
+  .wp-board-cell:last-child { border-bottom: 0; }
+}
+
+/* Filter / sort bar */
+.wp-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 1rem 0 0.9rem;
+  border-bottom: 1px solid var(--ink);
+  margin-bottom: 0;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wp-filter .left { display: flex; gap: 1.5rem; align-items: baseline; flex-wrap: wrap; }
+.wp-filter .chip {
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  cursor: default;
+  transition: all .2s var(--ease);
+}
+.wp-filter .chip:hover { border-color: var(--ink); color: var(--ink); }
+.wp-filter .chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.wp-filter .right { color: var(--ink-2); }
+.wp-filter .right strong { color: var(--accent); font-weight: 500; }
+
+/* Paper card — long-form */
+.wp-list {
+  border-bottom: 1px solid var(--ink);
+}
+.wp-paper {
+  display: grid;
+  grid-template-columns: 160px 1fr 280px;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  padding: 3rem 0 2.75rem;
+  border-top: 1px solid var(--line);
+  position: relative;
+  transition: background .3s var(--ease);
+}
+.wp-paper:first-child { border-top: 1px solid var(--ink); }
+.wp-paper:hover { background: var(--paper-3); }
+.wp-paper::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: var(--accent);
+  transition: width .3s var(--ease);
+}
+.wp-paper:hover::before { width: 2px; }
+
+/* Left rail — ID, date, tags */
+.wp-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 0.25rem;
+}
+.wp-id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 500;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line-accent);
+}
+.wp-meta-line {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.wp-meta-line strong {
+  display: block;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.wp-jel {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+}
+.wp-jel em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+/* Middle — the main paper content */
+.wp-main { min-width: 0; }
+.wp-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  text-wrap: balance;
+}
+.wp-title em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+.wp-authors {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.005em;
+}
+.wp-authors .a {
+  display: inline;
+  font-weight: 500;
+  color: var(--ink);
+}
+.wp-authors .aff {
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 400;
+}
+.wp-authors .sep {
+  color: var(--muted-2);
+  padding: 0 4px;
+}
+.wp-authors .corr {
+  color: var(--accent);
+  font-size: 0.75em;
+  vertical-align: super;
+  margin-left: 1px;
+}
+.wp-corr-note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.wp-corr-note .accent { color: var(--accent); font-weight: 500; }
+
+.wp-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  padding: 0.9rem 0;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+}
+.wp-kw {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  text-transform: lowercase;
+}
+.wp-kw::before {
+  content: '#';
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.wp-abstract-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+.wp-abstract-label::before {
+  content: '§';
+  color: var(--accent);
+  margin-right: 6px;
+  font-weight: 600;
+}
+.wp-abstract {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  letter-spacing: -0.005em;
+  max-width: 68ch;
+}
+.wp-abstract em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Right — actions + citation */
+.wp-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 0.25rem;
+}
+.wp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  transition: all .2s var(--ease);
+  cursor: pointer;
+}
+.wp-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.wp-btn .wp-btn-ic {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+}
+.wp-btn.primary {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+.wp-btn.primary:hover {
+  background: var(--accent-3);
+  border-color: var(--accent-3);
+}
+.wp-btn.primary .wp-btn-sz { opacity: 0.85; font-size: 10px; }
+
+.wp-btn-sz {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.wp-btn:hover .wp-btn-sz { color: rgba(255,255,255,0.75); }
+.wp-btn.primary .wp-btn-sz { color: rgba(255,255,255,0.8); }
+
+.wp-cite-box {
+  margin-top: 0.25rem;
+  padding: 0.9rem 1rem;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  letter-spacing: 0;
+}
+.wp-cite-box .k {
+  display: block;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.wp-cite-box code {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink);
+}
+
+.wp-stats {
+  margin-top: 0.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--line);
+}
+.wp-stat {
+  padding: 0.7rem 0.85rem;
+  border-right: 1px solid var(--line);
+}
+.wp-stat:last-child { border-right: 0; }
+.wp-stat-k {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+.wp-stat-v {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+.wp-stat-v.ac { color: var(--accent); }
+
+@media (max-width: 1100px) {
+  .wp-paper {
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+  }
+  .wp-actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--line);
+    margin-top: 0.5rem;
+  }
+  .wp-btn { flex: 1 1 220px; }
+  .wp-cite-box { flex: 1 1 100%; order: 3; }
+  .wp-stats { flex: 1 1 100%; order: 4; }
+}
+@media (max-width: 700px) {
+  .wp-paper { grid-template-columns: 1fr; padding: 2.5rem 0 2.25rem; }
+  .wp-rail { flex-direction: row; flex-wrap: wrap; gap: 1rem; align-items: baseline; }
+  .wp-jel { border-top: 0; padding-top: 0; }
+}
+
+/* ====== Collaborators block ====== */
+.collab-section {
+  background: var(--paper-3);
+  padding: clamp(5rem, 9vw, 8rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+.collab-section .section-head { margin-bottom: 3rem; }
+.collab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.collab-card {
+  background: var(--paper);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  transition: background .3s var(--ease);
+}
+.collab-card:hover { background: var(--paper-2); }
+.collab-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.collab-card:hover::before { transform: scaleX(1); }
+
+.collab-wm {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.collab-crest {
+  width: 44px; height: 44px;
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  background: var(--paper);
+  flex-shrink: 0;
+  position: relative;
+}
+.collab-crest::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+}
+.collab-crest.blue { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+.collab-crest.blue::after { border-color: rgba(255,255,255,0.3); }
+.collab-crest.ink { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.collab-crest.ink::after { border-color: rgba(255,255,255,0.25); }
+
+.collab-wordmark {
+  flex: 1;
+  min-width: 0;
+}
+.collab-wordmark .uni {
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink);
+  display: block;
+  text-transform: uppercase;
+}
+.collab-wordmark .uni.cond { letter-spacing: -0.035em; }
+.collab-wordmark .sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.collab-dept {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--ink-2);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.collab-dept span {
+  display: block;
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 12.5px;
+  margin-top: 2px;
+}
+
+.collab-pi {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 1rem;
+  margin-top: auto;
+  border-top: 1px dashed var(--line);
+}
+.collab-pi strong {
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  margin-bottom: 3px;
+}
+
+.collab-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 0.25rem;
+  border: 1px solid var(--line);
+}
+.collab-meta-cell {
+  padding: 0.6rem 0.8rem;
+  border-right: 1px solid var(--line);
+}
+.collab-meta-cell:last-child { border-right: 0; }
+.collab-meta-k {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.collab-meta-v {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.015em;
+}
+
+@media (max-width: 900px) {
+  .collab-grid { grid-template-columns: 1fr; }
+}
+
+/* ====== Submit research block ====== */
+.submit-section {
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(5rem, 9vw, 8rem) 0;
+  border-bottom: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.submit-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 0%, rgba(0,82,255,0.12), transparent 55%),
+    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: auto, 96px 100%;
+  pointer-events: none;
+}
+.submit-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.submit-head {
+  position: sticky;
+  top: 100px;
+}
+.submit-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.submit-eyebrow::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: #4A8BFF;
+}
+.submit-section h2 {
+  font-size: clamp(38px, 5.2vw, 76px);
+  line-height: 0.95;
+  letter-spacing: -0.042em;
+  color: var(--paper);
+  font-weight: 500;
+  margin-bottom: 1.75rem;
+  text-wrap: balance;
+}
+.submit-section h2 em {
+  color: #4A8BFF;
+  font-style: normal;
+  font-weight: 500;
+}
+.submit-section .sub-dek {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.55;
+  color: rgba(255,255,255,0.72);
+  max-width: 52ch;
+  margin-bottom: 2rem;
+}
+.submit-section .sub-dek em {
+  color: #4A8BFF;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.submit-offers {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 2rem;
+}
+.submit-offer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  align-items: start;
+}
+.submit-offer:last-child { border-bottom: 0; }
+.submit-offer-no {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #4A8BFF;
+  text-transform: uppercase;
+  padding-top: 4px;
+  font-weight: 500;
+  min-width: 48px;
+}
+.submit-offer-body h4 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--paper);
+  letter-spacing: -0.015em;
+  margin-bottom: 6px;
+}
+.submit-offer-body p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.65);
+  max-width: 42ch;
+}
+.submit-offer-body p em {
+  color: #4A8BFF;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.submit-cta-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.95rem 1.4rem;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: var(--paper);
+  background: transparent;
+  transition: all .25s var(--ease);
+}
+.submit-btn:hover {
+  background: #4A8BFF;
+  border-color: #4A8BFF;
+  color: var(--ink);
+}
+.submit-btn.primary {
+  background: #4A8BFF;
+  border-color: #4A8BFF;
+  color: var(--ink);
+}
+.submit-btn.primary:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+
+.submit-footnote {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed rgba(255,255,255,0.15);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+}
+.submit-footnote strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .submit-inner { grid-template-columns: 1fr; }
+  .submit-head { position: static; }
+}
+
+/* ====== Data & ethics footnote strip ====== */
+.ethics-strip {
+  padding: 3rem 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.ethics-strip-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.ethics-strip-k {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.ethics-strip-v {
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 72ch;
+  letter-spacing: -0.005em;
+}
+.ethics-strip-v em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+.ethics-strip-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--line-accent);
+  transition: border-color .2s;
+}
+.ethics-strip-link:hover { border-bottom-color: var(--accent); }
+
+@media (max-width: 800px) {
+  .ethics-strip-inner { grid-template-columns: 1fr; gap: 0.75rem; }
+}
+
+/* ====== Research container override ====== */
+.wp-main-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 56px);
+}
+
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero hero-research">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ Autopilot Labs Research · Working Paper Series</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>ISSN 2981-0042 · Series est. 2024</span></div>
+      </div>
+
+      <h1 class="hero-title reveal delay-1">
+        Working papers on<br>
+        <em>AI automation economics.</em>
+      </h1>
+
+      <div class="hero-lower reveal delay-2">
+        <p class="hero-dek">
+          Applied research from Autopilot Labs and our academic collaborators at the University of Melbourne, ANU, and UNSW. Plain-English preprints, <em>open data where possible</em>, and replication code for every empirical result. New papers circulate quarterly; revisions are tracked in the masthead.
+        </p>
+        <div class="hero-actions">
+          <a href="#papers" class="btn btn-primary btn-lg">Browse papers <span class="arrow">↓</span></a>
+          <a href="#submit" class="btn btn-lg">Submit research</a>
+          <a href="#collaborators" class="btn btn-ghost btn-lg">Collaborators</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MASTHEAD + BOARD ========== -->
+  <section style="padding: clamp(3rem, 5vw, 4.5rem) 0 0; border-bottom: 1px solid var(--line); background: var(--paper);">
+    <div class="wp-main-container">
+
+      <div class="wp-masthead reveal">
+        <span class="m-brand">Autopilot Labs Working Papers<em>.</em></span>
+        <span></span>
+        <span class="m-series"><strong>Series</strong> · WP-2026</span>
+        <span class="m-date"><strong>Vol. III</strong> · Apr 2026</span>
+      </div>
+
+      <div class="wp-board reveal delay-1" aria-label="Editorial board">
+        <div class="wp-board-cell">
+          <span class="wp-board-k">◆ Series editor</span>
+          <span class="wp-board-v">Dr. M. Orren<small>Head of Research · Autopilot Labs</small></span>
+        </div>
+        <div class="wp-board-cell">
+          <span class="wp-board-k">◆ Academic chair</span>
+          <span class="wp-board-v">Prof. A. Sarraf<small>University of Melbourne</small></span>
+        </div>
+        <div class="wp-board-cell">
+          <span class="wp-board-k">◆ Review panel</span>
+          <span class="wp-board-v">6 reviewers · AU / NZ / UK<small>Double-blind, non-refereed series</small></span>
+        </div>
+        <div class="wp-board-cell">
+          <span class="wp-board-k">◆ Replication</span>
+          <span class="wp-board-v">Code + data on request<small>Under Autopilot Labs OpenData v1.2</small></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== PAPER LIST ========== -->
+  <section id="papers" style="padding: clamp(3rem, 6vw, 5rem) 0 clamp(4rem, 8vw, 7rem); background: var(--paper);">
+    <div class="wp-main-container">
+
+      <div class="wp-filter reveal">
+        <div class="left">
+          <span>Filter:</span>
+          <span class="chip active">All · 6</span>
+          <span class="chip">Pricing · 3</span>
+          <span class="chip">Labour · 2</span>
+          <span class="chip">Quality · 1</span>
+          <span class="chip">Field studies · 4</span>
+        </div>
+        <div class="right">
+          Sorted: <strong>newest first</strong> · 06 of 06 shown
+        </div>
+      </div>
+
+      <div class="wp-list" role="list">
+
+        <!-- ============ PAPER 01 ============ -->
+        <article class="wp-paper reveal" role="listitem" aria-labelledby="wp01">
+          <div class="wp-rail">
+            <span class="wp-id">WP-2026-01</span>
+            <div class="wp-meta-line">
+              <strong>Mar 2026</strong>
+              Revised Apr 02
+            </div>
+            <div class="wp-meta-line">
+              <strong>Pages</strong>
+              38 pp · 14 figs
+            </div>
+            <div class="wp-meta-line">
+              <strong>Status</strong>
+              Circulating · v2.1
+            </div>
+            <div class="wp-jel">
+              JEL: <em>L86</em>, D22, O33
+            </div>
+          </div>
+
+          <div class="wp-main">
+            <h2 class="wp-title" id="wp01">Outcome pricing elasticity in <em>SME AI adoption</em>.</h2>
+            <p class="wp-authors">
+              <span class="a">M. Orren</span><span class="aff"> · Autopilot Labs Research</span><span class="sep">·</span>
+              <span class="a">A. Sarraf<span class="corr">†</span></span><span class="aff"> · Univ. of Melbourne, Dept. of Economics</span><span class="sep">·</span>
+              <span class="a">J. Chen</span><span class="aff"> · Autopilot Labs Research</span>
+            </p>
+            <div class="wp-corr-note"><span class="accent">†</span> Corresponding author · sarraf@unimelb.edu.au</div>
+
+            <div class="wp-keywords">
+              <span class="wp-kw">outcome-pricing</span>
+              <span class="wp-kw">sme-adoption</span>
+              <span class="wp-kw">price-elasticity</span>
+              <span class="wp-kw">ai-automation</span>
+            </div>
+
+            <div class="wp-abstract-label">Abstract</div>
+            <p class="wp-abstract">
+              We study how small and mid-sized firms respond to three pricing structures for AI automation: flat seat fees, token pass-through, and <em>per-outcome rates with SLA</em>. Using a 14-month panel of 412 Australian SMEs onboarded through Autopilot Labs, we estimate own-price elasticities of -1.8 for per-seat contracts and -0.6 for per-outcome contracts. Results suggest outcome pricing is markedly stickier and expands the addressable market for AI services by roughly 38%. We argue that seat pricing rations AI away from the firms that would benefit most.
+            </p>
+          </div>
+
+          <div class="wp-actions">
+            <button class="wp-btn primary" aria-label="Download PDF">
+              <span><span class="wp-btn-ic">↓</span> Download PDF</span>
+              <span class="wp-btn-sz">0.6 MB</span>
+            </button>
+            <button class="wp-btn" aria-label="Cite paper as BibTeX">
+              <span><span class="wp-btn-ic">“</span> Cite (BibTeX)</span>
+              <span class="wp-btn-ic">↓</span>
+            </button>
+            <div class="wp-cite-box">
+              <span class="k">BibTeX · preview</span>
+              <code>@techreport{orren2026elasticity,
+  author = {Orren, M. and Sarraf, A. and Chen, J.},
+  title  = {Outcome Pricing Elasticity...},
+  series = {Autopilot Labs WP}, year = {2026},
+  number = {WP-2026-01}
+}</code>
+            </div>
+            <div class="wp-stats">
+              <div class="wp-stat">
+                <div class="wp-stat-k">Downloads</div>
+                <div class="wp-stat-v ac">1,402</div>
+              </div>
+              <div class="wp-stat">
+                <div class="wp-stat-k">Citations</div>
+                <div class="wp-stat-v">14</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============ PAPER 02 ============ -->
+        <article class="wp-paper reveal" role="listitem" aria-labelledby="wp02">
+          <div class="wp-rail">
+            <span class="wp-id">WP-2026-02</span>
+            <div class="wp-meta-line">
+              <strong>Mar 2026</strong>
+              First release
+            </div>
+            <div class="wp-meta-line">
+              <strong>Pages</strong>
+              52 pp · 22 figs
+            </div>
+            <div class="wp-meta-line">
+              <strong>Status</strong>
+              Circulating · v1.0
+            </div>
+            <div class="wp-jel">
+              JEL: <em>J23</em>, K41, O33
+            </div>
+          </div>
+
+          <div class="wp-main">
+            <h2 class="wp-title" id="wp02">A natural experiment in <em>paralegal augmentation</em>.</h2>
+            <p class="wp-authors">
+              <span class="a">Autopilot Labs Research</span><span class="aff"> · Autopilot Labs Research</span><span class="sep">·</span>
+              <span class="a">E. Dubois<span class="corr">†</span></span><span class="aff"> · Australian National University, School of Law</span><span class="sep">·</span>
+              <span class="a">R. Nguyen</span><span class="aff"> · ANU, Research School of Economics</span>
+            </p>
+            <div class="wp-corr-note"><span class="accent">†</span> Corresponding author · e.dubois@anu.edu.au</div>
+
+            <div class="wp-keywords">
+              <span class="wp-kw">legal-tech</span>
+              <span class="wp-kw">labour-augmentation</span>
+              <span class="wp-kw">difference-in-differences</span>
+              <span class="wp-kw">discovery-review</span>
+            </div>
+
+            <div class="wp-abstract-label">Abstract</div>
+            <p class="wp-abstract">
+              A Sydney litigation firm rolled out an AI discovery agent across six of eleven practice groups during 2025, creating a near-ideal staggered adoption design. We use a difference-in-differences model to compare paralegal throughput, error rates, and self-reported task satisfaction pre- and post-rollout. Treated paralegals handled <em>2.8x more documents per hour</em> with no statistically significant change in privilege-flag error rates. Task satisfaction rose in three of six groups, fell in one, and was unchanged in two.
+            </p>
+          </div>
+
+          <div class="wp-actions">
+            <button class="wp-btn primary" aria-label="Download PDF">
+              <span><span class="wp-btn-ic">↓</span> Download PDF</span>
+              <span class="wp-btn-sz">0.6 MB</span>
+            </button>
+            <button class="wp-btn" aria-label="Cite paper as BibTeX">
+              <span><span class="wp-btn-ic">“</span> Cite (BibTeX)</span>
+              <span class="wp-btn-ic">↓</span>
+            </button>
+            <div class="wp-cite-box">
+              <span class="k">BibTeX · preview</span>
+              <code>@techreport{whitfield2026paralegal,
+  author = {[legal client], H. and Dubois, E. and Nguyen, R.},
+  title  = {A Natural Experiment in Paralegal Augmentation},
+  series = {Autopilot Labs WP}, year = {2026},
+  number = {WP-2026-02}
+}</code>
+            </div>
+            <div class="wp-stats">
+              <div class="wp-stat">
+                <div class="wp-stat-k">Downloads</div>
+                <div class="wp-stat-v ac">2,118</div>
+              </div>
+              <div class="wp-stat">
+                <div class="wp-stat-k">Citations</div>
+                <div class="wp-stat-v">22</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============ PAPER 03 ============ -->
+        <article class="wp-paper reveal" role="listitem" aria-labelledby="wp03">
+          <div class="wp-rail">
+            <span class="wp-id">WP-2026-03</span>
+            <div class="wp-meta-line">
+              <strong>Feb 2026</strong>
+              Revised Mar 14
+            </div>
+            <div class="wp-meta-line">
+              <strong>Pages</strong>
+              44 pp · 18 figs
+            </div>
+            <div class="wp-meta-line">
+              <strong>Status</strong>
+              Circulating · v1.3
+            </div>
+            <div class="wp-jel">
+              JEL: <em>L14</em>, D86, L23
+            </div>
+          </div>
+
+          <div class="wp-main">
+            <h2 class="wp-title" id="wp03">SLA-driven contracts vs. <em>time-and-materials</em>: a field study.</h2>
+            <p class="wp-authors">
+              <span class="a">J. Chen</span><span class="aff"> · Autopilot Labs Research</span><span class="sep">·</span>
+              <span class="a">P. Iyer<span class="corr">†</span></span><span class="aff"> · UNSW Business School, School of Management</span><span class="sep">·</span>
+              <span class="a">D. Halligan</span><span class="aff"> · Autopilot Labs Research</span>
+            </p>
+            <div class="wp-corr-note"><span class="accent">†</span> Corresponding author · p.iyer@unsw.edu.au</div>
+
+            <div class="wp-keywords">
+              <span class="wp-kw">contract-theory</span>
+              <span class="wp-kw">sla</span>
+              <span class="wp-kw">services-procurement</span>
+              <span class="wp-kw">ai-services</span>
+            </div>
+
+            <div class="wp-abstract-label">Abstract</div>
+            <p class="wp-abstract">
+              We compare the economic outcomes of 38 AI automation engagements billed under SLA-driven per-outcome contracts against a matched sample of 41 engagements billed on time-and-materials terms. SLA contracts delivered workflows to production <em>11 days earlier on median</em> and showed a 22% lower rate of scope disputes. Buyers of SLA contracts reported fewer renegotiations but slightly narrower feature creep. We discuss implications for AI services procurement and suggest a "reference SLA" template for practitioners.
+            </p>
+          </div>
+
+          <div class="wp-actions">
+            <button class="wp-btn primary" aria-label="Download PDF">
+              <span><span class="wp-btn-ic">↓</span> Download PDF</span>
+              <span class="wp-btn-sz">0.6 MB</span>
+            </button>
+            <button class="wp-btn" aria-label="Cite paper as BibTeX">
+              <span><span class="wp-btn-ic">“</span> Cite (BibTeX)</span>
+              <span class="wp-btn-ic">↓</span>
+            </button>
+            <div class="wp-cite-box">
+              <span class="k">BibTeX · preview</span>
+              <code>@techreport{chen2026sla,
+  author = {Chen, J. and Iyer, P. and Halligan, D.},
+  title  = {SLA-Driven Contracts vs. Time-and-Materials},
+  series = {Autopilot Labs WP}, year = {2026},
+  number = {WP-2026-03}
+}</code>
+            </div>
+            <div class="wp-stats">
+              <div class="wp-stat">
+                <div class="wp-stat-k">Downloads</div>
+                <div class="wp-stat-v ac">987</div>
+              </div>
+              <div class="wp-stat">
+                <div class="wp-stat-k">Citations</div>
+                <div class="wp-stat-v">9</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============ PAPER 04 ============ -->
+        <article class="wp-paper reveal" role="listitem" aria-labelledby="wp04">
+          <div class="wp-rail">
+            <span class="wp-id">WP-2026-04</span>
+            <div class="wp-meta-line">
+              <strong>Feb 2026</strong>
+              First release
+            </div>
+            <div class="wp-meta-line">
+              <strong>Pages</strong>
+              61 pp · 31 figs
+            </div>
+            <div class="wp-meta-line">
+              <strong>Status</strong>
+              Circulating · v1.0
+            </div>
+            <div class="wp-jel">
+              JEL: <em>C90</em>, L86, D83
+            </div>
+          </div>
+
+          <div class="wp-main">
+            <h2 class="wp-title" id="wp04">Hallucination rates across <em>eight vertical agents</em>.</h2>
+            <p class="wp-authors">
+              <span class="a">D. Halligan</span><span class="aff"> · Autopilot Labs Research</span><span class="sep">·</span>
+              <span class="a">S. Okonjo</span><span class="aff"> · Autopilot Labs Research</span><span class="sep">·</span>
+              <span class="a">K. Trifonov<span class="corr">†</span></span><span class="aff"> · UNSW, School of Computer Science</span>
+            </p>
+            <div class="wp-corr-note"><span class="accent">†</span> Corresponding author · k.trifonov@unsw.edu.au</div>
+
+            <div class="wp-keywords">
+              <span class="wp-kw">ai-safety</span>
+              <span class="wp-kw">hallucination</span>
+              <span class="wp-kw">benchmarks</span>
+              <span class="wp-kw">vertical-agents</span>
+            </div>
+
+            <div class="wp-abstract-label">Abstract</div>
+            <p class="wp-abstract">
+              We measure factual error rates — "hallucinations" — across Autopilot Labs's eight production vertical agents (healthcare, legal, finance, real estate, e-commerce, HR, marketing, manufacturing) over 3.4 million production outcomes. Using human-adjudicated ground truth on a 12,000-outcome sample, we report per-vertical error rates ranging from <em>0.09% (finance)</em> to 1.4% (marketing). We document a strong, monotonic relationship between narrower task scope and lower error rate. Results support domain-specific agent design over general-purpose systems for production AI automation.
+            </p>
+          </div>
+
+          <div class="wp-actions">
+            <button class="wp-btn primary" aria-label="Download PDF">
+              <span><span class="wp-btn-ic">↓</span> Download PDF</span>
+              <span class="wp-btn-sz">0.6 MB</span>
+            </button>
+            <button class="wp-btn" aria-label="Cite paper as BibTeX">
+              <span><span class="wp-btn-ic">“</span> Cite (BibTeX)</span>
+              <span class="wp-btn-ic">↓</span>
+            </button>
+            <div class="wp-cite-box">
+              <span class="k">BibTeX · preview</span>
+              <code>@techreport{halligan2026hallucination,
+  author = {Halligan, D. and Okonjo, S. and Trifonov, K.},
+  title  = {Hallucination Rates Across Eight Vertical Agents},
+  series = {Autopilot Labs WP}, year = {2026},
+  number = {WP-2026-04}
+}</code>
+            </div>
+            <div class="wp-stats">
+              <div class="wp-stat">
+                <div class="wp-stat-k">Downloads</div>
+                <div class="wp-stat-v ac">3,204</div>
+              </div>
+              <div class="wp-stat">
+                <div class="wp-stat-k">Citations</div>
+                <div class="wp-stat-v">31</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============ PAPER 05 ============ -->
+        <article class="wp-paper reveal" role="listitem" aria-labelledby="wp05">
+          <div class="wp-rail">
+            <span class="wp-id">WP-2026-05</span>
+            <div class="wp-meta-line">
+              <strong>Jan 2026</strong>
+              Revised Feb 11
+            </div>
+            <div class="wp-meta-line">
+              <strong>Pages</strong>
+              33 pp · 11 figs
+            </div>
+            <div class="wp-meta-line">
+              <strong>Status</strong>
+              Circulating · v1.1
+            </div>
+            <div class="wp-jel">
+              JEL: <em>M15</em>, L23, D24
+            </div>
+          </div>
+
+          <div class="wp-main">
+            <h2 class="wp-title" id="wp05">Workflow audit ROI: predicting <em>automatable vs. not</em>.</h2>
+            <p class="wp-authors">
+              <span class="a">R. Nguyen<span class="corr">†</span></span><span class="aff"> · ANU, Research School of Economics</span><span class="sep">·</span>
+              <span class="a">M. Orren</span><span class="aff"> · Autopilot Labs Research</span>
+            </p>
+            <div class="wp-corr-note"><span class="accent">†</span> Corresponding author · r.nguyen@anu.edu.au</div>
+
+            <div class="wp-keywords">
+              <span class="wp-kw">workflow-audit</span>
+              <span class="wp-kw">task-automation</span>
+              <span class="wp-kw">predictive-model</span>
+              <span class="wp-kw">roi</span>
+            </div>
+
+            <div class="wp-abstract-label">Abstract</div>
+            <p class="wp-abstract">
+              From 214 completed Autopilot Labs workflow audits, we hand-label 3,118 candidate sub-tasks as automated, partially automated, or rejected for automation. We train a lightweight classifier — 9 hand-engineered features, no model fine-tuning — that predicts automation feasibility with <em>84% accuracy</em> on a held-out sample. Feature importance is dominated by three signals: task repetition, variance in input format, and tolerance for minor errors. We publish the audit rubric and encourage practitioners to calibrate their own thresholds.
+            </p>
+          </div>
+
+          <div class="wp-actions">
+            <button class="wp-btn primary" aria-label="Download PDF">
+              <span><span class="wp-btn-ic">↓</span> Download PDF</span>
+              <span class="wp-btn-sz">0.6 MB</span>
+            </button>
+            <button class="wp-btn" aria-label="Cite paper as BibTeX">
+              <span><span class="wp-btn-ic">“</span> Cite (BibTeX)</span>
+              <span class="wp-btn-ic">↓</span>
+            </button>
+            <div class="wp-cite-box">
+              <span class="k">BibTeX · preview</span>
+              <code>@techreport{nguyen2026audit,
+  author = {Nguyen, R. and Orren, M.},
+  title  = {Workflow Audit ROI: Predicting Automatable vs. Not},
+  series = {Autopilot Labs WP}, year = {2026},
+  number = {WP-2026-05}
+}</code>
+            </div>
+            <div class="wp-stats">
+              <div class="wp-stat">
+                <div class="wp-stat-k">Downloads</div>
+                <div class="wp-stat-v ac">1,854</div>
+              </div>
+              <div class="wp-stat">
+                <div class="wp-stat-k">Citations</div>
+                <div class="wp-stat-v">17</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============ PAPER 06 ============ -->
+        <article class="wp-paper reveal" role="listitem" aria-labelledby="wp06">
+          <div class="wp-rail">
+            <span class="wp-id">WP-2026-06</span>
+            <div class="wp-meta-line">
+              <strong>Jan 2026</strong>
+              First release
+            </div>
+            <div class="wp-meta-line">
+              <strong>Pages</strong>
+              47 pp · 19 figs
+            </div>
+            <div class="wp-meta-line">
+              <strong>Status</strong>
+              Circulating · v1.0
+            </div>
+            <div class="wp-jel">
+              JEL: <em>J23</em>, J31, O33
+            </div>
+          </div>
+
+          <div class="wp-main">
+            <h2 class="wp-title" id="wp06">Per-outcome pricing and <em>labour market effects</em>.</h2>
+            <p class="wp-authors">
+              <span class="a">A. Sarraf<span class="corr">†</span></span><span class="aff"> · Univ. of Melbourne, Dept. of Economics</span><span class="sep">·</span>
+              <span class="a">E. Dubois</span><span class="aff"> · ANU, School of Law</span><span class="sep">·</span>
+              <span class="a">M. Orren</span><span class="aff"> · Autopilot Labs Research</span>
+            </p>
+            <div class="wp-corr-note"><span class="accent">†</span> Corresponding author · sarraf@unimelb.edu.au</div>
+
+            <div class="wp-keywords">
+              <span class="wp-kw">labour-economics</span>
+              <span class="wp-kw">wage-effects</span>
+              <span class="wp-kw">task-displacement</span>
+              <span class="wp-kw">outcome-pricing</span>
+            </div>
+
+            <div class="wp-abstract-label">Abstract</div>
+            <p class="wp-abstract">
+              We study wage and employment effects in 28 client firms that transitioned from headcount-based AI services to per-outcome pricing between 2024 and 2026. Contrary to a naive displacement hypothesis, mean headcount in affected teams was approximately stable, while the mix of work shifted sharply: time on rote task execution fell by 61% while time on exception handling, client-facing work, and QA rose correspondingly. Real wages for retained workers rose <em>3.1% above sector baseline</em>. We interpret the results cautiously, noting selection effects and a relatively short panel.
+            </p>
+          </div>
+
+          <div class="wp-actions">
+            <button class="wp-btn primary" aria-label="Download PDF">
+              <span><span class="wp-btn-ic">↓</span> Download PDF</span>
+              <span class="wp-btn-sz">0.6 MB</span>
+            </button>
+            <button class="wp-btn" aria-label="Cite paper as BibTeX">
+              <span><span class="wp-btn-ic">“</span> Cite (BibTeX)</span>
+              <span class="wp-btn-ic">↓</span>
+            </button>
+            <div class="wp-cite-box">
+              <span class="k">BibTeX · preview</span>
+              <code>@techreport{sarraf2026labour,
+  author = {Sarraf, A. and Dubois, E. and Orren, M.},
+  title  = {Per-Outcome Pricing and Labour Market Effects},
+  series = {Autopilot Labs WP}, year = {2026},
+  number = {WP-2026-06}
+}</code>
+            </div>
+            <div class="wp-stats">
+              <div class="wp-stat">
+                <div class="wp-stat-k">Downloads</div>
+                <div class="wp-stat-v ac">2,641</div>
+              </div>
+              <div class="wp-stat">
+                <div class="wp-stat-k">Citations</div>
+                <div class="wp-stat-v">26</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== ETHICS / DATA STRIP ========== -->
+  <section class="ethics-strip" aria-label="Data and ethics note">
+    <div class="wp-main-container">
+      <div class="ethics-strip-inner">
+        <span class="ethics-strip-k">◆ Data · ethics · replication</span>
+        <p class="ethics-strip-v">
+          All studies involving client-level data are conducted under <em>Autopilot Labs OpenData v1.2</em>, reviewed by each collaborating university's ethics committee. Where possible, anonymised microdata and replication code are released at paper acceptance; otherwise, replication materials are available on request under a standard data-use agreement.
+        </p>
+        <a href="#" class="ethics-strip-link">Read the protocol →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COLLABORATORS ========== -->
+  <section id="collaborators" class="collab-section">
+    <div class="wp-main-container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section II · Academic collaborators</span>
+          <span class="big">02</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Three faculties · one programme</div>
+          <h2 class="section-title">The universities we <em>work with</em>.</h2>
+          <p class="dek">Our applied research partnerships are anchored in three Australian faculties. Each collaborator brings a named principal investigator, access to graduate researchers, and a formal MOU governing data-sharing and authorship.</p>
+        </div>
+      </div>
+
+      <div class="collab-grid reveal delay-2" aria-label="Academic collaborators">
+
+        <article class="collab-card">
+          <div class="collab-wm">
+            <div class="collab-crest blue" aria-hidden="true">UM</div>
+            <div class="collab-wordmark">
+              <span class="uni cond">Univ. of Melbourne</span>
+              <span class="sub">Parkville · VIC · est. 1853</span>
+            </div>
+          </div>
+          <p class="collab-dept">
+            Department of Economics
+            <span>Faculty of Business &amp; Economics</span>
+          </p>
+          <p class="collab-dept">
+            <em>Research focus</em> — pricing theory, labour demand, and the industrial organisation of AI services. Lead collaborator on WP-2026-01 and WP-2026-06.
+          </p>
+          <div class="collab-pi">
+            <strong>Prof. A. Sarraf</strong>
+            Principal investigator · since 2024
+          </div>
+          <div class="collab-meta">
+            <div class="collab-meta-cell">
+              <div class="collab-meta-k">Joint papers</div>
+              <div class="collab-meta-v">04</div>
+            </div>
+            <div class="collab-meta-cell">
+              <div class="collab-meta-k">Grad researchers</div>
+              <div class="collab-meta-v">06</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="collab-card">
+          <div class="collab-wm">
+            <div class="collab-crest ink" aria-hidden="true">AN</div>
+            <div class="collab-wordmark">
+              <span class="uni cond">ANU · Canberra</span>
+              <span class="sub">Acton · ACT · est. 1946</span>
+            </div>
+          </div>
+          <p class="collab-dept">
+            School of Law &amp; School of Economics
+            <span>Colleges of Law / Business &amp; Economics</span>
+          </p>
+          <p class="collab-dept">
+            <em>Research focus</em> — legal-tech adoption, contract design, and workflow measurement. Lead collaborator on WP-2026-02 and WP-2026-05.
+          </p>
+          <div class="collab-pi">
+            <strong>Dr. E. Dubois</strong>
+            Principal investigator · since 2024
+          </div>
+          <div class="collab-meta">
+            <div class="collab-meta-cell">
+              <div class="collab-meta-k">Joint papers</div>
+              <div class="collab-meta-v">03</div>
+            </div>
+            <div class="collab-meta-cell">
+              <div class="collab-meta-k">Grad researchers</div>
+              <div class="collab-meta-v">04</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="collab-card">
+          <div class="collab-wm">
+            <div class="collab-crest" aria-hidden="true">UN</div>
+            <div class="collab-wordmark">
+              <span class="uni cond">UNSW Sydney</span>
+              <span class="sub">Kensington · NSW · est. 1949</span>
+            </div>
+          </div>
+          <p class="collab-dept">
+            School of Computer Science &amp; Business School
+            <span>Faculty of Engineering / Business</span>
+          </p>
+          <p class="collab-dept">
+            <em>Research focus</em> — agent safety, benchmark design, and procurement models for AI services. Lead collaborator on WP-2026-03 and WP-2026-04.
+          </p>
+          <div class="collab-pi">
+            <strong>Dr. K. Trifonov &amp; Dr. P. Iyer</strong>
+            Principal investigators · since 2025
+          </div>
+          <div class="collab-meta">
+            <div class="collab-meta-cell">
+              <div class="collab-meta-k">Joint papers</div>
+              <div class="collab-meta-v">02</div>
+            </div>
+            <div class="collab-meta-cell">
+              <div class="collab-meta-k">Grad researchers</div>
+              <div class="collab-meta-v">03</div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SUBMIT RESEARCH ========== -->
+  <section id="submit" class="submit-section">
+    <div class="wp-main-container submit-inner">
+
+      <div class="submit-head reveal">
+        <div class="submit-eyebrow">§ 03 — Submit research · 2026 call</div>
+        <h2>For academic researchers working on <em>AI automation</em>.</h2>
+        <p class="sub-dek">
+          We open two research slots per year to independent academics whose work touches the economics, labour, safety, or operations of AI automation. Selected collaborators receive <em>privileged data access</em>, named authorship, and a small-but-honest research stipend. No deliverable is required beyond a circulating paper.
+        </p>
+
+        <div class="submit-cta-row">
+          <a href="mailto:research@autopilotlabs.io" class="submit-btn primary">Email the research office <span aria-hidden="true">↗</span></a>
+          <a href="#" class="submit-btn">Download call (PDF) <span aria-hidden="true">↓</span></a>
+        </div>
+
+        <div class="submit-footnote">
+          <strong>Deadlines</strong> — Spring call opens 01 May, closes 30 Jun. Autumn call opens 01 Oct, closes 15 Nov. Decisions within four weeks of close.
+        </div>
+      </div>
+
+      <div class="submit-offers reveal delay-1" aria-label="What collaborators get">
+
+        <div class="submit-offer">
+          <span class="submit-offer-no">— 01</span>
+          <div class="submit-offer-body">
+            <h4>Privileged data access</h4>
+            <p>Anonymised microdata from the Autopilot Labs ops console — <em>billions of outcomes, 38 client firms, 13 verticals</em> — under a standard university data-use agreement, co-signed by your faculty ethics chair.</p>
+          </div>
+        </div>
+
+        <div class="submit-offer">
+          <span class="submit-offer-no">— 02</span>
+          <div class="submit-offer-body">
+            <h4>Named authorship</h4>
+            <p>Your name on the paper, in the order you earn. Our in-house research team drafts methods sections and builds replication notebooks, but the economics is yours.</p>
+          </div>
+        </div>
+
+        <div class="submit-offer">
+          <span class="submit-offer-no">— 03</span>
+          <div class="submit-offer-body">
+            <h4>A modest stipend</h4>
+            <p>A$18,000 per paper, paid to your department — enough for one RA quarter, not enough to buy opinions. No equity, no advisory role, no co-marketing clause.</p>
+          </div>
+        </div>
+
+        <div class="submit-offer">
+          <span class="submit-offer-no">— 04</span>
+          <div class="submit-offer-body">
+            <h4>Editorial independence</h4>
+            <p>We have <em>zero veto</em> over findings. If the paper concludes our pricing model is wrong, we publish it anyway — and we've done this twice so far.</p>
+          </div>
+        </div>
+
+        <div class="submit-offer">
+          <span class="submit-offer-no">— 05</span>
+          <div class="submit-offer-body">
+            <h4>Topics we're currently seeking</h4>
+            <p>Regulatory compliance and AI automation, labour market transitions in knowledge work, counterfactual measurement for per-outcome pricing, and longitudinal studies of agent quality. Adjacent proposals welcome.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="endcta">
+    <div class="container">
+      <div class="endcta-wrap reveal">
+        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">Subscribe to the series</div>
+        <h2>New papers every<br><em>quarter.</em></h2>
+        <p class="dek">Join 2,400 academics, policy researchers, and operators who receive each new WP in their inbox the morning it circulates. No marketing, no digests, no tracking pixels — just the paper.</p>
+        <div class="actions">
+          <a href="mailto:research@autopilotlabs.io?subject=Subscribe%20to%20WP%20series" class="btn btn-primary btn-lg">Subscribe by email <span class="arrow">↗</span></a>
+          <a href="#" class="btn btn-lg">RSS · Atom feed</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

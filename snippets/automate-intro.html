@@ -1,0 +1,267 @@
+<section class="automate-intro">
+  <style>
+    .automate-intro {
+      background: var(--paper);
+      color: var(--ink);
+      padding: clamp(5rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3rem);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-display), "Geist", system-ui, sans-serif;
+      font-feature-settings: "ss01", "cv11";
+    }
+
+    .automate-intro .ai-container {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .automate-intro .ai-head {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      max-width: 72ch;
+      margin-bottom: clamp(3.5rem, 6vw, 5.5rem);
+    }
+
+    .automate-intro .ai-eyebrow {
+      font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      font-variant-numeric: tabular-nums;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--line);
+    }
+
+    .automate-intro .ai-headline {
+      font-family: var(--font-display), "Geist", system-ui, sans-serif;
+      font-weight: 500;
+      font-size: clamp(2.5rem, 5.2vw, 4.25rem);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin: 0;
+      max-width: 22ch;
+    }
+
+    .automate-intro .ai-headline em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .automate-intro .ai-dek {
+      font-family: var(--font-display), "Geist", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: 1.125rem;
+      line-height: 1.55;
+      letter-spacing: -0.005em;
+      color: var(--ink-2);
+      margin: 0;
+      max-width: 60ch;
+    }
+
+    .automate-intro .ai-dek em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .automate-intro .ai-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .automate-intro .ai-step {
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: transparent;
+    }
+
+    .automate-intro .ai-step:last-child {
+      border-right: none;
+    }
+
+    .automate-intro .ai-step-num {
+      font-family: var(--font-display), "Geist", system-ui, sans-serif;
+      font-weight: 500;
+      font-size: clamp(3rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 0.5rem;
+    }
+
+    .automate-intro .ai-step-title {
+      font-family: var(--font-display), "Geist", system-ui, sans-serif;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .automate-intro .ai-step-dek {
+      font-family: var(--font-display), "Geist", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--ink-2);
+      margin: 0;
+      max-width: 42ch;
+    }
+
+    .automate-intro .ai-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.75rem 1.25rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--ink-3);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .automate-intro .ai-strip-lead {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .automate-intro .ai-strip-verticals {
+      color: var(--muted);
+    }
+
+    .automate-intro .ai-cta-row {
+      margin-top: clamp(2.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: center;
+    }
+
+    .automate-intro .ai-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--accent-fg);
+      padding: 1rem 1.75rem;
+      font-family: var(--font-display), "Geist", system-ui, sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: -0.005em;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .automate-intro .ai-cta:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+    }
+
+    .automate-intro .ai-cta-arrow {
+      font-family: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 400;
+    }
+
+    .automate-intro .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: ai-reveal 0.6s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+    }
+
+    .automate-intro .delay-1 { animation-delay: 0.05s; }
+    .automate-intro .delay-2 { animation-delay: 0.15s; }
+    .automate-intro .delay-3 { animation-delay: 0.25s; }
+
+    @keyframes ai-reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .automate-intro .ai-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .automate-intro .ai-step {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .automate-intro .ai-step:last-child {
+        border-bottom: none;
+      }
+
+      .automate-intro .ai-cta {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .automate-intro .reveal {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+
+  <div class="ai-container">
+    <header class="ai-head">
+      <span class="ai-eyebrow reveal">&sect; 01 &mdash; How it works</span>
+      <h2 class="ai-headline reveal delay-1">
+        We <em>automate with AI</em> the repetitive work eating your team&rsquo;s week.
+      </h2>
+      <p class="ai-dek reveal delay-2">
+        Think AI agents purpose-built for your industry. They <em>read, extract, decide, and ship</em> &mdash; 24/7, audit-logged, SLA-bound. You <em>pay when the work is done</em>. Not per seat. Not per token.
+      </p>
+    </header>
+
+    <div class="ai-steps">
+      <article class="ai-step reveal delay-1">
+        <div class="ai-step-num">1</div>
+        <h3 class="ai-step-title">Tell us the workflow</h3>
+        <p class="ai-step-dek">We spend 10 days shadowing your team. If it&rsquo;s ripe for AI automation, we quote. If it isn&rsquo;t, we say so.</p>
+      </article>
+
+      <article class="ai-step reveal delay-2">
+        <div class="ai-step-num">2</div>
+        <h3 class="ai-step-title">We build the agent</h3>
+        <p class="ai-step-dek">In 14 working days, an AI agent is parsing your real data, running in shadow mode, producing outcomes for a human to approve.</p>
+      </article>
+
+      <article class="ai-step reveal delay-3">
+        <div class="ai-step-num">3</div>
+        <h3 class="ai-step-title">You pay per finished job</h3>
+        <p class="ai-step-dek">Once the agent matches a human on 200 outcomes in a row, it goes live. A$1.80 &ndash; A$24 per outcome, SLA-backed.</p>
+      </article>
+    </div>
+
+    <div class="ai-strip reveal delay-3">
+      <span class="ai-strip-lead">Currently automating for 38 teams across 22 countries.</span>
+      <span class="ai-strip-verticals">Healthcare &middot; Legal &middot; Finance &middot; Real estate &middot; E-commerce &middot; HR &middot; Marketing &middot; Manufacturing.</span>
+    </div>
+
+    <div class="ai-cta-row reveal delay-3">
+      <a class="ai-cta" href="solutions.html">
+        <span>See what we can automate for your team</span>
+        <span class="ai-cta-arrow">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>

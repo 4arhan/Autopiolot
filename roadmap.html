@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap — Autopilot Labs</title>
+<meta name="description" content="The Autopilot Labs public roadmap. What we're automating next, what's in design, and what we're considering. Upvote what matters to your team.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ====== roadmap page ====== */
+
+/* Hero */
+.roadmap-hero {
+  padding: clamp(5rem, 10vw, 9rem) 0 clamp(2.5rem, 5vw, 4rem);
+}
+.roadmap-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 10vw, 148px);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  max-width: 16ch;
+  margin-bottom: 2rem;
+  color: var(--ink);
+}
+.roadmap-hero h1 em {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.roadmap-hero .dek {
+  font-size: clamp(16px, 1.5vw, 20px);
+  color: var(--ink-3);
+  line-height: 1.55;
+  max-width: 54ch;
+  margin-bottom: 2.5rem;
+}
+.roadmap-hero .dek em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+/* Shipped strip */
+.shipped {
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr auto;
+  gap: 0;
+  align-items: stretch;
+  margin-top: 1.5rem;
+}
+.shipped-lbl {
+  display: flex; align-items: center; gap: 10px;
+  padding: 1.1rem 1.4rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.shipped-lbl .pulse {
+  width: 7px; height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(0,82,255,0.7);
+  animation: shipped-pulse 2.2s infinite;
+}
+@keyframes shipped-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0,82,255,0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(0,82,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,82,255,0); }
+}
+.shipped-item {
+  padding: 1rem 1.4rem;
+  border-left: 1px solid var(--line);
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 4px;
+  text-decoration: none;
+  transition: background .25s;
+}
+.shipped-item:hover { background: var(--paper-3); }
+.shipped-item .date {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.shipped-item .title {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.shipped-more {
+  padding: 1rem 1.4rem;
+  border-left: 1px solid var(--line);
+  display: flex; align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .25s;
+}
+.shipped-more:hover { background: var(--paper-3); }
+.shipped-more .arrow { margin-left: 8px; transition: transform .25s; }
+.shipped-more:hover .arrow { transform: translate(3px, -2px); }
+
+@media (max-width: 1000px) {
+  .shipped { grid-template-columns: 1fr; }
+  .shipped-item, .shipped-more { border-left: 0; border-top: 1px solid var(--line); }
+}
+
+/* Meta strip */
+.roadmap-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 0;
+  margin: 2.5rem 0 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.roadmap-meta em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+.roadmap-meta .dot { color: var(--accent); }
+
+/* Section heading for kanban */
+.kanban-intro {
+  padding: clamp(3rem, 5vw, 5rem) 0 1.5rem;
+}
+.kanban-intro .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.kanban-intro .eyebrow::before {
+  content: ''; width: 20px; height: 1px; background: var(--accent);
+}
+.kanban-intro h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  max-width: 22ch;
+  margin-bottom: 1rem;
+}
+.kanban-intro h2 em {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.kanban-intro p {
+  font-size: 15.5px;
+  color: var(--ink-3);
+  max-width: 58ch;
+  line-height: 1.6;
+}
+
+/* Kanban board */
+.kanban {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  margin-top: 1.5rem;
+}
+.kanban-col {
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  min-height: 400px;
+}
+.kanban-col:last-child { border-right: 0; }
+.kanban-col.now { background: var(--accent-soft); }
+
+.col-head {
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  gap: 6px;
+  background: var(--paper);
+}
+.kanban-col.now .col-head { background: transparent; }
+.col-head .label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.col-head .label .count {
+  color: var(--accent);
+  font-weight: 600;
+}
+.col-head h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  line-height: 1;
+  margin: 4px 0 2px;
+}
+.col-head h3 em {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.col-head .quarter {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Cards inside columns */
+.col-body {
+  padding: 1rem 1rem 1.25rem;
+  display: flex; flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 0.95rem 1rem 0.85rem;
+  display: flex; flex-direction: column;
+  gap: 0.55rem;
+  position: relative;
+  transition: border-color .25s, background .25s, transform .25s;
+}
+.card:hover {
+  border-color: var(--line-strong);
+  background: var(--paper-3);
+  transform: translateY(-1px);
+}
+.card .priority {
+  position: absolute;
+  top: 0.95rem; right: 0.95rem;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--muted-2);
+}
+.card .priority.p1 { background: var(--accent); box-shadow: 0 0 0 3px rgba(0,82,255,0.14); }
+.card .priority.p2 { background: #0052FF; }
+.card .priority.p3 { background: var(--muted-2); }
+
+.card-head {
+  display: flex; align-items: baseline; gap: 8px;
+  flex-wrap: wrap;
+  padding-right: 18px;
+}
+.card-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 2px 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.card-tag.agents   { color: var(--accent); border-color: var(--line-accent); }
+.card-tag.platform { color: var(--ink); border-color: var(--line-strong); }
+.card-tag.billing  { color: #0E6B3A; border-color: rgba(14,107,58,0.28); }
+.card-tag.security { color: #9B2C2C; border-color: rgba(155,44,44,0.28); }
+.card-tag.devex    { color: #6B3A9B; border-color: rgba(107,58,155,0.28); }
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.card-desc {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  line-height: 1.55;
+}
+.card-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 0.55rem;
+  border-top: 1px dashed var(--line);
+  margin-top: 0.2rem;
+}
+.votes {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.votes .dots { color: var(--accent); letter-spacing: 0.04em; }
+.votes strong { color: var(--ink); font-weight: 600; }
+.upvote {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+  font-weight: 500;
+}
+.upvote:hover { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+@media (max-width: 1100px) {
+  .kanban { grid-template-columns: repeat(2, 1fr); }
+  .kanban-col:nth-child(2) { border-right: 0; }
+  .kanban-col:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 680px) {
+  .kanban { grid-template-columns: 1fr; }
+  .kanban-col { border-right: 0; border-bottom: 1px solid var(--line); }
+  .kanban-col:last-child { border-bottom: 0; }
+}
+
+/* Legend */
+.legend {
+  margin-top: 2rem;
+  padding: 1.25rem 0;
+  border-top: 1px dashed var(--line);
+  display: flex; flex-wrap: wrap; gap: 1.5rem 2rem;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.legend-head {
+  color: var(--ink);
+  font-weight: 500;
+}
+.legend-item { display: inline-flex; align-items: center; gap: 8px; }
+.legend-item .dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--muted-2);
+}
+.legend-item.p1 .dot { background: var(--accent); }
+.legend-item.p2 .dot { background: #0052FF; }
+.legend-item.p3 .dot { background: var(--muted-2); }
+
+/* Principles strip — how we decide */
+.principles {
+  background: var(--paper-3);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  margin-top: clamp(3rem, 5vw, 5rem);
+}
+.principles-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.principles-head .rule { height: 1px; background: var(--line-strong); }
+.principles-head em {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 17px; color: var(--ink); letter-spacing: -0.01em; text-transform: none;
+}
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.principle {
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 0.75rem;
+}
+.principle:last-child { border-right: 0; }
+.principle .n {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.principle h4 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.principle h4 em { color: var(--accent); font-family: var(--font-serif); font-style: italic; font-weight: 400; }
+.principle p {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .principles-grid { grid-template-columns: 1fr; }
+  .principle { border-right: 0; border-bottom: 1px solid var(--line); }
+  .principle:last-child { border-bottom: 0; }
+  .principles-head { grid-template-columns: 1fr; }
+  .principles-head .rule { display: none; }
+}
+
+/* Suggest block */
+.suggest {
+  padding: clamp(4rem, 7vw, 7rem) 0;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+.suggest-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.suggest-intro .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.suggest-intro .eyebrow::before {
+  content: ''; width: 20px; height: 1px; background: var(--accent);
+}
+.suggest-intro h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.2vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  max-width: 16ch;
+}
+.suggest-intro h2 em {
+  color: var(--accent); font-family: var(--font-serif); font-style: italic; font-weight: 400;
+}
+.suggest-intro p {
+  font-size: 15px;
+  color: var(--ink-3);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  max-width: 42ch;
+}
+.suggest-intro p em { color: var(--accent); font-style: normal; font-weight: 500; }
+.suggest-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line-strong);
+  background: var(--paper-3);
+  margin-top: 2rem;
+}
+.suggest-stats .s {
+  padding: 1rem 1.25rem;
+  border-right: 1px solid var(--line);
+}
+.suggest-stats .s:last-child { border-right: 0; }
+.suggest-stats .s .k {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.suggest-stats .s .v {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* Form */
+.suggest-form {
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  padding: 2rem;
+  display: flex; flex-direction: column;
+  gap: 1rem;
+}
+.suggest-form .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.field {
+  display: flex; flex-direction: column;
+  gap: 6px;
+}
+.field label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.field label .req { color: var(--accent); }
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 0.7rem 0.85rem;
+  transition: border-color .2s, background .2s;
+  width: 100%;
+  letter-spacing: -0.005em;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 0;
+  border-color: var(--accent);
+  background: var(--paper);
+  box-shadow: inset 0 -1px 0 var(--accent);
+}
+.field textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: var(--font-display);
+  line-height: 1.5;
+}
+.field .hint {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+}
+.suggest-form .foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+  gap: 1rem; flex-wrap: wrap;
+}
+.suggest-form .foot .note {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  max-width: 28ch;
+  line-height: 1.55;
+}
+.suggest-form button[type="submit"] {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background .2s, border-color .2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.suggest-form button[type="submit"]:hover { background: var(--accent); border-color: var(--accent); }
+.suggest-form button[type="submit"] .arrow { transition: transform .2s; }
+.suggest-form button[type="submit"]:hover .arrow { transform: translate(3px, -2px); }
+
+@media (max-width: 900px) {
+  .suggest-wrap { grid-template-columns: 1fr; }
+  .suggest-form .row { grid-template-columns: 1fr; }
+}
+
+/* End cta on roadmap */
+.roadmap-endcta {
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(4rem, 7vw, 6rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+.roadmap-endcta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 20% 100%, rgba(0,82,255,0.12), transparent 55%);
+  pointer-events: none;
+}
+.roadmap-endcta .inner { position: relative; z-index: 2; }
+.roadmap-endcta h3 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 48px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-weight: 500;
+  max-width: 22ch;
+  margin-bottom: 1rem;
+}
+.roadmap-endcta h3 em {
+  color: #4A8BFF;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+.roadmap-endcta p {
+  font-size: 15.5px;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.6;
+  max-width: 52ch;
+  margin-bottom: 2rem;
+}
+.roadmap-endcta .actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.roadmap-endcta .btn {
+  border-color: rgba(255,255,255,0.3);
+  color: var(--paper);
+  background: transparent;
+}
+.roadmap-endcta .btn:hover {
+  background: #4A8BFF;
+  border-color: #4A8BFF;
+  color: var(--ink);
+}
+.roadmap-endcta .btn-primary {
+  background: #4A8BFF;
+  border-color: #4A8BFF;
+  color: var(--ink);
+}
+.roadmap-endcta .btn-primary:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero roadmap-hero">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ Roadmap · Public · Vol. 14</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>No. 009 — What we're shipping next</span></div>
+      </div>
+
+      <h1 class="reveal delay-1">
+        What we're<br>
+        <em>automating</em> next.
+      </h1>
+
+      <p class="dek reveal delay-2">
+        A public roadmap for our AI agents. We don't hide the future —
+        <em>upvote what matters</em> and we'll prioritise it. Updated every other Monday, written by the engineering team, not a product comms desk.
+      </p>
+
+      <!-- Shipped preview strip -->
+      <div class="shipped reveal delay-2" aria-label="Recently shipped">
+        <span class="shipped-lbl"><span class="pulse"></span> Just shipped</span>
+        <a href="changelog.html#intake-v3" class="shipped-item">
+          <span class="date">14 APR 2026</span>
+          <span class="title">Intake agent v3 · 42% faster triage</span>
+        </a>
+        <a href="changelog.html#audit-exports" class="shipped-item">
+          <span class="date">08 APR 2026</span>
+          <span class="title">Audit-log exports to SIEM (Splunk, Datadog)</span>
+        </a>
+        <a href="changelog.html#outcome-webhooks" class="shipped-item">
+          <span class="date">02 APR 2026</span>
+          <span class="title">Outcome webhooks · real-time billing events</span>
+        </a>
+        <a href="changelog.html" class="shipped-more">Full changelog <span class="arrow">↗</span></a>
+      </div>
+
+      <div class="roadmap-meta reveal delay-3">
+        <span><span class="dot">◆</span> Last updated · 14 Apr 2026</span>
+        <em>20 items in flight · 6 under consideration · you decide the order.</em>
+        <span>Next review · 28 Apr 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== KANBAN ========== -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="kanban-intro reveal">
+        <span class="eyebrow">§ 01 — The board</span>
+        <h2>Four columns. <em>Zero spin.</em></h2>
+        <p>Everything we're building for our AI automation platform, in plain English, grouped by how soon you'll see it. Dot colour signals priority — blue is active work, amber is design, grey is discovery.</p>
+      </div>
+
+      <div class="kanban reveal delay-1">
+
+        <!-- ========== NOW ========== -->
+        <div class="kanban-col now">
+          <div class="col-head">
+            <div class="label"><span>Now · shipping</span><span class="count">5 items</span></div>
+            <h3>Now.</h3>
+            <div class="quarter">Q2 2026 · in flight</div>
+          </div>
+          <div class="col-body">
+            <article class="card">
+              <span class="priority p1" aria-label="High priority"></span>
+              <div class="card-head"><span class="card-tag agents">Agents</span></div>
+              <h4 class="card-title">German-language agents (Healthcare)</h4>
+              <p class="card-desc">Native DE intake, SOAP notes and billing codes for DACH clinics. Trained on anonymised Charité and Helios data.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●●</span> <strong>89</strong>&nbsp;teams interested</span>
+                <button class="upvote" aria-label="Upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p1"></span>
+              <div class="card-head"><span class="card-tag platform">Platform</span></div>
+              <h4 class="card-title">Vision agents for invoice extraction</h4>
+              <p class="card-desc">Reads scanned PDFs, faxes, and phone-camera snaps. Outputs structured line items to Xero, NetSuite, QuickBooks.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●●</span> <strong>142</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p1"></span>
+              <div class="card-head"><span class="card-tag security">Security</span></div>
+              <h4 class="card-title">Zero-retention mode (opt-in)</h4>
+              <p class="card-desc">Agent memory purged on every run. Nothing written to disk, nothing logged beyond SLA metadata. For legal, health, and gov workloads.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●●</span> <strong>67</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p1"></span>
+              <div class="card-head"><span class="card-tag billing">Billing</span></div>
+              <h4 class="card-title">Outcome credits &amp; prepay</h4>
+              <p class="card-desc">Buy a pack of outcome credits up front at a 12% discount. For finance teams that hate monthly variance on their AI bill.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>41</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p1"></span>
+              <div class="card-head"><span class="card-tag devex">DevEx</span></div>
+              <h4 class="card-title">Ops console · mobile view</h4>
+              <p class="card-desc">Full SLA, outcome stream, and approval queue on your phone. For ops leads who don't want to open their laptop at 11pm.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>34</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ========== NEXT ========== -->
+        <div class="kanban-col">
+          <div class="col-head">
+            <div class="label"><span>Next · in design</span><span class="count">5 items</span></div>
+            <h3>Next.</h3>
+            <div class="quarter">Q3 2026 · active design</div>
+          </div>
+          <div class="col-body">
+            <article class="card">
+              <span class="priority p2"></span>
+              <div class="card-head"><span class="card-tag agents">Agents</span></div>
+              <h4 class="card-title">MCP support for custom workflows</h4>
+              <p class="card-desc">Let your internal tools plug into our agents via the Model Context Protocol. Bring your own tools, we bring the reasoning.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●●</span> <strong>118</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p2"></span>
+              <div class="card-head"><span class="card-tag platform">Platform</span></div>
+              <h4 class="card-title">API v5 with streaming outcomes</h4>
+              <p class="card-desc">Subscribe to outcome streams over Server-Sent Events. See reasoning deltas, partial outputs, SLA progress — live.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>76</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p2"></span>
+              <div class="card-head"><span class="card-tag agents">Agents</span></div>
+              <h4 class="card-title">Voice agents for inbound calls</h4>
+              <p class="card-desc">Phone-line AI agents for triage, booking, and refunds. Warm transfer to human on low-confidence turns. AU, UK, US numbers.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●●</span> <strong>104</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p2"></span>
+              <div class="card-head"><span class="card-tag security">Security</span></div>
+              <h4 class="card-title">BYO cloud (AWS / Azure / GCP)</h4>
+              <p class="card-desc">Run agents inside your own VPC. We manage the control plane, you own the data plane. SOC 2 Type II on both sides.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>58</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p2"></span>
+              <div class="card-head"><span class="card-tag billing">Billing</span></div>
+              <h4 class="card-title">Per-team cost attribution</h4>
+              <p class="card-desc">Tag every outcome with a cost-centre or client-matter code. Chargeback reports exportable as CSV, NetSuite, or Workday journals.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>52</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ========== LATER ========== -->
+        <div class="kanban-col">
+          <div class="col-head">
+            <div class="label"><span>Later · on the horizon</span><span class="count">4 items</span></div>
+            <h3>Later.</h3>
+            <div class="quarter">Q4 2026 · scoped, not started</div>
+          </div>
+          <div class="col-body">
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag platform">Platform</span></div>
+              <h4 class="card-title">Brownfield migrations (lift existing automations)</h4>
+              <p class="card-desc">Migrate your UiPath, Zapier, or n8n workflows into Autopilot Labs agents. Parser + mapping assistant. Keep the logic, ditch the bill.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>47</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag agents">Agents</span></div>
+              <h4 class="card-title">Agent-to-agent handoff (multi-step workflows)</h4>
+              <p class="card-desc">Chain specialised agents into pipelines — intake → triage → resolve — with contractual SLAs per hop and one billable outcome at the end.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●●</span> <strong>93</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag security">Security</span></div>
+              <h4 class="card-title">On-premise deployment (air-gapped)</h4>
+              <p class="card-desc">Hardware-sealed install for defence, federal, and critical-infra clients. Runs on your silicon. Model weights shipped on encrypted drive.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●</span>◌◌ <strong>22</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag devex">DevEx</span></div>
+              <h4 class="card-title">Agent replay &amp; sandbox</h4>
+              <p class="card-desc">Replay any past outcome against a new agent version. Diff the reasoning, diff the cost. Regression testing for AI automation, finally.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>38</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ========== CONSIDERING ========== -->
+        <div class="kanban-col">
+          <div class="col-head">
+            <div class="label"><span>Considering · maybe</span><span class="count">6 items</span></div>
+            <h3>Considering.</h3>
+            <div class="quarter">Might ship · might not</div>
+          </div>
+          <div class="col-body">
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag agents">Agents</span></div>
+              <h4 class="card-title">Spanish &amp; Portuguese agents (LatAm)</h4>
+              <p class="card-desc">Full ES + PT-BR support across the healthcare and finance agent catalogues. Pending demand from our São Paulo waitlist.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>31</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag platform">Platform</span></div>
+              <h4 class="card-title">No-code workflow builder</h4>
+              <p class="card-desc">Drag-and-drop agent composer for ops teams without engineering. Honest question: do you want this, or do you want us to build it for you?</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●</span>◌◌ <strong>19</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag devex">DevEx</span></div>
+              <h4 class="card-title">VS Code extension</h4>
+              <p class="card-desc">Author, test, and deploy agents from your editor. Inline SLA diagnostics. Probably only useful for our 9 power-user clients.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●</span>◌◌ <strong>14</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag agents">Agents</span></div>
+              <h4 class="card-title">Agent marketplace (third-party)</h4>
+              <p class="card-desc">Let vetted partners publish agents on our runtime. Still weighing the trust overhead against the catalogue breadth.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●●</span>◌ <strong>27</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag billing">Billing</span></div>
+              <h4 class="card-title">Native Stripe / Airwallex invoicing</h4>
+              <p class="card-desc">Pass-through invoice your clients for agent work you resell. Margin configurable per workflow. Agency-of-agencies pattern.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●</span>◌◌ <strong>16</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <span class="priority p3"></span>
+              <div class="card-head"><span class="card-tag security">Security</span></div>
+              <h4 class="card-title">FedRAMP Moderate authorisation</h4>
+              <p class="card-desc">US federal compliance pathway. 12–18 month project if we commit. Only worth it if 10+ qualified agencies raise their hand.</p>
+              <div class="card-foot">
+                <span class="votes"><span class="dots">●</span>◌◌ <strong>8</strong>&nbsp;teams interested</span>
+                <button class="upvote">▲ vote</button>
+              </div>
+            </article>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Legend -->
+      <div class="legend reveal">
+        <span class="legend-head">Priority key</span>
+        <span class="legend-item p1"><span class="dot"></span> Active build</span>
+        <span class="legend-item p2"><span class="dot"></span> Design &amp; scoping</span>
+        <span class="legend-item p3"><span class="dot"></span> Discovery &amp; research</span>
+        <span>&nbsp;</span>
+        <span>Vote count = signed-contract clients who've requested it</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== PRINCIPLES ========== -->
+  <section class="principles">
+    <div class="container">
+      <div class="principles-head">
+        <span>§ 02 — How we pick</span>
+        <span class="rule" aria-hidden="true"></span>
+        <em>Three rules, in order.</em>
+      </div>
+      <div class="principles-grid">
+        <div class="principle">
+          <div class="n">— Rule 01</div>
+          <h4>Ships an <em>outcome</em> we can bill.</h4>
+          <p>Every roadmap item must end in a completed task a client can pay per-unit for. If it's a feature without a billable outcome, it waits. This keeps our AI automation honest.</p>
+        </div>
+        <div class="principle">
+          <div class="n">— Rule 02</div>
+          <h4>Asked for by <em>paying</em> clients.</h4>
+          <p>Vote counts shown here come from teams already on a contract. We do read inbound requests, but we weight the ask of a team who's actually shipped 10,000 outcomes with us.</p>
+        </div>
+        <div class="principle">
+          <div class="n">— Rule 03</div>
+          <h4>Deepens a vertical, <em>not</em> broadens.</h4>
+          <p>We turn down good ideas if they push us outside our thirteen verticals. A better finance agent beats a mediocre agent for insurance every time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SUGGEST ========== -->
+  <section class="suggest" id="suggest">
+    <div class="container">
+      <div class="suggest-wrap">
+        <div class="suggest-intro reveal">
+          <span class="eyebrow">§ 03 — Open floor</span>
+          <h2>Missing something? <em>Tell us.</em></h2>
+          <p>If your team would pay for an AI agent we haven't listed, we want to hear it. Every suggestion goes to the engineering lead — not a CRM workflow. We reply inside <em>5 working days</em>, and if 3 other paying clients want the same thing, it goes straight on the board.</p>
+          <p>No account required. No newsletter trick. You'll get one email with our reply and, if we build it, one more when it ships.</p>
+
+          <div class="suggest-stats">
+            <div class="s">
+              <div class="k">Suggestions this quarter</div>
+              <div class="v">214</div>
+            </div>
+            <div class="s">
+              <div class="k">Shipped from requests</div>
+              <div class="v">38</div>
+            </div>
+          </div>
+        </div>
+
+        <form class="suggest-form reveal delay-1" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Sent · we\\'ll reply in 5 days';">
+          <div class="row">
+            <div class="field">
+              <label for="sf-name">Your name <span class="req">*</span></label>
+              <input id="sf-name" type="text" placeholder="Jane Doe" required>
+            </div>
+            <div class="field">
+              <label for="sf-email">Work email <span class="req">*</span></label>
+              <input id="sf-email" type="email" placeholder="jane@company.com" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="sf-company">Company</label>
+              <input id="sf-company" type="text" placeholder="Acme Healthcare">
+            </div>
+            <div class="field">
+              <label for="sf-vertical">Vertical</label>
+              <select id="sf-vertical">
+                <option value="">Choose one…</option>
+                <option>Healthcare</option>
+                <option>Legal</option>
+                <option>Finance</option>
+                <option>Real estate</option>
+                <option>E-commerce</option>
+                <option>HR &amp; hiring</option>
+                <option>Marketing</option>
+                <option>Manufacturing</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="sf-title">Feature title <span class="req">*</span></label>
+            <input id="sf-title" type="text" placeholder="e.g. Italian-language agents for pharmacy intake" required>
+            <span class="hint">One line. What is the AI agent / capability you want?</span>
+          </div>
+
+          <div class="field">
+            <label for="sf-problem">The job to be done <span class="req">*</span></label>
+            <textarea id="sf-problem" placeholder="Describe the workflow. What takes your team too long today? What would you pay per-outcome for?" required></textarea>
+            <span class="hint">Specifics help. Numbers help more (volume, time, current cost).</span>
+          </div>
+
+          <div class="field">
+            <label for="sf-volume">Monthly volume (optional)</label>
+            <input id="sf-volume" type="text" placeholder="e.g. ~2,400 intake forms / month">
+          </div>
+
+          <div class="foot">
+            <span class="note">We read every submission. Shared with engineering only. Not a sales funnel.</span>
+            <button type="submit">Send suggestion <span class="arrow">↗</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="roadmap-endcta">
+    <div class="container inner">
+      <h3>Don't wait for the <em>roadmap</em>.<br>Book an audit.</h3>
+      <p>Half the items on this board started as a clause in someone's audit report. Two weeks on-site, we find the workflow your team hates, we quote it per-outcome. You don't pay unless we ship.</p>
+      <div class="actions">
+        <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+        <a href="changelog.html" class="btn btn-lg">Read the changelog</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+// Lightweight client-side upvote: increment counter + visual confirm, no backend.
+document.querySelectorAll('.upvote').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const foot = btn.closest('.card-foot');
+    const strong = foot && foot.querySelector('.votes strong');
+    if (!strong || btn.dataset.voted === '1') return;
+    const n = parseInt(strong.textContent.replace(/\D/g, ''), 10) || 0;
+    strong.textContent = (n + 1);
+    btn.textContent = '✓ voted';
+    btn.style.background = 'var(--accent)';
+    btn.style.color = 'var(--paper)';
+    btn.style.borderColor = 'var(--accent)';
+    btn.dataset.voted = '1';
+    btn.disabled = true;
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partners — Autopilot Labs</title>
+<meta name="description" content="Partner with Autopilot Labs — two programs: referral (introduce, we close) and delivery (co-deliver AI automation into your clients). Warm, outcome-aligned, no quotas.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ====== partners-specific ====== */
+.hero-partners { padding: clamp(5rem, 10vw, 8.5rem) 0 clamp(3rem, 6vw, 5rem); }
+.hero-partners h1 {
+  font-size: clamp(48px, 9vw, 136px);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+  max-width: 16ch;
+  margin-bottom: 2rem;
+}
+.hero-partners h1 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.hero-partners .hero-dek {
+  max-width: 62ch;
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.5;
+  color: var(--ink-3);
+  margin-bottom: 2rem;
+}
+.hero-partners .hero-dek em { color: var(--accent); font-weight: 500; }
+.hero-partners .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2.5rem; }
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-top: 2rem;
+}
+.hero-meta .m {
+  padding: 1.25rem 1.5rem 1.25rem 0;
+  border-right: 1px solid var(--line);
+}
+.hero-meta .m:last-child { border-right: 0; }
+.hero-meta .k {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.hero-meta .v {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.hero-meta .v .accent { color: var(--accent); }
+@media (max-width: 800px) {
+  .hero-meta { grid-template-columns: 1fr 1fr; }
+  .hero-meta .m:nth-child(2n) { border-right: 0; }
+  .hero-meta .m:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+
+/* ====== TRACKS — two partner programs side by side ====== */
+.tracks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--line);
+}
+.track {
+  padding: clamp(2rem, 3.5vw, 3rem);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-right: 1px solid var(--line);
+  transition: background .3s var(--ease);
+}
+.track:last-child { border-right: 0; }
+.track:hover { background: var(--paper-3); }
+.track.flag { background: var(--accent-soft); }
+.track.flag:hover { background: rgba(0,82,255,0.10); }
+.track-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.track-badge .num { color: var(--accent); font-weight: 600; }
+.track-name {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 4.4vw, 68px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+.track-name em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+.track-tagline {
+  font-size: 16px;
+  color: var(--ink-3);
+  line-height: 1.5;
+  max-width: 42ch;
+}
+.track-rate {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+}
+.track-rate .pct {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 6vw, 84px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--accent);
+}
+.track-rate .of {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  max-width: 16ch;
+  line-height: 1.45;
+}
+.track-feat { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.track-feat li {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.5;
+  padding: 0.6rem 0;
+  border-bottom: 1px dotted var(--line);
+}
+.track-feat li:last-child { border: 0; }
+.track-feat li::before {
+  content: '+';
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  flex-shrink: 0;
+  width: 12px;
+}
+.track-foot {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+@media (max-width: 900px) {
+  .tracks { grid-template-columns: 1fr; }
+  .track { border-right: 0; border-bottom: 1px solid var(--line); }
+  .track:last-child { border-bottom: 0; }
+}
+
+/* ====== WHO WE PARTNER WITH ====== */
+.ptypes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.ptype {
+  background: var(--paper);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-height: 180px;
+  transition: background .3s;
+  position: relative;
+}
+.ptype:hover { background: var(--paper-3); }
+.ptype-no {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.ptype-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.ptype-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-3);
+  margin-top: auto;
+}
+@media (max-width: 900px) { .ptypes { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .ptypes { grid-template-columns: 1fr; } }
+
+/* ====== PARTNERS WALL (logos) ====== */
+.pwall {
+  background: var(--paper-3);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 3.5rem 0 4rem;
+}
+.pwall-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px dashed var(--line);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.pwall-head em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+.pwall-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+}
+.pcell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem 1rem;
+  min-height: 92px;
+  border-right: 1px solid var(--line-faint);
+  border-bottom: 1px solid var(--line-faint);
+  color: var(--muted);
+  transition: color .3s var(--ease), background .3s var(--ease);
+  text-align: center;
+}
+.pcell:nth-child(6n) { border-right: 0; }
+.pcell:nth-last-child(-n+6) { border-bottom: 0; }
+.pcell:hover { color: var(--ink); background: var(--paper); }
+.pm {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.pm .ss { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+.pm .dot { color: var(--accent); }
+.pm .amp { font-family: var(--font-serif); font-style: italic; font-weight: 400; opacity: 0.8; padding: 0 2px; }
+.pm .tiny { font-size: 0.55em; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; vertical-align: 2px; margin-left: 4px; }
+.pm .slash { opacity: 0.5; padding: 0 4px; }
+.pm.cond { letter-spacing: -0.04em; font-weight: 700; transform: scaleX(0.88); transform-origin: center; }
+.pm.spaced { letter-spacing: 0.26em; font-weight: 500; font-size: 13.5px; text-transform: uppercase; }
+.pm.lower { text-transform: lowercase; font-weight: 500; font-size: 17px; letter-spacing: -0.015em; }
+.pm.script { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 22px; letter-spacing: -0.025em; }
+.pm.heavy { font-weight: 700; font-size: 15px; letter-spacing: -0.02em; text-transform: uppercase; }
+.pm .geo { display: inline-block; width: 9px; height: 9px; background: currentColor; margin-right: 6px; border-radius: 1px; position: relative; top: -1px; }
+.pm .tri { display: inline-block; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 8px solid currentColor; margin-right: 5px; position: relative; top: -1px; }
+@media (max-width: 1000px) {
+  .pwall-grid { grid-template-columns: repeat(3, 1fr); }
+  .pcell:nth-child(6n) { border-right: 1px solid var(--line-faint); }
+  .pcell:nth-child(3n) { border-right: 0; }
+  .pcell:nth-last-child(-n+6) { border-bottom: 1px solid var(--line-faint); }
+  .pcell:nth-last-child(-n+3) { border-bottom: 0; }
+}
+@media (max-width: 600px) {
+  .pwall-grid { grid-template-columns: repeat(2, 1fr); }
+  .pcell:nth-child(3n) { border-right: 1px solid var(--line-faint); }
+  .pcell:nth-child(2n) { border-right: 0; }
+}
+
+/* ====== TIMELINE ====== */
+.tline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.tstep {
+  padding: 2.5rem 2rem 2rem 0;
+  border-right: 1px solid var(--line);
+  margin-right: 1.5rem;
+  position: relative;
+}
+.tstep:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+.tstep::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 0;
+  width: 32px; height: 1px;
+  background: var(--accent);
+}
+.tstep-no {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.tstep-no .dur {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+.tstep-name {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.4vw, 36px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.tstep-name em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+.tstep-body {
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+@media (max-width: 900px) {
+  .tline { grid-template-columns: 1fr; }
+  .tstep { border-right: 0; margin-right: 0; padding-right: 0; border-bottom: 1px solid var(--line); padding-bottom: 2rem; }
+  .tstep:last-child { border-bottom: 0; }
+}
+
+/* ====== FAQ ====== */
+.faq {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.faq-item {
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+}
+.faq-item:last-child { border-bottom: 0; }
+.faq-q {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.65rem 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(19px, 1.8vw, 26px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--ink);
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--accent); }
+.faq-q .idx {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 400;
+}
+.faq-q .plus {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--accent);
+  transition: transform .3s var(--ease);
+  line-height: 1;
+}
+.faq-item.open .faq-q .plus { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s var(--ease);
+}
+.faq-item.open .faq-a { max-height: 500px; }
+.faq-a-inner {
+  padding: 0 2.5rem 1.75rem 4rem;
+  font-size: 15.5px;
+  color: var(--ink-3);
+  line-height: 1.65;
+  max-width: 76ch;
+}
+.faq-a-inner em { color: var(--accent); font-weight: 500; }
+@media (max-width: 700px) {
+  .faq-q { grid-template-columns: 1fr auto; gap: 0.75rem; }
+  .faq-q .idx { display: none; }
+  .faq-a-inner { padding: 0 1rem 1.5rem 0; }
+}
+
+/* ====== APPLICATION FORM ====== */
+.apply {
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(5rem, 8vw, 8rem) 0;
+  border-top: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.apply::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 10% 0%, rgba(0,82,255,0.10), transparent 55%),
+              radial-gradient(ellipse 60% 40% at 90% 100%, rgba(74,139,255,0.06), transparent 55%);
+  pointer-events: none;
+}
+.apply::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 96px 100%;
+  opacity: 0.6; pointer-events: none;
+}
+.apply-inner { position: relative; z-index: 2; }
+.apply-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  padding-bottom: 2rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.apply-head .rule { height: 1px; background: rgba(255,255,255,0.18); min-width: 0; }
+.apply-head .accent { color: #4A8BFF; }
+.apply-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 76px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  max-width: 18ch;
+  margin-bottom: 1.25rem;
+  color: var(--paper);
+}
+.apply-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: #4A8BFF;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+.apply-dek {
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.68);
+  max-width: 58ch;
+  margin-bottom: 3rem;
+}
+.apply-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 1.5rem;
+  max-width: 900px;
+}
+.field { display: flex; flex-direction: column; gap: 0.55rem; }
+.field.full { grid-column: 1 / -1; }
+.field label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+.field label .req { color: #4A8BFF; margin-left: 3px; }
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  padding: 0.75rem 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--paper);
+  letter-spacing: -0.01em;
+  transition: border-color .2s;
+  outline: none;
+  border-radius: 0;
+}
+.field input::placeholder,
+.field textarea::placeholder { color: rgba(255,255,255,0.35); }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { border-bottom-color: #4A8BFF; }
+.field textarea { resize: vertical; min-height: 110px; }
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234A8BFF' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.25rem center;
+  padding-right: 2rem;
+}
+.field select option { background: var(--ink); color: var(--paper); }
+
+/* Program radio toggle */
+.program-pick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.25);
+  margin-top: 0.25rem;
+}
+.program-pick label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  border-right: 1px solid rgba(255,255,255,0.18);
+  transition: background .25s;
+  text-transform: none;
+  letter-spacing: 0;
+  color: rgba(255,255,255,0.72);
+  font-family: var(--font-display);
+  font-size: 15px;
+}
+.program-pick label:last-child { border-right: 0; }
+.program-pick label:hover { background: rgba(255,255,255,0.04); }
+.program-pick input { display: none; }
+.program-pick label .head {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.program-pick label .body {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.45;
+}
+.program-pick label.picked {
+  background: rgba(74,139,255,0.12);
+  color: var(--paper);
+}
+.program-pick label.picked .head { color: #4A8BFF; }
+
+.apply-submit {
+  grid-column: 1 / -1;
+  margin-top: 1rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.apply-submit .note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5);
+  max-width: 42ch;
+  line-height: 1.55;
+}
+.btn-apply {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: #4A8BFF;
+  color: var(--ink);
+  border: 1px solid #4A8BFF;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.btn-apply:hover { background: var(--paper); border-color: var(--paper); }
+
+@media (max-width: 800px) {
+  .apply-form { grid-template-columns: 1fr; }
+  .program-pick { grid-template-columns: 1fr; }
+  .program-pick label { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.18); }
+  .program-pick label:last-child { border-bottom: 0; }
+  .apply-head { grid-template-columns: 1fr; }
+  .apply-head .rule { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero hero-partners">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ Autopilot Labs · Partner program</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>No. 008 — Two tracks, one agency</span></div>
+      </div>
+
+      <h1 class="reveal delay-1">
+        Partner with an agency<br>
+        that <em>automates work</em><br>
+        with AI.
+      </h1>
+
+      <p class="hero-dek reveal delay-2">
+        Two programs, plainly priced. <em>Referral</em> — for consultants and advisors who already sit next to the CFO when the operating budget is cut. <em>Delivery</em> — for agencies who want to resell Autopilot Labs into their clients, ship it with us, and keep the relationship.
+      </p>
+
+      <div class="hero-actions reveal delay-2">
+        <a href="#apply" class="btn btn-primary btn-lg">Apply to partner <span class="arrow">↗</span></a>
+        <a href="#tracks" class="btn btn-lg">Compare tracks</a>
+        <a href="#faq" class="btn btn-ghost btn-lg">Read the FAQ</a>
+      </div>
+
+      <div class="hero-meta reveal delay-3">
+        <div class="m">
+          <div class="k">◆ Referral rate</div>
+          <div class="v"><span class="accent">12%</span> of year-1 revenue</div>
+        </div>
+        <div class="m">
+          <div class="k">◆ Delivery rate</div>
+          <div class="v"><span class="accent">25%</span> of year-1 revenue</div>
+        </div>
+        <div class="m">
+          <div class="k">◆ Active partners</div>
+          <div class="v">28 · across 9 countries</div>
+        </div>
+        <div class="m">
+          <div class="k">◆ Q2 2026 intake</div>
+          <div class="v"><span class="accent">Open</span> · 6 seats</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TWO TRACKS ========== -->
+  <section class="section" id="tracks">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section I · Tracks</span>
+          <span class="big">01</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Two programs · side by side</div>
+          <h2 class="section-title">Pick the track that fits<br>the <em>work you already do</em>.</h2>
+          <p class="dek">Referral is for the advisor who drops our name in the boardroom and steps back. Delivery is for the agency that wants to hold the pen in their client's ops console. Different ratecards, different expectations, same philosophy: you earn when outcomes ship.</p>
+        </div>
+      </div>
+
+      <div class="tracks reveal delay-2">
+        <div class="track">
+          <div class="track-badge"><span class="num">01</span><span>· Referral partner</span></div>
+          <h3 class="track-name">Introduce.<br><em>We close.</em></h3>
+          <p class="track-tagline">You make the warm introduction. We run the audit, scope the agents, sign the contract, and deliver. You stay in your lane and collect.</p>
+          <div class="track-rate">
+            <span class="pct">12%</span>
+            <span class="of">of year-1 net revenue, paid quarterly, for 12 months from signed contract.</span>
+          </div>
+          <ul class="track-feat">
+            <li>No quota, no floor, no exclusivity clause</li>
+            <li>One-page MSA · 48-hour turnaround</li>
+            <li>Joint audit call at your option — not required</li>
+            <li>Quarterly statement · paid in AUD, USD, GBP, or EUR</li>
+            <li>We handle pricing, delivery, and all client communication</li>
+            <li>Ideal for 2 – 8 introductions per year</li>
+          </ul>
+          <div class="track-foot">
+            <a href="#apply" class="btn">Apply as referral</a>
+            <a href="#faq" class="btn btn-ghost">See payout terms</a>
+          </div>
+        </div>
+
+        <div class="track flag">
+          <div class="track-badge"><span class="num">02</span><span>· Delivery partner</span></div>
+          <h3 class="track-name">Co-deliver.<br>Keep the <em>relationship</em>.</h3>
+          <p class="track-tagline">You resell Autopilot Labs into your clients, ship alongside our build team, and own the account. We're the invisible engine. You're the name on the door.</p>
+          <div class="track-rate">
+            <span class="pct">25%</span>
+            <span class="of">of year-1 net revenue, plus co-delivery fees at your own rate card.</span>
+          </div>
+          <ul class="track-feat">
+            <li>Certification required · 3-week paid training</li>
+            <li>White-labeled ops console · your logo, our engine</li>
+            <li>Named partner manager · monthly pipeline review</li>
+            <li>Direct access to our engineering roster for joint builds</li>
+            <li>Co-branded case studies, sales deck, RFP language</li>
+            <li>Minimum two certified consultants in your firm</li>
+          </ul>
+          <div class="track-foot">
+            <a href="#apply" class="btn btn-primary">Apply as delivery <span class="arrow">↗</span></a>
+            <a href="#faq" class="btn btn-ghost">See certification</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHO WE PARTNER WITH ========== -->
+  <section class="section" style="background:var(--bg-elev);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section II · Fit</span>
+          <span class="big">02</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Who we partner with</div>
+          <h2 class="section-title">Six types of firms we've<br><em>made this work</em> with.</h2>
+          <p class="dek">Our best partners already sit close to the operating work — they see the bottlenecks before we do. If your practice spends time inside your clients' workflow, you already have everything you need to sell AI automation without learning a new pitch.</p>
+        </div>
+      </div>
+
+      <div class="ptypes reveal delay-2">
+        <div class="ptype">
+          <div class="ptype-no">— 01 · Management</div>
+          <div class="ptype-name">Management consultants</div>
+          <div class="ptype-desc">Ops and transformation practices who've already scoped the cost centre but can't ship the software. We close the implementation gap.</div>
+        </div>
+        <div class="ptype">
+          <div class="ptype-no">— 02 · Vertical SaaS</div>
+          <div class="ptype-name">Vertical SaaS vendors</div>
+          <div class="ptype-desc">You own the system of record. We automate the work around it. Partners get a co-sell motion and a revenue-share on every seat's worth of outcomes.</div>
+        </div>
+        <div class="ptype">
+          <div class="ptype-no">— 03 · IT services</div>
+          <div class="ptype-name">IT service providers</div>
+          <div class="ptype-desc">MSPs and managed service firms with a book of mid-market clients. We layer agents on top of the integrations you already run.</div>
+        </div>
+        <div class="ptype">
+          <div class="ptype-no">— 04 · Legal ops</div>
+          <div class="ptype-name">Legal-ops consultancies</div>
+          <div class="ptype-desc">You already map discovery, contract review, and matter intake for AmLaw firms. Our legal vertical ships in your runway.</div>
+        </div>
+        <div class="ptype">
+          <div class="ptype-no">— 05 · RPO / staffing</div>
+          <div class="ptype-name">RPOs &amp; staffing firms</div>
+          <div class="ptype-desc">You win on speed-to-shortlist. Our HR agents shortlist CVs, run first-screen comms, and schedule — in the background, 24/7.</div>
+        </div>
+        <div class="ptype">
+          <div class="ptype-no">— 06 · SI partners</div>
+          <div class="ptype-name">Systems integrators</div>
+          <div class="ptype-desc">You connect the stack. We finish the work that falls between the tools. Best fit for SIs with active Salesforce, SAP, or NetSuite practices.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PARTNERS WALL ========== -->
+  <section class="pwall reveal" aria-label="Current partners">
+    <div class="container">
+      <div class="pwall-head">
+        <span>◆ In partnership · 2026</span>
+        <em>A quiet roster. Consultants, agencies, and SIs who resell Autopilot Labs without losing their own name.</em>
+        <span>— 28 firms</span>
+      </div>
+      <div class="pwall-grid">
+        <div class="pcell"><span class="pm">Ferrovia<span class="tiny">Consulting</span></span></div>
+        <div class="pcell"><span class="pm script">Hexen&nbsp;Advisory</span></div>
+        <div class="pcell"><span class="pm spaced">Northbound</span></div>
+        <div class="pcell"><span class="pm">Atlas<span class="dot">.</span>Group</span></div>
+        <div class="pcell"><span class="pm lower">pine&nbsp;<span class="amp">&amp;</span>&nbsp;hollow</span></div>
+        <div class="pcell"><span class="pm heavy">Cardinal<span class="dot">.</span></span></div>
+        <div class="pcell"><span class="pm cond">KELVIN&amp;CO</span></div>
+        <div class="pcell"><span class="pm"><span class="tri"></span>Riverwood</span></div>
+        <div class="pcell"><span class="pm script">Solace&nbsp;Partners</span></div>
+        <div class="pcell"><span class="pm spaced">Foundry</span></div>
+        <div class="pcell"><span class="pm">Lattice<span class="slash">/</span>Ops</span></div>
+        <div class="pcell"><span class="pm heavy"><span class="geo"></span>Beacon&amp;Co</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT WORKS ========== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section III · How it works</span>
+          <span class="big">03</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Apply → Interview → Onboarding → Launch</div>
+          <h2 class="section-title">Four steps. <em>Twenty-one days</em>.<br>No surprise paperwork.</h2>
+          <p class="dek">Most of our partners are live and paid on their first deal inside three weeks of signing. Here's the whole path, with median durations from our last 18 partner starts.</p>
+        </div>
+      </div>
+
+      <div class="tline reveal delay-2">
+        <div class="tstep">
+          <div class="tstep-no"><span>— Step 01</span><span class="dur">Day 0 – 2</span></div>
+          <h3 class="tstep-name">Apply</h3>
+          <p class="tstep-body">Fill the form below. We read every submission within two business days. No generic questionnaire — we only ask what we actually need to route you to the right partner manager.</p>
+        </div>
+        <div class="tstep">
+          <div class="tstep-no"><span>— Step 02</span><span class="dur">Day 3 – 7</span></div>
+          <h3 class="tstep-name"><em>Interview</em></h3>
+          <p class="tstep-body">A 45-minute call with our head of partnerships. We walk through your client book, where AI fits, and which track matches your practice. You leave with a written proposal in 48 hours.</p>
+        </div>
+        <div class="tstep">
+          <div class="tstep-no"><span>— Step 03</span><span class="dur">Day 8 – 18</span></div>
+          <h3 class="tstep-name">Onboarding</h3>
+          <p class="tstep-body">Sign the one-page MSA. Referral partners get a 90-minute positioning session. Delivery partners begin the three-week certification with two of our senior engineers.</p>
+        </div>
+        <div class="tstep">
+          <div class="tstep-no"><span>— Step 04</span><span class="dur">Day 19 – 21</span></div>
+          <h3 class="tstep-name">Launch</h3>
+          <p class="tstep-body">You get a warm-handoff email to two existing clients who fit your vertical, a co-branded deck, and a dedicated Slack channel. First deal typically signs inside 60 days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FAQ ========== -->
+  <section class="section" id="faq" style="background:var(--bg-elev);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num reveal">
+          <span>Section IV · Questions</span>
+          <span class="big">04</span>
+        </div>
+        <div class="section-title-col reveal delay-1">
+          <div class="eyebrow accent">Frequently asked</div>
+          <h2 class="section-title">Straight answers, <em>upfront</em>.</h2>
+          <p class="dek">The six questions we field most often from consultants and agencies before they sign. If yours isn't here, the application form has a free-text pitch field — we'll answer in the reply.</p>
+        </div>
+      </div>
+
+      <div class="faq reveal delay-2" id="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="idx">01</span>
+            <span>Is there a quota or floor I need to hit?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">No. Referral partners have <em>no quota, no floor, no exclusivity</em>. We've had partners make two introductions a year for four years — we value steady warm traffic over volume. Delivery partners are asked to ship at least one engagement in their first nine months to stay certified, but that's a competency bar, not a sales target.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="idx">02</span>
+            <span>When and how do I get paid?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">Commission accrues on every invoice we collect from a partner-sourced client for 12 months from their signed contract. We pay <em>quarterly, within 30 days</em> of quarter-end, in your preferred currency (AUD, USD, GBP, EUR). You get a line-item statement showing every outcome billed, so you can reconcile against your own CRM. No clawbacks after 90 days.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="idx">03</span>
+            <span>What does delivery certification actually involve?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">Three weeks, fully paid, mostly remote. Week one is our agent catalogue and ops console. Week two is hands-on — your consultants co-build a reference agent with ours, on a real client workflow. Week three is a simulated audit-to-delivery run, graded. Two of your consultants must pass. We run cohorts monthly and will tailor the schedule around your current engagements.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="idx">04</span>
+            <span>Can I white-label the ops console for my clients?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">Delivery partners, yes. Your logo, your subdomain, your colour. The engine is ours, the relationship is yours. Referral partners don't get white-label — because you're introducing, not delivering, and we want the client to know who's on the other end of the SLA.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="idx">05</span>
+            <span>What if my client is outside your thirteen verticals?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">We'll tell you honestly in the interview call. Autopilot Labs is vertical on purpose — we turn down work we can't ship well. If your client is adjacent (e.g., aged care adjacent to healthcare, or insurance adjacent to finance), we often can. If it's a genuine net-new vertical, we'll route you to one of two trusted horizontal partners instead. <em>No dead-end introductions.</em></div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span class="idx">06</span>
+            <span>Do I need to be in Australia?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">No. Twelve of our active partners are outside Australia — UK, US, Singapore, UAE, NZ, and the Netherlands. We run delivery in AEST and GMT windows, and our partner managers work both. The only constraint: we contract in English and we only sign clients we can onboard inside a single calendar month.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== APPLICATION FORM ========== -->
+  <section class="apply" id="apply" aria-label="Apply to partner">
+    <div class="container apply-inner">
+      <div class="apply-head reveal">
+        <span>§ 05 — Apply</span>
+        <span class="rule" aria-hidden="true"></span>
+        <span>Q2 2026 intake · <span class="accent">6 seats</span></span>
+      </div>
+
+      <h2 class="apply-title reveal delay-1">Tell us a bit about you.<br>We'll reply in <em>two business days</em>.</h2>
+      <p class="apply-dek reveal delay-1">No generic form. Four fields, one short pitch. We read every application — if your firm's a fit for the current cohort, our head of partnerships books a call the same week.</p>
+
+      <form class="apply-form reveal delay-2" onsubmit="event.preventDefault(); this.querySelector('.btn-apply').textContent='Received — we\\'ll be in touch'; this.querySelector('.btn-apply').disabled=true;">
+        <div class="field">
+          <label for="company">Company <span class="req">*</span></label>
+          <input type="text" id="company" name="company" placeholder="e.g., Ferrovia Consulting" required>
+        </div>
+        <div class="field">
+          <label for="website">Website or LinkedIn</label>
+          <input type="url" id="website" name="website" placeholder="https://">
+        </div>
+        <div class="field">
+          <label for="name">Your name <span class="req">*</span></label>
+          <input type="text" id="name" name="name" placeholder="First &amp; last" required>
+        </div>
+        <div class="field">
+          <label for="role">Your role <span class="req">*</span></label>
+          <input type="text" id="role" name="role" placeholder="e.g., Managing Partner" required>
+        </div>
+        <div class="field">
+          <label for="email">Work email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="you@firm.com" required>
+        </div>
+        <div class="field">
+          <label for="geo">Primary geography</label>
+          <select id="geo" name="geo">
+            <option value="">Choose —</option>
+            <option>Australia / NZ</option>
+            <option>United Kingdom / EU</option>
+            <option>United States / Canada</option>
+            <option>Asia (ex-AU)</option>
+            <option>Middle East</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>Which program? <span class="req">*</span></label>
+          <div class="program-pick" role="radiogroup" aria-label="Program">
+            <label class="picked">
+              <input type="radio" name="program" value="referral" checked>
+              <span class="head">◆ Track 01 — Referral</span>
+              <span class="body">Introduce, we close. 12% of year-1 revenue. No quota.</span>
+            </label>
+            <label>
+              <input type="radio" name="program" value="delivery">
+              <span class="head">◆ Track 02 — Delivery</span>
+              <span class="body">Co-deliver, white-label, certification required. 25% of year-1.</span>
+            </label>
+          </div>
+        </div>
+        <div class="field full">
+          <label for="pitch">Short pitch — what kind of clients do you serve, and why is AI automation the next conversation? <span class="req">*</span></label>
+          <textarea id="pitch" name="pitch" rows="4" placeholder="Two or three sentences is plenty. We're looking for fit, not a proposal." required></textarea>
+        </div>
+        <div class="apply-submit">
+          <span class="note">By submitting you agree we can contact you about the partner program. We don't share your details, and we don't subscribe you to anything.</span>
+          <button type="submit" class="btn-apply">Send application <span aria-hidden="true">↗</span></button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="endcta">
+    <div class="container">
+      <div class="endcta-wrap reveal">
+        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">Not ready to apply?</div>
+        <h2>Have a client in mind<br>but want to <em>talk first</em>?</h2>
+        <p class="dek">Book a 20-minute intro call with our head of partnerships. No NDA, no obligation — we'll tell you on the call whether the fit is there and which track makes sense.</p>
+        <div class="actions">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book the intro call <span class="arrow">↗</span></a>
+          <a href="process.html" class="btn btn-lg">See how we deliver</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+  // FAQ accordion
+  (function(){
+    var list = document.getElementById('faq-list');
+    if (!list) return;
+    list.querySelectorAll('.faq-item').forEach(function(item){
+      var q = item.querySelector('.faq-q');
+      q.addEventListener('click', function(){
+        var open = item.classList.toggle('open');
+        q.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  })();
+  // Program radio visual toggle
+  (function(){
+    var pick = document.querySelector('.program-pick');
+    if (!pick) return;
+    pick.querySelectorAll('input[type=radio]').forEach(function(r){
+      r.addEventListener('change', function(){
+        pick.querySelectorAll('label').forEach(function(l){ l.classList.remove('picked'); });
+        r.closest('label').classList.add('picked');
+      });
+    });
+  })();
+</script>
+</body>
+</html>

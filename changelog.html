@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog — Autopilot Labs</title>
+<meta name="description" content="Everything we've shipped to AI agents, the ops console, and the pricing system. Newest first.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ============================================================
+   CHANGELOG — Modernist Swiss
+   Pure white, near-black, cobalt. Sharp corners. No serif/italic.
+   ============================================================ */
+
+/* ====== HERO ====== */
+.cl-hero {
+  padding: clamp(5.5rem, 10vw, 9rem) 0 clamp(2.5rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--line);
+}
+.cl-hero-coord {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.25rem;
+  align-items: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.cl-hero-coord .line { height: 1px; background: var(--line-strong); min-width: 0; }
+.cl-hero-coord .right { color: var(--ink); font-weight: 500; }
+.cl-hero-coord .accent { color: var(--accent); }
+
+.cl-hero h1 {
+  font-family: 'Geist', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(72px, 14vw, 200px);
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+  color: var(--ink);
+  margin: 0 0 2rem;
+  font-variant-numeric: tabular-nums;
+}
+.cl-hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 500;
+}
+.cl-hero-dek {
+  font-family: 'Geist', system-ui, sans-serif;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.5;
+  color: var(--ink-3);
+  letter-spacing: -0.01em;
+  max-width: 52ch;
+  font-weight: 400;
+  margin: 0 0 2.75rem;
+}
+.cl-hero-dek em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Subscribe strip */
+.cl-sub {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cl-sub a {
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color 180ms linear, border-color 180ms linear;
+  font-variant-numeric: tabular-nums;
+}
+.cl-sub a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.cl-sub .sep {
+  width: 1px;
+  height: 14px;
+  background: var(--line-strong);
+  display: inline-block;
+}
+.cl-sub .accent { color: var(--accent); }
+.cl-sub .rss-mark {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  margin-right: 4px;
+}
+
+/* ====== FILTER PILLS ====== */
+.cl-filters {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  z-index: 20;
+}
+.cl-filters-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.cl-filters-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 0.5rem;
+  padding-right: 1rem;
+  border-right: 1px solid var(--line);
+}
+.cl-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 160ms linear, color 160ms linear, border-color 160ms linear;
+  font-variant-numeric: tabular-nums;
+}
+.cl-pill:hover { border-color: var(--ink); }
+.cl-pill.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.cl-pill .count {
+  color: var(--muted);
+  font-weight: 400;
+  padding-left: 0.5rem;
+  margin-left: 0.25rem;
+  border-left: 1px solid var(--line);
+}
+.cl-pill.active .count { color: rgba(255,255,255,0.55); border-left-color: rgba(255,255,255,0.2); }
+
+/* ====== RELEASE LIST ====== */
+.cl-stream {
+  padding: clamp(3rem, 6vw, 5.5rem) 0 clamp(4rem, 8vw, 7rem);
+}
+.cl-release {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  padding: clamp(2.5rem, 5vw, 4.5rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+.cl-release:first-child { padding-top: 0; }
+.cl-release:last-child { border-bottom: 0; padding-bottom: 0; }
+
+/* Left column: version */
+.cl-meta {
+  position: sticky;
+  top: 7rem;
+  align-self: start;
+}
+.cl-ver {
+  font-family: 'Geist', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0 0 1rem;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+.cl-ver em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 500;
+}
+.cl-date {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--line-strong);
+}
+.cl-date .dot { color: var(--accent); padding: 0 6px; }
+.cl-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+.cl-badge.major {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+.cl-badge.minor {
+  background: var(--paper);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.cl-badge.patch {
+  background: var(--paper);
+  color: var(--muted);
+  border-color: var(--line-strong);
+}
+.cl-badge.security {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.cl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 1rem;
+}
+.cl-tag {
+  display: inline-block;
+  padding: 2px 7px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+}
+.cl-tag.on { color: var(--accent); border-color: var(--line-accent); }
+
+/* Right column: body */
+.cl-headline {
+  font-family: 'Geist', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(22px, 2.1vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+  text-wrap: balance;
+  max-width: 60ch;
+}
+.cl-headline em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.cl-group {
+  margin-bottom: 1.75rem;
+}
+.cl-group:last-child { margin-bottom: 0; }
+.cl-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+.cl-group-head .dia {
+  color: var(--accent);
+  font-size: 10px;
+}
+.cl-group-head.added .dia { color: var(--accent); }
+.cl-group-head.changed .dia { color: var(--ink); }
+.cl-group-head.fixed .dia { color: #15803d; }
+.cl-group-head.deprecated .dia { color: var(--muted); }
+.cl-group-head.security .dia { color: var(--accent); }
+.cl-group-head .count {
+  margin-left: auto;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.cl-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.cl-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px dotted var(--line);
+  font-family: 'Geist', system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.cl-list li:last-child { border-bottom: 0; }
+.cl-list li em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 500;
+}
+.cl-list li .k {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 3px;
+  font-variant-numeric: tabular-nums;
+  min-width: 4.5rem;
+}
+.cl-list li .k.added { color: var(--accent); }
+.cl-list li .k.changed { color: var(--ink-3); }
+.cl-list li .k.fixed { color: #15803d; }
+.cl-list li .k.deprecated { color: var(--muted); }
+.cl-list li .k.security { color: var(--accent); }
+
+/* Footer rail */
+.cl-foot-rail {
+  padding: 2rem 0;
+  border-top: 1px solid var(--line-strong);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cl-foot-rail a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 160ms linear;
+}
+.cl-foot-rail a:hover { border-bottom-color: var(--accent); }
+.cl-foot-rail .center {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.cl-foot-rail .right { text-align: right; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cl-release { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cl-meta { position: static; }
+  .cl-ver { font-size: 34px; }
+  .cl-foot-rail { grid-template-columns: 1fr; text-align: center; }
+  .cl-foot-rail .right { text-align: center; }
+}
+@media (max-width: 600px) {
+  .cl-hero h1 { font-size: clamp(56px, 18vw, 96px); }
+  .cl-list li { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ========== HERO ========== -->
+  <section class="cl-hero">
+    <div class="container">
+      <div class="cl-hero-coord reveal">
+        <span>◎ Autopilot Labs · release log</span>
+        <span class="line" aria-hidden="true"></span>
+        <span class="right">No. <span class="accent">047</span> — v4.6.0 shipped 14 Apr 2026</span>
+      </div>
+
+      <h1 class="reveal delay-1">Changelog<em>.</em></h1>
+
+      <p class="cl-hero-dek reveal delay-2">
+        Everything we've shipped to <em>AI agents</em>, the ops console, and the pricing system. Newest first.
+      </p>
+
+      <div class="cl-sub reveal delay-2">
+        <span>◆ Track every release</span>
+        <span class="sep" aria-hidden="true"></span>
+        <a href="changelog.rss"><span class="rss-mark" aria-hidden="true"></span>Subscribe via RSS</a>
+        <span class="sep" aria-hidden="true"></span>
+        <a href="mailto:digest@autopilotlabs.io?subject=Subscribe%20to%20changelog">Changelog email digest <span aria-hidden="true">→</span></a>
+        <span class="sep" aria-hidden="true"></span>
+        <span class="accent">47 releases · 12 mo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FILTER PILLS ========== -->
+  <section class="cl-filters" aria-label="Filter releases">
+    <div class="container">
+      <div class="cl-filters-inner">
+        <span class="cl-filters-label">◆ Filter</span>
+        <button class="cl-pill active" data-filter="all">All <span class="count">47</span></button>
+        <button class="cl-pill" data-filter="agents">Agents <span class="count">24</span></button>
+        <button class="cl-pill" data-filter="ops">Ops console <span class="count">11</span></button>
+        <button class="cl-pill" data-filter="billing">Billing <span class="count">6</span></button>
+        <button class="cl-pill" data-filter="platform">Platform <span class="count">9</span></button>
+        <button class="cl-pill" data-filter="security">Security <span class="count">4</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RELEASE STREAM ========== -->
+  <section class="cl-stream">
+    <div class="container">
+
+      <!-- ========== v4.6.0 — MAJOR ========== -->
+      <article class="cl-release reveal" id="v4-6-0">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.6.0</h2>
+          <div class="cl-date">14 Apr 2026 <span class="dot">·</span> Major</div>
+          <span class="cl-badge major">Major</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag on">Ops console</span>
+            <span class="cl-tag on">Platform</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            Agents now auto-route across verticals with a new <em>cross-domain planner</em>, plus a full redesign of the ops console for 4K displays.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">8 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>New cross-domain planner that lets <em>AI agents</em> hand work between verticals — e.g. a finance agent can now escalate to a legal agent with full context in one hop.</span></li>
+              <li><span class="k added">Added</span><span>Agents auto-retry on SLA near-miss with a <em>12-second backoff</em> and a warm-path fallback to keep the outcome billable.</span></li>
+              <li><span class="k added">Added</span><span>New healthcare prior-auth agent (HIPAA-aligned, auto-codes to <em>ICD-11</em>, auto-attaches supporting evidence from the patient chart).</span></li>
+              <li><span class="k added">Added</span><span>Ops console redesign: 4K-native layout, a new <em>outcome timeline</em> view, and per-agent cost-per-outcome trendlines.</span></li>
+              <li><span class="k added">Added</span><span>"Explain this outcome" button on every row — one click opens the agent's plan, tool calls, and evidence trail.</span></li>
+              <li><span class="k added">Added</span><span>Bulk rerun of failed outcomes from the ops console, with optional prompt override for the retry.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head changed"><span class="dia">◆</span> Changed <span class="count">3 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k changed">Changed</span><span>Default SLA on the hybrid plan raised from 99.1% to <em>99.3%</em> — credit-back is automatic, no ticket needed.</span></li>
+              <li><span class="k changed">Changed</span><span>Agent memory is now per-workflow by default instead of per-tenant, which cut cross-contamination incidents to zero this quarter.</span></li>
+              <li><span class="k changed">Changed</span><span>The outcome stream API now emits events at the <em>plan step</em> level, not just the outcome level — useful for long-running claims agents.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head fixed"><span class="dia">◆</span> Fixed <span class="count">2 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k fixed">Fixed</span><span>Fixed a race where two agents could both claim the same intake fax and double-bill. Now settled via a single-writer lock on the inbox.</span></li>
+              <li><span class="k fixed">Fixed</span><span>Fixed ops console chart flicker on Safari 17 when streaming more than 200 events/second.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.5.2 — PATCH ========== -->
+      <article class="cl-release reveal" id="v4-5-2">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.5.2</h2>
+          <div class="cl-date">02 Apr 2026 <span class="dot">·</span> Patch</div>
+          <span class="cl-badge patch">Patch</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag">Billing</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            Quiet fixes for the <em>finance reconciliation agent</em> and tighter rounding on per-outcome invoices.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head fixed"><span class="dia">◆</span> Fixed <span class="count">3 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k fixed">Fixed</span><span>Reconciliation agent no longer re-opens journal entries that were manually force-closed by a human — it now respects the <em>"human-final"</em> flag.</span></li>
+              <li><span class="k fixed">Fixed</span><span>Invoice line-items for per-outcome billing now round to 4 decimals, not 2. No more A$0.01 drift at month-end.</span></li>
+              <li><span class="k fixed">Fixed</span><span>Fixed a rare timezone bug where AEST-registered outcomes were logged as UTC in the audit export.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head changed"><span class="dia">◆</span> Changed <span class="count">1 item</span></div>
+            <ul class="cl-list">
+              <li><span class="k changed">Changed</span><span>AI agents assigned to a plan now surface their model provider in the ops console — transparency, not marketing.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.5.0 — MINOR ========== -->
+      <article class="cl-release reveal" id="v4-5-0">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.5.0</h2>
+          <div class="cl-date">18 Mar 2026 <span class="dot">·</span> Minor</div>
+          <span class="cl-badge minor">Minor</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag on">Ops console</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            Two new legal agents, plus a <em>human-in-the-loop</em> review queue that hands off in under six seconds.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">4 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>New legal agent: <em>privilege review</em> — flags attorney-client communications on ingest and routes to a supervising attorney before any external share.</span></li>
+              <li><span class="k added">Added</span><span>New legal agent: <em>clause extraction</em> — pulls termination, indemnity, governing-law, and auto-renew clauses from uploaded contracts into a structured table.</span></li>
+              <li><span class="k added">Added</span><span>Human-in-the-loop review queue: any outcome can be sent for human review and the agent waits up to 72 hours for a decision before expiring.</span></li>
+              <li><span class="k added">Added</span><span>"Approve all" and "Reject with note" keyboard shortcuts in the review queue (J, K, A, R) for power users.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head changed"><span class="dia">◆</span> Changed <span class="count">2 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k changed">Changed</span><span>Review handoff latency improved from 14s to <em>5.8s</em> median. Humans see the agent's reasoning before they see the outcome.</span></li>
+              <li><span class="k changed">Changed</span><span>Ops console now defaults to dense mode on screens above 1440px. Toggle remains in settings.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head fixed"><span class="dia">◆</span> Fixed <span class="count">1 item</span></div>
+            <ul class="cl-list">
+              <li><span class="k fixed">Fixed</span><span>Fixed a CSV export bug where long clauses were truncated at 32,767 characters (Excel's cap) — we now split across cells with a reference ID.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.4.1 — SECURITY ========== -->
+      <article class="cl-release reveal" id="v4-4-1">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.4.1</h2>
+          <div class="cl-date">06 Mar 2026 <span class="dot">·</span> Security</div>
+          <span class="cl-badge security">Security</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Security</span>
+            <span class="cl-tag on">Platform</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            Mandatory <em>SSO</em> rollout for all ops console seats, plus a tighter egress allow-list for tool-using agents.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head security"><span class="dia">◆</span> Security <span class="count">3 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k security">Security</span><span>SSO via Okta, Google Workspace, and Entra ID is now <em>mandatory</em> for all ops console seats. Password-only accounts auto-migrate on next sign-in.</span></li>
+              <li><span class="k security">Security</span><span>AI agents making outbound tool calls now go through a tenant-specific egress allow-list — no more wildcard domains, even for read-only scraping.</span></li>
+              <li><span class="k security">Security</span><span>Session tokens rotate every 15 minutes for seats with admin privileges (was 60). Regular seats unchanged.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">1 item</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>New <em>security</em> tab in the ops console: live audit of every agent tool call, who approved it, and which policy it matched.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.4.0 — MINOR ========== -->
+      <article class="cl-release reveal" id="v4-4-0">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.4.0</h2>
+          <div class="cl-date">21 Feb 2026 <span class="dot">·</span> Minor</div>
+          <span class="cl-badge minor">Minor</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag on">Billing</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            Real estate gets three new agents and the billing system learns to <em>credit-back</em> in under a minute.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">5 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>New real-estate agent: <em>listing-refresh</em> — auto-rewrites stale listings with fresh comps, pulls updated photos, and republishes to Domain and REA.</span></li>
+              <li><span class="k added">Added</span><span>New real-estate agent: <em>lease-abstract</em> — pulls rent, term, option, and maintenance obligations from scanned leases into a one-pager.</span></li>
+              <li><span class="k added">Added</span><span>New real-estate agent: <em>inspection-report</em> — drafts a first-pass report from photos and voice notes within 9 minutes of upload.</span></li>
+              <li><span class="k added">Added</span><span>Automatic SLA credit-back: if an outcome misses SLA by even 1 second, the credit hits the invoice inside <em>60 seconds</em>, no ticket required.</span></li>
+              <li><span class="k added">Added</span><span>New "cost-to-finish" estimate shown next to each queued outcome in the ops console.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head changed"><span class="dia">◆</span> Changed <span class="count">2 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k changed">Changed</span><span>Per-outcome pricing for real-estate refreshed to reflect new model costs — <em>average outcome price fell 11%</em>.</span></li>
+              <li><span class="k changed">Changed</span><span>Invoice PDFs now include a per-agent breakdown, not just a per-workflow one.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.3.0 — MINOR ========== -->
+      <article class="cl-release reveal" id="v4-3-0">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.3.0</h2>
+          <div class="cl-date">04 Feb 2026 <span class="dot">·</span> Minor</div>
+          <span class="cl-badge minor">Minor</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag on">Platform</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            E-commerce agents can now <em>dispute chargebacks end-to-end</em>, and the platform learns to queue by priority.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">4 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>New e-commerce agent: <em>chargeback-dispute</em> — assembles the evidence packet (shipping, comms, policy) and files to the processor inside the acceptance window.</span></li>
+              <li><span class="k added">Added</span><span>Priority queue: P1 outcomes now jump the line ahead of P2/P3, with per-tenant fairness to prevent starvation.</span></li>
+              <li><span class="k added">Added</span><span>Agents can now call a tenant-supplied HTTP tool over signed requests — your internal APIs, not ours.</span></li>
+              <li><span class="k added">Added</span><span>Ops console keyboard shortcut "G then O" jumps to the live outcome stream from anywhere.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head fixed"><span class="dia">◆</span> Fixed <span class="count">2 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k fixed">Fixed</span><span>Fixed a bug where AI agents would re-ask a human reviewer for context that was already in the workflow memory.</span></li>
+              <li><span class="k fixed">Fixed</span><span>Fixed invoice line ordering — outcomes now sort by timestamp, not by internal ID.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head deprecated"><span class="dia">◆</span> Deprecated <span class="count">1 item</span></div>
+            <ul class="cl-list">
+              <li><span class="k deprecated">Deprecated</span><span>The <em>v1 outcome webhook</em> payload is deprecated and will be removed in v4.8. Please move to v2 — it's a superset with tool-call trace included.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.2.1 — PATCH ========== -->
+      <article class="cl-release reveal" id="v4-2-1">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.2.1</h2>
+          <div class="cl-date">22 Jan 2026 <span class="dot">·</span> Patch</div>
+          <span class="cl-badge patch">Patch</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Ops console</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            Small fixes to the <em>ops console</em> — filters, dates, and a chart that used to lie about averages.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head fixed"><span class="dia">◆</span> Fixed <span class="count">4 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k fixed">Fixed</span><span>The "last 90 days" filter now actually shows 90 days, not 89. Yes, we know.</span></li>
+              <li><span class="k fixed">Fixed</span><span>The per-agent cost chart was showing a mean instead of a weighted mean. Now correctly weighted by outcome volume.</span></li>
+              <li><span class="k fixed">Fixed</span><span>Date picker no longer collapses when the viewport is narrower than 360px.</span></li>
+              <li><span class="k fixed">Fixed</span><span>Fixed a focus trap in the outcome detail modal — Esc and Tab now behave.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.2.0 — MINOR ========== -->
+      <article class="cl-release reveal" id="v4-2-0">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.2.0</h2>
+          <div class="cl-date">09 Jan 2026 <span class="dot">·</span> Minor</div>
+          <span class="cl-badge minor">Minor</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag on">Ops console</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            Manufacturing gets a <em>QA-escape</em> agent and the console learns to show cost, SLA, and volume in one frame.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">3 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>New manufacturing agent: <em>QA-escape triage</em> — ingests complaints, finds matching batch records, and drafts a root-cause summary for the quality lead.</span></li>
+              <li><span class="k added">Added</span><span>Unified "cost × SLA × volume" dashboard tile in the ops console — the one our clients kept screenshotting and emailing to their CFO.</span></li>
+              <li><span class="k added">Added</span><span>Slack and Teams bridges: the ops console can DM the on-call engineer when any workflow's SLA drops below 98%.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head changed"><span class="dia">◆</span> Changed <span class="count">1 item</span></div>
+            <ul class="cl-list">
+              <li><span class="k changed">Changed</span><span>AI agents now cache their plan for identical-shaped tasks within a 15-minute window — median planning latency dropped 38%.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.1.0 — MINOR ========== -->
+      <article class="cl-release reveal" id="v4-1-0">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.1.0</h2>
+          <div class="cl-date">16 Dec 2025 <span class="dot">·</span> Minor</div>
+          <span class="cl-badge minor">Minor</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag on">Billing</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            The <em>hybrid plan</em> gets a warm-path credit pool, and HR agents stop asking candidates the same question twice.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">3 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>Hybrid plans now include <em>500 warm-path credits</em> in the monthly base — agents stay resident and respond in under 800ms cold.</span></li>
+              <li><span class="k added">Added</span><span>New HR agent: <em>candidate-shortlist</em> — ranks CVs against a job spec, explains each rank, and flags any trait the hiring manager flagged as disqualifying.</span></li>
+              <li><span class="k added">Added</span><span>Candidate interaction memory — AI agents now remember which questions they've already asked a candidate across sessions.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head changed"><span class="dia">◆</span> Changed <span class="count">2 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k changed">Changed</span><span>Per-outcome rate for HR agents reduced by 18% on the hybrid plan, effective immediately.</span></li>
+              <li><span class="k changed">Changed</span><span>Invoice PDFs are now generated at month-end in under 30 seconds, down from 4 minutes for large tenants.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head fixed"><span class="dia">◆</span> Fixed <span class="count">1 item</span></div>
+            <ul class="cl-list">
+              <li><span class="k fixed">Fixed</span><span>Fixed a crash in the candidate-shortlist agent when the CV was a scanned image with no OCR layer — we now OCR it ourselves.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v4.0.0 — MAJOR ========== -->
+      <article class="cl-release reveal" id="v4-0-0">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v4.0.0</h2>
+          <div class="cl-date">01 Dec 2025 <span class="dot">·</span> Major</div>
+          <span class="cl-badge major">Major</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag on">Ops console</span>
+            <span class="cl-tag on">Billing</span>
+            <span class="cl-tag on">Platform</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            The <em>outcome-pricing rewrite</em> — a ground-up rebuild of how we price, meter, and bill AI work.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">5 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>Ground-up rewrite of the billing engine: every outcome is metered with a tamper-evident hash chain, auditable by a third party on request.</span></li>
+              <li><span class="k added">Added</span><span>Three named plans — <em>Retainer</em>, <em>Per-task</em>, <em>Hybrid</em> — replacing the old seven-tier mess.</span></li>
+              <li><span class="k added">Added</span><span>Real-time invoice preview in the ops console: watch your bill accrue as agents ship.</span></li>
+              <li><span class="k added">Added</span><span>SLA credit-back policy published in-contract — no more "we'll look into it" replies.</span></li>
+              <li><span class="k added">Added</span><span>New marketing-brief agent that drafts 312 briefs/week at the cost of one senior copywriter.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head changed"><span class="dia">◆</span> Changed <span class="count">2 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k changed">Changed</span><span>AI agents now report tokens-in, tokens-out, and tool-call counts per outcome — never on your invoice, always in your ops console, for <em>transparency</em>.</span></li>
+              <li><span class="k changed">Changed</span><span>The ops console is now a separate subdomain per tenant (e.g. your-team.autopilotlabs.io) for cleaner audit trails.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head deprecated"><span class="dia">◆</span> Deprecated <span class="count">2 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k deprecated">Deprecated</span><span>The legacy per-seat pricing model is deprecated. Existing contracts honour their terms to expiry; no new seats are sold.</span></li>
+              <li><span class="k deprecated">Deprecated</span><span>The v3 REST API is deprecated and will be sunset on 01 Jun 2026. The v4 API is <em>strictly more capable</em>; migration doc is at /docs/v3-to-v4.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== v3.9.0 — MINOR ========== -->
+      <article class="cl-release reveal" id="v3-9-0">
+        <aside class="cl-meta">
+          <h2 class="cl-ver">v3.9.0</h2>
+          <div class="cl-date">14 Nov 2025 <span class="dot">·</span> Minor</div>
+          <span class="cl-badge minor">Minor</span>
+          <div class="cl-tags">
+            <span class="cl-tag on">Agents</span>
+            <span class="cl-tag on">Platform</span>
+          </div>
+        </aside>
+        <div class="cl-body">
+          <h3 class="cl-headline">
+            New <em>finance reconciliation agent</em>, plus faster cold-starts for every AI agent on the platform.
+          </h3>
+
+          <div class="cl-group">
+            <div class="cl-group-head added"><span class="dia">◆</span> Added <span class="count">2 items</span></div>
+            <ul class="cl-list">
+              <li><span class="k added">Added</span><span>New finance agent: <em>month-end reconciliation</em> — matches GL entries to source docs, flags exceptions, and drafts journal entries for the controller to sign.</span></li>
+              <li><span class="k added">Added</span><span>Cold-start time for a fresh agent container reduced from 4.2s to <em>780ms</em> via pre-warmed model pools.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head changed"><span class="dia">◆</span> Changed <span class="count">1 item</span></div>
+            <ul class="cl-list">
+              <li><span class="k changed">Changed</span><span>Agent plans are now capped at 32 steps per outcome. Anything longer gets escalated to a human with the partial plan attached.</span></li>
+            </ul>
+          </div>
+
+          <div class="cl-group">
+            <div class="cl-group-head fixed"><span class="dia">◆</span> Fixed <span class="count">1 item</span></div>
+            <ul class="cl-list">
+              <li><span class="k fixed">Fixed</span><span>Fixed a memory leak in the long-running discovery agent that caused its sidecar to OOM after ~18 hours.</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========== FOOT RAIL ========== -->
+      <div class="cl-foot-rail">
+        <div class="left">◆ Showing <span style="color:var(--ink)">11 most recent</span> of 47 releases</div>
+        <div class="center">
+          <a href="changelog-archive.html">Browse full archive <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="right"><a href="changelog.rss">RSS</a> · <a href="mailto:digest@autopilotlabs.io">Email digest</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="endcta">
+    <div class="container">
+      <div class="endcta-wrap reveal">
+        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">Next release cut 28 Apr 2026</div>
+        <h2>Built in the open.<br><em>Shipped every fortnight.</em></h2>
+        <p class="dek">We cut a release every two weeks. Majors land on the last Tuesday of the month. Security patches ship the hour they're ready, no calendar.</p>
+        <div class="actions">
+          <a href="changelog.rss" class="btn btn-primary btn-lg">Subscribe via RSS <span class="arrow">↗</span></a>
+          <a href="mailto:digest@autopilotlabs.io?subject=Subscribe%20to%20changelog" class="btn btn-lg">Get the email digest</a>
+          <a href="contact.html" class="btn btn-ghost btn-lg">Talk to us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+// Lightweight filter-pill wiring (visual-only for data-filter='all'; hides non-matching otherwise)
+(function(){
+  var pills = document.querySelectorAll('.cl-pill');
+  var releases = document.querySelectorAll('.cl-release');
+  pills.forEach(function(p){
+    p.addEventListener('click', function(){
+      pills.forEach(function(x){ x.classList.remove('active'); });
+      p.classList.add('active');
+      var f = p.getAttribute('data-filter');
+      releases.forEach(function(r){
+        if (f === 'all') { r.style.display = ''; return; }
+        var tags = r.querySelectorAll('.cl-tag.on');
+        var match = false;
+        tags.forEach(function(t){
+          var v = t.textContent.trim().toLowerCase();
+          if (f === 'ops' && v.indexOf('ops') === 0) match = true;
+          else if (v === f) match = true;
+        });
+        r.style.display = match ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!-- ============================================================
+     § 05 — OPS CONSOLE PREVIEW
+     "The thing clients actually see."
+     Assumes global CSS vars: --paper, --ink, --muted, --accent,
+       --font-display, --font-mono, --line, --line-strong.
+     Global rule: <em> renders as cobalt sans (no faux italic).
+============================================================ -->
+<section class="ops-preview" aria-label="Ops console preview">
+  <div class="ops-preview__inner">
+
+    <!-- Section head -->
+    <header class="ops-preview__head">
+      <span class="ops-preview__eyebrow">§ 05 &nbsp;—&nbsp; WHAT YOU SEE</span>
+      <h2 class="ops-preview__title">
+        The ops console, <em>in production</em>.
+      </h2>
+      <p class="ops-preview__dek">
+        Every outcome. Every SLA. Every cost. In one console, live, for every
+        seat on your team.
+      </p>
+    </header>
+
+    <!-- Device frame wrapping the SVG -->
+    <figure class="ops-preview__device" aria-label="Autopilot Labs ops console — [healthcare client] patient intake, live view">
+      <!-- macOS-style chrome bar -->
+      <div class="ops-preview__chrome" aria-hidden="true">
+        <span class="ops-preview__dot"></span>
+        <span class="ops-preview__dot"></span>
+        <span class="ops-preview__dot"></span>
+        <span class="ops-preview__url">your-team.autopilotlabs.io / ops / patient-intake</span>
+        <span class="ops-preview__chrome-right">LIVE · 14:27 AEST</span>
+      </div>
+      <!-- Dashboard SVG -->
+      <object
+        class="ops-preview__canvas"
+        type="image/svg+xml"
+        data="assets/ops-dashboard.svg"
+        aria-label="Simulated Autopilot Labs operations dashboard">
+      </object>
+    </figure>
+
+    <!-- Three explanatory bullets in a row -->
+    <ul class="ops-preview__bullets" role="list">
+      <li class="ops-preview__bullet">
+        <span class="ops-preview__tick" aria-hidden="true">+</span>
+        <span class="ops-preview__blabel">Real-time outcome stream</span>
+      </li>
+      <li class="ops-preview__bullet">
+        <span class="ops-preview__tick" aria-hidden="true">+</span>
+        <span class="ops-preview__blabel">SLA credit-back on miss</span>
+      </li>
+      <li class="ops-preview__bullet">
+        <span class="ops-preview__tick" aria-hidden="true">+</span>
+        <span class="ops-preview__blabel">Audit log on every action</span>
+      </li>
+    </ul>
+
+    <!-- CTA -->
+    <div class="ops-preview__cta">
+      <a class="ops-preview__btn" href="contact.html">
+        Request demo access
+        <span class="ops-preview__arrow" aria-hidden="true">&#8594;</span>
+      </a>
+      <span class="ops-preview__note">
+        Live read-only seat issued within 24 hours. No sales call required.
+      </span>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .ops-preview {
+    background: var(--paper, #FFFFFF);
+    color: var(--ink, #09090B);
+    width: 100%;
+    padding: clamp(64px, 9vw, 128px) 0 clamp(56px, 8vw, 112px);
+    border-top: 1px solid var(--line-strong, rgba(9, 9, 11, 0.18));
+    border-bottom: 1px solid var(--line-strong, rgba(9, 9, 11, 0.18));
+    font-family: var(--font-display, "Geist", system-ui, sans-serif);
+    font-feature-settings: "ss01", "cv11";
+  }
+  .ops-preview__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+
+  /* ---------- Head ---------- */
+  .ops-preview__head {
+    max-width: 780px;
+    margin-bottom: clamp(40px, 5vw, 72px);
+  }
+  .ops-preview__eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted, #71717A);
+    padding-bottom: 20px;
+  }
+  .ops-preview__title {
+    font-size: clamp(36px, 5.2vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    color: var(--ink, #09090B);
+    margin: 0 0 18px;
+  }
+  .ops-preview__dek {
+    font-size: clamp(15px, 1.2vw, 18px);
+    line-height: 1.5;
+    color: var(--muted, #71717A);
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  /* ---------- Device frame ---------- */
+  .ops-preview__device {
+    margin: 0 0 clamp(32px, 4vw, 56px);
+    border: 1px solid var(--ink, #09090B);
+    background: var(--paper, #FFFFFF);
+    overflow: hidden;
+    position: relative;
+  }
+  .ops-preview__chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 14px;
+    border-bottom: 1px solid var(--ink, #09090B);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    color: var(--muted, #71717A);
+    background: var(--paper, #FFFFFF);
+  }
+  .ops-preview__dot {
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--ink, #09090B);
+    background: transparent;
+    flex-shrink: 0;
+    margin-right: 2px;
+  }
+  .ops-preview__url {
+    margin-left: 18px;
+    color: var(--ink, #09090B);
+    letter-spacing: 0.02em;
+  }
+  .ops-preview__chrome-right {
+    margin-left: auto;
+    color: var(--accent, #0052FF);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .ops-preview__canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1200 / 720;
+    border: 0;
+  }
+
+  /* ---------- Three-bullet row ---------- */
+  .ops-preview__bullets {
+    list-style: none;
+    margin: 0 0 clamp(32px, 4vw, 56px);
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line, rgba(9, 9, 11, 0.08));
+    border-bottom: 1px solid var(--line, rgba(9, 9, 11, 0.08));
+  }
+  .ops-preview__bullet {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 20px clamp(16px, 2vw, 28px);
+    border-right: 1px solid var(--line, rgba(9, 9, 11, 0.08));
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--ink, #09090B);
+  }
+  .ops-preview__bullet:last-child { border-right: 0; }
+  .ops-preview__tick {
+    color: var(--accent, #0052FF);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+    font-family: var(--font-mono, ui-monospace, monospace);
+  }
+  .ops-preview__blabel {
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- CTA ---------- */
+  .ops-preview__cta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .ops-preview__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+    background: var(--ink, #09090B);
+    color: var(--paper, #FFFFFF);
+    font-family: var(--font-display, "Geist", system-ui, sans-serif);
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    border: 1px solid var(--ink, #09090B);
+    transition: background 140ms var(--ease, ease), color 140ms var(--ease, ease);
+  }
+  .ops-preview__btn:hover {
+    background: var(--accent, #0052FF);
+    border-color: var(--accent, #0052FF);
+    color: var(--paper, #FFFFFF);
+  }
+  .ops-preview__arrow { font-weight: 400; }
+  .ops-preview__note {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+    color: var(--muted, #71717A);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .ops-preview__bullets { grid-template-columns: 1fr; }
+    .ops-preview__bullet {
+      border-right: 0;
+      border-bottom: 1px solid var(--line, rgba(9, 9, 11, 0.08));
+    }
+    .ops-preview__bullet:last-child { border-bottom: 0; }
+    .ops-preview__url { display: none; }
+  }
+  @media (max-width: 600px) {
+    .ops-preview__chrome { height: 28px; font-size: 10px; }
+    .ops-preview__chrome-right { letter-spacing: 0.04em; }
+    .ops-preview__cta { gap: 14px; }
+    .ops-preview__btn { padding: 12px 18px; font-size: 13.5px; }
+  }
+</style>
+<!-- ============================================================
+     END § 05 — OPS CONSOLE PREVIEW
+============================================================ -->

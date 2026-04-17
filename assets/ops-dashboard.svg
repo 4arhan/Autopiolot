@@ -1,0 +1,434 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" aria-hidden="true" role="img">
+  <!-- ============================================================
+       AUTOPILOT LABS — OPS CONSOLE (simulated dashboard)
+       Modernist Swiss × Bloomberg terminal × Linear app
+       Palette: #FFFFFF paper · #09090B ink · #71717A muted · #0052FF cobalt
+       All data as real <text>. All geometric, no rounding.
+       ============================================================ -->
+
+  <defs>
+    <!-- Subtle grid: 40px squares, very faint ink -->
+    <pattern id="ops-grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#09090B" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+    <!-- Cobalt area fill (soft) -->
+    <linearGradient id="ops-area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0052FF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0052FF" stop-opacity="0.02"/>
+    </linearGradient>
+    <clipPath id="ops-clip-chart">
+      <rect x="224" y="272" width="596" height="200"/>
+    </clipPath>
+  </defs>
+
+  <!-- Paper -->
+  <rect width="1200" height="720" fill="#FFFFFF"/>
+  <!-- Faint technical grid (behind everything) -->
+  <rect width="1200" height="720" fill="url(#ops-grid)"/>
+
+  <!-- ============================================================
+       TOP BAR — 50px tall
+       ============================================================ -->
+  <g font-family="ui-monospace, 'SF Mono', monospace">
+    <!-- Cobalt logo square -->
+    <rect x="20" y="17" width="16" height="16" fill="#0052FF"/>
+    <!-- Wordmark -->
+    <text x="44" y="30" font-size="14" font-weight="700" fill="#09090B" letter-spacing="0.6">AUTOPILOT LABS</text>
+
+    <!-- Vertical hairline divider after wordmark -->
+    <line x1="128" y1="10" x2="128" y2="40" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+
+    <!-- Breadcrumb (center) -->
+    <text x="600" y="30" text-anchor="middle" font-size="12" fill="#71717A" letter-spacing="0.3">
+      <tspan fill="#71717A">[healthcare client]</tspan>
+      <tspan fill="#71717A" dx="6">/</tspan>
+      <tspan fill="#71717A" dx="6">Healthcare</tspan>
+      <tspan fill="#71717A" dx="6">/</tspan>
+      <tspan fill="#09090B" dx="6" font-weight="600">Patient intake</tspan>
+    </text>
+
+    <!-- Status dot + LIVE -->
+    <circle cx="1074" cy="25" r="3" fill="#0052FF"/>
+    <text x="1084" y="29" font-size="11" fill="#09090B" font-weight="600" letter-spacing="1">LIVE</text>
+
+    <!-- User initials square -->
+    <rect x="1128" y="13" width="24" height="24" fill="#FFFFFF" stroke="#09090B" stroke-width="1"/>
+    <text x="1140" y="29" text-anchor="middle" font-size="11" font-weight="600" fill="#09090B" letter-spacing="0.4">PR</text>
+
+    <!-- Top bar bottom hairline -->
+    <line x1="0" y1="50" x2="1200" y2="50" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+  </g>
+
+  <!-- ============================================================
+       LEFT SIDEBAR — 200px wide
+       ============================================================ -->
+  <g font-family="ui-monospace, 'SF Mono', monospace">
+    <!-- Sidebar right divider -->
+    <line x1="200" y1="50" x2="200" y2="720" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+
+    <!-- Section label -->
+    <text x="20" y="82" font-size="10" fill="#71717A" letter-spacing="1.4">NAVIGATION</text>
+
+    <!-- Active: Dashboard (cobalt left bar) -->
+    <rect x="0" y="100" width="3" height="28" fill="#0052FF"/>
+    <text x="20" y="118" font-size="12" fill="#09090B" font-weight="600" letter-spacing="1.2">DASHBOARD</text>
+
+    <!-- Other nav items -->
+    <text x="20" y="148" font-size="12" fill="#71717A" letter-spacing="1.2">AGENTS</text>
+    <text x="20" y="176" font-size="12" fill="#71717A" letter-spacing="1.2">OUTCOMES</text>
+    <text x="20" y="204" font-size="12" fill="#71717A" letter-spacing="1.2">SLA</text>
+    <text x="20" y="232" font-size="12" fill="#71717A" letter-spacing="1.2">AUDIT LOG</text>
+    <text x="20" y="260" font-size="12" fill="#71717A" letter-spacing="1.2">BILLING</text>
+    <text x="20" y="288" font-size="12" fill="#71717A" letter-spacing="1.2">SETTINGS</text>
+
+    <!-- Sidebar hairline separator -->
+    <line x1="20" y1="312" x2="180" y2="312" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+
+    <!-- Workspace footer -->
+    <text x="20" y="338" font-size="10" fill="#71717A" letter-spacing="1.4">WORKSPACE</text>
+    <text x="20" y="360" font-size="11" fill="#09090B" letter-spacing="0.3">meridian-prod-au</text>
+    <text x="20" y="378" font-size="10" fill="#71717A" letter-spacing="0.3">v4.12.1 · ap-southeast-2</text>
+
+    <!-- Sidebar bottom status -->
+    <line x1="20" y1="668" x2="180" y2="668" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+    <circle cx="26" cy="690" r="3" fill="#0052FF"/>
+    <text x="36" y="694" font-size="10" fill="#09090B" letter-spacing="0.6">ALL SYSTEMS NOMINAL</text>
+  </g>
+
+  <!-- ============================================================
+       MAIN AREA — starts at x=200, y=50
+       width = 1000, height = 670
+       ============================================================ -->
+
+  <!-- ========== SECTION HEADER (main) ========== -->
+  <g font-family="ui-monospace, 'SF Mono', monospace">
+    <text x="224" y="82" font-size="10" fill="#71717A" letter-spacing="1.4">§ 01 · OVERVIEW</text>
+    <text x="224" y="108" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#09090B" letter-spacing="-0.4">Patient intake — rolling 24h</text>
+    <text x="1176" y="82" text-anchor="end" font-size="10" fill="#71717A" letter-spacing="1.2">16 APR 2026 · 14:27 AEST</text>
+    <text x="1176" y="108" text-anchor="end" font-size="11" fill="#09090B" letter-spacing="0.4">Auto-refresh · 5s</text>
+
+    <!-- Header underline hairline -->
+    <line x1="224" y1="126" x2="1176" y2="126" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+  </g>
+
+  <!-- ============================================================
+       SECTION 1 — FOUR STAT TILES
+       Area: y=142 to y=246, 4 columns across 224..1176 (952 wide)
+       Each tile ~234 wide, gap 6
+       ============================================================ -->
+  <g font-family="ui-monospace, 'SF Mono', monospace">
+    <!-- Tile 1 — OUTCOMES TODAY (cobalt big number) -->
+    <g>
+      <rect x="224" y="142" width="234" height="104" fill="#FFFFFF" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+      <text x="236" y="162" font-size="10" fill="#71717A" letter-spacing="1.4">OUTCOMES TODAY</text>
+      <text x="236" y="210" font-family="Helvetica, Arial, sans-serif" font-size="36" font-weight="600" fill="#0052FF" letter-spacing="-1">1,247</text>
+      <text x="236" y="232" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#0052FF" font-weight="700">+14%</tspan>
+        <tspan fill="#71717A" dx="6">vs yesterday · 1,094</tspan>
+      </text>
+    </g>
+
+    <!-- Tile 2 — ON-TIME -->
+    <g>
+      <rect x="464" y="142" width="234" height="104" fill="#FFFFFF" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+      <text x="476" y="162" font-size="10" fill="#71717A" letter-spacing="1.4">ON-TIME SLA</text>
+      <text x="476" y="210" font-family="Helvetica, Arial, sans-serif" font-size="36" font-weight="600" fill="#09090B" letter-spacing="-1">99.4%</text>
+      <text x="476" y="232" font-size="10" fill="#71717A" letter-spacing="0.3">target 99.0% · 7d rolling</text>
+    </g>
+
+    <!-- Tile 3 — AVG COST -->
+    <g>
+      <rect x="704" y="142" width="234" height="104" fill="#FFFFFF" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+      <text x="716" y="162" font-size="10" fill="#71717A" letter-spacing="1.4">AVG COST / OUTCOME</text>
+      <text x="716" y="210" font-family="Helvetica, Arial, sans-serif" font-size="36" font-weight="600" fill="#09090B" letter-spacing="-1">A$3.20</text>
+      <text x="716" y="232" font-size="10" fill="#71717A" letter-spacing="0.3">vs A$18 human baseline</text>
+    </g>
+
+    <!-- Tile 4 — IN QUEUE -->
+    <g>
+      <rect x="944" y="142" width="232" height="104" fill="#FFFFFF" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+      <text x="956" y="162" font-size="10" fill="#71717A" letter-spacing="1.4">IN QUEUE</text>
+      <text x="956" y="210" font-family="Helvetica, Arial, sans-serif" font-size="36" font-weight="600" fill="#09090B" letter-spacing="-1">8</text>
+      <text x="956" y="232" font-size="10" fill="#71717A" letter-spacing="0.3">median wait · 340ms</text>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       SECTION 2 — AREA / LINE CHART (left block)
+       Chart region: x=224..820 (596w), y=272..472 (200h)
+       Plus label strip above and axis labels
+       ============================================================ -->
+  <g font-family="ui-monospace, 'SF Mono', monospace">
+    <!-- Chart header strip -->
+    <text x="224" y="268" font-size="10" fill="#71717A" letter-spacing="1.4">OUTCOMES · 24H ROLLING</text>
+    <text x="820" y="268" text-anchor="end" font-size="10" fill="#09090B" letter-spacing="0.4">
+      <tspan fill="#0052FF" font-weight="700">●</tspan>
+      <tspan dx="6" fill="#09090B">completed</tspan>
+      <tspan dx="10" fill="#71717A">n = 1,247</tspan>
+    </text>
+
+    <!-- Chart frame (thin ink) -->
+    <rect x="224" y="272" width="596" height="200" fill="#FFFFFF" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+
+    <!-- Horizontal gridlines (faint) -->
+    <line x1="224" y1="312" x2="820" y2="312" stroke="#09090B" stroke-opacity="0.06" stroke-width="1"/>
+    <line x1="224" y1="352" x2="820" y2="352" stroke="#09090B" stroke-opacity="0.06" stroke-width="1"/>
+    <line x1="224" y1="392" x2="820" y2="392" stroke="#09090B" stroke-opacity="0.06" stroke-width="1"/>
+    <line x1="224" y1="432" x2="820" y2="432" stroke="#09090B" stroke-opacity="0.06" stroke-width="1"/>
+
+    <!-- Y-axis labels (outcomes per hour) -->
+    <text x="220" y="276" text-anchor="end" font-size="9" fill="#71717A">80</text>
+    <text x="220" y="316" text-anchor="end" font-size="9" fill="#71717A">60</text>
+    <text x="220" y="356" text-anchor="end" font-size="9" fill="#71717A">40</text>
+    <text x="220" y="396" text-anchor="end" font-size="9" fill="#71717A">20</text>
+    <text x="220" y="436" text-anchor="end" font-size="9" fill="#71717A">0</text>
+
+    <!-- Area fill under line (cobalt gradient) -->
+    <g clip-path="url(#ops-clip-chart)">
+      <path d="M 224 420
+               L 260 400
+               L 296 412
+               L 332 380
+               L 368 360
+               L 404 372
+               L 440 340
+               L 476 310
+               L 512 328
+               L 548 300
+               L 584 286
+               L 620 308
+               L 656 296
+               L 692 318
+               L 728 288
+               L 764 310
+               L 800 294
+               L 820 302
+               L 820 472
+               L 224 472 Z"
+            fill="url(#ops-area)"/>
+
+      <!-- Primary cobalt line -->
+      <polyline
+        points="224,420 260,400 296,412 332,380 368,360 404,372 440,340 476,310 512,328 548,300 584,286 620,308 656,296 692,318 728,288 764,310 800,294 820,302"
+        fill="none" stroke="#0052FF" stroke-width="1.75" stroke-linejoin="miter" stroke-linecap="square"/>
+
+      <!-- Data point dots -->
+      <g fill="#FFFFFF" stroke="#0052FF" stroke-width="1.5">
+        <circle cx="224" cy="420" r="2.5"/>
+        <circle cx="260" cy="400" r="2.5"/>
+        <circle cx="296" cy="412" r="2.5"/>
+        <circle cx="332" cy="380" r="2.5"/>
+        <circle cx="368" cy="360" r="2.5"/>
+        <circle cx="404" cy="372" r="2.5"/>
+        <circle cx="440" cy="340" r="2.5"/>
+        <circle cx="476" cy="310" r="2.5"/>
+        <circle cx="512" cy="328" r="2.5"/>
+        <circle cx="548" cy="300" r="2.5"/>
+        <circle cx="584" cy="286" r="2.5"/>
+        <circle cx="620" cy="308" r="2.5"/>
+        <circle cx="656" cy="296" r="2.5"/>
+        <circle cx="692" cy="318" r="2.5"/>
+        <circle cx="728" cy="288" r="2.5"/>
+        <circle cx="764" cy="310" r="2.5"/>
+        <circle cx="800" cy="294" r="2.5"/>
+      </g>
+
+      <!-- Highlighted peak marker -->
+      <circle cx="584" cy="286" r="4" fill="#0052FF"/>
+      <line x1="584" y1="272" x2="584" y2="286" stroke="#0052FF" stroke-opacity="0.4" stroke-dasharray="2 3" stroke-width="1"/>
+      <rect x="554" y="253" width="60" height="16" fill="#FFFFFF" stroke="#0052FF" stroke-width="1"/>
+      <text x="584" y="264" text-anchor="middle" font-size="9" fill="#0052FF" font-weight="700" letter-spacing="0.3">PEAK · 74</text>
+    </g>
+
+    <!-- X-axis labels -->
+    <text x="224" y="488" font-size="9" fill="#71717A">14:30</text>
+    <text x="324" y="488" font-size="9" fill="#71717A">18:30</text>
+    <text x="424" y="488" font-size="9" fill="#71717A">22:30</text>
+    <text x="524" y="488" font-size="9" fill="#71717A">02:30</text>
+    <text x="624" y="488" font-size="9" fill="#71717A">06:30</text>
+    <text x="724" y="488" font-size="9" fill="#71717A">10:30</text>
+    <text x="800" y="488" font-size="9" fill="#71717A">NOW</text>
+  </g>
+
+  <!-- ============================================================
+       SECTION 3 — RECENT ACTIVITY LIST (right)
+       Area: x=836..1176 (340w), y=272..472
+       ============================================================ -->
+  <g font-family="ui-monospace, 'SF Mono', monospace">
+    <!-- Header strip -->
+    <text x="836" y="268" font-size="10" fill="#71717A" letter-spacing="1.4">RECENT ACTIVITY</text>
+    <text x="1176" y="268" text-anchor="end" font-size="10" fill="#0052FF" letter-spacing="0.4" font-weight="700">● LIVE STREAM</text>
+
+    <!-- Frame -->
+    <rect x="836" y="272" width="340" height="200" fill="#FFFFFF" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+
+    <!-- Row 1 -->
+    <g>
+      <circle cx="850" cy="290" r="3" fill="#0052FF"/>
+      <text x="860" y="294" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">14:27</tspan>
+        <tspan dx="6" fill="#09090B">Intake normalised</tspan>
+      </text>
+      <text x="1166" y="294" text-anchor="end" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">14ms</tspan>
+        <tspan dx="8" fill="#0052FF" font-weight="700">✓</tspan>
+      </text>
+      <line x1="836" y1="302" x2="1176" y2="302" stroke="#09090B" stroke-opacity="0.08" stroke-width="1"/>
+    </g>
+
+    <!-- Row 2 -->
+    <g>
+      <circle cx="850" cy="318" r="3" fill="#09090B"/>
+      <text x="860" y="322" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">14:26</tspan>
+        <tspan dx="6" fill="#09090B">Triage routed · tier-2</tspan>
+      </text>
+      <text x="1166" y="322" text-anchor="end" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">22ms</tspan>
+        <tspan dx="8" fill="#09090B">✓</tspan>
+      </text>
+      <line x1="836" y1="330" x2="1176" y2="330" stroke="#09090B" stroke-opacity="0.08" stroke-width="1"/>
+    </g>
+
+    <!-- Row 3 -->
+    <g>
+      <circle cx="850" cy="346" r="3" fill="#09090B"/>
+      <text x="860" y="350" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">14:25</tspan>
+        <tspan dx="6" fill="#09090B">Medicare verified · PT-4471</tspan>
+      </text>
+      <text x="1166" y="350" text-anchor="end" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">118ms</tspan>
+        <tspan dx="8" fill="#09090B">✓</tspan>
+      </text>
+      <line x1="836" y1="358" x2="1176" y2="358" stroke="#09090B" stroke-opacity="0.08" stroke-width="1"/>
+    </g>
+
+    <!-- Row 4 -->
+    <g>
+      <circle cx="850" cy="374" r="3" fill="#0052FF"/>
+      <text x="860" y="378" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">14:24</tspan>
+        <tspan dx="6" fill="#09090B">Outcome closed · PT-4470</tspan>
+      </text>
+      <text x="1166" y="378" text-anchor="end" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">9ms</tspan>
+        <tspan dx="8" fill="#0052FF" font-weight="700">✓</tspan>
+      </text>
+      <line x1="836" y1="386" x2="1176" y2="386" stroke="#09090B" stroke-opacity="0.08" stroke-width="1"/>
+    </g>
+
+    <!-- Row 5 -->
+    <g>
+      <circle cx="850" cy="402" r="3" fill="#09090B"/>
+      <text x="860" y="406" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">14:22</tspan>
+        <tspan dx="6" fill="#09090B">Handoff · Dr Kapoor</tspan>
+      </text>
+      <text x="1166" y="406" text-anchor="end" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">31ms</tspan>
+        <tspan dx="8" fill="#09090B">✓</tspan>
+      </text>
+      <line x1="836" y1="414" x2="1176" y2="414" stroke="#09090B" stroke-opacity="0.08" stroke-width="1"/>
+    </g>
+
+    <!-- Row 6 -->
+    <g>
+      <circle cx="850" cy="430" r="3" fill="#09090B"/>
+      <text x="860" y="434" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">14:21</tspan>
+        <tspan dx="6" fill="#09090B">Consent logged · v3.2</tspan>
+      </text>
+      <text x="1166" y="434" text-anchor="end" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">7ms</tspan>
+        <tspan dx="8" fill="#09090B">✓</tspan>
+      </text>
+      <line x1="836" y1="442" x2="1176" y2="442" stroke="#09090B" stroke-opacity="0.08" stroke-width="1"/>
+    </g>
+
+    <!-- Row 7 -->
+    <g>
+      <circle cx="850" cy="458" r="3" fill="#09090B"/>
+      <text x="860" y="462" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">14:19</tspan>
+        <tspan dx="6" fill="#09090B">Intake normalised</tspan>
+      </text>
+      <text x="1166" y="462" text-anchor="end" font-size="10" fill="#09090B" letter-spacing="0.3">
+        <tspan fill="#71717A">12ms</tspan>
+        <tspan dx="8" fill="#09090B">✓</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       SECTION 4 — SLA BY AGENT — horizontal bar chart
+       Area: x=224..1176 (952w), y=506..694
+       ============================================================ -->
+  <g font-family="ui-monospace, 'SF Mono', monospace">
+    <!-- Section header -->
+    <text x="224" y="514" font-size="10" fill="#71717A" letter-spacing="1.4">SLA BY AGENT · LAST 7 DAYS</text>
+    <text x="1176" y="514" text-anchor="end" font-size="10" fill="#71717A" letter-spacing="0.4">target &#8805; 99.0%</text>
+
+    <line x1="224" y1="526" x2="1176" y2="526" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+
+    <!-- Bar chart geometry:
+         Agent name column: x=224..354 (130w)
+         Bar track: x=360..1100 (740w)
+         Pct value:  x=1108..1176 right-aligned
+         5 rows, row height 28, starting y=542 -->
+
+    <!-- Row 1 — intake-normaliser (highest, cobalt) -->
+    <g>
+      <text x="224" y="558" font-size="11" fill="#09090B" letter-spacing="0.2">intake-normaliser</text>
+      <text x="354" y="558" text-anchor="end" font-size="9" fill="#71717A">v2.4</text>
+      <rect x="360" y="550" width="740" height="8" fill="#09090B" fill-opacity="0.04"/>
+      <rect x="360" y="550" width="734" height="8" fill="#0052FF"/>
+      <text x="1176" y="558" text-anchor="end" font-size="11" fill="#0052FF" font-weight="700" letter-spacing="0.3">99.8%</text>
+    </g>
+
+    <!-- Row 2 — triage-router -->
+    <g>
+      <text x="224" y="586" font-size="11" fill="#09090B" letter-spacing="0.2">triage-router</text>
+      <text x="354" y="586" text-anchor="end" font-size="9" fill="#71717A">v1.9</text>
+      <rect x="360" y="578" width="740" height="8" fill="#09090B" fill-opacity="0.04"/>
+      <rect x="360" y="578" width="725" height="8" fill="#0052FF"/>
+      <text x="1176" y="586" text-anchor="end" font-size="11" fill="#0052FF" font-weight="700" letter-spacing="0.3">99.6%</text>
+    </g>
+
+    <!-- Row 3 — medicare-verifier -->
+    <g>
+      <text x="224" y="614" font-size="11" fill="#09090B" letter-spacing="0.2">medicare-verifier</text>
+      <text x="354" y="614" text-anchor="end" font-size="9" fill="#71717A">v3.1</text>
+      <rect x="360" y="606" width="740" height="8" fill="#09090B" fill-opacity="0.04"/>
+      <rect x="360" y="606" width="711" height="8" fill="#0052FF"/>
+      <text x="1176" y="614" text-anchor="end" font-size="11" fill="#09090B" font-weight="600" letter-spacing="0.3">99.2%</text>
+    </g>
+
+    <!-- Row 4 — consent-logger -->
+    <g>
+      <text x="224" y="642" font-size="11" fill="#09090B" letter-spacing="0.2">consent-logger</text>
+      <text x="354" y="642" text-anchor="end" font-size="9" fill="#71717A">v2.0</text>
+      <rect x="360" y="634" width="740" height="8" fill="#09090B" fill-opacity="0.04"/>
+      <rect x="360" y="634" width="703" height="8" fill="#09090B"/>
+      <text x="1176" y="642" text-anchor="end" font-size="11" fill="#09090B" font-weight="600" letter-spacing="0.3">99.0%</text>
+    </g>
+
+    <!-- Row 5 — handoff-scheduler (below target, ink) -->
+    <g>
+      <text x="224" y="670" font-size="11" fill="#09090B" letter-spacing="0.2">handoff-scheduler</text>
+      <text x="354" y="670" text-anchor="end" font-size="9" fill="#71717A">v1.4</text>
+      <rect x="360" y="662" width="740" height="8" fill="#09090B" fill-opacity="0.04"/>
+      <rect x="360" y="662" width="688" height="8" fill="#09090B"/>
+      <text x="1176" y="670" text-anchor="end" font-size="11" fill="#09090B" font-weight="600" letter-spacing="0.3">96.9%</text>
+    </g>
+
+    <!-- Target rule across chart (dashed) -->
+    <line x1="1092" y1="544" x2="1092" y2="678" stroke="#0052FF" stroke-opacity="0.4" stroke-dasharray="2 3" stroke-width="1"/>
+    <text x="1092" y="540" text-anchor="middle" font-size="8" fill="#0052FF" font-weight="700" letter-spacing="0.3">99.0%</text>
+  </g>
+
+  <!-- ============================================================
+       OUTER CANVAS HAIRLINE (for Swiss precision)
+       ============================================================ -->
+  <rect x="0.5" y="0.5" width="1199" height="719" fill="none" stroke="#09090B" stroke-opacity="0.18" stroke-width="1"/>
+</svg>

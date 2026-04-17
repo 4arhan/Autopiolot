@@ -1,0 +1,421 @@
+<section class="press-wall" aria-label="Press coverage">
+  <style>
+    .press-wall {
+      background: var(--paper);
+      color: var(--ink);
+      padding: 7rem 0 5rem;
+      border-top: 1px solid var(--line);
+      position: relative;
+    }
+
+    .press-wall .container {
+      position: relative;
+    }
+
+    /* Section head overrides — tighten to broadsheet feel */
+    .press-wall .section-head {
+      margin-bottom: 4.5rem;
+      max-width: 62rem;
+    }
+
+    .press-wall .section-title {
+      font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .press-wall .section-title em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .press-wall .section-dek {
+      margin-top: 1.25rem;
+      font-size: 0.9375rem;
+      color: var(--ink-3);
+      letter-spacing: -0.005em;
+      max-width: 38rem;
+      line-height: 1.55;
+    }
+
+    /* Masthead ruling above grid */
+    .press-wall .masthead-rule {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .press-wall .masthead-rule .edition {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .press-wall .masthead-rule .edition strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* Press grid */
+    .press-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .press-card {
+      position: relative;
+      padding: 2.5rem;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      min-height: 22rem;
+      transition: background-color 240ms ease, box-shadow 240ms ease;
+    }
+
+    .press-card:nth-child(3n) { border-right: none; }
+    .press-card:nth-last-child(-n+3) { border-bottom: none; }
+
+    .press-card:hover {
+      background: var(--paper-3);
+      box-shadow: inset 2px 0 0 0 var(--accent);
+    }
+
+    /* Publication wordmarks — each distinctly styled */
+    .wordmark {
+      font-family: "Geist", system-ui, sans-serif;
+      color: var(--ink);
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      height: 20px;
+    }
+
+    .wm-afr {
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      font-stretch: condensed;
+      text-transform: uppercase;
+    }
+
+    .wm-bloomberg {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.035em;
+    }
+
+    .wm-techcrunch {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      text-transform: lowercase;
+    }
+
+    .wm-forbes {
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.015em;
+    }
+
+    .wm-forbes .tag-au {
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      margin-left: 4px;
+      color: var(--muted);
+      text-transform: uppercase;
+      align-self: flex-start;
+      padding-top: 2px;
+    }
+
+    .wm-capital {
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .wm-smart {
+      font-weight: 400;
+      font-size: 17px;
+      letter-spacing: -0.03em;
+    }
+
+    .wm-smart strong {
+      font-weight: 700;
+    }
+
+    /* Hairline under wordmark */
+    .wordmark-rule {
+      height: 1px;
+      background: var(--ink);
+      margin-top: 1.25rem;
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+
+    /* The pull quote */
+    .press-quote {
+      font-family: "Geist", system-ui, sans-serif;
+      font-size: clamp(1.375rem, 1.6vw, 1.625rem);
+      line-height: 1.24;
+      letter-spacing: -0.025em;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0 0 auto 0;
+      text-wrap: balance;
+    }
+
+    .press-quote em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .press-quote::before {
+      content: "\201C";
+      font-weight: 500;
+      margin-right: 0.05em;
+    }
+
+    .press-quote::after {
+      content: "\201D";
+      font-weight: 500;
+      margin-left: 0.05em;
+    }
+
+    /* Byline */
+    .press-byline {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      line-height: 1.5;
+    }
+
+    .press-byline .author {
+      color: var(--ink-2);
+      font-weight: 500;
+    }
+
+    /* Read link */
+    .press-read {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap 200ms ease, opacity 200ms ease;
+    }
+
+    .press-read:hover {
+      gap: 0.55rem;
+      opacity: 0.85;
+    }
+
+    /* Also-featured strip */
+    .press-strip {
+      margin-top: 5rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .press-strip-label {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .press-strip-logos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 3rem;
+      row-gap: 1.75rem;
+    }
+
+    .press-strip-logos .wordmark {
+      color: var(--muted);
+      transition: color 200ms ease;
+      cursor: default;
+    }
+
+    .press-strip-logos .wordmark:hover {
+      color: var(--ink);
+    }
+
+    /* Foot */
+    .press-foot {
+      margin-top: 2.5rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .press-foot .foot-meta {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .press-kit-link {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap 200ms ease;
+    }
+
+    .press-kit-link:hover { gap: 0.6rem; }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .press-grid { grid-template-columns: repeat(2, 1fr); }
+      .press-card { min-height: 20rem; padding: 2rem; }
+      .press-card:nth-child(3n) { border-right: 1px solid var(--line); }
+      .press-card:nth-child(2n) { border-right: none; }
+      .press-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
+      .press-card:nth-last-child(-n+2) { border-bottom: none; }
+    }
+
+    @media (max-width: 640px) {
+      .press-wall { padding: 5rem 0 3.5rem; }
+      .press-grid { grid-template-columns: 1fr; }
+      .press-card { border-right: none !important; border-bottom: 1px solid var(--line) !important; min-height: auto; padding: 2rem 0; }
+      .press-card:last-child { border-bottom: none !important; }
+      .press-strip-logos { gap: 2rem; row-gap: 1.25rem; }
+      .press-foot { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+  </style>
+
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-num">§ 06 — In the press</div>
+      <h2 class="section-title">What the <em>papers</em> are saying.</h2>
+      <p class="section-dek">Selected coverage from AU, UK, and US press. Last 12 months.</p>
+    </div>
+
+    <div class="masthead-rule">
+      <span class="edition"><strong>Press</strong> / Vol. II</span>
+      <span class="edition">Updated Mar 2026</span>
+    </div>
+
+    <div class="press-grid">
+      <article class="press-card reveal delay-1">
+        <span class="wordmark wm-afr">AFR</span>
+        <div class="wordmark-rule"></div>
+        <p class="press-quote">Autopilot Labs is quietly rewriting how <em>SMEs</em> buy AI.</p>
+        <div class="press-byline">
+          <span class="author">— Priya Shah</span> · Technology · 14 Mar 2026
+        </div>
+        <a class="press-read" href="#">Read <span aria-hidden="true">&rarr;</span></a>
+      </article>
+
+      <article class="press-card reveal delay-2">
+        <span class="wordmark wm-bloomberg">Bloomberg</span>
+        <div class="wordmark-rule"></div>
+        <p class="press-quote">If the future of AI work is measured in <em>outcomes</em>, Autopilot Labs is already there.</p>
+        <div class="press-byline">
+          <span class="author">— Marcus Ueno</span> · Technology · 22 Feb 2026
+        </div>
+        <a class="press-read" href="#">Read <span aria-hidden="true">&rarr;</span></a>
+      </article>
+
+      <article class="press-card reveal delay-3">
+        <span class="wordmark wm-techcrunch">techcrunch</span>
+        <div class="wordmark-rule"></div>
+        <p class="press-quote">A Melbourne agency with an honest answer to <em>token pricing</em> — and a waiting list.</p>
+        <div class="press-byline">
+          <span class="author">— Lena Fischer</span> · Startups · 08 Jan 2026
+        </div>
+        <a class="press-read" href="#">Read <span aria-hidden="true">&rarr;</span></a>
+      </article>
+
+      <article class="press-card reveal delay-1">
+        <span class="wordmark wm-forbes">Forbes<span class="tag-au">AU</span></span>
+        <div class="wordmark-rule"></div>
+        <p class="press-quote">The anti-platform play: thirteen verticals, <em>zero seat fees</em>.</p>
+        <div class="press-byline">
+          <span class="author">— Tom Reeves</span> · Contributor · 28 Feb 2026
+        </div>
+        <a class="press-read" href="#">Read <span aria-hidden="true">&rarr;</span></a>
+      </article>
+
+      <article class="press-card reveal delay-2">
+        <span class="wordmark wm-capital">Capital Brief</span>
+        <div class="wordmark-rule"></div>
+        <p class="press-quote">Autopilot Labs's per-outcome model may be the <em>template</em> for Australian AI services.</p>
+        <div class="press-byline">
+          <span class="author">— Jenny Whan</span> · Editor · 05 Feb 2026
+        </div>
+        <a class="press-read" href="#">Read <span aria-hidden="true">&rarr;</span></a>
+      </article>
+
+      <article class="press-card reveal delay-3">
+        <span class="wordmark wm-smart"><strong>Smart</strong>Company</span>
+        <div class="wordmark-rule"></div>
+        <p class="press-quote">Inside the AI agency that <em>turned down</em> $3M in 2025 — and still beat their target.</p>
+        <div class="press-byline">
+          <span class="author">— Ada Reyes</span> · Features · 17 Dec 2025
+        </div>
+        <a class="press-read" href="#">Read <span aria-hidden="true">&rarr;</span></a>
+      </article>
+    </div>
+
+    <div class="press-strip reveal">
+      <div class="press-strip-label">Also featured in</div>
+      <div class="press-strip-logos">
+        <span class="wordmark wm-afr">AFR</span>
+        <span class="wordmark wm-bloomberg">Bloomberg</span>
+        <span class="wordmark wm-techcrunch">techcrunch</span>
+        <span class="wordmark wm-forbes">Forbes<span class="tag-au">AU</span></span>
+        <span class="wordmark wm-capital">Capital Brief</span>
+        <span class="wordmark wm-smart"><strong>Smart</strong>Company</span>
+        <span class="wordmark wm-bloomberg" style="letter-spacing:-0.025em;font-weight:600">Startup Daily</span>
+        <span class="wordmark wm-capital" style="letter-spacing:0.22em;font-size:14px">THE AGE</span>
+      </div>
+    </div>
+
+    <div class="press-foot">
+      <span class="foot-meta">Press · 06 / 12 · 2026 edition</span>
+      <a class="press-kit-link" href="press.html">See full press kit <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</section>

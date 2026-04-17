@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Autopilot Labs</title>
+<meta name="description" content="Book a free workflow audit with Autopilot Labs. Two weeks, one workflow, per-outcome quote — or a polite no.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+@media (max-width: 1000px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+/* FORM */
+.form {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2.5rem;
+}
+.form-head {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.form-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 2.8vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.form-head h2 em { color: var(--accent); }
+.form-head .meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.field { margin-bottom: 1.5rem; }
+fieldset.field { border: 0; padding: 0; min-width: 0; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.field > label,
+fieldset.field > legend {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+.field label .required, fieldset.field legend .required { color: var(--accent); margin-left: 4px; }
+.field input, .field select, .field textarea {
+  width: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 0.85rem 1rem;
+  font-family: var(--font-display);
+  font-size: 15px;
+  border-radius: 4px;
+  transition: border-color .2s, box-shadow .2s;
+  outline: none;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,82,255,0.10);
+}
+.field textarea { resize: vertical; min-height: 110px; line-height: 1.5; font-family: var(--font-display); }
+.field select {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--accent) 50%), linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.5rem;
+}
+
+.field-inline {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition: all .2s;
+  background: transparent;
+}
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip:hover { color: var(--ink); border-color: var(--line-strong); }
+.chip:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chip.is-on { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+
+.form-submit {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  gap: 1rem; flex-wrap: wrap;
+}
+.form-note {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  max-width: 30ch;
+  line-height: 1.5;
+}
+
+/* SIDE */
+.side {
+  display: flex; flex-direction: column;
+  gap: 2rem;
+}
+.side-card {
+  border: 1px solid var(--line);
+  padding: 1.75rem;
+  border-radius: 6px;
+  background: var(--bg-elev);
+}
+.side-card h4 {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  font-weight: 500;
+}
+
+.next-step {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+.next-step:last-child { border: 0; padding-bottom: 0; }
+.next-step:first-child { padding-top: 0; }
+.next-step .n {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.next-step h5 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.35rem;
+}
+.next-step p {
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+.next-step p em { color: var(--accent); font-style: normal; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+.office-map {
+  aspect-ratio: 3/2;
+  background:
+    linear-gradient(135deg, transparent 49.5%, rgba(0,82,255,0.18) 49.5% 50.5%, transparent 50.5%) 0 0 / 36px 36px,
+    linear-gradient(45deg, transparent 49.5%, rgba(9,9,11,0.09) 49.5% 50.5%, transparent 50.5%) 0 0 / 36px 36px,
+    radial-gradient(ellipse at 62% 45%, rgba(0,82,255,0.12) 0%, transparent 55%),
+    var(--paper-3);
+  border-radius: 4px;
+  position: relative;
+  border: 1px solid var(--line);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.office-pin {
+  position: absolute;
+  left: 62%; top: 45%;
+  transform: translate(-50%, -50%);
+  width: 12px; height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(0,82,255,0.18), 0 0 0 10px rgba(0,82,255,0.08);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.office-addr {
+  font-family: var(--font-display);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-dim);
+}
+.office-addr b { display: block; color: var(--ink); font-weight: 500; margin-bottom: 4px; }
+
+.contact-methods { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-method {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px dashed var(--line);
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.contact-method:last-child { border: 0; }
+.contact-method .k {
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 10.5px;
+}
+.contact-method .v {
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.contact-method .v a:hover { color: var(--accent); }
+.contact-method .badge { color: var(--accent); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ Q2 2026 audit cohort · 4 slots left</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>Response within 1 working day</span></div>
+      </div>
+
+      <h1 class="hero-title reveal delay-1">
+        Book a <em>free</em><br>
+        workflow audit.
+      </h1>
+
+      <div class="hero-lower reveal delay-2">
+        <p class="hero-dek">
+          Tell us what repetitive job is eating your team's week. We'll spend 10 working days figuring out what we can <em>automate with AI</em>, and hand you a 20-page diagnostic. Yours to keep whether we quote or not. About a third of audits end in a polite no — that's fine too.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FORM + SIDE ========== -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- FORM -->
+        <form class="form reveal" id="audit-form" novalidate>
+          <div class="form-head">
+            <h2>Audit <em>request</em></h2>
+            <span class="meta">Ref. 2026.Q2 · #AUD</span>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Your name<span class="required">*</span></label>
+              <input id="name" name="name" type="text" placeholder="—" required>
+            </div>
+            <div class="field">
+              <label for="role">Role<span class="required">*</span></label>
+              <input id="role" name="role" type="text" placeholder="Chief Operating Officer" required>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="email">Work email<span class="required">*</span></label>
+              <input id="email" name="email" type="email" placeholder="priya@meridianhealth.com" required>
+            </div>
+            <div class="field">
+              <label for="company">Company<span class="required">*</span></label>
+              <input id="company" name="company" type="text" placeholder="[healthcare client]" required>
+            </div>
+          </div>
+
+          <fieldset class="field">
+            <legend>Vertical<span class="required">*</span></legend>
+            <div class="field-inline" data-chip-group="vertical">
+              <label class="chip"><input type="radio" name="vertical" value="healthcare"><span>Healthcare</span></label>
+              <label class="chip"><input type="radio" name="vertical" value="legal"><span>Legal</span></label>
+              <label class="chip"><input type="radio" name="vertical" value="finance"><span>Finance</span></label>
+              <label class="chip"><input type="radio" name="vertical" value="real-estate"><span>Real estate</span></label>
+              <label class="chip"><input type="radio" name="vertical" value="ecommerce"><span>E-commerce</span></label>
+              <label class="chip"><input type="radio" name="vertical" value="hr"><span>HR &amp; hiring</span></label>
+              <label class="chip"><input type="radio" name="vertical" value="marketing"><span>Marketing</span></label>
+              <label class="chip"><input type="radio" name="vertical" value="manufacturing"><span>Manufacturing</span></label>
+              <label class="chip"><input type="radio" name="vertical" value="other"><span>Other · ask us</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="volume">Monthly workflow volume (rough)</label>
+            <select id="volume" name="volume">
+              <option>Under 500 outcomes / month</option>
+              <option>500 – 5,000 / month</option>
+              <option selected>5,000 – 50,000 / month</option>
+              <option>50,000 – 500,000 / month</option>
+              <option>500,000+ / month</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="workflow">The workflow we should audit<span class="required">*</span></label>
+            <textarea id="workflow" name="workflow" placeholder="In a paragraph — which manual, repetitive job eats the most hours in your operation today? Who does it? How often does it happen? What goes wrong when it slips?" required></textarea>
+          </div>
+
+          <fieldset class="field">
+            <legend>Which plan interests you?</legend>
+            <div class="field-inline" data-chip-group="plan">
+              <label class="chip"><input type="radio" name="plan" value="outcome"><span>Outcome · flagship</span></label>
+              <label class="chip"><input type="radio" name="plan" value="hybrid"><span>Hybrid</span></label>
+              <label class="chip"><input type="radio" name="plan" value="subscription"><span>Retainer</span></label>
+              <label class="chip"><input type="radio" name="plan" value="unsure"><span>Tell me after the audit</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form-submit">
+            <p class="form-note">◆ We reply within 1 working day. No marketing emails — ever.</p>
+            <button type="submit" class="btn btn-primary btn-lg">Submit request <span class="arrow">↗</span></button>
+          </div>
+        </form>
+
+        <!-- SIDE -->
+        <aside class="side reveal delay-1">
+          <div class="side-card">
+            <h4>◆ What happens next</h4>
+            <div class="next-step">
+              <div class="n">01</div>
+              <div>
+                <h5>We reply within 1 working day</h5>
+                <p>A human — not an autoresponder — reads every request. <em>Monday → Friday, Melbourne time</em>.</p>
+              </div>
+            </div>
+            <div class="next-step">
+              <div class="n">02</div>
+              <div>
+                <h5>30-minute call to scope</h5>
+                <p>If we can help, we book a scoping call. If we can't, we say so and point you at someone who can.</p>
+              </div>
+            </div>
+            <div class="next-step">
+              <div class="n">03</div>
+              <div>
+                <h5>Audit starts within 14 days</h5>
+                <p>Two-week audit, free, yours to keep. <em>A third of audits end in a polite no — that's fine</em>.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-card">
+            <h4>◆ Direct lines</h4>
+            <div class="contact-methods">
+              <div class="contact-method">
+                <span class="k">Email</span>
+                <span class="v"><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></span>
+                <span class="badge">&lt; 1 day</span>
+              </div>
+              <div class="contact-method">
+                <span class="k">Audits</span>
+                <span class="v"><a href="mailto:audit@autopilotlabs.io">audit@autopilotlabs.io</a></span>
+                <span class="badge">&lt; 1 day</span>
+              </div>
+              <div class="contact-method">
+                <span class="k">Phone</span>
+                <span class="v"><a href="tel:+61390000000">+61 3 9000 0000</a></span>
+                <span class="badge">9–5 AEST</span>
+              </div>
+              <div class="contact-method">
+                <span class="k">Press</span>
+                <span class="v"><a href="mailto:press@autopilotlabs.io">press@autopilotlabs.io</a></span>
+                <span class="badge">&lt; 2 days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-card">
+            <h4>◆ Melbourne HQ</h4>
+            <div class="office-map" aria-hidden="true">
+              <div class="office-pin"></div>
+            </div>
+            <div class="office-addr">
+              <b>Level 14 · 459 Collins St</b>
+              Melbourne VIC 3000<br>
+              Australia · ABN 00 000 000 000<br><br>
+              <span class="mono" style="font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;">— 37.8174°S · 144.9614°E</span>
+            </div>
+          </div>
+
+          <div class="side-card" style="border-color: var(--line-accent); background: linear-gradient(180deg, var(--bg-elev), var(--bg));">
+            <h4 style="color: var(--accent);">◆ Prefer async?</h4>
+            <p style="font-size:14px;color:var(--ink-dim);line-height:1.55;margin-bottom:1rem;">
+              Send a Loom or a 2-paragraph write-up of the workflow. If we can quote from it alone, we will — no call required.
+            </p>
+            <a href="mailto:audit@autopilotlabs.io?subject=Async%20audit%20request" class="btn btn-primary btn-sm">Start async <span class="arrow">↗</span></a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END ========== -->
+  <section class="endcta">
+    <div class="container">
+      <div class="endcta-wrap reveal">
+        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">While you decide</div>
+        <h2>Go read the<br><em>fine print</em>.</h2>
+        <p class="dek">The pricing, the process, the thirteen verticals, the clauses we've signed our name to. Everything we'd hand you in the first meeting is already on the site.</p>
+        <div class="actions">
+          <a href="pricing.html" class="btn btn-primary btn-lg">See the rate card</a>
+          <a href="process.html" class="btn btn-lg">Read the process</a>
+          <a href="solutions.html" class="btn btn-lg">Browse the catalogue</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left"><span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span></div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+(function () {
+  // Pre-select vertical / plan from ?query; site.js handles is-on via change events
+  const params = new URLSearchParams(location.search);
+  ['vertical', 'plan'].forEach((k) => {
+    const v = params.get(k);
+    if (!v) return;
+    const el = document.querySelector('input[name="' + k + '"][value="' + v + '"]');
+    if (el) {
+      el.checked = true;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  });
+
+  // Prevent default submit; show fake confirmation
+  const form = document.getElementById('audit-form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const btn = form.querySelector('[type="submit"]');
+      btn.innerHTML = 'Request received · we\'ll reply within 1 working day <span class="arrow">✓</span>';
+      btn.disabled = true;
+      form.querySelectorAll('input,select,textarea,button:not([type=submit])').forEach(i => i.disabled = true);
+    });
+  }
+})();
+</script>
+</body>
+</html>

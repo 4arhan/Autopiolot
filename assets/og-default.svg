@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <title>Autopilot Labs — Agents that finish the job.</title>
+  <desc>Autopilot Labs is an AI workflow agency building vertical AI agents for 8 industries, with per-outcome pricing and SLA-bound delivery. Established Melbourne, 2024.</desc>
+
+  <defs>
+    <style type="text/css"><![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap');
+      .display { font-family: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 500; }
+      .body    { font-family: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 400; }
+      .mono    { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Monaco, monospace; font-weight: 500; }
+    ]]></style>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="1200" height="630" fill="#FFFFFF"/>
+
+  <!-- Top hairline -->
+  <line x1="0" y1="80" x2="1200" y2="80" stroke="#09090B" stroke-width="1"/>
+
+  <!-- Top strip: three mono labels -->
+  <text x="80" y="58" class="mono" font-size="16" fill="#09090B" letter-spacing="2.56">AUTOPILOT LABS</text>
+  <text x="600" y="58" class="mono" font-size="16" fill="#09090B" letter-spacing="2.56" text-anchor="middle">AI WORKFLOW AGENCY</text>
+  <text x="1120" y="58" class="mono" font-size="16" fill="#09090B" letter-spacing="2.56" text-anchor="end">EST. MELBOURNE &#183; 2024</text>
+
+  <!-- Editorial crop marks / data annotations -->
+  <text x="1120" y="120" class="mono" font-size="10" fill="#71717A" letter-spacing="1.4" text-anchor="end">&#167; 001</text>
+  <text x="1120" y="200" class="mono" font-size="10" fill="#71717A" letter-spacing="1.4" text-anchor="end">99.1% SLA</text>
+  <text x="80" y="150" class="mono" font-size="10" fill="#71717A" letter-spacing="1.4">14D DEPLOY</text>
+  <text x="80" y="605" class="mono" font-size="10" fill="#71717A" letter-spacing="1.4">V.4.6</text>
+
+  <!-- Headline -->
+  <text x="80" y="290" class="display" font-size="144" fill="#09090B" letter-spacing="-7.2">Agents that</text>
+  <text x="80" y="434" class="display" font-size="144" fill="#09090B" letter-spacing="-7.2"><tspan fill="#0052FF">finish</tspan> the job.</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="500" class="body" font-size="22" fill="#3F3F46">Vertical AI agents for 8 industries. Per-outcome pricing. SLA-bound.</text>
+
+  <!-- Bottom hairline -->
+  <line x1="0" y1="560" x2="1200" y2="560" stroke="#09090B" stroke-width="1"/>
+
+  <!-- Bottom-left: logomark + wordmark -->
+  <g>
+    <rect x="80" y="575" width="40" height="40" fill="#09090B"/>
+    <rect x="106" y="601" width="14" height="14" fill="#0052FF"/>
+    <text x="136" y="605" class="mono" font-size="22" fill="#09090B" letter-spacing="1.5">AUTOPILOT LABS.</text>
+  </g>
+
+  <!-- Bottom-right: domain -->
+  <text x="1120" y="605" class="mono" font-size="22" fill="#09090B" text-anchor="end">autopilotlabs.io</text>
+</svg>

@@ -1,0 +1,11 @@
+# Autopilot Labs marketing site — robots.txt
+# https://autopilotlabs.io
+# Generated 2026-04-16
+
+User-agent: *
+Allow: /
+
+Disallow: /private/
+Disallow: /admin/
+
+Sitemap: https://autopilotlabs.io/sitemap.xml

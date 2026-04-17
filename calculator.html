@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator — Autopilot Labs · What automating with AI would cost you</title>
+<meta name="description" content="Adjust the sliders. We'll show you the monthly bill against your current human baseline, with real rates from our published rate card.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/motion.css">
+<style>
+/* ====== calculator-specific ====== */
+.calc-hero {
+  padding: clamp(4.5rem, 10vw, 8rem) 0 clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+}
+.calc-hero h1 {
+  font-size: clamp(48px, 8vw, 120px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  max-width: 18ch;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+.calc-hero h1 em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+  font-family: inherit;
+}
+.calc-hero .dek {
+  font-size: clamp(17px, 1.4vw, 22px);
+  color: var(--ink-2);
+  max-width: 62ch;
+  line-height: 1.5;
+  font-weight: 400;
+}
+.calc-hero .dek em { color: var(--accent); font-weight: 500; font-style: normal; }
+
+/* ====== Big calculator panel ====== */
+.calc-wrap {
+  padding: clamp(2rem, 4vw, 4rem) 0 clamp(4rem, 8vw, 6rem);
+  border-bottom: 1px solid var(--line);
+}
+.calc-panel {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) 1fr;
+  gap: 0;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  min-height: 720px;
+}
+.calc-controls {
+  padding: 2.25rem 2rem;
+  border-right: 1px solid var(--line-strong);
+  background: var(--paper-3);
+  display: flex; flex-direction: column; gap: 1.75rem;
+}
+.calc-out {
+  padding: 2.5rem 2.25rem;
+  background: var(--paper);
+  display: flex; flex-direction: column; gap: 1.75rem;
+  position: relative;
+  overflow: hidden;
+}
+.calc-out::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 40% at 100% 0%, rgba(0,82,255,0.05), transparent 55%);
+  pointer-events: none;
+}
+.calc-out > * { position: relative; z-index: 2; }
+
+.calc-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.calc-head .label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.calc-head .meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+/* Form field building blocks */
+.field { display: flex; flex-direction: column; gap: 0.55rem; }
+.field-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.field-label .hint { color: var(--accent); font-size: 10px; letter-spacing: 0.08em; }
+
+.select, .input-text {
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  padding: 0.8rem 0.9rem;
+  border-radius: 0;
+  transition: border-color .2s var(--ease), background .2s var(--ease);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.select {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2 4L6 8L10 4' stroke='%230052FF' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.25rem;
+}
+.select:focus, .input-text:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--paper);
+}
+.select:hover, .input-text:hover { border-color: var(--ink); }
+
+/* Slider */
+.slider-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.2rem;
+}
+.slider-row .cur-val {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 16px;
+}
+.slider-row .range {
+  color: var(--muted);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--line-strong);
+  outline: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border: 2px solid var(--paper);
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px var(--accent);
+  transition: transform .15s var(--ease);
+}
+.range-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.range-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border: 2px solid var(--paper);
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.range-ticks {
+  display: flex; justify-content: space-between;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--muted-2);
+  letter-spacing: 0.08em;
+}
+
+/* Plan toggle — chip group */
+.chip-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+}
+.chip-group.two-up { grid-template-columns: repeat(3, 1fr); }
+.chip {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 0.8rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  border-right: 1px solid var(--line);
+  transition: all .18s var(--ease);
+  user-select: none;
+}
+.chip:last-child { border-right: 0; }
+.chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.chip:hover { color: var(--ink); background: var(--paper-2); }
+.chip.is-on {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-right-color: var(--accent);
+}
+.chip.is-on + .chip { border-left: 0; }
+
+/* Input with currency prefix */
+.input-prefix {
+  position: relative;
+}
+.input-prefix .input-text { padding-left: 2.25rem; font-variant-numeric: tabular-nums; }
+.input-prefix .prefix {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+  pointer-events: none;
+}
+
+/* ===== Outputs ===== */
+.out-kicker {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--line);
+  margin-bottom: 0.25rem;
+}
+.out-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.big-fig {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 9vw, 160px);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+  color: var(--accent);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+}
+.big-fig .cur {
+  font-size: 0.32em;
+  color: var(--muted);
+  letter-spacing: 0;
+  font-weight: 500;
+  vertical-align: 38%;
+}
+.big-fig .unit {
+  font-family: var(--font-mono);
+  font-size: 0.14em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-left: 0.3em;
+  align-self: flex-end;
+  padding-bottom: 0.2em;
+}
+
+/* Breakdown rows */
+.out-rows {
+  display: flex; flex-direction: column;
+}
+.out-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px dotted var(--line);
+  align-items: baseline;
+}
+.out-row:last-child { border-bottom: 0; }
+.out-row .k {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+}
+.out-row .k .tag-pct {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-soft);
+  padding: 2px 6px;
+  border: 1px solid var(--line-accent);
+}
+.out-row .v {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.out-row .v .cur { color: var(--muted); font-weight: 500; font-size: 0.7em; margin-right: 2px; }
+.out-row.highlight .v { color: var(--accent); }
+.out-row.highlight .k { color: var(--ink); }
+
+/* Mini bar chart */
+.chart {
+  border: 1px solid var(--line);
+  background: var(--paper-3);
+  padding: 1.25rem 1.25rem 1rem;
+  margin-top: 0.5rem;
+}
+.chart-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.chart-head .legend {
+  display: inline-flex; gap: 1rem; align-items: center;
+}
+.chart-head .legend span {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.chart-head .legend .swatch {
+  width: 10px; height: 10px; display: inline-block;
+}
+.chart-head .legend .hum { background: var(--ink); }
+.chart-head .legend .agx { background: var(--accent); }
+
+/* Deal at a glance */
+.deal {
+  border-top: 1px solid var(--line);
+  padding-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 0.5rem;
+}
+.deal-cell {
+  padding: 1rem 1rem 0.5rem;
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 0.35rem;
+}
+.deal-cell:first-child { padding-left: 0; }
+.deal-cell:last-child { border-right: 0; padding-right: 0; }
+.deal-k {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.deal-v {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.deal-v.accent { color: var(--accent); }
+.deal-foot {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--muted-2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ===== Assumptions accordion ===== */
+.assumptions {
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+.assumptions-head {
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  margin-bottom: 2.5rem;
+}
+.assumptions-head .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--accent);
+}
+.assumptions-head .title-col { padding-top: 0.75rem; border-top: 1px solid var(--line); }
+.assumptions-head h2 {
+  margin: 1.25rem 0 1rem;
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  max-width: 22ch;
+}
+.assumptions-head h2 em { color: var(--accent); font-style: normal; font-weight: 500; }
+.assumptions-head .dek { max-width: 54ch; }
+
+.acc { border-top: 1px solid var(--line); }
+.acc-item { border-bottom: 1px solid var(--line); }
+.acc-q {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.4rem 0;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.4vw, 22px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  transition: color .18s var(--ease);
+}
+.acc-q:hover { color: var(--accent); }
+.acc-q .n {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 500;
+}
+.acc-q .plus {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--accent);
+  line-height: 1;
+  width: 16px;
+  display: inline-block;
+  text-align: center;
+  transition: transform .25s var(--ease);
+}
+.acc-item.open .acc-q .plus { transform: rotate(45deg); }
+.acc-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .35s var(--ease);
+}
+.acc-a > div { overflow: hidden; }
+.acc-item.open .acc-a { grid-template-rows: 1fr; }
+.acc-a-body {
+  padding: 0.25rem 0 1.6rem 0;
+  margin-left: calc(1.5rem + 24px);
+  font-size: 15px;
+  color: var(--ink-3);
+  line-height: 1.65;
+  max-width: 66ch;
+}
+.acc-a-body p + p { margin-top: 0.75rem; }
+.acc-a-body ul { margin-top: 0.75rem; padding-left: 1.2rem; }
+.acc-a-body li { padding: 0.25rem 0; }
+.acc-a-body code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--paper-3);
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  color: var(--accent);
+}
+
+/* ===== CTA strip ===== */
+.calc-cta {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.calc-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 100%, rgba(0,82,255,0.12), transparent 55%);
+  pointer-events: none;
+}
+.calc-cta-inner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.calc-cta h2 {
+  font-size: clamp(36px, 5vw, 76px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+  max-width: 18ch;
+}
+.calc-cta h2 em { color: #4A8BFF; font-style: normal; font-weight: 500; }
+.calc-cta p {
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.55;
+  color: rgba(255,255,255,0.7);
+  max-width: 48ch;
+  margin-bottom: 2rem;
+}
+.calc-cta .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.calc-cta .btn { background: transparent; border-color: rgba(255,255,255,0.28); color: var(--paper); }
+.calc-cta .btn:hover { background: #4A8BFF; border-color: #4A8BFF; color: var(--ink); }
+.calc-cta .btn-primary { background: #4A8BFF; border-color: #4A8BFF; color: var(--ink); }
+.calc-cta .btn-primary:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.calc-cta-side {
+  border-left: 1px solid rgba(255,255,255,0.14);
+  padding-left: clamp(1.5rem, 3vw, 3rem);
+}
+.calc-cta-side .k {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1rem;
+}
+.calc-cta-side .v {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6vw, 88px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: #4A8BFF;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.5rem;
+}
+.calc-cta-side .v .unit { color: rgba(255,255,255,0.45); font-size: 0.32em; margin-left: 6px; letter-spacing: 0; font-family: var(--font-mono); }
+.calc-cta-side .foot {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.08em;
+  line-height: 1.55;
+  max-width: 30ch;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1000px) {
+  .calc-panel { grid-template-columns: 1fr; }
+  .calc-controls { border-right: 0; border-bottom: 1px solid var(--line-strong); }
+  .deal { grid-template-columns: repeat(2, 1fr); }
+  .deal-cell:nth-child(2) { border-right: 0; }
+  .deal-cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); padding-bottom: 1rem; margin-bottom: 1rem; }
+  .calc-cta-inner { grid-template-columns: 1fr; }
+  .calc-cta-side { border-left: 0; padding-left: 0; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.14); }
+  .assumptions-head { grid-template-columns: 1fr; gap: 1rem; }
+}
+@media (max-width: 600px) {
+  .calc-controls, .calc-out { padding: 1.75rem 1.25rem; }
+  .deal { grid-template-columns: 1fr; }
+  .deal-cell { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
+  .deal-cell:last-child { border-bottom: 0; }
+  .acc-a-body { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+<div class="scroll-prog" aria-hidden="true"></div>
+
+<!-- ========== TOPBAR ========== -->
+<header class="topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
+      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
+      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
+      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
+      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
+      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
+      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
+      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
+      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
+      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
+      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
+      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
+      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
+      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
+    </div>
+  </div>
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
+      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="solutions.html" data-nav="solutions">Solutions</a>
+      <a href="cases.html" data-nav="cases">Achieve</a>
+      <a href="demo.html" data-nav="demo">Demo</a>
+      <a href="pricing.html" data-nav="pricing">Pricing</a>
+      <a href="process.html" data-nav="process">Process</a>
+      <a href="about.html" data-nav="about">About</a>
+    </nav>
+    <div class="topbar-cta">
+      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="bar b1" aria-hidden="true"></span>
+        <span class="bar b2" aria-hidden="true"></span>
+        <span class="bar b3" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <div></div>
+    <div class="mobile-nav-inner">
+      <div class="mnav-group">
+        <h5>Work</h5>
+        <ul class="mnav-list">
+          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
+          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
+          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
+          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
+          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
+          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
+          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Resources</h5>
+        <ul class="mnav-list">
+          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
+          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
+          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
+          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
+          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
+          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
+          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Company</h5>
+        <ul class="mnav-list">
+          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
+          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
+          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
+          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
+          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
+          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
+          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+      <div class="mnav-group secondary">
+        <h5>Product &amp; trust</h5>
+        <ul class="mnav-list">
+          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
+          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
+          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
+          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
+          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mobile-nav-foot">
+      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
+      <div class="mfoot-meta">
+        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <section class="calc-hero">
+    <div class="container">
+      <div class="hero-coord reveal">
+        <div class="c"><span>◎ Autopilot Labs · Calculator · v2.4</span></div>
+        <div class="line"></div>
+        <div class="c right"><span>No. 009 — Real rates, live math</span></div>
+      </div>
+
+      <h1 class="reveal delay-1">
+        See what <em>automating with AI</em> would cost you.
+      </h1>
+
+      <p class="dek reveal delay-2">
+        Adjust the sliders. We'll show you the monthly bill against your current human baseline, with <em>real rates</em> from our published rate card.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== CALCULATOR PANEL ========== -->
+  <section class="calc-wrap">
+    <div class="container">
+      <div class="calc-panel reveal" data-calc>
+        <!-- LEFT: controls -->
+        <div class="calc-controls">
+          <div class="calc-head">
+            <span class="label">◆ Inputs</span>
+            <span class="meta" data-calc-meta>Healthcare · Intake</span>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="calc-vertical">
+              <span>Vertical</span>
+              <span class="hint">8 industries</span>
+            </label>
+            <select class="select" id="calc-vertical" data-calc-vertical>
+              <option value="healthcare">Healthcare</option>
+              <option value="legal">Legal</option>
+              <option value="finance">Finance</option>
+              <option value="real-estate">Real estate</option>
+              <option value="ecommerce">E-commerce</option>
+              <option value="hr">HR &amp; hiring</option>
+              <option value="marketing">Marketing</option>
+              <option value="manufacturing">Manufacturing</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="calc-workflow">
+              <span>Workflow</span>
+              <span class="hint" data-calc-wf-hint>Pre-priced</span>
+            </label>
+            <select class="select" id="calc-workflow" data-calc-workflow>
+              <!-- populated by JS -->
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="slider-row">
+              <span>
+                Volume
+                <span class="cur-val" data-calc-vol-out>5,000</span>
+                <span style="color:var(--muted);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;margin-left:4px;">outcomes / mo</span>
+              </span>
+              <span class="range">100 – 500K</span>
+            </div>
+            <input
+              type="range"
+              class="range-slider"
+              id="calc-volume"
+              data-calc-volume
+              min="0"
+              max="100"
+              step="0.1"
+              value="46.5"
+              aria-label="Monthly outcome volume"
+            >
+            <div class="range-ticks">
+              <span>100</span>
+              <span>1K</span>
+              <span>10K</span>
+              <span>100K</span>
+              <span>500K</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="calc-baseline">
+              <span>Human baseline</span>
+              <span class="hint">per outcome</span>
+            </label>
+            <div class="input-prefix">
+              <span class="prefix" data-calc-cur-prefix>A$</span>
+              <input
+                type="number"
+                class="input-text"
+                id="calc-baseline"
+                data-calc-baseline
+                min="0.5"
+                max="2000"
+                step="0.5"
+                value="18"
+              >
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">
+              <span>Plan</span>
+              <span class="hint">toggle</span>
+            </span>
+            <div class="chip-group" data-chip-group role="radiogroup" aria-label="Plan">
+              <label class="chip is-on">
+                <input type="radio" name="calc-plan" value="outcome" checked>
+                Outcome
+              </label>
+              <label class="chip">
+                <input type="radio" name="calc-plan" value="hybrid">
+                Hybrid
+              </label>
+              <label class="chip">
+                <input type="radio" name="calc-plan" value="retainer">
+                Retainer
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">
+              <span>Currency</span>
+              <span class="hint">FX · indicative</span>
+            </span>
+            <div class="chip-group" data-chip-group role="radiogroup" aria-label="Currency">
+              <label class="chip is-on">
+                <input type="radio" name="calc-cur" value="AUD" checked>
+                AUD
+              </label>
+              <label class="chip">
+                <input type="radio" name="calc-cur" value="USD">
+                USD
+              </label>
+              <label class="chip">
+                <input type="radio" name="calc-cur" value="GBP">
+                GBP
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: outputs -->
+        <div class="calc-out">
+          <div class="calc-head">
+            <span class="label">◆ Your projected monthly bill</span>
+            <span class="meta"><span class="status-dot" style="display:inline-block;vertical-align:middle;margin-right:4px;"></span> LIVE</span>
+          </div>
+
+          <div class="out-hero">
+            <div class="out-kicker">Autopilot Labs · monthly total</div>
+            <div class="big-fig">
+              <span class="cur" data-calc-cur-sym>A$</span><span data-calc-total>24,438</span>
+              <span class="unit">/ mo</span>
+            </div>
+          </div>
+
+          <div class="out-rows">
+            <div class="out-row">
+              <span class="k">
+                Base + per-outcome rate
+              </span>
+              <span class="v">
+                <span class="cur" data-calc-cur-sym>A$</span><span data-calc-base>0</span>
+                <span style="color:var(--muted);font-size:0.65em;margin:0 4px;">+</span>
+                <span class="cur" data-calc-cur-sym>A$</span><span data-calc-rate>4.89</span><span style="color:var(--muted);font-size:0.65em;">/out</span>
+              </span>
+            </div>
+            <div class="out-row highlight">
+              <span class="k">
+                Monthly savings vs baseline
+                <span class="tag-pct" data-calc-save-pct>73%</span>
+              </span>
+              <span class="v">
+                <span class="cur" data-calc-cur-sym>A$</span><span data-calc-save>65,562</span>
+              </span>
+            </div>
+            <div class="out-row">
+              <span class="k">Annual projected savings</span>
+              <span class="v">
+                <span class="cur" data-calc-cur-sym>A$</span><span data-calc-save-yr>786,744</span>
+              </span>
+            </div>
+            <div class="out-row">
+              <span class="k">Effective per-outcome cost</span>
+              <span class="v">
+                <span class="cur" data-calc-cur-sym>A$</span><span data-calc-eff>4.89</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Bar chart -->
+          <div class="chart">
+            <div class="chart-head">
+              <span>Monthly spend · compared</span>
+              <span class="legend">
+                <span><span class="swatch hum"></span> Without Autopilot Labs</span>
+                <span><span class="swatch agx"></span> With Autopilot Labs</span>
+              </span>
+            </div>
+            <svg viewBox="0 0 600 160" width="100%" height="140" role="img" aria-label="Monthly spend comparison">
+              <!-- grid -->
+              <line x1="120" y1="20"  x2="600" y2="20"  stroke="rgba(9,9,11,0.04)" stroke-width="1"/>
+              <line x1="120" y1="60"  x2="600" y2="60"  stroke="rgba(9,9,11,0.04)" stroke-width="1"/>
+              <line x1="120" y1="100" x2="600" y2="100" stroke="rgba(9,9,11,0.04)" stroke-width="1"/>
+              <line x1="120" y1="140" x2="600" y2="140" stroke="rgba(9,9,11,0.18)" stroke-width="1"/>
+
+              <!-- label: without -->
+              <text x="0" y="44" font-family="JetBrains Mono, monospace" font-size="10" fill="#09090B" font-weight="500">Without</text>
+              <text x="0" y="58" font-family="JetBrains Mono, monospace" font-size="9" fill="#71717A" letter-spacing="0.08em">HUMAN BASELINE</text>
+              <rect x="120" y="34" width="450" height="32" fill="#09090B" data-calc-bar-hum/>
+              <text x="580" y="55" font-family="Geist, sans-serif" font-size="14" fill="#09090B" font-weight="500" text-anchor="end" data-calc-bar-hum-lbl>A$90,000</text>
+
+              <!-- label: with -->
+              <text x="0" y="114" font-family="JetBrains Mono, monospace" font-size="10" fill="#0052FF" font-weight="500">With</text>
+              <text x="0" y="128" font-family="JetBrains Mono, monospace" font-size="9" fill="#71717A" letter-spacing="0.08em">AUTOPILOT LABS</text>
+              <rect x="120" y="104" width="122" height="32" fill="#0052FF" data-calc-bar-agx/>
+              <text x="252" y="125" font-family="Geist, sans-serif" font-size="14" fill="#0052FF" font-weight="500" data-calc-bar-agx-lbl>A$24,438</text>
+            </svg>
+          </div>
+
+          <!-- Deal at a glance -->
+          <div class="deal">
+            <div class="deal-cell">
+              <span class="deal-k">Plan</span>
+              <span class="deal-v" data-calc-deal-plan>Outcome</span>
+              <span class="deal-foot">default route</span>
+            </div>
+            <div class="deal-cell">
+              <span class="deal-k">Break-even</span>
+              <span class="deal-v accent" data-calc-deal-be>Day 8</span>
+              <span class="deal-foot">month 1</span>
+            </div>
+            <div class="deal-cell">
+              <span class="deal-k">SLA target</span>
+              <span class="deal-v" data-calc-deal-sla>99.1%</span>
+              <span class="deal-foot">credit-back on miss</span>
+            </div>
+            <div class="deal-cell">
+              <span class="deal-k">3-year savings</span>
+              <span class="deal-v accent" data-calc-deal-3y>A$2.36M</span>
+              <span class="deal-foot">compounded · static volume</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- sub-note -->
+      <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 1rem; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;">
+        <span>◆ Rates synced from our Q2 2026 rate card · updated weekly</span>
+        <span>FX · AUD 1.0 / USD 0.65 / GBP 0.52 · indicative only</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ASSUMPTIONS ACCORDION ========== -->
+  <section class="assumptions">
+    <div class="container">
+      <div class="assumptions-head">
+        <div class="num reveal">§ 02 — Fine print</div>
+        <div class="title-col reveal delay-1">
+          <div class="eyebrow accent">Assumptions &amp; methodology</div>
+          <h2>How we <em>arrived at</em> these numbers.</h2>
+          <p class="dek">Published rates, published assumptions. No mystery loading, no discount-from-a-number-we-made-up. If anything below doesn't fit your shop, we'll re-price against your actuals during the audit.</p>
+        </div>
+      </div>
+
+      <div class="acc reveal delay-2" data-acc>
+        <div class="acc-item" data-acc-item>
+          <button class="acc-q" data-acc-q>
+            <span class="n">— 01</span>
+            <span>Where do these rates come from?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="acc-a"><div>
+            <div class="acc-a-body">
+              <p>Rates are the published per-outcome prices from our Q2 2026 rate card — the same numbers we put on contracts. We tier by workflow complexity: a refund reply is a different cost profile than a lease abstraction, so each workflow carries its own base rate.</p>
+              <p>Per-vertical overrides account for data volume, compliance surface, and typical rework rates. Healthcare and legal skew higher per-outcome because of audit, PHI, and privilege handling. E-commerce and marketing skew lower because the unit work is shorter and rework is cheap.</p>
+              <p>Volume discounts kick in on a sliding curve starting at <code>10,000 / mo</code> and compress to ~40% off list at <code>500,000 / mo</code>. The slider applies that curve in real time.</p>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="acc-item" data-acc-item>
+          <button class="acc-q" data-acc-q>
+            <span class="n">— 02</span>
+            <span>What counts as "an outcome"?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="acc-a"><div>
+            <div class="acc-a-body">
+              <p>An outcome is one unit of finished work, defined per workflow and written into the contract. Examples from production:</p>
+              <ul>
+                <li><b>Patient intake normalised</b> — one complete patient record, structured, de-duplicated, loaded into your EMR.</li>
+                <li><b>Discovery doc tagged</b> — one document with issue-code tags, privilege flags, and a summary, loaded into Relativity.</li>
+                <li><b>Reconciliation closed</b> — one bank / ledger pair matched, exceptions flagged, journal entry drafted.</li>
+                <li><b>Refund resolved</b> — one customer ticket closed with a decision, reply drafted, and the refund executed or declined.</li>
+                <li><b>CV screened</b> — one candidate scored against a rubric with structured evidence.</li>
+              </ul>
+              <p>If the outcome doesn't pass SLA — wrong tag, missing field, mis-routed — it isn't billable. Credit-back is automatic.</p>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="acc-item" data-acc-item>
+          <button class="acc-q" data-acc-q>
+            <span class="n">— 03</span>
+            <span>What's the human baseline calibrated against?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="acc-a"><div>
+            <div class="acc-a-body">
+              <p>The default A$18 / outcome is a mid-market loaded cost — blended salary (incl. super and payroll tax), tooling, QA, and typical rework. Averaged across the 13 verticals we serve.</p>
+              <p>Your number will vary. Specialist verticals (paralegal review, senior nurse triage) land closer to A$35–60 per outcome. Low-complexity verticals (shelf-stock refresh, ticket triage) land closer to A$6–10. Override the baseline input with your actual fully-loaded rate for an honest comparison — that's what matters.</p>
+              <p>We do not assume you fire anyone. We assume the same team ships 3–8x more outcomes, with humans reviewing exceptions and edge cases. The savings are real; the labour dividend is redeployed.</p>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="acc-item" data-acc-item>
+          <button class="acc-q" data-acc-q>
+            <span class="n">— 04</span>
+            <span>What SLAs apply, and what happens if you miss?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="acc-a"><div>
+            <div class="acc-a-body">
+              <p>Every workflow ships with an SLA in the contract. Default targets:</p>
+              <ul>
+                <li><b>Outcome plan</b> — 99.1% on-time · credit-back on any miss.</li>
+                <li><b>Hybrid plan</b> — 99.3% on-time · priority routing · credit-back.</li>
+                <li><b>Retainer plan</b> — 98.0% on-time · fixed-scope · re-negotiated quarterly.</li>
+              </ul>
+              <p>If we miss the SLA on an outcome, it's not billable. If we miss the monthly aggregate, we credit 2x the shortfall against next month. We publish a live SLA dashboard against your account — you see every miss as it happens.</p>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="acc-item" data-acc-item>
+          <button class="acc-q" data-acc-q>
+            <span class="n">— 05</span>
+            <span>What's not included in the monthly bill?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="acc-a"><div>
+            <div class="acc-a-body">
+              <p>The calculator shows the recurring monthly bill. One-time and pass-through items sit outside that number:</p>
+              <ul>
+                <li><b>Workflow audit</b> — free. No cost unless we ship.</li>
+                <li><b>Integration build</b> — billed once at time-and-materials. Typical range A$8K–A$30K depending on source systems.</li>
+                <li><b>Compliance add-ons</b> — HIPAA / SOC 2 / ISO 27001 evidence packs billed annually (~A$6K / yr).</li>
+                <li><b>Data egress / archival</b> — pass-through at cloud cost, capped in contract.</li>
+              </ul>
+              <p>We do not pass through token costs, GPU time, or model spend. Infrastructure is our problem.</p>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="acc-item" data-acc-item>
+          <button class="acc-q" data-acc-q>
+            <span class="n">— 06</span>
+            <span>Why is currency marked "indicative only"?</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="acc-a"><div>
+            <div class="acc-a-body">
+              <p>List price is set in AUD. The USD / GBP toggle applies a fixed conversion for comparison (<code>AUD 1.00 / USD 0.65 / GBP 0.52</code>) — it's a sense-check, not a quote.</p>
+              <p>We invoice in your local currency at contract-lock rate, re-set annually. If the AUD moves more than 8% during a 12-month term, the contract re-opens for a currency adjustment — same direction, both sides.</p>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="calc-cta">
+    <div class="container">
+      <div class="calc-cta-inner reveal">
+        <div>
+          <div class="eyebrow accent" style="color:#4A8BFF;margin-bottom:1.25rem;">
+            <span style="background:#4A8BFF;"></span>Numbers check out?
+          </div>
+          <h2>Book a free <em>workflow audit</em>.</h2>
+          <p>Ten working days inside your team. We map one workflow end-to-end, price it against the numbers you just ran, and show you the delta. If we can't find anything worth shipping, you walk away with the audit. On us.</p>
+          <div class="actions">
+            <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
+            <a href="pricing.html" class="btn btn-lg">See the full rate card</a>
+          </div>
+        </div>
+        <div class="calc-cta-side">
+          <div class="k">◆ Your projected year-1 savings</div>
+          <div class="v"><span class="cur" style="font-size:0.38em;vertical-align:38%;color:rgba(255,255,255,0.4);font-family:var(--font-mono);" data-calc-cur-sym>A$</span><span data-calc-cta-yr>786,744</span></div>
+          <p class="foot">Static-volume projection, current sliders. Actuals trend higher as your team redeploys to higher-value work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Agents that<br><em>finish</em>.</h3>
+        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="solutions.html">Solutions</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="cases.html">Case studies</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="journal.html">Journal</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Verticals</h5>
+        <ul>
+          <li><a href="solutions.html#healthcare">Healthcare</a></li>
+          <li><a href="solutions.html#legal">Legal</a></li>
+          <li><a href="solutions.html#finance">Finance</a></li>
+          <li><a href="solutions.html#real-estate">Real estate</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Office</h5>
+        <ul>
+          <li><a href="#">L14 · 459 Collins St</a></li>
+          <li><a href="#">Melbourne VIC 3000</a></li>
+          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
+          <li><a href="#">+61 3 9000 0000</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="left">
+        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
+      </div>
+      <div class="right">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">SLA</a>
+        <span>v. 4.6 · build 2026.Q2</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+
+<script>
+/* ================================================================
+   AUTOPILOT LABS — calculator page logic
+   Live rates, per-vertical overrides, currency FX.
+   ================================================================ */
+(function () {
+  'use strict';
+
+  const root = document.querySelector('[data-calc]');
+  if (!root) return;
+
+  // ----- Config ------------------------------------------------
+  const FX = { AUD: 1.00, USD: 0.65, GBP: 0.52 };
+  const SYM = { AUD: 'A$', USD: 'US$', GBP: '£' };
+
+  // Volume slider: exponential 100 -> 500,000
+  const VOL_MIN = 100, VOL_MAX = 500000;
+  const volFromSlider = (v) => {
+    const t = v / 100; // 0..1
+    return Math.round(VOL_MIN * Math.pow(VOL_MAX / VOL_MIN, t));
+  };
+
+  // Plan rate cards (AUD, applied to blended per-outcome rate)
+  const PLANS = {
+    outcome:  { base: 0,    mult: 1.00, sla: '99.1%', label: 'Outcome' },
+    hybrid:   { base: 1800, mult: 0.68, sla: '99.3%', label: 'Hybrid'  },
+    retainer: { base: 9800, mult: 0.00, sla: '98.0%', label: 'Retainer'} // flat, capped
+  };
+
+  // Workflow catalogue — keyed per vertical
+  // Each workflow carries: { id, label, baseRate (AUD/outcome), defaultVolSlider }
+  const WORKFLOWS = {
+    healthcare: [
+      { id: 'intake',      label: 'Patient intake normalisation', rate: 3.80, vol: 46.5 },
+      { id: 'triage',      label: 'Symptom triage routing',       rate: 5.20, vol: 38 },
+      { id: 'claims',      label: 'Claims coding (ICD-10)',       rate: 6.40, vol: 42 },
+      { id: 'pre-auth',    label: 'Pre-auth request drafting',    rate: 8.20, vol: 32 }
+    ],
+    legal: [
+      { id: 'doc-tag',     label: 'Discovery document tagging',   rate: 1.80, vol: 58 },
+      { id: 'lease-abs',   label: 'Lease abstraction',            rate: 9.40, vol: 30 },
+      { id: 'privilege',   label: 'Privilege review',             rate: 4.60, vol: 45 },
+      { id: 'contract-red',label: 'Contract redlining',           rate: 12.00, vol: 26 }
+    ],
+    finance: [
+      { id: 'recon',       label: 'Bank reconciliation',          rate: 1.45, vol: 62 },
+      { id: 'ap-code',     label: 'AP invoice coding',            rate: 0.95, vol: 66 },
+      { id: 'close-draft', label: 'Month-end close drafting',     rate: 3.80, vol: 40 },
+      { id: 'kyc',         label: 'KYC / AML screen',             rate: 2.80, vol: 50 }
+    ],
+    'real-estate': [
+      { id: 'listing',     label: 'Listing refresh & enrichment', rate: 0.60, vol: 62 },
+      { id: 'lease-abs-re',label: 'Commercial lease abstraction', rate: 8.80, vol: 28 },
+      { id: 'tenant-scr',  label: 'Tenant screening',             rate: 3.40, vol: 36 },
+      { id: 'maintenance', label: 'Maintenance triage',           rate: 2.10, vol: 42 }
+    ],
+    ecommerce: [
+      { id: 'refund',      label: 'Refund dispute resolution',    rate: 1.60, vol: 56 },
+      { id: 'review-mod',  label: 'Review moderation',            rate: 0.40, vol: 72 },
+      { id: 'catalog',     label: 'Catalogue enrichment',         rate: 0.90, vol: 60 },
+      { id: 'csat',        label: 'CSAT ticket reply',            rate: 1.20, vol: 54 }
+    ],
+    hr: [
+      { id: 'cv-screen',   label: 'CV screening',                 rate: 1.40, vol: 50 },
+      { id: 'onboard',     label: 'Onboarding packet build',      rate: 6.20, vol: 24 },
+      { id: 'interview',   label: 'Interview note structuring',   rate: 3.80, vol: 34 },
+      { id: 'policy-qna',  label: 'Policy Q&A ticket',            rate: 1.80, vol: 46 }
+    ],
+    marketing: [
+      { id: 'brief',       label: 'Campaign brief drafting',      rate: 11.40, vol: 18 },
+      { id: 'seo-page',    label: 'SEO page build',               rate: 4.80, vol: 30 },
+      { id: 'lead-score',  label: 'Lead scoring & routing',       rate: 0.80, vol: 60 },
+      { id: 'social-copy', label: 'Social copy variants',         rate: 0.55, vol: 66 }
+    ],
+    manufacturing: [
+      { id: 'qa-escape',   label: 'QA escape review',             rate: 2.40, vol: 42 },
+      { id: 'bom-clean',   label: 'BOM cleanup',                  rate: 1.80, vol: 48 },
+      { id: 'supplier-doc',label: 'Supplier document intake',     rate: 3.20, vol: 36 },
+      { id: 'work-order',  label: 'Work order drafting',          rate: 4.60, vol: 32 }
+    ]
+  };
+
+  // ----- DOM refs ----------------------------------------------
+  const $vertical = root.querySelector('[data-calc-vertical]');
+  const $workflow = root.querySelector('[data-calc-workflow]');
+  const $volume   = root.querySelector('[data-calc-volume]');
+  const $baseline = root.querySelector('[data-calc-baseline]');
+  const $planChips = root.querySelectorAll('input[name="calc-plan"]');
+  const $curChips  = root.querySelectorAll('input[name="calc-cur"]');
+
+  const $volOut   = root.querySelector('[data-calc-vol-out]');
+  const $meta     = root.querySelector('[data-calc-meta]');
+  const $wfHint   = root.querySelector('[data-calc-wf-hint]');
+  const $total    = root.querySelector('[data-calc-total]');
+  const $base     = root.querySelector('[data-calc-base]');
+  const $rate     = root.querySelector('[data-calc-rate]');
+  const $save     = root.querySelector('[data-calc-save]');
+  const $savePct  = root.querySelector('[data-calc-save-pct]');
+  const $saveYr   = root.querySelector('[data-calc-save-yr]');
+  const $eff      = root.querySelector('[data-calc-eff]');
+  const $barHum   = root.querySelector('[data-calc-bar-hum]');
+  const $barHumL  = root.querySelector('[data-calc-bar-hum-lbl]');
+  const $barAgx   = root.querySelector('[data-calc-bar-agx]');
+  const $barAgxL  = root.querySelector('[data-calc-bar-agx-lbl]');
+  const $dealPlan = root.querySelector('[data-calc-deal-plan]');
+  const $dealBe   = root.querySelector('[data-calc-deal-be]');
+  const $dealSla  = root.querySelector('[data-calc-deal-sla]');
+  const $deal3y   = root.querySelector('[data-calc-deal-3y]');
+  const $ctaYr    = document.querySelector('[data-calc-cta-yr]');
+
+  const $allCurSym = document.querySelectorAll('[data-calc-cur-sym]');
+  const $curPrefix = root.querySelector('[data-calc-cur-prefix]');
+
+  // ----- Helpers -----------------------------------------------
+  const fmtInt = (n, cur) => Math.round(n).toLocaleString(cur === 'GBP' ? 'en-GB' : 'en-US');
+  const fmtDec = (n) => (Math.round(n * 100) / 100).toFixed(2);
+  const fmtMillions = (n) => {
+    if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+    return Math.round(n).toString();
+  };
+
+  // Volume discount curve (applied on blended per-outcome rate)
+  // 1.0 at <10K, sloping to 0.60 at 500K
+  const volumeDiscount = (vol) => {
+    if (vol <= 10000) return 1.0;
+    if (vol >= 500000) return 0.60;
+    const t = (Math.log10(vol) - Math.log10(10000)) / (Math.log10(500000) - Math.log10(10000));
+    return 1.0 - t * 0.40;
+  };
+
+  const getPlan = () => {
+    for (const r of $planChips) if (r.checked) return r.value;
+    return 'outcome';
+  };
+  const getCur = () => {
+    for (const r of $curChips) if (r.checked) return r.value;
+    return 'AUD';
+  };
+
+  // Populate workflow dropdown for a vertical
+  const populateWorkflows = (vertical) => {
+    const list = WORKFLOWS[vertical] || [];
+    $workflow.innerHTML = '';
+    list.forEach((w) => {
+      const o = document.createElement('option');
+      o.value = w.id;
+      o.textContent = w.label;
+      o.dataset.rate = w.rate;
+      o.dataset.vol = w.vol;
+      $workflow.appendChild(o);
+    });
+    // Apply default volume slider for this workflow
+    if (list[0]) $volume.value = list[0].vol;
+  };
+
+  // Main compute
+  const compute = () => {
+    const vertical = $vertical.value;
+    const wfId = $workflow.value;
+    const wfList = WORKFLOWS[vertical] || [];
+    const wf = wfList.find((w) => w.id === wfId) || wfList[0];
+    if (!wf) return;
+
+    const volume = volFromSlider(parseFloat($volume.value));
+    const baseline = Math.max(0.01, parseFloat($baseline.value) || 0);
+    const plan = getPlan();
+    const cur = getCur();
+    const fx = FX[cur];
+    const sym = SYM[cur];
+    const planDef = PLANS[plan];
+
+    // Effective per-outcome rate in AUD
+    const volDisc = volumeDiscount(volume);
+    let perOutcomeAUD;
+    let baseAUD;
+
+    if (plan === 'retainer') {
+      // Retainer = flat base (scaled to volume tiers), no per-outcome charge
+      // scale base by volume tier: every 10x over 5K adds 50%
+      const scale = Math.max(1, 1 + Math.log10(Math.max(volume, 5000) / 5000) * 0.5);
+      baseAUD = Math.round(planDef.base * scale);
+      perOutcomeAUD = 0;
+    } else {
+      baseAUD = planDef.base;
+      perOutcomeAUD = wf.rate * planDef.mult * volDisc;
+    }
+
+    const totalAUD = baseAUD + perOutcomeAUD * volume;
+    // Baseline input is already in display currency; convert to AUD for comparison
+    const baselineAUD = baseline / fx;
+    const humanAUD = baselineAUD * volume;
+    const savingsAUD = Math.max(0, humanAUD - totalAUD);
+    const savingsPct = humanAUD > 0 ? Math.round((savingsAUD / humanAUD) * 100) : 0;
+    const effAUD = volume > 0 ? totalAUD / volume : 0;
+
+    // To display currency
+    const total = totalAUD * fx;
+    const base = baseAUD * fx;
+    const rate = perOutcomeAUD * fx;
+    const saveMo = savingsAUD * fx;
+    const saveYr = saveMo * 12;
+    const save3y = saveMo * 36;
+    const human = humanAUD * fx;
+    const eff = effAUD * fx;
+
+    // Break-even: assuming one-time setup cost of 3x monthly savings amortised
+    // Simpler: show day of month when cumulative savings = setup proxy
+    const setupProxy = 20000; // A$
+    const daysToBreakEven = saveMo > 0 ? Math.max(1, Math.min(30, Math.round(30 * setupProxy / saveMo))) : 30;
+
+    // Write outputs
+    $volOut.textContent = volume.toLocaleString('en-US');
+    $meta.textContent = ($vertical.options[$vertical.selectedIndex].text) + ' · ' + wf.label.split(' ')[0];
+    $wfHint.textContent = fmtDec(wf.rate * planDef.mult * volDisc) + ' AUD / outcome list';
+    $total.textContent = fmtInt(total, cur);
+    $base.textContent = fmtInt(base, cur);
+    $rate.textContent = fmtDec(rate);
+    $save.textContent = fmtInt(saveMo, cur);
+    $savePct.textContent = savingsPct + '%';
+    $saveYr.textContent = fmtInt(saveYr, cur);
+    $eff.textContent = fmtDec(eff);
+
+    // Bar chart — scale bars relative to human baseline
+    const MAX_BAR = 450;
+    const humanBarW = MAX_BAR;
+    const agxBarW = human > 0 ? Math.max(6, Math.min(MAX_BAR, (total / human) * MAX_BAR)) : 6;
+    $barHum.setAttribute('width', humanBarW);
+    $barAgx.setAttribute('width', agxBarW);
+    $barHumL.textContent = sym + fmtInt(human, cur);
+    // Position agx label right-aligned to end of its bar
+    const agxLabelX = 120 + agxBarW + 10;
+    $barAgxL.setAttribute('x', agxLabelX);
+    $barAgxL.textContent = sym + fmtInt(total, cur);
+
+    // Deal summary
+    $dealPlan.textContent = planDef.label;
+    if ($dealBe) $dealBe.textContent = 'Day ' + daysToBreakEven;
+    $dealSla.textContent = planDef.sla;
+    $deal3y.textContent = sym + fmtMillions(save3y);
+
+    // CTA side panel
+    if ($ctaYr) $ctaYr.textContent = fmtInt(saveYr, cur);
+
+    // Currency prefix + symbols everywhere
+    $allCurSym.forEach((el) => { el.textContent = sym; });
+    if ($curPrefix) $curPrefix.textContent = sym;
+  };
+
+  // ----- Wiring ------------------------------------------------
+  $vertical.addEventListener('change', () => {
+    populateWorkflows($vertical.value);
+    compute();
+  });
+  $workflow.addEventListener('change', () => {
+    // reset volume to workflow default
+    const opt = $workflow.options[$workflow.selectedIndex];
+    if (opt && opt.dataset.vol) $volume.value = opt.dataset.vol;
+    compute();
+  });
+  $volume.addEventListener('input', compute);
+  $baseline.addEventListener('input', compute);
+  $planChips.forEach((r) => r.addEventListener('change', compute));
+  $curChips.forEach((r) => r.addEventListener('change', () => {
+    // When switching currency, convert the baseline input so user value stays "equivalent"
+    // (simpler UX: leave user-typed value in new currency as-is)
+    compute();
+  }));
+
+  // Init
+  populateWorkflows($vertical.value);
+  compute();
+
+  // ===== Accordion =====
+  document.querySelectorAll('[data-acc] [data-acc-q]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('[data-acc-item]');
+      if (!item) return;
+      item.classList.toggle('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>

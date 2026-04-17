@@ -1,0 +1,406 @@
+<!-- ========== HOW IT WORKS ========== -->
+<section class="how-it-works" aria-label="How an Autopilot Labs AI agent runs">
+  <div class="how-it-works__container">
+
+    <!-- Section head -->
+    <header class="how-it-works__head reveal">
+      <span class="how-it-works__eyebrow">&sect; 02 &nbsp;&mdash;&nbsp; What actually happens when an Autopilot Labs AI agent runs.</span>
+      <h2 class="how-it-works__headline">
+        From <span class="how-it-works__mark">messy fax</span> to shipped outcome.<br>
+        In under two seconds.
+      </h2>
+      <p class="how-it-works__dek">
+        Every Autopilot Labs deployment is a narrow, boring, well-lit pipeline. A document lands, the AI agent reads it, checks it against the system of record, decides, and writes the result back. No chat. No hand-holding. Below is a real run, from input to audit line, at production tempo.
+      </p>
+    </header>
+
+    <!-- The star: SVG infographic -->
+    <figure class="how-it-works__figure reveal delay-1" aria-labelledby="how-it-works-fig-caption">
+      <svg
+        class="how-it-works__svg"
+        viewBox="0 0 1200 480"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Pipeline showing five phases: input, parse, validate, act, ship"
+      >
+        <defs>
+          <marker id="hiw-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 Z" fill="#0052FF" />
+          </marker>
+          <pattern id="hiw-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(9,9,11,0.04)" stroke-width="1"/>
+          </pattern>
+        </defs>
+
+        <!-- Faint grid background -->
+        <rect x="0" y="0" width="1200" height="480" fill="url(#hiw-grid)" />
+
+        <!-- Annotation callouts above -->
+        <g class="hiw-annotations" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10" fill="#71717A">
+          <!-- Human can intervene (above phase 3) -->
+          <g transform="translate(475, 40)">
+            <line x1="55" y1="30" x2="55" y2="85" stroke="rgba(9,9,11,0.18)" stroke-width="1" stroke-dasharray="2 3"/>
+            <circle cx="55" cy="85" r="2.5" fill="#0052FF"/>
+            <text x="0" y="10" letter-spacing="0.08em">&#9670; HUMAN CAN INTERVENE</text>
+            <text x="0" y="24" fill="#09090B" font-size="10">kill-switch, override, re-route</text>
+          </g>
+          <!-- Audit log written (above phase 4) -->
+          <g transform="translate(700, 40)">
+            <line x1="55" y1="30" x2="55" y2="85" stroke="rgba(9,9,11,0.18)" stroke-width="1" stroke-dasharray="2 3"/>
+            <circle cx="55" cy="85" r="2.5" fill="#0052FF"/>
+            <text x="0" y="10" letter-spacing="0.08em">&#9670; AUDIT LOG WRITTEN</text>
+            <text x="0" y="24" fill="#09090B" font-size="10">hash-chained, immutable</text>
+          </g>
+          <!-- SLA clock ticking (above phase 5) -->
+          <g transform="translate(940, 40)">
+            <line x1="55" y1="30" x2="55" y2="85" stroke="rgba(9,9,11,0.18)" stroke-width="1" stroke-dasharray="2 3"/>
+            <circle cx="55" cy="85" r="2.5" fill="#0052FF"/>
+            <text x="0" y="10" letter-spacing="0.08em">&#9670; SLA CLOCK TICKING</text>
+            <text x="0" y="24" fill="#09090B" font-size="10">bill only if this one passes</text>
+          </g>
+        </g>
+
+        <!-- Node row baseline ink line -->
+        <line x1="60" y1="230" x2="1140" y2="230" stroke="rgba(9,9,11,0.18)" stroke-width="1"/>
+
+        <!-- Phase 1: INPUT -->
+        <g>
+          <rect x="40" y="160" width="160" height="140" fill="#FFFFFF" stroke="#09090B" stroke-width="1.25"/>
+          <text x="56" y="185" font-family="'JetBrains Mono', monospace" font-size="10" fill="#71717A" letter-spacing="0.12em">&#9670; 01 / INPUT</text>
+          <line x1="56" y1="195" x2="184" y2="195" stroke="rgba(9,9,11,0.18)"/>
+          <text x="56" y="225" font-family="'Geist', sans-serif" font-size="22" font-weight="500" fill="#09090B">Raw signal</text>
+          <text x="56" y="255" font-family="'Geist', sans-serif" font-size="13" fill="#3F3F46">arrives</text>
+          <text x="56" y="285" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0052FF">[ unstructured ]</text>
+        </g>
+        <!-- arrow 1->2 -->
+        <line x1="205" y1="230" x2="245" y2="230" stroke="#09090B" stroke-width="1" marker-end="url(#hiw-arrow)"/>
+
+        <!-- Phase 2: PARSE -->
+        <g>
+          <rect x="250" y="160" width="160" height="140" fill="#FFFFFF" stroke="#09090B" stroke-width="1.25"/>
+          <text x="266" y="185" font-family="'JetBrains Mono', monospace" font-size="10" fill="#71717A" letter-spacing="0.12em">&#9670; 02 / PARSE</text>
+          <line x1="266" y1="195" x2="394" y2="195" stroke="rgba(9,9,11,0.18)"/>
+          <text x="266" y="225" font-family="'Geist', sans-serif" font-size="22" font-weight="500" fill="#09090B">AI extracts</text>
+          <text x="266" y="255" font-family="'Geist', sans-serif" font-size="13" fill="#3F3F46">fields &amp; entities</text>
+          <text x="266" y="285" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0052FF">[ structured JSON ]</text>
+        </g>
+        <!-- arrow 2->3 -->
+        <line x1="415" y1="230" x2="455" y2="230" stroke="#09090B" stroke-width="1" marker-end="url(#hiw-arrow)"/>
+
+        <!-- Phase 3: VALIDATE -->
+        <g>
+          <rect x="460" y="160" width="160" height="140" fill="#FFFFFF" stroke="#09090B" stroke-width="1.25"/>
+          <text x="476" y="185" font-family="'JetBrains Mono', monospace" font-size="10" fill="#71717A" letter-spacing="0.12em">&#9670; 03 / VALIDATE</text>
+          <line x1="476" y1="195" x2="604" y2="195" stroke="rgba(9,9,11,0.18)"/>
+          <text x="476" y="225" font-family="'Geist', sans-serif" font-size="22" font-weight="500" fill="#09090B">Cross-check</text>
+          <text x="476" y="255" font-family="'Geist', sans-serif" font-size="13" fill="#3F3F46">EMR / ERP / CRM</text>
+          <text x="476" y="285" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0052FF">[ reconciled ]</text>
+        </g>
+        <!-- arrow 3->4 -->
+        <line x1="625" y1="230" x2="665" y2="230" stroke="#09090B" stroke-width="1" marker-end="url(#hiw-arrow)"/>
+
+        <!-- Phase 4: ACT -->
+        <g>
+          <rect x="670" y="160" width="160" height="140" fill="#FFFFFF" stroke="#09090B" stroke-width="1.25"/>
+          <text x="686" y="185" font-family="'JetBrains Mono', monospace" font-size="10" fill="#71717A" letter-spacing="0.12em">&#9670; 04 / ACT</text>
+          <line x1="686" y1="195" x2="814" y2="195" stroke="rgba(9,9,11,0.18)"/>
+          <text x="686" y="225" font-family="'Geist', sans-serif" font-size="22" font-weight="500" fill="#09090B">Decide &amp;</text>
+          <text x="686" y="255" font-family="'Geist', sans-serif" font-size="13" fill="#3F3F46">draft the action</text>
+          <text x="686" y="285" font-family="'JetBrains Mono', monospace" font-size="10" fill="#0052FF">[ policy-bounded ]</text>
+        </g>
+        <!-- arrow 4->5 -->
+        <line x1="835" y1="230" x2="875" y2="230" stroke="#09090B" stroke-width="1" marker-end="url(#hiw-arrow)"/>
+
+        <!-- Phase 5: SHIP -->
+        <g>
+          <rect x="880" y="160" width="220" height="140" fill="#09090B" stroke="#09090B" stroke-width="1.25"/>
+          <text x="896" y="185" font-family="'JetBrains Mono', monospace" font-size="10" fill="rgba(255,255,255,0.6)" letter-spacing="0.12em">&#9670; 05 / SHIP</text>
+          <line x1="896" y1="195" x2="1084" y2="195" stroke="rgba(255,255,255,0.22)"/>
+          <text x="896" y="225" font-family="'Geist', sans-serif" font-size="22" font-weight="500" fill="#FFFFFF">Write to system</text>
+          <text x="896" y="255" font-family="'Geist', sans-serif" font-size="13" fill="rgba(255,255,255,0.72)">of record. Receipt.</text>
+          <text x="896" y="285" font-family="'JetBrains Mono', monospace" font-size="10" fill="#1A6BFF">[ billable outcome ]</text>
+        </g>
+
+        <!-- Mono captions below each node -->
+        <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10.5" fill="#09090B">
+          <text x="120" y="340" text-anchor="middle">Fax arrives</text>
+          <text x="120" y="356" text-anchor="middle" fill="#71717A">14:03:28.041</text>
+
+          <text x="330" y="340" text-anchor="middle">18 fields &middot; 0.94</text>
+          <text x="330" y="356" text-anchor="middle" fill="#71717A">confidence</text>
+
+          <text x="540" y="340" text-anchor="middle">Matched record</text>
+          <text x="540" y="356" text-anchor="middle" fill="#71717A">#1204 &middot; verified</text>
+
+          <text x="750" y="340" text-anchor="middle">Triage score:</text>
+          <text x="750" y="356" text-anchor="middle" fill="#0052FF">URGENT</text>
+
+          <text x="990" y="340" text-anchor="middle">Saved &middot; EHR updated</text>
+          <text x="990" y="356" text-anchor="middle" fill="#71717A">14:03:29.847</text>
+        </g>
+
+        <!-- Time axis -->
+        <g transform="translate(0, 400)">
+          <line x1="60" y1="20" x2="1140" y2="20" stroke="#09090B" stroke-width="1"/>
+          <!-- ticks -->
+          <line x1="60"   y1="14" x2="60"   y2="26" stroke="#09090B" stroke-width="1"/>
+          <line x1="420"  y1="14" x2="420"  y2="26" stroke="#09090B" stroke-width="1"/>
+          <line x1="780"  y1="14" x2="780"  y2="26" stroke="#09090B" stroke-width="1"/>
+          <line x1="1140" y1="14" x2="1140" y2="26" stroke="#09090B" stroke-width="1"/>
+
+          <g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10" fill="#71717A" letter-spacing="0.06em">
+            <text x="60"   y="48">0.0s</text>
+            <text x="420"  y="48" text-anchor="middle">1.2s</text>
+            <text x="780"  y="48" text-anchor="middle">1.6s</text>
+            <text x="1140" y="48" text-anchor="end">total 1.806s</text>
+          </g>
+          <text x="600" y="8" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="9" fill="#0052FF" letter-spacing="0.14em">&mdash; WALL-CLOCK TIME &mdash;</text>
+        </g>
+      </svg>
+      <figcaption id="how-it-works-fig-caption" class="how-it-works__caption">
+        &#9670;&nbsp; Run <span class="how-it-works__mono">#a4f2-c10b</span> &middot; tenant: Mercy Regional &middot; vertical: Healthcare intake &middot; 2026-04-16
+      </figcaption>
+    </figure>
+
+    <!-- Below-diagram 3 columns -->
+    <div class="how-it-works__cols reveal delay-2">
+      <article class="how-it-works__col">
+        <header class="how-it-works__colHead">&#9670;&nbsp; EVERYTHING IS LOGGED</header>
+        <p>Every parse, every decision, every write lands in a hash-chained audit trail. You can replay any run to the byte, months later.</p>
+      </article>
+      <article class="how-it-works__col">
+        <header class="how-it-works__colHead">&#9670;&nbsp; KILL-SWITCH IS REAL</header>
+        <p>One click pauses the agent for a tenant, a route, or the whole pipeline. Humans stay in the loop on anything the policy flags for review.</p>
+      </article>
+      <article class="how-it-works__col">
+        <header class="how-it-works__colHead">&#9670;&nbsp; WE ONLY BILL ON SLA</header>
+        <p>If the output misses the contracted SLA, the run is free. Outcome pricing means the economics track the work you can actually count.</p>
+      </article>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="how-it-works__cta reveal delay-2">
+      <a href="demo.html" class="how-it-works__btn">
+        See one run live
+        <span class="how-it-works__btnArrow" aria-hidden="true">&rarr;</span>
+      </a>
+      <span class="how-it-works__ctaNote">&#9670;&nbsp; live shadow-mode demo, no signup</span>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ---------- Frame ---------- */
+  .how-it-works {
+    background: var(--paper);
+    color: var(--ink);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: clamp(5rem, 8vw, 8rem) 0;
+    font-family: var(--font-display);
+  }
+  .how-it-works__container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+
+  /* ---------- Head ---------- */
+  .how-it-works__head {
+    max-width: 920px;
+    margin: 0 0 clamp(3rem, 5vw, 4.5rem);
+  }
+  .how-it-works__eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 1.75rem;
+  }
+  .how-it-works__headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .how-it-works__mark {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .how-it-works__dek {
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: 1.55;
+    color: var(--ink-3, #3F3F46);
+    max-width: 64ch;
+  }
+
+  /* ---------- Figure ---------- */
+  .how-it-works__figure {
+    margin: 0 auto clamp(3rem, 5vw, 4.5rem);
+    max-width: 1180px;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .how-it-works__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .how-it-works__caption {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .how-it-works__mono {
+    color: var(--ink);
+  }
+
+  /* ---------- 3 columns ---------- */
+  .how-it-works__cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    margin-bottom: clamp(2.5rem, 4vw, 4rem);
+  }
+  .how-it-works__col {
+    padding: clamp(1.75rem, 2.5vw, 2.25rem) clamp(1.25rem, 2vw, 2rem);
+    border-right: 1px solid var(--line);
+  }
+  .how-it-works__col:last-child {
+    border-right: 0;
+  }
+  .how-it-works__colHead {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .how-it-works__col p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 40ch;
+  }
+
+  /* ---------- CTA ---------- */
+  .how-it-works__cta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .how-it-works__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.95rem 1.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    border: 1px solid var(--ink);
+    transition: background .25s var(--ease), color .25s var(--ease);
+  }
+  .how-it-works__btn:hover,
+  .how-it-works__btn:focus-visible {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+    outline: none;
+  }
+  .how-it-works__btnArrow {
+    font-family: var(--font-mono);
+    transition: transform .25s var(--ease);
+  }
+  .how-it-works__btn:hover .how-it-works__btnArrow {
+    transform: translateX(4px);
+  }
+  .how-it-works__ctaNote {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ---------- Reveal ---------- */
+  .how-it-works .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+  }
+  .how-it-works .reveal.is-in,
+  .how-it-works .reveal.in-view {
+    opacity: 1;
+    transform: none;
+  }
+  .how-it-works .delay-1 { transition-delay: .08s; }
+  .how-it-works .delay-2 { transition-delay: .16s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .how-it-works .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .how-it-works__cols {
+      grid-template-columns: 1fr;
+    }
+    .how-it-works__col {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .how-it-works__col:last-child {
+      border-bottom: 0;
+    }
+    .how-it-works__figure {
+      padding: 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .how-it-works__cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .how-it-works__btn {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  /* Fallback: if JS-driven reveal isn't wired, show content after 1.5s */
+  @media (min-width: 0px) {
+    .how-it-works .reveal {
+      animation: hiw-fade-in .9s var(--ease-out) .3s forwards;
+    }
+  }
+  @keyframes hiw-fade-in {
+    to { opacity: 1; transform: none; }
+  }
+</style>
