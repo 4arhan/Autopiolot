@@ -194,18 +194,37 @@
   .m-head { position: static; }
   .m-article { grid-template-columns: 48px 1fr; gap: 1rem; }
 }
+@media (max-width: 820px) {
+  .tl-title { font-size: clamp(26px, 6vw, 36px); }
+  .manifesto { gap: 2.5rem; }
+}
 @media (max-width: 720px) {
   .tl-step { padding: 2rem 0; }
   .tl-num { font-size: 52px; }
-  .tl-title { font-size: 26px; }
+  .tl-title { font-size: clamp(22px, 6vw, 28px); }
   .tl-body { font-size: 15px; }
   .tl-bullets, .tl-meta { padding: 1rem; }
+  .tl-meta-row { flex-direction: column; align-items: flex-start; gap: 0.2rem; padding: 0.5rem 0; }
+  .tl-meta-row .l, .tl-meta-row .v { font-size: 11px; }
   .m-roman { font-size: 36px; }
   .m-art-title { font-size: 19px; }
 }
 @media (max-width: 520px) {
-  .m-article { grid-template-columns: 40px 1fr; gap: 0.75rem; padding: 1.5rem 0; }
-  .m-title { font-size: clamp(32px, 9vw, 48px); }
+  .tl-step { padding: 1.5rem 0; }
+  .tl-num { font-size: 44px; }
+  .tl-title { font-size: 22px; }
+  .tl-body { font-size: 14.5px; }
+  .tl-bullets .b { font-size: 13px; }
+  .m-article { grid-template-columns: 36px 1fr; gap: 0.75rem; padding: 1.25rem 0; }
+  .m-roman { font-size: 30px; }
+  .m-art-title { font-size: 17px; }
+  .m-art-body { font-size: 13.5px; }
+  .m-title { font-size: clamp(28px, 9vw, 40px); }
+  .m-body { font-size: 14.5px; }
+}
+@media (max-width: 380px) {
+  .tl-title { font-size: 20px; }
+  .m-title { font-size: 26px; }
 }
 </style>
 </head>

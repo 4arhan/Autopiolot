@@ -143,6 +143,10 @@
   .model-tag { min-height: 0; margin-bottom: 1.5rem; }
   .model-feat { margin-bottom: 1.5rem; }
   .model .btn { width: 100%; justify-content: center; }
+  .model-name { font-size: clamp(28px, 8vw, 36px); }
+  .model-price { font-size: clamp(46px, 14vw, 64px); }
+  .model-ribbon { padding: 5px 10px; font-size: 9.5px; letter-spacing: 0.12em; }
+  .model-best { padding: 0.85rem 1rem; font-size: 14px; }
 }
 
 /* Outcome rate table */
@@ -224,6 +228,12 @@
   .rate-name { font-size: 14.5px; }
   .rate-name span { font-size: 10.5px; }
   .rate-price { font-size: 22px; }
+}
+@media (max-width: 380px) {
+  .rate-row { padding: 0.8rem 0.85rem; gap: 0.5rem; }
+  .rates-head { padding: 0.75rem 0.85rem; }
+  .rate-name { font-size: 13.5px; }
+  .rate-price { font-size: 19px; }
 }
 
 /* Calculator */
@@ -351,6 +361,9 @@
   .calc-tier { min-height: 44px; display: flex; align-items: center; justify-content: center; }
   .co-row { flex-wrap: wrap; gap: 4px; }
   .co-row .r.big { font-size: 18px; }
+  .co-big { font-size: clamp(44px, 16vw, 68px); margin-bottom: 1.5rem; }
+  .co-label { margin-bottom: 0.75rem; }
+  .calc-label { flex-wrap: wrap; gap: 0.25rem; }
 }
 @media (max-width: 380px) {
   .calc-tiers { grid-template-columns: 1fr; }

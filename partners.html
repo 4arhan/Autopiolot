@@ -634,21 +634,50 @@
   .apply-head { grid-template-columns: 1fr; }
   .apply-head .rule { display: none; }
 }
+@media (max-width: 820px) {
+  .hero-partners h1 { font-size: clamp(40px, 9vw, 80px); }
+  .hero-partners .hero-dek { font-size: 16px; }
+  .track-rate .pct { font-size: clamp(44px, 10vw, 64px); }
+  .pwall-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+}
 @media (max-width: 720px) {
-  .hero-partners h1 { font-size: clamp(36px, 11vw, 64px); }
+  .hero-partners h1 { font-size: clamp(34px, 10vw, 52px); line-height: 0.9; }
   .hero-meta { grid-template-columns: 1fr; }
   .hero-meta .m { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
   .hero-meta .m:last-child { border-bottom: 0; }
+  .hero-partners .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-partners .hero-actions .btn { width: 100%; justify-content: center; }
   .track { padding: 1.5rem 1.25rem; }
-  .track-name { font-size: clamp(32px, 9vw, 52px); }
-  .apply-title { font-size: clamp(32px, 9vw, 56px); }
+  .track-name { font-size: clamp(28px, 8vw, 44px); }
+  .track-foot { flex-direction: column; align-items: stretch; }
+  .track-foot .btn { width: 100%; justify-content: center; text-align: center; }
+  .apply-title { font-size: clamp(28px, 9vw, 44px); max-width: none; }
   .apply-submit { flex-direction: column; align-items: stretch; }
   .apply-submit .btn-apply { width: 100%; justify-content: center; }
+  .faq-q { font-size: clamp(16px, 4.5vw, 20px); padding: 1.25rem 0; }
+  .tstep-name { font-size: clamp(22px, 6vw, 28px); }
 }
 @media (max-width: 520px) {
-  .ptype { padding: 1.5rem 1.25rem; min-height: 0; }
-  .tstep { padding: 2rem 0 1.5rem 0; }
-  .faq-a-inner { font-size: 14.5px; }
+  .hero-partners h1 { font-size: clamp(30px, 10vw, 42px); }
+  .ptype { padding: 1.5rem 1.1rem; min-height: 0; }
+  .tstep { padding: 1.75rem 0 1.25rem 0; }
+  .faq-a-inner { font-size: 14px; padding: 0 0 1.25rem 0; }
+  .track-rate { flex-direction: column; gap: 0.25rem; align-items: flex-start; }
+  .track-rate .pct { font-size: 48px; }
+  .track-rate .of { max-width: none; }
+  .track-feat li { font-size: 13.5px; }
+  .apply-head { font-size: 10px; letter-spacing: 0.14em; }
+  .apply-dek { font-size: 14.5px; }
+  .apply-form { gap: 1.25rem; }
+  .field input, .field select, .field textarea { font-size: 16px; }
+  .pcell { padding: 1rem 0.75rem; min-height: 76px; }
+  .pm { font-size: 14px; }
+  .pm.script { font-size: 18px; }
+}
+@media (max-width: 380px) {
+  .hero-partners h1 { font-size: 28px; }
+  .apply-title { font-size: 26px; }
+  .track-name { font-size: 26px; }
 }
 </style>
 </head>

@@ -621,23 +621,57 @@
   .suggest-wrap { grid-template-columns: 1fr; }
   .suggest-form .row { grid-template-columns: 1fr; }
 }
+@media (max-width: 820px) {
+  .roadmap-hero h1 { max-width: 100%; }
+  .legend { gap: 0.75rem 1.5rem; font-size: 10.5px; letter-spacing: 0.08em; }
+  .col-head { padding: 1rem; }
+  .col-body { padding: 0.85rem 0.85rem 1rem; }
+  .card { padding: 0.85rem 0.9rem 0.75rem; }
+}
 @media (max-width: 720px) {
   .roadmap-hero h1 { font-size: clamp(44px, 12vw, 84px); }
   .roadmap-meta { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .roadmap-meta em { font-size: 13px; }
   .shipped-lbl { padding: 0.85rem 1rem; font-size: 10px; }
   .shipped-item, .shipped-more { padding: 0.85rem 1rem; }
+  .shipped-item .title { font-size: 13.5px; }
   .suggest-form { padding: 1.25rem; }
   .suggest-stats { grid-template-columns: 1fr; }
   .suggest-stats .s { border-right: 0; border-bottom: 1px solid var(--line); }
   .suggest-stats .s:last-child { border-bottom: 0; }
   .suggest-form .foot { flex-direction: column; align-items: stretch; }
   .suggest-form button[type="submit"] { width: 100%; justify-content: center; }
+  .principles-head em { font-size: 15px; }
+  .kanban-intro { padding: clamp(2rem, 5vw, 3rem) 0 1rem; }
+  .principle { padding: 1.5rem 1.25rem; }
+  .suggest-intro h2 { font-size: clamp(28px, 7vw, 40px); }
 }
 @media (max-width: 520px) {
-  .kanban-intro h2 { font-size: 28px; }
-  .col-head h3 { font-size: 22px; }
-  .card-title { font-size: 14px; }
+  .kanban-intro h2 { font-size: 26px; }
+  .col-head h3 { font-size: 20px; }
+  .col-head { padding: 0.85rem 0.85rem 0.75rem; }
+  .col-body { padding: 0.75rem 0.75rem 0.85rem; gap: 8px; }
+  .card { padding: 0.75rem 0.8rem 0.7rem; }
+  .card-title { font-size: 13.5px; }
+  .card-desc { font-size: 12px; line-height: 1.5; }
+  .card-foot { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .votes { font-size: 10px; }
+  .upvote { font-size: 9.5px; padding: 3px 7px; }
+  .card-tag { font-size: 9px; }
+  .shipped-lbl { padding: 0.7rem 0.85rem; font-size: 9.5px; letter-spacing: 0.12em; }
+  .shipped-item, .shipped-more { padding: 0.75rem 0.85rem; }
+  .roadmap-endcta h3 { font-size: clamp(22px, 7vw, 30px); }
+  .field input, .field select, .field textarea { font-size: 14px; padding: 0.6rem 0.7rem; }
+  .principle h4 { font-size: 19px; }
+  .principles-head { font-size: 10px; letter-spacing: 0.12em; }
+  .legend { font-size: 10px; gap: 0.5rem 1rem; }
+}
+@media (max-width: 380px) {
+  .roadmap-hero h1 { font-size: 38px; }
+  .kanban-intro h2 { font-size: 22px; }
+  .col-head h3 { font-size: 18px; }
+  .card-title { font-size: 13px; }
+  .shipped-item .title { font-size: 12.5px; }
 }
 
 /* End cta on roadmap */
