@@ -28,6 +28,18 @@
 .stub .bd { font-family: var(--font-display); font-size: clamp(16px, 1.2vw, 18px); line-height: 1.4; color: var(--muted-2); font-weight: 400; }
 .stub .mt { margin-top: auto; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-top: 1rem; border-top: 1px dashed var(--line); }
 @media (max-width: 900px) { .stubs { grid-template-columns: 1fr; } }
+@media (max-width: 520px) {
+  .placeholder { padding: 3rem 0 2.5rem; }
+  .placeholder .hd { font-size: clamp(36px, 11vw, 44px); line-height: 0.95; letter-spacing: -0.04em; }
+  .placeholder .dk { font-size: 15px; }
+  .placeholder .meta-row { font-size: 10px; letter-spacing: 0.1em; gap: 0.5rem; }
+  .placeholder .acts { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+  .placeholder .acts .btn { width: 100%; justify-content: center; }
+  .stub { min-height: 0; padding: 1.5rem 1.25rem; }
+}
+@media (max-width: 380px) {
+  .placeholder .hd { font-size: clamp(32px, 12vw, 40px); }
+}
 </style>
 </head>
 <body>
