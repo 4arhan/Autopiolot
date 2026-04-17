@@ -205,11 +205,22 @@
 .ledger-foot a:hover { text-decoration: underline; }
 
 @media (max-width: 1000px) {
-  .home-grid { grid-template-columns: 1fr; }
-  .ledger { position: static; max-height: 520px; order: -1; }
+  .home-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .ledger { position: static; max-height: 480px; }
   .home-proof { grid-template-columns: repeat(2, 1fr); }
   .home-proof .p:nth-child(2n) { border-right: 0; }
   .home-proof .p:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .home-proof .p { padding: 1rem 1rem 1rem 0; }
+}
+@media (max-width: 520px) {
+  .ledger { max-height: 420px; }
+  .ledger-head { grid-template-columns: 58px 1fr 68px 58px; padding: 8px 12px; font-size: 9px; gap: 0.5rem; }
+  .ledger-row { grid-template-columns: 58px 1fr 68px 58px; padding: 10px 12px; gap: 0.5rem; font-size: 12px; }
+  .ledger-row .t { font-size: 10px; }
+  .ledger-row .w span { font-size: 9px; }
+  .ledger-row .p { font-size: 12px; }
+  .ledger-row .s { font-size: 9px; }
+  .home-headline { font-size: clamp(40px, 12vw, 72px) !important; }
 }
 
 /* ---------- WHAT WE DO — 14 practice areas ---------- */

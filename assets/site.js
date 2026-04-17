@@ -46,23 +46,34 @@
   const mobileNav = document.querySelector('.mobile-nav');
   if (toggle && mobileNav) {
     let lastFocus = null;
+    let savedScrollY = 0;
 
     const openMenu = () => {
       lastFocus = document.activeElement;
+      savedScrollY = window.scrollY || window.pageYOffset || 0;
+      // Pin body so iOS Safari can't scroll under the menu
+      document.body.style.top = `-${savedScrollY}px`;
+      document.body.classList.add('nav-locked');
       mobileNav.classList.add('open');
       toggle.setAttribute('aria-expanded', 'true');
-      document.body.classList.add('nav-locked');
       const first = mobileNav.querySelector('a, button');
-      if (first) setTimeout(() => first.focus(), 120);
+      if (first) setTimeout(() => first.focus(), 180);
     };
     const closeMenu = () => {
       mobileNav.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
       document.body.classList.remove('nav-locked');
+      document.body.style.top = '';
+      // Restore scroll position (html is scroll-smooth; use instant jump)
+      const prevBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo(0, savedScrollY);
+      document.documentElement.style.scrollBehavior = prevBehavior;
       if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
     };
 
-    toggle.addEventListener('click', () => {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
       if (mobileNav.classList.contains('open')) closeMenu(); else openMenu();
     });
 
@@ -88,7 +99,7 @@
 
     // Close on resize-up to desktop
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 960 && mobileNav.classList.contains('open')) closeMenu();
+      if (window.innerWidth > 1024 && mobileNav.classList.contains('open')) closeMenu();
     });
   }
 
