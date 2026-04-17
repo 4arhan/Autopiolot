@@ -364,54 +364,70 @@
 @media (max-width: 780px)  { .grid-12 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px)  { .grid-12 { grid-template-columns: 1fr; } }
 
-/* 13th cell — full-width feature card */
-.grid-12 .cell-wide {
-  grid-column: 1 / -1;
+/* 13th + 14th cells — twin half-width feature cards */
+.grid-12 .cell-feature {
+  grid-column: span 2;
   background: var(--ink); color: var(--paper);
-  padding: 2rem 2.25rem;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  align-items: center;
-  min-height: 0;
+  padding: clamp(1.75rem, 2.6vw, 2.5rem);
+  min-height: 260px;
+  display: flex; flex-direction: column; justify-content: space-between;
   position: relative;
+  gap: 1rem;
 }
-.grid-12 .cell-wide::before {
+.grid-12 .cell-feature::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 50% 60% at 100% 50%, rgba(0,82,255,0.12), transparent 60%);
+  background: radial-gradient(ellipse 60% 70% at 100% 100%, rgba(0,82,255,0.14), transparent 60%);
   pointer-events: none;
 }
-.grid-12 .cell-wide::after { background: var(--accent); }
-.grid-12 .cell-wide:hover { background: #0b0b0f; }
-.grid-12 .cell-wide .cell-top {
-  flex-direction: column; align-items: flex-start; gap: 1rem;
-  display: flex; min-width: 260px;
-  border-right: 1px solid rgba(255,255,255,0.14);
-  padding-right: clamp(1.25rem, 3vw, 2.5rem);
+.grid-12 .cell-feature > * { position: relative; z-index: 1; }
+.grid-12 .cell-feature::after { background: var(--accent); }
+.grid-12 .cell-feature:hover { background: #0b0b0f; }
+
+.grid-12 .cell-feature .cell-num {
+  color: rgba(255,255,255,0.55);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
 }
-.grid-12 .cell-wide .cell-num { color: rgba(255,255,255,0.55); }
-.grid-12 .cell-wide .cell-glyph { color: var(--paper); width: 64px; height: 64px; }
-.grid-12 .cell-wide:hover .cell-glyph { color: var(--accent-2); }
-.grid-12 .cell-wide .cell-wide-body .cell-name {
-  font-size: clamp(28px, 2.6vw, 38px);
-  margin-top: 0;
+.grid-12 .cell-feature .cell-glyph {
+  color: var(--paper);
+  width: 56px; height: 56px;
 }
-.grid-12 .cell-wide .cell-wide-body .cell-work {
-  color: rgba(255,255,255,0.75); max-width: 68ch; margin-top: 0.6rem;
+.grid-12 .cell-feature:hover .cell-glyph { color: var(--accent-2); }
+.grid-12 .cell-feature .cell-feature-body .cell-name {
+  font-size: clamp(24px, 2.2vw, 32px);
+  margin-top: 1.25rem;
+  letter-spacing: -0.03em;
 }
-.grid-12 .cell-wide .cell-meta {
-  flex-direction: column; align-items: flex-end; gap: 0.6rem;
-  border-top: 0; padding-top: 0;
-  color: rgba(255,255,255,0.55); margin-top: 0;
-  white-space: nowrap;
+.grid-12 .cell-feature .cell-feature-body .cell-work {
+  color: rgba(255,255,255,0.72);
+  margin-top: 0.6rem;
+  max-width: 46ch;
 }
-.grid-12 .cell-wide .cell-meta .go { color: var(--accent-2); font-size: 14px; }
-@media (max-width: 900px) {
-  .grid-12 .cell-wide { grid-template-columns: 1fr; }
-  .grid-12 .cell-wide .cell-top { flex-direction: row; border-right: 0;
-    border-bottom: 1px solid rgba(255,255,255,0.14); padding-right: 0;
-    padding-bottom: 1rem; min-width: 0; }
-  .grid-12 .cell-wide .cell-meta { align-items: flex-start; }
+.grid-12 .cell-feature .cell-meta {
+  border-top: 1px dashed rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.55);
+  padding-top: 0.9rem;
+  margin-top: 1.25rem;
+}
+.grid-12 .cell-feature .cell-meta .go { color: var(--accent-2); }
+
+/* Voice feature cell — lighter accent gradient */
+.grid-12 .cell-feature-voice::before {
+  background:
+    radial-gradient(ellipse 70% 80% at 0% 0%, rgba(0,82,255,0.18), transparent 55%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(74,139,255,0.10), transparent 55%);
+}
+.grid-12 .cell-feature-voice .cell-name em,
+.grid-12 .cell-feature .cell-name em { color: #4A8BFF; }
+
+@media (max-width: 1100px) {
+  .grid-12 .cell-feature { grid-column: span 3; }
+}
+@media (max-width: 780px) {
+  .grid-12 .cell-feature { grid-column: span 2; }
+}
+@media (max-width: 520px) {
+  .grid-12 .cell-feature { grid-column: 1 / -1; }
 }
 
 /* ---------- VOICE FLAGSHIP — full-width dark band ---------- */
@@ -1180,16 +1196,28 @@
           <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
         </a>
 
-        <a href="solutions.html#public-safety" class="cell cell-wide">
+        <a href="solutions.html#public-safety" class="cell cell-feature">
           <div class="cell-top">
             <span class="cell-num">13 · Public safety &amp; justice</span>
             <span class="cell-glyph" style="--glyph:url('assets/verticals/public-safety.svg')" aria-hidden="true"></span>
           </div>
-          <div class="cell-wide-body">
+          <div class="cell-feature-body">
             <div class="cell-name">Public safety &amp; justice</div>
-            <p class="cell-work">Incident reports, evidence inventory with chain-of-custody, court filings, FOI triage, AML scoring, witness-statement voice, fraud case-builder. On-prem or sovereign-region deploy.</p>
+            <p class="cell-work">Incident reports, evidence inventory with chain-of-custody, court filings, FOI triage, AML scoring, witness-statement voice, fraud case-builder.</p>
           </div>
-          <div class="cell-meta"><span>NEW · 10 agents · sovereign-region deploy</span><span class="go">Open →</span></div>
+          <div class="cell-meta"><span>NEW · 10 agents · sovereign deploy</span><span class="go">Open →</span></div>
+        </a>
+
+        <a href="solutions.html#voice" class="cell cell-feature cell-feature-voice">
+          <div class="cell-top">
+            <span class="cell-num">14 · Voice agents · 14 languages</span>
+            <span class="cell-glyph" style="--glyph:url('assets/verticals/voice.svg')" aria-hidden="true"></span>
+          </div>
+          <div class="cell-feature-body">
+            <div class="cell-name">Voice · 14 languages</div>
+            <p class="cell-work">AI phone desk that crosses every industry. Inbound, outbound, multilingual (Arabic · Mandarin · Hindi · Spanish · +10 more). &lt; 2 rings to answer, writes the CRM note for you.</p>
+          </div>
+          <div class="cell-meta"><span>FLAGSHIP · 16 SKUs · &lt; 2 rings</span><span class="go">Open →</span></div>
         </a>
       </div>
     </div>
