@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 <style>
 /* Hero */
@@ -209,6 +209,79 @@
 .cs-cta p { font-size: clamp(16px, 1.2vw, 19px); color: var(--ink-3);
   line-height: 1.5; max-width: 46rem; margin: 0 auto 2.5rem; }
 .cs-cta .acts { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+
+@media (max-width: 520px) {
+  .cs-hero h1 { font-size: clamp(34px, 10vw, 44px); letter-spacing: -0.045em; }
+  .cs-hero .acts .btn { width: 100%; justify-content: center; }
+  .cs-stats .s { padding: 1rem 1rem 1rem 0; }
+  .cs-stats .n { font-size: 26px; }
+  .cs-item { padding: 1.5rem 1.25rem; }
+  .cs-item h3 { font-size: clamp(19px, 5.2vw, 22px); }
+  .cs-ba > div { padding: 0.8rem 0.9rem; min-height: 0; }
+  .cs-ba .v { font-size: 12.5px; }
+  .cs-foot { flex-wrap: wrap; gap: 0.4rem; }
+  .vf-head h2 { font-size: clamp(36px, 11vw, 60px); letter-spacing: -0.045em; }
+  .vf-sku { padding: 1.25rem; }
+  .vf-cta { gap: 0.75rem; }
+  .vf-cta .btn { width: 100%; justify-content: center; }
+  .vf-langs { gap: 6px; padding: 1rem 0; }
+  .vf-langs .lg { padding: 6px 10px; font-size: 10.5px; letter-spacing: 0.06em; }
+  .lev-step { padding: 1.5rem 1.25rem; }
+  .lev-step .sn { font-size: clamp(36px, 10vw, 48px); }
+  .cs-cta h2 { font-size: clamp(32px, 11vw, 56px); letter-spacing: -0.04em; }
+  .cs-cta .acts { display: flex; }
+  .cs-cta .acts .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 380px) {
+  .cs-stats { grid-template-columns: 1fr; }
+  .cs-stats .s { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
+  .cs-stats .s:last-child { border-bottom: 0; }
+}
+
+/* === 2026 modernization polish ============================ */
+.case-card, .cs-card, .lev-step, .cs-cta {
+  border: 1px solid rgba(0,82,255,0.08);
+  transition: transform .25s var(--ease-out, ease-out),
+              box-shadow .25s var(--ease-out, ease-out),
+              border-color .25s var(--ease-out, ease-out);
+}
+.case-card:hover, .cs-card:hover, .lev-step:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,82,255,0.18);
+  box-shadow: 0 10px 28px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
+}
+@supports (background: color-mix(in oklab, red, blue)) {
+  .case-card:hover, .cs-card:hover, .lev-step:hover {
+    box-shadow: 0 12px 30px -18px color-mix(in oklab, var(--accent) 45%, transparent),
+                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
+  }
+}
+.hero-overlay {
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+}
+main p a:not(.btn):not(.btn-link)::after {
+  content: ""; display: block; height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .25s var(--ease-out, ease-out);
+}
+main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
+.cs-hero h1 em, h1 em, .dek em, .hi-grad {
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+a:focus-visible, button:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+}
+.cs-stats .s .v, .lev-step .sn, .num, [data-tnum] {
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
+.scroll-x > * { scroll-snap-align: start; }
+@media (prefers-reduced-motion: reduce) {
+  .case-card, .cs-card, .lev-step { transition: none; }
+}
 </style>
 </head>
 <body>
@@ -286,40 +359,6 @@
           <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
           <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
         </ul>
       </div>
     </div>
@@ -632,6 +671,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 </body>
 </html>

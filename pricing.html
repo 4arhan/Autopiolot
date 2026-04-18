@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 <style>
 /* Model comparison */
@@ -138,6 +138,16 @@
 @media (max-width: 950px) {
   .models { grid-template-columns: 1fr; }
 }
+@media (max-width: 520px) {
+  .model { padding: 2rem 1.25rem; }
+  .model-tag { min-height: 0; margin-bottom: 1.5rem; }
+  .model-feat { margin-bottom: 1.5rem; }
+  .model .btn { width: 100%; justify-content: center; }
+  .model-name { font-size: clamp(28px, 8vw, 36px); }
+  .model-price { font-size: clamp(46px, 14vw, 64px); }
+  .model-ribbon { padding: 5px 10px; font-size: 9.5px; letter-spacing: 0.12em; }
+  .model-best { padding: 0.85rem 1rem; font-size: 14px; }
+}
 
 /* Outcome rate table */
 .rates {
@@ -211,6 +221,19 @@
 @media (max-width: 800px) {
   .rates-head, .rate-row { grid-template-columns: 1fr auto; }
   .rates-head .col-vert, .rates-head .col-unit, .rate-vert, .rate-unit { display: none; }
+}
+@media (max-width: 520px) {
+  .rates-head { padding: 0.85rem 1rem; font-size: 10px; }
+  .rate-row { padding: 0.9rem 1rem; gap: 0.75rem; }
+  .rate-name { font-size: 14.5px; }
+  .rate-name span { font-size: 10.5px; }
+  .rate-price { font-size: 22px; }
+}
+@media (max-width: 380px) {
+  .rate-row { padding: 0.8rem 0.85rem; gap: 0.5rem; }
+  .rates-head { padding: 0.75rem 0.85rem; }
+  .rate-name { font-size: 13.5px; }
+  .rate-price { font-size: 19px; }
 }
 
 /* Calculator */
@@ -327,6 +350,24 @@
   .calc { grid-template-columns: 1fr; }
   .calc-left { border-right: 0; border-bottom: 1px solid var(--line); }
 }
+@media (max-width: 520px) {
+  .calc-left, .calc-right { padding: 1.75rem 1.25rem; }
+  .calc-tiers { grid-template-columns: repeat(2, 1fr); }
+  .calc input[type=range] { height: 44px; background: transparent; }
+  .calc input[type=range]::-webkit-slider-runnable-track { height: 2px; background: var(--line-strong); border-radius: 2px; }
+  .calc input[type=range]::-moz-range-track { height: 2px; background: var(--line-strong); border-radius: 2px; }
+  .calc input[type=range]::-webkit-slider-thumb { margin-top: -8px; width: 22px; height: 22px; }
+  .calc input[type=range]::-moz-range-thumb { width: 22px; height: 22px; }
+  .calc-tier { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+  .co-row { flex-wrap: wrap; gap: 4px; }
+  .co-row .r.big { font-size: 18px; }
+  .co-big { font-size: clamp(44px, 16vw, 68px); margin-bottom: 1.5rem; }
+  .co-label { margin-bottom: 0.75rem; }
+  .calc-label { flex-wrap: wrap; gap: 0.25rem; }
+}
+@media (max-width: 380px) {
+  .calc-tiers { grid-template-columns: 1fr; }
+}
 
 /* FAQ */
 .faq {
@@ -388,6 +429,64 @@
   max-width: 62ch;
 }
 .faq-a-inner em { color: var(--ink); font-family: var(--font-serif); font-style: italic; letter-spacing: -0.01em; }
+
+@media (max-width: 520px) {
+  .faq-q { grid-template-columns: 32px 1fr 20px; gap: 0.65rem; padding: 1.15rem 0; }
+  .faq-a { padding-left: calc(32px + 0.65rem); }
+}
+
+/* === 2026 modernization polish ============================ */
+.price-card, .tier-card, .addon, .faq-card, .pri-card {
+  border: 1px solid rgba(0,82,255,0.08);
+  transition: transform .25s var(--ease-out, ease-out),
+              box-shadow .25s var(--ease-out, ease-out),
+              border-color .25s var(--ease-out, ease-out);
+}
+.price-card:hover, .tier-card:hover, .addon:hover, .pri-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,82,255,0.18);
+  box-shadow: 0 10px 28px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
+}
+@supports (background: color-mix(in oklab, red, blue)) {
+  .price-card:hover, .tier-card:hover, .addon:hover, .pri-card:hover {
+    box-shadow: 0 12px 32px -18px color-mix(in oklab, var(--accent) 50%, transparent),
+                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
+  }
+}
+.hero-overlay {
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+}
+main p a:not(.btn):not(.btn-link)::after {
+  content: ""; display: block; height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .25s var(--ease-out, ease-out);
+}
+main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
+.pricing-hero h1 em, h1 em, .dek em, .hi-grad {
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+a:focus-visible, button:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+}
+.price, .price .n, .tier-price, .num, [data-tnum], .stat .v {
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.skeleton {
+  background: linear-gradient(90deg, rgba(10,12,20,0.04) 25%, rgba(10,12,20,0.08) 37%, rgba(10,12,20,0.04) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 4px;
+}
+@keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
+.scroll-x > * { scroll-snap-align: start; }
+@media (prefers-reduced-motion: reduce) {
+  .price-card, .tier-card, .addon, .pri-card { transition: none; }
+  .skeleton { animation: none; }
+}
 </style>
 </head>
 <body>
@@ -466,40 +565,6 @@
           <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
           <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
         </ul>
       </div>
     </div>
@@ -765,43 +830,43 @@
 
       <div class="faq reveal delay-2" data-accordion>
         <div class="faq-item open" data-item>
-          <button class="faq-q" data-q><span class="num">01</span><span class="text">What exactly is an "outcome"?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">01</span><span class="text">What exactly is an "outcome"?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">An outcome is a finished unit of work, defined in the statement of work before we start. For a discovery agent, it's a document tagged and written to Relativity. For a reconciliation agent, it's a ledger entry drafted and approved. <em>Every outcome has a pass/fail SLA criterion</em> — we don't bill the fails.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">02</span><span class="text">What happens if an agent misses the SLA?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">02</span><span class="text">What happens if an agent misses the SLA?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">The outcome doesn't count. It's automatically credited back on your next invoice — no ticket, no dispute. Our SLA also includes a cumulative clause: <em>if we miss 2% or more in a calendar month,</em> the whole month's run is credited back, not just the misses.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">03</span><span class="text">Do you pass on inference / model costs?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">03</span><span class="text">Do you pass on inference / model costs?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">No. Token cost is our problem, not yours. If models get cheaper, we keep the margin — and lower our published rate card at the next quarterly review. We publish the rate-card change history so you can hold us to it.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">04</span><span class="text">Currency? We're not in Australia.</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">04</span><span class="text">Currency? We're not in Australia.</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">Default is AUD. We publish USD and GBP rate cards for clients domiciled there — same underlying rates, converted monthly at OANDA mid. We invoice in your base currency so you don't eat FX volatility.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">05</span><span class="text">Minimum term &amp; exit terms?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">05</span><span class="text">Minimum term &amp; exit terms?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">30-day rolling after the first 90 days. You can churn in month four, no notice period, no exit fee. <em>On churn we hand over agent weights, logs, and export artefacts within 30 days</em> — and purge our side. That's in the contract, not a goodwill policy.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">06</span><span class="text">How do you handle regulated data?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">06</span><span class="text">How do you handle regulated data?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">We're ISO 27001, SOC 2 Type II, HIPAA-aligned and Privacy-Act-compliant. Data residency is contracted per-region: AU, EU, UK, US, SG. We never train shared models on your corpus — every vertical agent is a per-tenant fine-tune you own.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">07</span><span class="text">What's the minimum volume?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">07</span><span class="text">What's the minimum volume?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">100 outcomes / month for outcome pricing. Below that, the engineering cost doesn't clear — we'll tell you so during the audit and point you at better-suited tools.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">08</span><span class="text">Do you charge for the audit if we don't proceed?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">08</span><span class="text">Do you charge for the audit if we don't proceed?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">No. Audits are free whether you hire us, hire someone else, or do nothing. We do cap audits at 18 / quarter — so they're first-come, first-served.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">09</span><span class="text">Can you build a bespoke agent outside the catalogue?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">09</span><span class="text">Can you build a bespoke agent outside the catalogue?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">If it's inside our thirteen verticals, usually yes. Bespoke agents carry a one-time build fee (A$18k–A$48k) <em>plus</em> the same per-outcome rate card. Outside the thirteen verticals, we'll politely decline. Gulf engagements (UAE, SA) priced in AED or SAR.</div></div>
         </div>
         <div class="faq-item" data-item>
-          <button class="faq-q" data-q><span class="num">10</span><span class="text">Who owns the IP?</span><span class="plus">+</span></button>
+          <button type="button" class="faq-q" data-q><span class="num">10</span><span class="text">Who owns the IP?</span><span class="plus">+</span></button>
           <div class="faq-a"><div class="faq-a-inner">You own: the agent weights trained on your data, the logs, and anything the agent produces. We own: the base framework and the tenant-agnostic tooling. On exit, your agent runs on your infra without us — we leave you with a container, a README, and a phone number.</div></div>
         </div>
       </div>
@@ -822,6 +887,39 @@
       </div>
     </div>
   </section>
+
+<!-- ========== VS. PLATFORMS (PRICING) ========== -->
+<section class="vs-ribbon reveal">
+  <div class="container">
+    <div class="vs-inner">
+      <div>
+        <div class="eyebrow">Per-outcome vs. per-token</div>
+        <h2>Google bills you per token.<br>We bill you <em>per finished job</em>.</h2>
+        <p>Token-metered AI punishes you twice: once when the model makes a mistake, and again when you re-run it. Autopilot Labs absorbs that risk. A patient intake costs AU$0.40 — completed, audited, filed. A lease abstract costs AU$6.80 — completed, audited, filed. If the agent fails SLA, it's not on your invoice. That's a commercial guarantee, not a marketing line.</p>
+      </div>
+      <div class="vs-compare">
+        <div>
+          <h6>Token / seat pricing</h6>
+          <ul>
+            <li>You pay for every attempt</li>
+            <li>Retries stack on the bill</li>
+            <li>Hard to forecast monthly spend</li>
+            <li>Vendor wins when the model fails</li>
+          </ul>
+        </div>
+        <div class="us">
+          <h6>Autopilot per-outcome</h6>
+          <ul>
+            <li>One invoice line per job done</li>
+            <li>Retries are on us, not you</li>
+            <li>Forecast = volume × unit rate</li>
+            <li>We only win when the job ships</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="site-footer">
@@ -877,7 +975,7 @@
   </div>
 </footer>
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 <script>
   // Calculator tier-button + hidden select sync
   (function () {

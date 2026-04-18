@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 <style>
 /* ====== sitemap-specific ====== */
@@ -281,9 +281,39 @@
   .smrow { grid-template-columns: 1rem 1fr; }
   .smrow-href { display: none; }
 }
+@media (max-width: 720px) {
+  .hero-sitemap h1 { font-size: clamp(38px, 11vw, 72px); }
+  .sitemap-masthead { gap: 0.5rem; }
+  .sitemap-masthead .m { font-size: 9.5px; }
+  .smgroup { padding: 1.5rem 1.25rem; }
+  .smgroup-title { font-size: 24px; }
+  .smgroup-lede { font-size: 13px; }
+  .smrow { padding: 0.75rem 0; }
+  .smrow-title { font-size: 15px; }
+  .smrow-desc { font-size: 10.5px; line-height: 1.4; }
+}
 @media (max-width: 520px) {
   .smrow-mark { display: none; }
-  .smrow { grid-template-columns: 1fr; gap: 0.25rem; }
+  .smrow { grid-template-columns: 1fr; gap: 0.2rem; padding: 0.7rem 0; }
+  .hero-sitemap { padding: clamp(3rem, 9vw, 5rem) 0 clamp(2rem, 5vw, 3rem); }
+  .hero-sitemap h1 { font-size: clamp(30px, 10vw, 44px); letter-spacing: -0.04em; }
+  .hero-sitemap .dek { font-size: 15px; line-height: 1.45; }
+  .sitemap-masthead { font-size: 9px; letter-spacing: 0.1em; }
+  .smgroup { padding: 1.25rem 1rem; }
+  .smgroup-head { padding-bottom: 0.85rem; margin-bottom: 0.85rem; }
+  .smgroup-title { font-size: 22px; }
+  .smgroup-lede { font-size: 12.5px; max-width: 100%; }
+  .smgroup-no, .smgroup-count { font-size: 9.5px; letter-spacing: 0.1em; }
+  .smrow-title { font-size: 14.5px; }
+  .smrow-desc { font-size: 10px; }
+  .sitemap-foot .cell { padding: 1.25rem 1rem; }
+  .sitemap-foot .cell h3 { font-size: 19px; }
+  .sitemap-foot .cell p { font-size: 13px; }
+}
+@media (max-width: 380px) {
+  .hero-sitemap h1 { font-size: 28px; }
+  .smgroup-title { font-size: 19px; }
+  .smrow-title { font-size: 13.5px; }
 }
 </style>
 </head>
@@ -364,40 +394,6 @@
           <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
           <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
         </ul>
       </div>
     </div>
@@ -846,6 +842,6 @@
   </div>
 </footer>
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 </body>
 </html>

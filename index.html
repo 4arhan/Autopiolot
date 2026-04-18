@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 
 <style>
@@ -27,17 +27,35 @@
   position: relative;
   overflow: hidden;
 }
-.home-hero .meta-row {
-  display: flex; justify-content: space-between; align-items: baseline;
+
+/* Mobile eyebrow badge */
+.home-eyebrow {
+  display: none; /* shown only on mobile via media query below */
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px 5px 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--line-accent);
+  border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted);
-  padding-bottom: 1.25rem; margin-bottom: clamp(2rem, 4vw, 3rem);
-  border-bottom: 1px solid var(--line);
-  flex-wrap: wrap; gap: 1rem;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  width: fit-content;
+  margin-bottom: 1.5rem;
 }
-.home-hero .meta-row b { color: var(--ink); font-weight: 500; letter-spacing: 0.14em; }
-.home-hero .meta-row .accent { color: var(--accent); }
+.home-eyebrow-dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 1.8s infinite ease-in-out;
+}
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+/* Short mobile dek — hidden on desktop */
+.home-dek-short { display: none !important; }
 
 .home-grid {
   display: grid;
@@ -95,6 +113,88 @@
   font-family: var(--font-mono);
   font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--muted);
+}
+
+/* ===== MOBILE HERO — completely re-done ===== */
+@media (max-width: 1000px) {
+  .home-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ledger { position: static !important; max-height: 460px; }
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    padding: 2.75rem 0 3rem;
+  }
+
+  /* Show mobile eyebrow, hide desktop meta-row */
+  .home-eyebrow { display: inline-flex; }
+
+  /* Centered single-column layout */
+  .home-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .home-headline {
+    font-size: clamp(54px, 15vw, 80px) !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.05em !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  /* Swap deks: hide long, show short */
+  .home-dek-long  { display: none !important; }
+  .home-dek-short {
+    display: block !important;
+    font-size: 17px !important;
+    line-height: 1.65 !important;
+    text-align: center;
+    max-width: 34ch !important;
+    margin: 0 auto 1.75rem !important;
+    color: var(--ink-3);
+  }
+
+  /* Stack CTAs full-width */
+  .home-cta {
+    flex-direction: column;
+    width: 100%;
+    max-width: 340px;
+    gap: 0.65rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .home-cta .btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 52px;
+  }
+
+  /* Stats: 2 × 2 grid, centered text */
+  .home-proof {
+    grid-template-columns: repeat(2, 1fr) !important;
+    width: 100%;
+    border-left: 1px solid var(--line);
+  }
+  .home-proof .p {
+    padding: 1.25rem 1rem !important;
+    text-align: center;
+    border-right: 1px solid var(--line) !important;
+    border-bottom: 1px solid var(--line);
+  }
+  /* kill right border on even items (col 2) */
+  .home-proof .p:nth-child(2n) { border-right: 0 !important; }
+  /* kill bottom border on last row */
+  .home-proof .p:nth-child(3),
+  .home-proof .p:nth-child(4) { border-bottom: 0; }
+  .home-proof .n { font-size: clamp(30px, 8vw, 42px) !important; }
+  .home-proof .l { font-size: 10px; }
+
+  /* Ledger: compact version below the fold */
+  .ledger {
+    max-height: 340px !important;
+  }
+  .ledger-chrome .u { display: none; }
 }
 
 /* ---------- LIVE LEDGER (hero right) ---------- */
@@ -204,24 +304,7 @@
 .ledger-foot a { color: var(--accent); font-weight: 600; }
 .ledger-foot a:hover { text-decoration: underline; }
 
-@media (max-width: 1000px) {
-  .home-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .ledger { position: static; max-height: 480px; }
-  .home-proof { grid-template-columns: repeat(2, 1fr); }
-  .home-proof .p:nth-child(2n) { border-right: 0; }
-  .home-proof .p:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .home-proof .p { padding: 1rem 1rem 1rem 0; }
-}
-@media (max-width: 520px) {
-  .ledger { max-height: 420px; }
-  .ledger-head { grid-template-columns: 58px 1fr 68px 58px; padding: 8px 12px; font-size: 9px; gap: 0.5rem; }
-  .ledger-row { grid-template-columns: 58px 1fr 68px 58px; padding: 10px 12px; gap: 0.5rem; font-size: 12px; }
-  .ledger-row .t { font-size: 10px; }
-  .ledger-row .w span { font-size: 9px; }
-  .ledger-row .p { font-size: 12px; }
-  .ledger-row .s { font-size: 9px; }
-  .home-headline { font-size: clamp(40px, 12vw, 72px) !important; }
-}
+/* hero responsive: handled in the MOBILE HERO block above */
 
 /* ---------- WHAT WE DO — 14 practice areas ---------- */
 .do-section { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); }
@@ -828,6 +911,33 @@
   .press-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
   .press-cell:last-child { border-bottom: 0; }
 }
+@media (max-width: 520px) {
+  .case-card { padding: 1.5rem 1.25rem; }
+  .case-card blockquote { font-size: 16px; padding-left: 0.75rem; }
+  .case-kpi > div { padding: 0.75rem 0.85rem; }
+  .case-kpi .v { font-size: 19px; }
+  .press-cell { padding: 1.5rem 1.25rem; gap: 1rem; }
+  .end-cta .btns .btn { width: 100%; }
+  .end-cta .btns { display: flex; flex-direction: column; align-items: stretch; gap: 0.6rem; }
+  .cell { min-height: 0; padding: 1.75rem 1.25rem 1.5rem; }
+  .cell-name { font-size: clamp(19px, 6vw, 22px) !important; margin-top: 1.25rem; }
+  .grid-12 .cell { min-height: 0; padding: 1.5rem 1.1rem; }
+  .grid-12 .cell-feature { min-height: 0; padding: 1.75rem 1.25rem; }
+  .grid-12 .cell-feature .cell-glyph { width: 44px; height: 44px; }
+  .diff-card { padding: 1.75rem 1.25rem; }
+  .diff-card .fig { font-size: clamp(44px, 13vw, 64px); }
+  .diff-card .figLabel { padding-bottom: 1rem; margin-bottom: 1rem; }
+  .vf-sku { padding: 1.1rem 1.25rem; }
+  .ops-bullets li { padding: 1.1rem 1rem; font-size: 14px; }
+  .proof-head, .do-head { gap: 1.25rem; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+}
+@media (max-width: 380px) {
+  .cell-glyph { width: 40px; height: 40px; }
+  .cell-feature .cell-glyph { width: 40px; height: 40px; }
+  .diff-card .fig { font-size: clamp(40px, 14vw, 52px); }
+  .end-cta h2 { font-size: clamp(32px, 13vw, 48px); letter-spacing: -0.04em; }
+  .vf-head h2 { font-size: clamp(32px, 12vw, 48px); letter-spacing: -0.04em; }
+}
 
 /* ---------- END CTA ---------- */
 .end-cta { padding: clamp(6rem, 10vw, 10rem) 0 clamp(5rem, 8vw, 8rem); background: var(--paper); }
@@ -854,6 +964,333 @@
   max-width: 46rem; margin: 0 auto 2.5rem;
 }
 .end-cta .btns { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+
+/* =========================================================
+   MOBILE — aggressive rewrite (820 / 720 / 520 / 380)
+   ========================================================= */
+
+@media (max-width: 820px) {
+  /* HERO */
+  .home-hero { padding: 3rem 0 2.5rem; }
+  .home-hero .meta-row { font-size: 10px; letter-spacing: 0.1em; gap: 0.5rem 0.75rem; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+  .home-grid { grid-template-columns: 1fr !important; gap: 1.75rem; }
+  .home-headline { font-size: clamp(40px, 10.5vw, 64px) !important; line-height: 0.92; letter-spacing: -0.04em; margin-bottom: 1.25rem; }
+  .home-dek { font-size: 15.5px; line-height: 1.5; margin-bottom: 1.5rem; }
+  .home-cta { gap: 0.6rem; margin-bottom: 1.75rem; }
+  .home-proof { grid-template-columns: repeat(2, 1fr); }
+  .home-proof .p { padding: 0.9rem 1rem 0.9rem 0; }
+  .home-proof .n { font-size: 26px !important; }
+  .home-proof .l { font-size: 9.5px; }
+
+  /* LEDGER */
+  .ledger { position: static !important; max-height: 420px; }
+
+  /* WHAT WE DO */
+  .do-section { padding: 3.5rem 0; }
+  .do-head { grid-template-columns: 1fr !important; gap: 1.25rem; padding-bottom: 1.75rem; margin-bottom: 1.75rem; align-items: start; }
+  .do-head h2 { font-size: clamp(28px, 7.5vw, 44px) !important; line-height: 1.05; letter-spacing: -0.03em; }
+  .do-head p { font-size: 15px; line-height: 1.55; }
+  .grid-12 { grid-template-columns: repeat(2, 1fr); }
+  .cell { padding: 1.5rem 1.25rem 1.25rem; min-height: 0; }
+  .cell-name { font-size: 19px !important; margin-top: 1rem; }
+  .cell-work { font-size: 13px; }
+  .cell-glyph { width: 44px; height: 44px; }
+
+  /* VOICE FLAGSHIP */
+  .voice-flag { padding: 3.5rem 0; }
+  .vf-head { grid-template-columns: 1fr !important; gap: 1.25rem; padding-bottom: 1.75rem; margin-bottom: 1.5rem; align-items: start; }
+  .vf-head h2 { font-size: clamp(34px, 9vw, 56px) !important; line-height: 0.96; letter-spacing: -0.04em; }
+  .vf-head p { font-size: 15px; }
+  .vf-skus { grid-template-columns: repeat(2, 1fr); }
+  .vf-sku { padding: 1.1rem 1.25rem; }
+  .vf-langs { padding: 1rem 0; margin-bottom: 1.5rem; gap: 6px; }
+  .vf-langs .lg { padding: 5px 10px; font-size: 10px; letter-spacing: 0.06em; }
+  .vf-cta { flex-direction: column; align-items: stretch; gap: 0.75rem; margin-top: 1.5rem; }
+  .vf-cta .btn { width: 100%; text-align: center; justify-content: center; }
+
+  /* DIFFERENTIATORS */
+  .diff { padding: 3.5rem 0; }
+  .diff-head { margin-bottom: 1.75rem; }
+  .diff-head h2 { font-size: clamp(28px, 7.5vw, 44px) !important; line-height: 1.05; letter-spacing: -0.03em; }
+  .diff-head p { font-size: 15px; margin-top: 1rem; }
+  .diff-row { grid-template-columns: 1fr !important; }
+  .diff-card { padding: 1.75rem 1.5rem; }
+  .diff-card .fig { font-size: clamp(48px, 12vw, 72px) !important; }
+  .diff-card h3 { font-size: 22px !important; }
+
+  /* OPS */
+  .ops { padding: 3.5rem 0; }
+  .ops-head { margin-bottom: 1.75rem; }
+  .ops-head h2 { font-size: clamp(28px, 7.5vw, 44px) !important; line-height: 1.05; letter-spacing: -0.03em; }
+  .ops-head p { font-size: 15px; margin-top: 1rem; }
+  .ops-bullets { grid-template-columns: 1fr !important; }
+  .ops-bullets li { border-right: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1.1rem 1rem; font-size: 14px; }
+  .ops-bullets li:last-child { border-bottom: 0; }
+  .ops-cta { flex-direction: column; align-items: stretch; gap: 0.75rem; margin-top: 1.5rem; }
+  .ops-cta .btn { width: 100%; text-align: center; justify-content: center; }
+  .ops-chrome { height: 32px; padding: 0 10px; font-size: 9.5px; gap: 6px; }
+  .ops-chrome .u { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ops-chrome .r { font-size: 9.5px; }
+
+  /* PROOF / HOW WE WORK */
+  .proof { padding: 3.5rem 0; }
+  .proof-head { grid-template-columns: 1fr !important; gap: 1.25rem; padding-bottom: 1.75rem; margin-bottom: 1.75rem; align-items: start; }
+  .proof-head h2 { font-size: clamp(28px, 7.5vw, 44px) !important; line-height: 1.05; letter-spacing: -0.03em; }
+  .proof-head .r p { font-size: 15px; }
+  .principles-row { grid-template-columns: repeat(2, 1fr) !important; }
+  .principle { padding: 1.5rem 1.25rem !important; }
+  .principle h3 { font-size: 19px !important; }
+  .cases-row { grid-template-columns: 1fr !important; }
+  .case-card { padding: 1.75rem 1.5rem; }
+  .press-row { grid-template-columns: 1fr !important; }
+  .press-cell { border-right: 0 !important; padding: 1.5rem 1.25rem; }
+  .press-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .press-cell:last-child { border-bottom: 0; }
+
+  /* END CTA */
+  .end-cta { padding: 3.5rem 0 3rem; }
+  .end-cta h2 { font-size: clamp(36px, 9vw, 60px) !important; line-height: 1; letter-spacing: -0.04em; margin-bottom: 1rem; }
+  .end-cta p { font-size: 15.5px; margin-bottom: 1.75rem; }
+  .end-cta .btns { flex-direction: column; align-items: stretch; gap: 0.6rem; width: 100%; }
+  .end-cta .btns .btn { width: 100%; text-align: center; justify-content: center; }
+}
+
+@media (max-width: 520px) {
+  /* HERO — phone */
+  .home-hero { padding: 2.25rem 0 2rem; }
+  .home-hero .meta-row { font-size: 9.5px; flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+  .home-headline { font-size: clamp(36px, 11vw, 44px) !important; line-height: 0.92; letter-spacing: -0.035em; }
+  .home-dek { font-size: 15px !important; line-height: 1.55; }
+  .home-cta { flex-direction: column; align-items: stretch; gap: 0.55rem; }
+  .home-cta .btn { width: 100%; text-align: center; justify-content: center; }
+  .home-proof { grid-template-columns: 1fr !important; }
+  .home-proof .p { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; padding: 0.85rem 0 !important; }
+  .home-proof .p:last-child { border-bottom: 0 !important; }
+  .home-proof .n { font-size: 24px !important; }
+
+  /* LEDGER — tighten columns */
+  .ledger { max-height: 400px; }
+  .ledger-chrome { padding: 0 10px; font-size: 9.5px; gap: 6px; }
+  .ledger-chrome .u { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 160px; }
+  .ledger-head { grid-template-columns: 48px 1fr 58px 46px; padding: 8px 10px; font-size: 9px; gap: 0.4rem; }
+  .ledger-row { grid-template-columns: 48px 1fr 58px 46px; padding: 10px 10px; gap: 0.4rem; font-size: 12px; }
+  .ledger-row .t { font-size: 10px; }
+  .ledger-row .w { font-size: 11.5px; }
+  .ledger-row .w span { font-size: 9px; }
+  .ledger-row .p { font-size: 11.5px; }
+  .ledger-row .s { font-size: 9px; }
+  .ledger-foot { padding: 9px 10px; font-size: 9px; gap: 0.5rem; }
+
+  /* WHAT WE DO — phone */
+  .do-section { padding: 2.75rem 0; }
+  .do-head h2 { font-size: clamp(26px, 8vw, 34px) !important; }
+  .do-head p { font-size: 14.5px !important; }
+  .grid-12 { grid-template-columns: 1fr !important; }
+  .grid-12 .cell { min-height: 0; padding: 1.35rem 1.1rem; }
+  .grid-12 .cell-feature { grid-column: 1 / -1 !important; min-height: 0; padding: 1.5rem 1.25rem; }
+  .grid-12 .cell-feature .cell-glyph { width: 40px; height: 40px; }
+  .grid-12 .cell-feature .cell-feature-body .cell-name { font-size: 22px !important; margin-top: 1rem; }
+  .cell-top { gap: 0.5rem; }
+  .cell-name { font-size: 18px !important; margin-top: 0.9rem; }
+  .cell-work { font-size: 13px; max-width: 100%; }
+  .cell-meta { font-size: 9.5px; margin-top: 1rem; padding-top: 0.75rem; }
+  .cell-glyph { width: 40px; height: 40px; }
+
+  /* VOICE FLAGSHIP — phone */
+  .voice-flag { padding: 2.75rem 0; }
+  .vf-head h2 { font-size: clamp(30px, 9vw, 40px) !important; }
+  .vf-head p { font-size: 14.5px !important; }
+  .vf-skus { grid-template-columns: 1fr !important; }
+  .vf-sku { padding: 1rem 1.15rem; }
+  .vf-langs { gap: 5px; padding: 0.85rem 0; margin-bottom: 1.25rem; }
+  .vf-langs .lg { padding: 4px 8px; font-size: 9.5px; }
+
+  /* DIFF — phone */
+  .diff { padding: 2.75rem 0; }
+  .diff-head h2 { font-size: clamp(26px, 8vw, 34px) !important; }
+  .diff-head p { font-size: 14.5px !important; }
+  .diff-card { padding: 1.5rem 1.25rem !important; }
+  .diff-card .fig { font-size: clamp(42px, 13vw, 56px) !important; }
+  .diff-card .figLabel { font-size: 9.5px; padding-bottom: 0.85rem; margin-bottom: 1rem; }
+  .diff-card h3 { font-size: 19px !important; }
+  .diff-card p { font-size: 14px; }
+  .diff-card .vs { font-size: 10.5px; padding-top: 1.1rem; }
+
+  /* OPS — phone */
+  .ops { padding: 2.75rem 0; }
+  .ops-head h2 { font-size: clamp(26px, 8vw, 34px) !important; }
+  .ops-head p { font-size: 14.5px !important; }
+  .ops-bullets li { padding: 1rem 0.9rem; font-size: 13.5px; }
+  .ops-bullets li b { font-size: 9.5px; }
+  .ops-chrome .u { max-width: 170px; }
+
+  /* PROOF — phone */
+  .proof { padding: 2.75rem 0; }
+  .proof-head h2 { font-size: clamp(26px, 8vw, 34px) !important; }
+  .proof-head .r p { font-size: 14.5px !important; }
+  .principles-row { grid-template-columns: 1fr !important; }
+  .principle { padding: 1.35rem 1.15rem !important; }
+  .principle h3 { font-size: 18px !important; }
+  .principle p { font-size: 13.5px; }
+  .case-card { padding: 1.4rem 1.15rem; gap: 1rem; }
+  .case-card blockquote { font-size: 15.5px; padding-left: 0.75rem; line-height: 1.4; }
+  .case-kpi > div { padding: 0.7rem 0.85rem; }
+  .case-kpi .k { font-size: 8.5px; }
+  .case-kpi .v { font-size: 18px; }
+  .press-cell { padding: 1.4rem 1.15rem; gap: 0.9rem; }
+  .press-quote { font-size: 15.5px; line-height: 1.35; }
+  .press-mark { font-size: 16px; }
+
+  /* END CTA — phone */
+  .end-cta { padding: 2.75rem 0 2.5rem; }
+  .end-cta .eyebrow { font-size: 10px; margin-bottom: 1rem; }
+  .end-cta h2 { font-size: clamp(32px, 10vw, 44px) !important; letter-spacing: -0.035em; line-height: 1; }
+  .end-cta p { font-size: 14.5px !important; margin-bottom: 1.5rem; }
+  .end-cta .btns { width: 100%; display: flex; flex-direction: column; gap: 0.55rem; }
+  .end-cta .btns .btn { width: 100%; text-align: center; justify-content: center; }
+}
+
+@media (max-width: 380px) {
+  .home-hero { padding: 2rem 0 1.75rem; }
+  .home-headline { font-size: clamp(30px, 12vw, 38px) !important; }
+  .home-dek { font-size: 14.5px !important; }
+  .home-proof .n { font-size: 22px !important; }
+
+  .ledger-chrome .u { display: none; }
+  .ledger-head, .ledger-row { grid-template-columns: 42px 1fr 52px 40px; padding: 8px 8px; gap: 0.3rem; }
+  .ledger-row { font-size: 11.5px; }
+  .ledger-row .w { font-size: 11px; }
+
+  .do-head h2,
+  .diff-head h2,
+  .ops-head h2,
+  .proof-head h2 { font-size: clamp(24px, 8.5vw, 30px) !important; }
+  .vf-head h2 { font-size: clamp(28px, 9.5vw, 36px) !important; }
+  .end-cta h2 { font-size: clamp(28px, 10.5vw, 38px) !important; }
+
+  .cell-glyph,
+  .grid-12 .cell-feature .cell-glyph { width: 36px; height: 36px; }
+  .cell-name { font-size: 17px !important; }
+  .diff-card .fig { font-size: clamp(38px, 14vw, 48px) !important; }
+  .case-kpi .v { font-size: 16px; }
+}
+
+/* Anything that might overflow horizontally — guard */
+@media (max-width: 820px) {
+  main img, main svg, main object { max-width: 100%; height: auto; }
+  .ops-canvas { aspect-ratio: 16/11; }
+}
+
+/* === 2026 modernization polish ============================ */
+/* Hairline accents + subtle glass on hero/overlay surfaces */
+.hero-overlay, .diff-card, .case-card, .logo-card, .ops-card {
+  border: 1px solid rgba(0,82,255,0.08);
+  transition: transform .25s var(--ease-out, ease-out),
+              box-shadow .25s var(--ease-out, ease-out),
+              border-color .25s var(--ease-out, ease-out);
+}
+.hero-overlay { backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px); }
+
+/* Refined elevation hover (no hard color swap) */
+.diff-card:hover, .case-card:hover, .logo-card:hover, .ops-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,82,255,0.18);
+  box-shadow: 0 10px 30px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
+}
+@supports (background: color-mix(in oklab, red, blue)) {
+  .diff-card:hover, .case-card:hover, .logo-card:hover, .ops-card:hover {
+    box-shadow: 0 12px 32px -18px color-mix(in oklab, var(--accent) 45%, transparent),
+                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
+  }
+}
+
+/* Underline animation for in-content links */
+main p a:not(.btn):not(.btn-link)::after {
+  content: ""; display: block; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .25s var(--ease-out, ease-out);
+}
+main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
+
+/* Gradient text on key emphasis spans */
+.hi-grad, h1 em, .dek em {
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Focus-visible ring */
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg, rgba(10,12,20,0.04) 25%, rgba(10,12,20,0.08) 37%, rgba(10,12,20,0.04) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 4px;
+}
+@keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+
+/* Scroll snap on horizontal scrollers */
+.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
+.scroll-x > * { scroll-snap-align: start; }
+
+/* Tabular figures on stats */
+.case-kpi .v, .diff-card .fig, .stat .v, .ticker-item .tup, .num, [data-tnum] {
+  font-feature-settings: 'tnum' 1, 'lnum' 1, 'ss01' 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diff-card, .case-card, .logo-card, .ops-card { transition: none; }
+  .skeleton { animation: none; }
+}
+
+/* Mobile nav pitch (Google-positioning) */
+.mnav-pitch { display: none; }
+@media (max-width: 1024px) {
+  .mnav-pitch {
+    display: block;
+    padding: 1rem 1.1rem 1.15rem;
+    border: 1px solid var(--line-strong);
+    background: var(--paper-3);
+    margin-bottom: 0.25rem;
+  }
+  .mnav-pitch-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .mnav-pitch p {
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0 0 0.6rem;
+  }
+  .mnav-pitch p em { color: var(--accent); font-style: normal; font-weight: 500; }
+  .mnav-pitch-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 3px;
+  }
+  .mnav-pitch-link .ar { font-family: var(--font-mono); }
+}
 </style>
 </head>
 <body>
@@ -923,6 +1360,11 @@
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
     <div></div>
     <div class="mobile-nav-inner">
+      <div class="mnav-pitch" aria-hidden="false">
+        <span class="mnav-pitch-eyebrow">Why us, not Google?</span>
+        <p>Google hands you a toolbox. We hand you the <em>finished work</em> — billed per outcome, not per token.</p>
+        <a href="about.html" class="mnav-pitch-link">Read the case <span class="ar">→</span></a>
+      </div>
       <div class="mnav-group">
         <h5>Work</h5>
         <ul class="mnav-list">
@@ -933,40 +1375,6 @@
           <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
           <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
         </ul>
       </div>
     </div>
@@ -985,24 +1393,29 @@
   <!-- ========== HERO ========== -->
   <section class="home-hero">
     <div class="container">
-      <div class="meta-row reveal">
-        <span>◎ <b>Autopilot Labs</b> · Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
-        <span>Vertical AI agents · Per-outcome pricing · <span class="accent">14 languages · Arabic included</span></span>
-      </div>
-
       <div class="home-grid">
         <div class="home-left">
+
+          <div class="home-eyebrow reveal">
+            <span class="home-eyebrow-dot" aria-hidden="true"></span>
+            AI agents · Pay per outcome
+          </div>
+
           <h1 class="home-headline reveal delay-1">
             Agents that<br><em>finish</em> the job.
           </h1>
 
-          <p class="home-dek reveal delay-2">
-            Autopilot Labs builds <em>vertical AI agents</em> that do your team's most repetitive work — patient intake, invoice reconciliation, lease abstraction, case-file drafting, inbound phone calls <em>in 14 languages, Arabic included</em>. Hubs in <em>Melbourne, Dubai and Riyadh</em>, deployed globally. You pay when the AI ships the outcome. Not per seat. Not per token.
+          <p class="home-dek home-dek-long reveal delay-2">
+            Google, Microsoft and OpenAI sell you <em>tools</em>. We ship you the <em>outcome</em>. Autopilot Labs builds <em>vertical AI agents</em> that complete your team's repetitive work — patient intake, invoice reconciliation, lease abstraction, case-file drafting, inbound calls in <em>14 languages, Arabic included</em>. Hubs in <em>Melbourne, Dubai, Riyadh</em>. You pay per completed outcome — never per seat, never per token.
+          </p>
+
+          <p class="home-dek home-dek-short reveal delay-2">
+            We build vertical AI agents that <em>complete your workflows</em> — billed per finished job, not per token. If the agent misses SLA, you don't pay.
           </p>
 
           <div class="home-cta reveal delay-2">
             <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-            <a href="cases.html" class="btn btn-lg">What you can achieve</a>
+            <a href="cases.html" class="btn btn-lg">See what we achieve</a>
           </div>
 
           <div class="home-proof reveal delay-3">
@@ -1332,6 +1745,41 @@
     </div>
   </section>
 
+  <!-- ========== VS. GOOGLE RIBBON ========== -->
+  <section class="vs-ribbon reveal">
+    <div class="container">
+      <div class="vs-inner">
+        <div>
+          <div class="eyebrow">Autopilot Labs vs. the platforms</div>
+          <h2>Google sells you a model.<br>We ship you the <em>finished work</em>.</h2>
+          <p>Gemini, Vertex AI Agent Builder, Copilot, OpenAI Assistants — they all hand you a toolbox and a bill per token. That's the <em>starting line</em>, not the finish line. Autopilot Labs runs the last mile: our agents are embedded in your workflows, audited live, and <em>billed per outcome that passes SLA</em>. If the job doesn't ship, you don't pay.</p>
+        </div>
+        <div class="vs-compare">
+          <div>
+            <h6>Platforms (Google, Microsoft, OpenAI)</h6>
+            <ul>
+              <li>You rent a model and a console</li>
+              <li>Billed per token, per seat, per call</li>
+              <li>You hire the team to wire it up</li>
+              <li>You own every failed run</li>
+              <li>Generic — built for everyone</li>
+            </ul>
+          </div>
+          <div class="us">
+            <h6>Autopilot Labs</h6>
+            <ul>
+              <li>We deliver a live, vertical agent</li>
+              <li>Billed per SLA-passing outcome</li>
+              <li>Deploy in 14 days, we do the wiring</li>
+              <li>If it misses SLA, we don't invoice</li>
+              <li>Purpose-built per industry</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== OPS CONSOLE ========== -->
   <section class="ops">
     <div class="container">
@@ -1521,7 +1969,7 @@
   </div>
 </footer>
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {

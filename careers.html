@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 <style>
 /* ====== careers-specific ====== */
@@ -562,6 +562,54 @@
   .mini-intro { grid-template-columns: 1fr; gap: 1.5rem; }
 }
 
+@media (max-width: 820px) {
+  .hero-careers h1 { font-size: clamp(44px, 10vw, 80px); }
+  .hero-careers .hero-dek { font-size: 16px; }
+  .role-title { font-size: clamp(17px, 4.5vw, 20px); }
+  .values { border-left: 0; border-right: 0; }
+  .process-note { flex-direction: column; align-items: flex-start; gap: 0.5rem; font-size: 10px; }
+}
+@media (max-width: 720px) {
+  .hero-careers h1 { font-size: clamp(38px, 10vw, 56px); line-height: 0.92; }
+  .hero-careers .hero-meta { flex-direction: column; align-items: flex-start; }
+  .hero-careers .hero-meta em { font-size: 15px; }
+  .role-row { padding: 1.25rem 1rem; grid-template-columns: 50px 1fr 32px; column-gap: 0.75rem; }
+  .role-detail { padding: 0 1rem 2rem; }
+  .role-detail-inner { padding-top: 1.75rem; }
+  .role-apply { flex-direction: column; align-items: stretch; }
+  .role-apply .btn { width: 100%; justify-content: center; text-align: center; }
+  .role-apply .small { text-align: left; }
+  .reject h2 { font-size: clamp(30px, 8vw, 48px); }
+  .reject-head { grid-template-columns: 1fr; gap: 0.5rem; }
+  .reject-head .rule { display: none; }
+  .mini-intro .lhs { font-size: clamp(44px, 14vw, 80px); }
+  .mini-intro .rhs h2 { font-size: clamp(24px, 7vw, 40px); }
+  .val-title { font-size: clamp(22px, 6vw, 28px); }
+  .ben-title { font-size: 18px; }
+  .step-title { font-size: clamp(18px, 5vw, 22px); }
+}
+@media (max-width: 520px) {
+  .hero-careers h1 { font-size: clamp(32px, 11vw, 46px); }
+  .hero-careers .hero-meta { font-size: 10px; gap: 0.5rem; padding: 0.75rem 0; }
+  .val { padding: 1.75rem 1.1rem; }
+  .ben { padding: 1.25rem 1.1rem 1.5rem; min-height: 0; }
+  .step { padding: 1.75rem 1.1rem 1.5rem; }
+  .reject-item { padding: 1.25rem 0; }
+  .reject-q { font-size: 20px; }
+  .reject-a { font-size: 13.5px; }
+  .role-title { font-size: 17px; }
+  .role-meta { font-size: 11px; }
+  .role-desc p { font-size: 14px; }
+  .role-side li { font-size: 13.5px; }
+  .role-side h4 { font-size: 10px; }
+  .hero-careers .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-careers .hero-actions .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 380px) {
+  .hero-careers h1 { font-size: 30px; }
+  .reject h2 { font-size: 26px; }
+  .mini-intro .rhs h2 { font-size: 22px; }
+}
 </style>
 </head>
 <body>
@@ -641,40 +689,6 @@
           <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
           <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
         </ul>
       </div>
     </div>
@@ -1251,6 +1265,6 @@
   </div>
 </footer>
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 </body>
 </html>

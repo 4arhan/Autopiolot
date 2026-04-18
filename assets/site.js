@@ -44,9 +44,28 @@
   // ---- Mobile fullscreen menu ----
   const toggle = document.querySelector('.menu-toggle');
   const mobileNav = document.querySelector('.mobile-nav');
+  // Move .mobile-nav out of .topbar so position:fixed is relative to the
+  // viewport, not the topbar (topbar has backdrop-filter which creates a
+  // containing block for fixed descendants).
+  if (mobileNav && mobileNav.parentElement && mobileNav.parentElement.classList.contains('topbar')) {
+    document.body.appendChild(mobileNav);
+  }
   if (toggle && mobileNav) {
     let lastFocus = null;
     let savedScrollY = 0;
+
+    // Inject a visible close (X) button inside the drawer if one isn't present.
+    // This fixes the "menu can open but not close" confusion on touch devices
+    // where users don't realize the hamburger has become an X.
+    let closeBtn = mobileNav.querySelector('.mnav-close');
+    if (!closeBtn) {
+      closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.className = 'mnav-close';
+      closeBtn.setAttribute('aria-label', 'Close menu');
+      closeBtn.innerHTML = '<span aria-hidden="true">Close</span><span class="x" aria-hidden="true">×</span>';
+      mobileNav.insertBefore(closeBtn, mobileNav.firstChild);
+    }
 
     const openMenu = () => {
       lastFocus = document.activeElement;
@@ -56,12 +75,14 @@
       document.body.classList.add('nav-locked');
       mobileNav.classList.add('open');
       toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
       const first = mobileNav.querySelector('a, button');
       if (first) setTimeout(() => first.focus(), 180);
     };
     const closeMenu = () => {
       mobileNav.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
       document.body.classList.remove('nav-locked');
       document.body.style.top = '';
       // Restore scroll position (html is scroll-smooth; use instant jump)
@@ -74,7 +95,14 @@
 
     toggle.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       if (mobileNav.classList.contains('open')) closeMenu(); else openMenu();
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMenu();
     });
 
     // Esc closes, focus trap on Tab
@@ -91,16 +119,37 @@
       }
     });
 
-    // Close when a link is clicked (SPA-ish feel on same-origin nav)
+    // Close when a link or explicitly-tagged close control is clicked.
     mobileNav.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href]');
+      const a = e.target.closest('a[href], [data-mnav-close]');
       if (a) closeMenu();
     });
 
-    // Close on resize-up to desktop
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1024 && mobileNav.classList.contains('open')) closeMenu();
+    // Backdrop close: tap directly on the drawer background (not on children)
+    mobileNav.addEventListener('click', (e) => {
+      if (e.target === mobileNav) closeMenu();
     });
+
+    // Close on any resize change when the menu is open (desktop or narrower).
+    let resizeRaf = null;
+    window.addEventListener('resize', () => {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        if (window.innerWidth > 1024 && mobileNav.classList.contains('open')) closeMenu();
+      });
+    });
+
+    // Swipe-up-to-close (mobile gesture)
+    let touchStartY = null;
+    mobileNav.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    mobileNav.addEventListener('touchend', (e) => {
+      if (touchStartY == null) return;
+      const endY = (e.changedTouches[0] && e.changedTouches[0].clientY) || touchStartY;
+      if (touchStartY - endY > 90 && mobileNav.scrollTop <= 0) closeMenu();
+      touchStartY = null;
+    }, { passive: true });
   }
 
   // Mark active nav link from current path

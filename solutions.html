@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 <style>
 /* ====== solutions page ====== */
@@ -250,12 +250,95 @@
 }
 
 @media (max-width: 1000px) {
-  .directory { grid-template-columns: 1fr; }
+  .directory { grid-template-columns: 1fr; min-height: 0; }
   .dir-list { border-right: 0; border-bottom: 1px solid var(--line); }
   .dp-top { grid-template-columns: 1fr; }
   .dp-agent { grid-template-columns: 30px 1fr auto; }
   .dp-a-unit { display: none; }
   .dp-foot { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .dir-panel { padding: 1.75rem 1.25rem; }
+  .dir-item { padding: 1rem 1.25rem; grid-template-columns: 32px 1fr auto; }
+  .dir-item:hover, .dir-item.active { padding-left: 1.25rem; }
+  .dp-title { font-size: clamp(26px, 6.5vw, 36px); }
+  .dp-badge { min-width: 0; padding: 0.85rem 1rem; text-align: left; }
+  .dp-badge-v { font-size: 32px; }
+  .dp-agent { gap: 0.6rem; padding: 0.9rem 0.1rem; }
+  .dp-agent:hover { padding-left: 0.35rem; padding-right: 0.35rem; }
+  .dp-a-name { font-size: 14.5px; }
+  .dp-a-price { font-size: 19px; }
+  .dp-quote { font-size: 17px; padding-left: 0.9rem; }
+  .dp-foot .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 520px) {
+  .dir-panel { padding: 1.5rem 1rem; }
+  .dir-head { padding: 1rem 1.25rem; }
+  .dir-item { padding: 0.9rem 1rem; grid-template-columns: 28px 1fr 14px; gap: 0.6rem; }
+  .dir-name { font-size: 15px; }
+  .dp-top { gap: 1.25rem; margin-bottom: 1.5rem; padding-bottom: 1.25rem; }
+  .dp-title { font-size: clamp(24px, 7.5vw, 32px); letter-spacing: -0.03em; }
+  .dp-body { font-size: 14.5px; margin-bottom: 1.75rem; }
+  .dp-agent { grid-template-columns: 24px 1fr auto; gap: 0.5rem; padding: 0.8rem 0; }
+  .dp-agent:hover { padding-left: 0.2rem; padding-right: 0.2rem; }
+  .dp-a-name { font-size: 13.5px; }
+  .dp-a-name span { font-size: 10px; }
+  .dp-a-price { font-size: 17px; }
+  .dp-foot { margin-top: 1.5rem; padding-top: 1.5rem; gap: 1.25rem; }
+  .dp-quote { font-size: 15.5px; padding-left: 0.75rem; line-height: 1.35; }
+}
+@media (max-width: 380px) {
+  .dir-item { grid-template-columns: 24px 1fr 10px; gap: 0.5rem; padding: 0.85rem 0.85rem; }
+  .dir-name { font-size: 14px; }
+  .dir-panel { padding: 1.25rem 0.85rem; }
+  .dp-agents-head { font-size: 9.5px; }
+  .dp-a-price { font-size: 15.5px; }
+}
+
+/* === 2026 modernization polish ============================ */
+.dir-panel, .sol-card, .dp-a, .dir-item {
+  border: 1px solid rgba(0,82,255,0.08);
+  transition: transform .25s var(--ease-out, ease-out),
+              box-shadow .25s var(--ease-out, ease-out),
+              border-color .25s var(--ease-out, ease-out),
+              background-color .2s var(--ease-out, ease-out);
+}
+.sol-card:hover, .dp-a:hover, .dir-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,82,255,0.18);
+  box-shadow: 0 10px 28px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
+}
+@supports (background: color-mix(in oklab, red, blue)) {
+  .sol-card:hover, .dp-a:hover, .dir-item:hover {
+    box-shadow: 0 12px 30px -18px color-mix(in oklab, var(--accent) 45%, transparent),
+                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
+  }
+}
+.hero-overlay {
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+}
+main p a:not(.btn):not(.btn-link)::after {
+  content: ""; display: block; height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .25s var(--ease-out, ease-out);
+}
+main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
+h1 em, .dek em, .hi-grad {
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+a:focus-visible, button:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+}
+.dp-a-price, .stat .v, .num, [data-tnum] {
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
+.scroll-x > * { scroll-snap-align: start; }
+@media (prefers-reduced-motion: reduce) {
+  .dir-panel, .sol-card, .dp-a, .dir-item { transition: none; }
 }
 </style>
 </head>
@@ -337,40 +420,6 @@
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
         </ul>
       </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
-        </ul>
-      </div>
     </div>
     <div class="mobile-nav-foot">
       <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
@@ -427,85 +476,85 @@
       <div class="directory reveal delay-2" data-directory>
         <aside class="dir-list">
           <div class="dir-head"><span>◆ Practice areas</span><span>14</span></div>
-          <button class="dir-item active" data-dir-item="healthcare">
+          <button type="button" class="dir-item active" data-dir-item="healthcare">
             <span class="dir-num">01</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/healthcare.svg')" aria-hidden="true"></span>
             <span class="dir-name">Healthcare</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="legal">
+          <button type="button" class="dir-item" data-dir-item="legal">
             <span class="dir-num">02</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/legal.svg')" aria-hidden="true"></span>
             <span class="dir-name">Legal</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="finance">
+          <button type="button" class="dir-item" data-dir-item="finance">
             <span class="dir-num">03</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/finance.svg')" aria-hidden="true"></span>
             <span class="dir-name">Finance</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="real-estate">
+          <button type="button" class="dir-item" data-dir-item="real-estate">
             <span class="dir-num">04</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/real-estate.svg')" aria-hidden="true"></span>
             <span class="dir-name">Real estate</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="ecommerce">
+          <button type="button" class="dir-item" data-dir-item="ecommerce">
             <span class="dir-num">05</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/ecommerce.svg')" aria-hidden="true"></span>
             <span class="dir-name">E-commerce</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="hr">
+          <button type="button" class="dir-item" data-dir-item="hr">
             <span class="dir-num">06</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/hr.svg')" aria-hidden="true"></span>
             <span class="dir-name">HR &amp; hiring</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="marketing">
+          <button type="button" class="dir-item" data-dir-item="marketing">
             <span class="dir-num">07</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/marketing.svg')" aria-hidden="true"></span>
             <span class="dir-name">Marketing</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="manufacturing">
+          <button type="button" class="dir-item" data-dir-item="manufacturing">
             <span class="dir-num">08</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/manufacturing.svg')" aria-hidden="true"></span>
             <span class="dir-name">Manufacturing</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="education">
+          <button type="button" class="dir-item" data-dir-item="education">
             <span class="dir-num">09</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/education.svg')" aria-hidden="true"></span>
             <span class="dir-name">Education</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="insurance">
+          <button type="button" class="dir-item" data-dir-item="insurance">
             <span class="dir-num">10</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/insurance.svg')" aria-hidden="true"></span>
             <span class="dir-name">Insurance</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="hospitality">
+          <button type="button" class="dir-item" data-dir-item="hospitality">
             <span class="dir-num">11</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/hospitality.svg')" aria-hidden="true"></span>
             <span class="dir-name">Hospitality</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="logistics">
+          <button type="button" class="dir-item" data-dir-item="logistics">
             <span class="dir-num">12</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/logistics.svg')" aria-hidden="true"></span>
             <span class="dir-name">Logistics</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="public-safety">
+          <button type="button" class="dir-item" data-dir-item="public-safety">
             <span class="dir-num">13</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/public-safety.svg')" aria-hidden="true"></span>
             <span class="dir-name">Public safety</span>
             <span class="dir-arrow">→</span>
           </button>
-          <button class="dir-item" data-dir-item="voice">
+          <button type="button" class="dir-item" data-dir-item="voice">
             <span class="dir-num">14</span>
             <span class="dir-glyph" style="--glyph:url('assets/verticals/voice.svg')" aria-hidden="true"></span>
             <span class="dir-name">Voice agents</span>
@@ -992,6 +1041,39 @@
       </div>
     </div>
   </section>
+
+  <!-- ========== VS. PLATFORMS ========== -->
+<section class="vs-ribbon reveal">
+  <div class="container">
+    <div class="vs-inner">
+      <div>
+        <div class="eyebrow">Built where Google stops</div>
+        <h2>Vertex ships a model.<br>We ship the <em>whole workflow</em>.</h2>
+        <p>Every solution on this page is a finished agent, not a starter template. Google Vertex AI Agent Builder gives you a blank canvas; Autopilot Labs gives you an intake agent already wired into your PMS, a reconciliation agent already matched to your ledger, a lease-abstract agent already trained on AU/UK/ME tenancy law. Live, audited, billed per outcome.</p>
+      </div>
+      <div class="vs-compare">
+        <div>
+          <h6>DIY on a platform</h6>
+          <ul>
+            <li>Months of prompt / eval work</li>
+            <li>You own every integration</li>
+            <li>Unpredictable token bills</li>
+            <li>Generic tone, generic accuracy</li>
+          </ul>
+        </div>
+        <div class="us">
+          <h6>Autopilot Labs catalogue</h6>
+          <ul>
+            <li>150+ pre-built vertical agents</li>
+            <li>We integrate, we operate, we fix</li>
+            <li>Flat per-outcome unit price</li>
+            <li>Trained on your industry's language</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="site-footer">
@@ -1048,7 +1130,7 @@
   </div>
 </footer>
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 <script>
   // Deep-link: #vertical opens that panel
   (function () {

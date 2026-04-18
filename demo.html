@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 <style>
 /* =========================================================
@@ -799,6 +799,53 @@
   .col-head .dot-live::before { animation: none !important; }
   .metric-v.flash { transition: none !important; }
 }
+
+@media (max-width: 720px) {
+  .demo-hero .hero-coord { grid-template-columns: 1fr; gap: 0.35rem; text-align: left; }
+  .demo-hero .hero-coord .line { display: none; }
+  .demo-hero .hero-coord .right { text-align: left; }
+  .terminal { min-height: 0; }
+  .term-body { max-height: 360px; padding: 1rem 1.1rem; font-size: 11.5px; line-height: 1.65; }
+  .log-line { grid-template-columns: 58px 1fr; gap: 10px; }
+  .log-line.ship { grid-template-columns: 58px 1fr; padding: 0.65rem 0.75rem; }
+  .metric { padding: 1.25rem 1.1rem 1rem; }
+  .metric-v { font-size: 30px; }
+  .phase { padding: 1.75rem 1.25rem; }
+  .phase-name { font-size: 22px; }
+  .faq-item { padding: 1.25rem 1.1rem; }
+}
+@media (max-width: 520px) {
+  .scen { padding: 0.9rem 0.95rem; }
+  .scen-name { font-size: 15px; }
+  .scen-desc { font-size: 11.5px; }
+  .scen-radio { right: 0.8rem; top: 0.85rem; }
+  .term-chrome { padding: 9px 10px; font-size: 9px; }
+  .term-chrome .path { margin-left: 8px; font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .term-body { padding: 0.85rem 0.9rem; font-size: 10.75px; }
+  .log-line { grid-template-columns: 48px 1fr; gap: 8px; }
+  .log-line.ship { grid-template-columns: 48px 1fr; padding: 0.55rem 0.6rem; }
+  .term-btn { padding: 0.95rem 0.5rem; font-size: 13px; min-height: 44px; }
+  .metric { padding: 1rem 0.9rem 0.9rem; }
+  .metric-v { font-size: 26px; }
+  .metric .spark { right: 0.6rem; bottom: 0.6rem; }
+  .phase-name { font-size: 20px; }
+  .phase-no { margin-bottom: 1rem; }
+  .phase-icon { width: 44px; height: 44px; margin-bottom: 1.25rem; }
+  .demo-cta-actions { gap: 0.65rem; }
+  .demo-cta h2 { font-size: clamp(30px, 9vw, 44px); }
+  .cta-btn { padding: 1rem 1.1rem; font-size: 14px; gap: 0.75rem; }
+  .faq-head { padding-bottom: 1rem; margin-bottom: 1.25rem; }
+}
+@media (max-width: 380px) {
+  .term-controls { flex-direction: column; }
+  .term-btn { border-right: 0; border-bottom: 1px solid rgba(250,250,250,0.08); }
+  .term-btn:last-child { border-bottom: 0; }
+  .demo-hero h1 { font-size: clamp(34px, 12vw, 48px); }
+  .log-line { grid-template-columns: 40px 1fr; gap: 6px; }
+  .log-line.ship { grid-template-columns: 40px 1fr; }
+  .metric-v { font-size: 22px; }
+  .phase { padding: 1.25rem 1rem; }
+}
 </style>
 </head>
 <body>
@@ -878,40 +925,6 @@
           <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
           <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
         </ul>
       </div>
     </div>
@@ -1626,6 +1639,6 @@
   setInterval(tickClock, 1000);
 })();
 </script>
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 </body>
 </html>

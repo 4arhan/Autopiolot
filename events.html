@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 <style>
 /* ====== events page ====== */
@@ -618,6 +618,50 @@
   .talk-row { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 720px) {
+  .hero-events h1 { font-size: clamp(36px, 11vw, 64px); }
+  .ev-section-head { grid-template-columns: 1fr; gap: 0.5rem; }
+  .ev-f-main { padding: 1.5rem 1.25rem; }
+  .ev-f-side { padding: 1.5rem 1.25rem; }
+  .ev-f-meta { grid-template-columns: 1fr; }
+  .ev-f-meta-cell { border-right: 0; padding-left: 0 !important; }
+  .ev-f-meta-cell:nth-child(n+2) { border-top: 1px dashed rgba(255,255,255,0.12); padding-top: 0.75rem; margin-top: 0.75rem; }
+  .ev-f-actions { flex-direction: column; align-items: stretch; }
+  .ev-f-actions .btn { justify-content: center; }
+  .past-toggle { flex-direction: column; align-items: flex-start; }
+  .talk-submit { flex-direction: column; align-items: stretch; }
+  .talk-submit .btn { justify-content: center; }
+}
+@media (max-width: 520px) {
+  .ev-row { grid-template-columns: 64px 1fr; gap: 0.5rem 0.85rem; padding: 1.1rem 0; }
+  .ev-date .d { font-size: 28px; letter-spacing: -0.035em; }
+  .ev-date .m { font-size: 9px; letter-spacing: 0.16em; }
+  .ev-name { font-size: 15.5px; }
+  .ev-sub { font-size: 10px; letter-spacing: 0.04em; }
+  .ev-format-tag, .ev-status { font-size: 9.5px; padding: 0.3rem 0.55rem; letter-spacing: 0.1em; }
+  .ev-cta { font-size: 10px; }
+  .ev-f-date-display .d { font-size: clamp(64px, 24vw, 88px); }
+  .ev-f-date-display .m { font-size: 12px; }
+  .ev-f-title { font-size: clamp(24px, 7vw, 34px); margin-top: 1rem; margin-bottom: 1rem; }
+  .ev-f-dek { font-size: 14.5px; }
+  .ev-f-tag { font-size: 9.5px; letter-spacing: 0.14em; }
+  .hero-events h1 { font-size: clamp(30px, 10vw, 44px); }
+  .ev-pill { padding: 0.45rem 0.7rem; font-size: 10.5px; }
+  .ev-filters .lbl { font-size: 9.5px; letter-spacing: 0.12em; }
+  .past-card { padding: 1.25rem 1rem; min-height: 0; }
+  .past-card .p-title { font-size: 14.5px; }
+  .talk-intro h2 { font-size: clamp(26px, 8vw, 38px); }
+  .talk-form { padding: 1.25rem; }
+  .talk-field input, .talk-field select, .talk-field textarea { font-size: 13.5px; padding: 0.6rem 0.7rem; }
+  .past-toggle h3 { font-size: 20px; }
+}
+@media (max-width: 380px) {
+  .ev-row { grid-template-columns: 56px 1fr; }
+  .ev-date .d { font-size: 24px; }
+  .ev-name { font-size: 14.5px; }
+  .hero-events h1 { font-size: 30px; }
+  .ev-f-title { font-size: 22px; }
+}
 </style>
 </head>
 <body>
@@ -699,40 +743,6 @@
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
         </ul>
       </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
-        </ul>
-      </div>
     </div>
     <div class="mobile-nav-foot">
       <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
@@ -765,11 +775,11 @@
       <!-- Filter pills -->
       <div class="ev-filters reveal delay-3" role="tablist" aria-label="Filter events">
         <span class="lbl">Filter —</span>
-        <button class="ev-pill active" data-filter="all">All <span class="count">11</span></button>
-        <button class="ev-pill" data-filter="inperson">In-person <span class="count">5</span></button>
-        <button class="ev-pill" data-filter="virtual">Virtual <span class="count">3</span></button>
-        <button class="ev-pill" data-filter="talk">Conference talks <span class="count">2</span></button>
-        <button class="ev-pill" data-filter="client">Client-only <span class="count">1</span></button>
+        <button type="button" class="ev-pill active" data-filter="all">All <span class="count">11</span></button>
+        <button type="button" class="ev-pill" data-filter="inperson">In-person <span class="count">5</span></button>
+        <button type="button" class="ev-pill" data-filter="virtual">Virtual <span class="count">3</span></button>
+        <button type="button" class="ev-pill" data-filter="talk">Conference talks <span class="count">2</span></button>
+        <button type="button" class="ev-pill" data-filter="client">Client-only <span class="count">1</span></button>
       </div>
 
       <!-- Featured event -->
@@ -1161,7 +1171,7 @@
   </div>
 </footer>
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 <script>
 // Filter pills
 (function() {

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 <style>
 /* ====== integrations page ====== */
@@ -719,6 +719,56 @@
   .auth-cell:nth-child(2n) { border-right: 0; }
 }
 
+@media (max-width: 820px) {
+  .int-section { padding: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(3rem, 6vw, 5rem); }
+  .detail-grid { grid-template-columns: repeat(2, 1fr); }
+  .detail-cell { padding: 1.4rem 1.25rem; }
+  .request { padding: clamp(3.5rem, 7vw, 6rem) 0; }
+  .request-form { padding: 1.75rem; }
+  .int-mark { font-size: 0.9em; }
+}
+@media (max-width: 720px) {
+  .strip-cell { padding: 1.5rem 1.25rem; }
+  .strip-v { font-size: clamp(40px, 12vw, 64px); }
+  .filter-label { width: 100%; }
+  .filter-pills { width: 100%; }
+  .pill { padding: 7px 11px; font-size: 10.5px; }
+  .detail-title { font-size: clamp(24px, 7vw, 34px); }
+  .request-form { padding: 1.5rem 1.25rem; }
+  .form-input { font-size: 16px; }
+  .int { padding: 1.4rem 1.1rem; min-height: 170px; }
+  .int-mark [class^="wm-"] { font-size: 18px !important; }
+  .auth-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+  .detail-head { gap: 1.25rem; margin-bottom: 1.75rem; }
+}
+@media (max-width: 520px) {
+  .int-grid { grid-template-columns: 1fr; }
+  .int { padding: 1.25rem 1rem; min-height: 150px; }
+  .int-head { margin-bottom: 1rem; }
+  .int-mark { min-height: 28px; margin-bottom: 0.75rem; }
+  .int-mark [class^="wm-"] { font-size: 20px !important; letter-spacing: -0.02em !important; }
+  .hero-int { padding: clamp(4rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3rem); }
+  .hero-int h1 { font-size: clamp(36px, 10vw, 44px); }
+  .hero-int .dek { font-size: 15.5px; }
+  .request-title { font-size: clamp(30px, 9vw, 48px); }
+  .request-dek { font-size: 15px; margin-bottom: 1.5rem; }
+  .request-form { padding: 1.25rem 1rem; gap: 1rem; }
+  .strip-cell { padding: 1.25rem 1rem; }
+  .strip-v { font-size: clamp(36px, 11vw, 56px); }
+  .auth-cell { padding: 1rem 0.75rem; }
+  .detail-cell { padding: 1.2rem 1rem; }
+  .detail-name { font-size: 15px; }
+  .detail-body { font-size: 12.5px; }
+  .pill { padding: 6px 9px; font-size: 10px; }
+  .int-cat { font-size: 9px; padding: 2px 5px; }
+}
+@media (max-width: 380px) {
+  .hero-int h1 { font-size: clamp(34px, 12vw, 56px); letter-spacing: -0.035em; }
+  .request-title { font-size: clamp(26px, 9vw, 40px); }
+  .int-mark [class^="wm-"] { font-size: 17px !important; }
+  .strip-v { font-size: clamp(32px, 11vw, 48px); }
+}
+
 </style>
 </head>
 <body>
@@ -800,40 +850,6 @@
           <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
         </ul>
       </div>
-      <div class="mnav-group secondary">
-        <h5>Resources</h5>
-        <ul class="mnav-list">
-          <li><a href="calculator.html" data-nav="calculator">Calculator <span class="ar">→</span></a></li>
-          <li><a href="integrations.html" data-nav="integrations">Integrations <span class="ar">→</span></a></li>
-          <li><a href="docs.html" data-nav="docs">Docs <span class="ar">→</span></a></li>
-          <li><a href="watch.html" data-nav="watch">Watch <span class="ar">→</span></a></li>
-          <li><a href="journal.html" data-nav="journal">Journal <span class="ar">→</span></a></li>
-          <li><a href="help.html" data-nav="help">Help <span class="ar">→</span></a></li>
-          <li><a href="glossary.html" data-nav="glossary">Glossary <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Company</h5>
-        <ul class="mnav-list">
-          <li><a href="manifesto.html" data-nav="manifesto">Manifesto <span class="ar">→</span></a></li>
-          <li><a href="careers.html" data-nav="careers">Careers <span class="ar">→</span></a></li>
-          <li><a href="partners.html" data-nav="partners">Partners <span class="ar">→</span></a></li>
-          <li><a href="press.html" data-nav="press">Press <span class="ar">→</span></a></li>
-          <li><a href="events.html" data-nav="events">Events <span class="ar">→</span></a></li>
-          <li><a href="research.html" data-nav="research">Research <span class="ar">→</span></a></li>
-          <li><a href="report-2026.html" data-nav="report-2026">2026 report <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-      <div class="mnav-group secondary">
-        <h5>Product &amp; trust</h5>
-        <ul class="mnav-list">
-          <li><a href="roadmap.html" data-nav="roadmap">Roadmap <span class="ar">→</span></a></li>
-          <li><a href="changelog.html" data-nav="changelog">Changelog <span class="ar">→</span></a></li>
-          <li><a href="status.html" data-nav="status">Status <span class="ar">→</span></a></li>
-          <li><a href="security.html" data-nav="security">Security <span class="ar">→</span></a></li>
-          <li><a href="trust.html" data-nav="trust">Trust <span class="ar">→</span></a></li>
-        </ul>
-      </div>
     </div>
     <div class="mobile-nav-foot">
       <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
@@ -891,15 +907,15 @@
       <div class="filter-inner">
         <div class="filter-pills" role="tablist" aria-label="Integration categories">
           <span class="filter-label">◆ Filter</span>
-          <button class="pill is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-          <button class="pill" data-filter="ehr" role="tab">EHR</button>
-          <button class="pill" data-filter="legal" role="tab">Legal</button>
-          <button class="pill" data-filter="finance" role="tab">Finance / ERP</button>
-          <button class="pill" data-filter="proptech" role="tab">PropTech</button>
-          <button class="pill" data-filter="commerce" role="tab">Commerce</button>
-          <button class="pill" data-filter="hr" role="tab">HR / ATS</button>
-          <button class="pill" data-filter="crm" role="tab">CRM</button>
-          <button class="pill" data-filter="comms" role="tab">Comms</button>
+          <button type="button" class="pill is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button type="button" class="pill" data-filter="ehr" role="tab">EHR</button>
+          <button type="button" class="pill" data-filter="legal" role="tab">Legal</button>
+          <button type="button" class="pill" data-filter="finance" role="tab">Finance / ERP</button>
+          <button type="button" class="pill" data-filter="proptech" role="tab">PropTech</button>
+          <button type="button" class="pill" data-filter="commerce" role="tab">Commerce</button>
+          <button type="button" class="pill" data-filter="hr" role="tab">HR / ATS</button>
+          <button type="button" class="pill" data-filter="crm" role="tab">CRM</button>
+          <button type="button" class="pill" data-filter="comms" role="tab">Comms</button>
         </div>
         <div class="filter-count"><span data-count>40</span> of <strong>40</strong> shown</div>
       </div>
@@ -1649,6 +1665,6 @@
   });
 })();
 </script>
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=7"></script>
 </body>
 </html>
