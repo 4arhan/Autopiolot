@@ -1250,6 +1250,187 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   .skeleton { animation: none; }
 }
 
+/* ---------- ROLES WE REPLACE — professional AI agents ---------- */
+.roles-section {
+  padding: clamp(5rem, 9vw, 9rem) 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.roles-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 32% at 90% 8%, rgba(0,82,255,0.05), transparent 60%),
+    radial-gradient(ellipse 38% 25% at 5% 100%, rgba(0,82,255,0.04), transparent 60%);
+  pointer-events: none;
+}
+.roles-section > .container { position: relative; z-index: 1; }
+.roles-head {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+  align-items: end;
+}
+.roles-head .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.roles-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 64px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0;
+}
+.roles-head h2 em { color: var(--accent); font-style: normal; font-weight: 500; }
+.roles-head p {
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  margin: 0;
+  max-width: 48ch;
+}
+.roles-head p em { color: var(--ink); font-style: normal; font-weight: 500; }
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
+}
+.role-card {
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 1.85rem 1.6rem 1.5rem;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: background 220ms var(--ease), transform 220ms var(--ease);
+  position: relative;
+  min-height: 280px;
+}
+.role-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--ease);
+}
+.role-card:hover { background: var(--paper-3); }
+.role-card:hover::before { transform: scaleX(1); }
+.role-num {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.role-num .channel {
+  color: var(--muted);
+  letter-spacing: 0.14em;
+}
+.role-name {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--ink);
+  margin: 0.15rem 0 0;
+}
+.role-name em { color: var(--accent); font-style: normal; font-weight: 500; }
+.role-replaces {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 0.65rem;
+  border-bottom: 1px dashed var(--line-strong);
+}
+.role-replaces b {
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+.role-does {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  line-height: 1.55;
+}
+.role-stat {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding-top: 0.7rem;
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.role-stat b {
+  color: var(--ink);
+  font-weight: 500;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+.roles-foot {
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.roles-foot a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  transition: color 180ms;
+}
+.roles-foot a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+@media (max-width: 1024px) {
+  .roles-head { grid-template-columns: 1fr; align-items: start; gap: 1.25rem; }
+  .roles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .roles-grid { grid-template-columns: 1fr; }
+  .role-card { padding: 1.4rem 1.2rem 1.2rem; min-height: 0; }
+  .role-name { font-size: 20px; }
+  .role-does { font-size: 13px; }
+}
+
 /* Mobile nav pitch (vs. token-meter vendors) */
 .mnav-pitch { display: none; }
 @media (max-width: 1024px) {
@@ -1300,7 +1481,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
 <header class="topbar">
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
       <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
       <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
       <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
@@ -1316,7 +1497,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
       <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
       <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
       <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
       <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
       <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
       <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
@@ -1381,7 +1562,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     <div class="mobile-nav-foot">
       <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
       <div class="mfoot-meta">
-        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
+        <span>Global · 24/7 · <span data-clock>—</span></span>
         <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
       </div>
     </div>
@@ -1398,19 +1579,19 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
 
           <div class="home-eyebrow reveal">
             <span class="home-eyebrow-dot" aria-hidden="true"></span>
-            AI agents · Pay per outcome
+            AI agents that automate the manual work · Pay per outcome
           </div>
 
           <h1 class="home-headline reveal delay-1">
-            Agents that<br><em>finish</em> the job.
+            We replace the<br><em>repetitive</em> job.
           </h1>
 
           <p class="home-dek home-dek-long reveal delay-2">
-            Most AI vendors sell you <em>tools</em>. We ship you the <em>outcome</em>. Autopilot Labs builds <em>vertical AI agents</em> that complete your team's repetitive work — patient intake, invoice reconciliation, lease abstraction, case-file drafting, inbound calls in <em>14 languages, Arabic included</em>. Hubs in <em>Melbourne, Dubai, Riyadh</em>. You pay per completed outcome — never per seat, never per token.
+            Autopilot Labs builds <em>professional AI agents</em> that take over the repetitive, manual work your team does every day — answering inbound calls, booking patients, chasing invoices, abstracting leases, dispatching drivers, replying to refunds — and ships the <em>finished outcome</em> straight back into your existing systems. Voice, email, chat and back-office, in <em>14 languages, Arabic included</em>, on a written SLA. You pay per completed job — never per seat, never per token.
           </p>
 
           <p class="home-dek home-dek-short reveal delay-2">
-            We build vertical AI agents that <em>complete your workflows</em> — billed per finished job, not per token. If the agent misses SLA, you don't pay.
+            Professional AI agents that <em>do the manual work</em> for you — inbound calls, intake, reconciliation, dispatch — billed per finished job, not per token. Miss the SLA, you don't pay.
           </p>
 
           <div class="home-cta reveal delay-2">
@@ -1432,8 +1613,8 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
               <div class="l">Voice languages · incl. Arabic</div>
             </div>
             <div class="p">
-              <div class="n">3</div>
-              <div class="l">Hubs · MEL · DXB · RUH</div>
+              <div class="n">24/7</div>
+              <div class="l">Always-on · Global delivery</div>
             </div>
           </div>
         </div>
@@ -1462,16 +1643,136 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     </div>
   </section>
 
+  <!-- ========== ROLES WE REPLACE — professional AI agents ========== -->
+  <section class="roles-section" aria-labelledby="roles-h2">
+    <div class="container">
+      <div class="roles-head reveal">
+        <div>
+          <div class="eyebrow">Roles we replace · § 01</div>
+          <h2 id="roles-h2">Hire an <em>AI</em><br>for the desk.</h2>
+        </div>
+        <p>
+          Every box below is a <em>professional role</em> we ship as an AI agent — answering the phone, taking the booking, chasing the invoice, opening the file. Trained on your scripts, plugged into your systems, billed per finished job. Your team stops doing the repetitive part. The role still shows up — just <em>at 03:00, in 14 languages, for a fraction of the cost</em>.
+        </p>
+      </div>
+
+      <div class="roles-grid reveal delay-1">
+
+        <article class="role-card">
+          <div class="role-num"><span>01 · Voice</span><span class="channel">Inbound</span></div>
+          <h3 class="role-name"><em>Inbound</em> call-center agent</h3>
+          <div class="role-replaces">Replaces <b>Tier-1 phone rep</b></div>
+          <p class="role-does">Picks up in &lt; 2 rings, identifies the caller against your CRM, triages intent, answers FAQ from your knowledge base, books or reschedules, and writes the disposition note back into the system. Escalates the 8% it can't close — with full context attached.</p>
+          <div class="role-stat"><b>14</b> languages · <b>24/7</b> · per call</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>02 · Voice</span><span class="channel">Outbound</span></div>
+          <h3 class="role-name"><em>Outbound</em> call-center agent</h3>
+          <div class="role-replaces">Replaces <b>dialer team</b></div>
+          <p class="role-does">Runs your outbound list — appointment confirmations, AR collections, surveys, lead-qualification, win-back. Books to your calendar, captures payment intents, respects DNC, retries on a sane cadence, and drops a clean call-summary into the CRM after every dial.</p>
+          <div class="role-stat"><b>~40</b> dials/hr · per connect</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>03 · Voice</span><span class="channel">Healthcare</span></div>
+          <h3 class="role-name"><em>Medical</em> receptionist</h3>
+          <div class="role-replaces">Replaces <b>front-desk staff</b></div>
+          <p class="role-does">Answers patient calls, books and reschedules appointments, takes refill requests, captures insurance details and copay, runs eligibility checks, and writes the visit note straight into the EMR. HIPAA-aware, audit-logged, with a same-day human handoff for clinical questions.</p>
+          <div class="role-stat"><b>EMR-native</b> · per booking</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>04 · Voice + Email</span><span class="channel">Insurance</span></div>
+          <h3 class="role-name"><em>Claims</em> intake (FNOL)</h3>
+          <div class="role-replaces">Replaces <b>FNOL desk</b></div>
+          <p class="role-does">Takes the first-notice-of-loss call 24/7, captures structured fields (location, parties, photos), opens the claim file in the carrier's system, dispatches the assessor, and sends a written summary to the insured before the call ends.</p>
+          <div class="role-stat"><b>24/7</b> intake · per FNOL</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>05 · Voice + Email</span><span class="channel">Legal</span></div>
+          <h3 class="role-name"><em>Legal</em> intake specialist</h3>
+          <div class="role-replaces">Replaces <b>new-matter intake</b></div>
+          <p class="role-does">Qualifies new matters from inbound calls and forms, runs conflict checks against your case database, books the consult, opens the matter, sends the engagement letter, and routes the file to the right partner with a one-page brief attached.</p>
+          <div class="role-stat"><b>Conflict-checked</b> · per matter</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>06 · Voice + Email</span><span class="channel">Finance</span></div>
+          <h3 class="role-name"><em>AR &amp; collections</em> specialist</h3>
+          <div class="role-replaces">Replaces <b>AR analyst</b></div>
+          <p class="role-does">Calls and emails customers about overdue invoices, takes promise-to-pay, captures partial payments, schedules follow-ups, and escalates the disputes worth a human's time. Posts every interaction back into the ledger and the CRM.</p>
+          <div class="role-stat">DSO <b>↓ 18%</b> · per recovery</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>07 · Multi-channel</span><span class="channel">Sales</span></div>
+          <h3 class="role-name"><em>Sales</em> development rep</h3>
+          <div class="role-replaces">Replaces <b>SDR / BDR</b></div>
+          <p class="role-does">Researches accounts against your ICP, drafts personalised outreach (email, LinkedIn, voice drop), runs cadences, handles common objections, books qualified meetings on your AE's calendar, and pre-fills the discovery doc before the call.</p>
+          <div class="role-stat"><b>5×</b> meeting volume · per booked</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>08 · Voice</span><span class="channel">HR</span></div>
+          <h3 class="role-name"><em>HR</em> phone screener</h3>
+          <div class="role-replaces">Replaces <b>first-round recruiter</b></div>
+          <p class="role-does">Runs structured first-round screens against your scoring rubric, books the on-site for the keepers, sends declines with feedback, and writes a 5-line summary into the ATS for every candidate it talked to. Bias-controlled, transcript on file.</p>
+          <div class="role-stat"><b>15-min</b> turnaround · per screen</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>09 · Email + Chat</span><span class="channel">Support</span></div>
+          <h3 class="role-name"><em>Customer support</em> Tier-1</h3>
+          <div class="role-replaces">Replaces <b>L1 support agent</b></div>
+          <p class="role-does">Handles the 80% of repeat tickets — refunds, WISMO, password resets, invoice copies, plan changes — end-to-end, in your tone of voice. Escalates the rest with a clean handoff packet so your humans walk into context, not chaos.</p>
+          <div class="role-stat"><b>82%</b> deflection · per resolved</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>10 · Voice</span><span class="channel">Logistics</span></div>
+          <h3 class="role-name"><em>Dispatch</em> &amp; driver liaison</h3>
+          <div class="role-replaces">Replaces <b>dispatch desk</b></div>
+          <p class="role-does">Answers the driver hotline 24/7, handles ETA changes, re-routes around exceptions, reschedules deliveries with the customer, opens incident tickets, and pings the on-call human only when the rules say so.</p>
+          <div class="role-stat"><b>24/7</b> coverage · per shipment</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>11 · Voice</span><span class="channel">Hospitality</span></div>
+          <h3 class="role-name"><em>Concierge</em> &amp; booking desk</h3>
+          <div class="role-replaces">Replaces <b>night-audit + reception</b></div>
+          <p class="role-does">Takes booking calls in 14 languages, answers FAQ on the property, processes upsells (late checkout, breakfast, transfer), sends confirmations, and drops a post-stay review request at the right moment. Fully PMS-integrated.</p>
+          <div class="role-stat"><b>+12%</b> upsell · per booking</div>
+        </article>
+
+        <article class="role-card">
+          <div class="role-num"><span>12 · Voice</span><span class="channel">Front office</span></div>
+          <h3 class="role-name"><em>Reception</em> &amp; switchboard</h3>
+          <div class="role-replaces">Replaces <b>front desk / receptionist</b></div>
+          <p class="role-does">Greets every call, takes structured messages, books meetings into shared calendars, routes to the right person, sends follow-up emails, and covers the line after-hours so no caller hits a voicemail dead-end. Speaks in your brand's tone.</p>
+          <div class="role-stat"><b>0</b> missed calls · per call</div>
+        </article>
+
+      </div>
+
+      <div class="roles-foot">
+        <span>◎ Don't see your role? · We custom-build new ones in 2 weeks.</span>
+        <a href="contact.html">Brief us on the role →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== WHAT WE DO — 13 industries + voice ========== -->
   <section class="do-section">
     <div class="container">
       <div class="do-head reveal">
         <div>
-          <div class="do-eyebrow">What we do · § 01</div>
+          <div class="do-eyebrow">What we do · § 02</div>
           <h2>Thirteen industries.<br><em>One-hundred-fifty+</em> ready agents.</h2>
         </div>
         <p>
-          We don't build horizontal AI. Each practice area ships a <em>pre-priced catalogue</em> of agents, a target SLA, and a shortlist of workflows we're ready to audit, build and run — plus an always-on <em>voice desk in 14 languages</em> (Arabic included) that slots into Aircall, Twilio, RingCentral, or your existing phone stack. <em>Melbourne · Dubai · Riyadh · global.</em>
+          We don't build horizontal AI. Each practice area ships a <em>pre-priced catalogue</em> of agents, a target SLA, and a shortlist of workflows we're ready to audit, build and run — plus an always-on <em>voice desk in 14 languages</em> (Arabic included) that slots into Aircall, Twilio, RingCentral, or your existing phone stack. <em>Available globally · always-on.</em>
         </p>
       </div>
 
@@ -1652,7 +1953,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     <div class="container">
       <div class="vf-head reveal">
         <div>
-          <div class="vf-eyebrow">Flagship · cross-cutting · § 02</div>
+          <div class="vf-eyebrow">Flagship · cross-cutting · § 03</div>
           <h2>A voice desk.<br>In <em>14 languages</em>.<br>That never misses a ring.</h2>
         </div>
         <div>
@@ -1700,7 +2001,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   <section class="diff">
     <div class="container">
       <div class="diff-head reveal">
-        <div class="diff-eyebrow">Why we exist · § 03</div>
+        <div class="diff-eyebrow">Why we exist · § 04</div>
         <h2>Three things every other<br>AI agency gets <em>wrong</em>.</h2>
         <p>Most AI agencies sell a chatbot and a subscription. We sell finished work, measured in units your CFO already tracks.</p>
       </div>
@@ -1784,7 +2085,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   <section class="ops">
     <div class="container">
       <div class="ops-head reveal">
-        <div class="ops-eyebrow">What you see · § 04</div>
+        <div class="ops-eyebrow">What you see · § 05</div>
         <h2>Every outcome, <em>audited</em>.<br>Every SLA, <em>live</em>.</h2>
         <p>One console, live, for every seat on your team. No screenshots, no PDFs, no "ask your CSM." A read-only seat lands in your inbox within 24 hours of signing the audit letter.</p>
       </div>
@@ -1847,7 +2148,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     <div class="container">
       <div class="proof-head reveal">
         <div class="l">
-          <div class="eyebrow">How we work · § 05</div>
+          <div class="eyebrow">How we work · § 06</div>
           <h2>Four principles on<br>every <em>contract</em>.</h2>
         </div>
         <div class="r">
@@ -1902,7 +2203,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     <div class="footer-top">
       <div class="footer-brand">
         <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat. Not per token.</p>
+        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat. Not per token.</p>
       </div>
       <div class="footer-col">
         <h5>Work</h5>
@@ -1956,7 +2257,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
       <div class="left">
         <span>© 2026 Autopilot Labs Pty Ltd</span>
         <span>·</span>
-        <span>L14 · 459 Collins St · Melbourne VIC 3000</span>
+        <span>Global · Remote-first · 24/7 delivery</span>
         <span>·</span>
         <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
       </div>
