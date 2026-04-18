@@ -404,8 +404,8 @@ em, .italic {
 /* ---- Hamburger (animated) ---- */
 .menu-toggle {
   display: none;
-  width: 44px; height: 44px;
-  border: 1px solid var(--line-strong);
+  width: 48px; height: 48px;
+  border: 1.5px solid var(--ink);
   background: var(--paper);
   padding: 0;
   cursor: pointer;
@@ -413,16 +413,30 @@ em, .italic {
   border-radius: 0;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  transition: background .18s, border-color .18s;
+}
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
+  background: var(--paper-2);
+  outline: none;
+}
+/* When open: dark fill so it's unmistakably "close" */
+.menu-toggle[aria-expanded="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.menu-toggle[aria-expanded="true"] .bar {
+  background: var(--paper);
 }
 .menu-toggle .bar {
   position: absolute; left: 50%; top: 50%;
   width: 18px; height: 1.5px;
   background: var(--ink);
   transform: translate(-50%, -50%);
-  transition: transform .28s var(--ease), top .22s var(--ease), opacity .15s linear;
+  transition: transform .28s var(--ease), top .22s var(--ease), opacity .15s linear, background .18s;
 }
-.menu-toggle .bar.b1 { transform: translate(-50%, calc(-50% - 5px)); }
-.menu-toggle .bar.b3 { transform: translate(-50%, calc(-50% + 5px)); }
+.menu-toggle .bar.b1 { transform: translate(-50%, calc(-50% - 5.5px)); }
+.menu-toggle .bar.b3 { transform: translate(-50%, calc(-50% + 5.5px)); }
 .menu-toggle[aria-expanded="true"] .bar.b1 { transform: translate(-50%, -50%) rotate(45deg); }
 .menu-toggle[aria-expanded="true"] .bar.b2 { opacity: 0; }
 .menu-toggle[aria-expanded="true"] .bar.b3 { transform: translate(-50%, -50%) rotate(-45deg); }
@@ -515,9 +529,13 @@ body.nav-locked {
   .mobile-nav > div:first-child,
   .mobile-nav > div:empty { display: none !important; }
 
-  /* Top buffer so content starts below the topbar */
+  /* Top buffer so content starts below the topbar AND the close button */
   .mobile-nav.open {
     padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+  }
+  /* Extra offset for the close button row */
+  .mobile-nav.open .mobile-nav-inner {
+    padding-top: 0.5rem !important;
   }
 
   /* Inner scrolls — takes all remaining vertical space */
@@ -627,41 +645,44 @@ body.nav-locked {
   display: none;
 }
 @media (max-width: 1024px) {
+  /* ---- Close button: sits in the top-right of the full-screen nav overlay ---- */
+  /* Always visible, high-contrast, large tap target */
   .mobile-nav.open .mnav-close {
     position: fixed !important;
-    top: calc(env(safe-area-inset-top, 0px) + 10px) !important;
-    right: max(var(--pad), 14px) !important;
-    z-index: 1002 !important;
+    top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
+    right: 16px !important;
+    z-index: 1100 !important;
     display: inline-flex !important;
     align-items: center;
-    gap: 8px;
-    height: 40px;
-    padding: 0 14px 0 12px;
+    justify-content: center;
+    gap: 7px;
+    min-width: 80px;
+    height: 44px;
+    padding: 0 16px;
     background: var(--ink);
     color: var(--paper);
-    border: 1px solid var(--ink);
-    border-radius: 999px;
+    border: 0;
+    border-radius: 0;
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    box-shadow: 0 6px 18px -8px rgba(9,9,11,0.35);
   }
   .mobile-nav.open .mnav-close .x {
     font-family: var(--font-display);
-    font-size: 20px;
+    font-size: 22px;
     line-height: 1;
-    font-weight: 400;
-    margin-top: -2px;
+    font-weight: 300;
+    margin-top: -1px;
   }
   .mobile-nav.open .mnav-close:hover,
+  .mobile-nav.open .mnav-close:active,
   .mobile-nav.open .mnav-close:focus-visible {
     background: var(--accent);
-    border-color: var(--accent);
     outline: none;
   }
 }

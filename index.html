@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=6">
+<link rel="stylesheet" href="assets/site.css?v=7">
 <link rel="stylesheet" href="assets/motion.css">
 
 <style>
@@ -27,17 +27,35 @@
   position: relative;
   overflow: hidden;
 }
-.home-hero .meta-row {
-  display: flex; justify-content: space-between; align-items: baseline;
+
+/* Mobile eyebrow badge */
+.home-eyebrow {
+  display: none; /* shown only on mobile via media query below */
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px 5px 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--line-accent);
+  border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted);
-  padding-bottom: 1.25rem; margin-bottom: clamp(2rem, 4vw, 3rem);
-  border-bottom: 1px solid var(--line);
-  flex-wrap: wrap; gap: 1rem;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  width: fit-content;
+  margin-bottom: 1.5rem;
 }
-.home-hero .meta-row b { color: var(--ink); font-weight: 500; letter-spacing: 0.14em; }
-.home-hero .meta-row .accent { color: var(--accent); }
+.home-eyebrow-dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 1.8s infinite ease-in-out;
+}
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+/* Short mobile dek — hidden on desktop */
+.home-dek-short { display: none !important; }
 
 .home-grid {
   display: grid;
@@ -95,6 +113,88 @@
   font-family: var(--font-mono);
   font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--muted);
+}
+
+/* ===== MOBILE HERO — completely re-done ===== */
+@media (max-width: 1000px) {
+  .home-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ledger { position: static !important; max-height: 460px; }
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    padding: 2.75rem 0 3rem;
+  }
+
+  /* Show mobile eyebrow, hide desktop meta-row */
+  .home-eyebrow { display: inline-flex; }
+
+  /* Centered single-column layout */
+  .home-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .home-headline {
+    font-size: clamp(54px, 15vw, 80px) !important;
+    line-height: 0.9 !important;
+    letter-spacing: -0.05em !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  /* Swap deks: hide long, show short */
+  .home-dek-long  { display: none !important; }
+  .home-dek-short {
+    display: block !important;
+    font-size: 17px !important;
+    line-height: 1.65 !important;
+    text-align: center;
+    max-width: 34ch !important;
+    margin: 0 auto 1.75rem !important;
+    color: var(--ink-3);
+  }
+
+  /* Stack CTAs full-width */
+  .home-cta {
+    flex-direction: column;
+    width: 100%;
+    max-width: 340px;
+    gap: 0.65rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .home-cta .btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 52px;
+  }
+
+  /* Stats: 2 × 2 grid, centered text */
+  .home-proof {
+    grid-template-columns: repeat(2, 1fr) !important;
+    width: 100%;
+    border-left: 1px solid var(--line);
+  }
+  .home-proof .p {
+    padding: 1.25rem 1rem !important;
+    text-align: center;
+    border-right: 1px solid var(--line) !important;
+    border-bottom: 1px solid var(--line);
+  }
+  /* kill right border on even items (col 2) */
+  .home-proof .p:nth-child(2n) { border-right: 0 !important; }
+  /* kill bottom border on last row */
+  .home-proof .p:nth-child(3),
+  .home-proof .p:nth-child(4) { border-bottom: 0; }
+  .home-proof .n { font-size: clamp(30px, 8vw, 42px) !important; }
+  .home-proof .l { font-size: 10px; }
+
+  /* Ledger: compact version below the fold */
+  .ledger {
+    max-height: 340px !important;
+  }
+  .ledger-chrome .u { display: none; }
 }
 
 /* ---------- LIVE LEDGER (hero right) ---------- */
@@ -204,14 +304,7 @@
 .ledger-foot a { color: var(--accent); font-weight: 600; }
 .ledger-foot a:hover { text-decoration: underline; }
 
-@media (max-width: 1000px) {
-  .home-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .ledger { position: static; max-height: 480px; }
-  .home-proof { grid-template-columns: repeat(2, 1fr); }
-  .home-proof .p:nth-child(2n) { border-right: 0; }
-  .home-proof .p:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .home-proof .p { padding: 1rem 1rem 1rem 0; }
-}
+/* hero responsive: handled in the MOBILE HERO block above */
 
 /* ---------- WHAT WE DO — 14 practice areas ---------- */
 .do-section { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); }
@@ -1300,24 +1393,29 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   <!-- ========== HERO ========== -->
   <section class="home-hero">
     <div class="container">
-      <div class="meta-row reveal">
-        <span>◎ <b>Autopilot Labs</b> · Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
-        <span>Not a chatbot · Not a Google re-skin · <span class="accent">Outcome-billed AI agents</span></span>
-      </div>
-
       <div class="home-grid">
         <div class="home-left">
+
+          <div class="home-eyebrow reveal">
+            <span class="home-eyebrow-dot" aria-hidden="true"></span>
+            AI agents · Pay per outcome
+          </div>
+
           <h1 class="home-headline reveal delay-1">
             Agents that<br><em>finish</em> the job.
           </h1>
 
-          <p class="home-dek reveal delay-2">
+          <p class="home-dek home-dek-long reveal delay-2">
             Google, Microsoft and OpenAI sell you <em>tools</em>. We ship you the <em>outcome</em>. Autopilot Labs builds <em>vertical AI agents</em> that complete your team's repetitive work — patient intake, invoice reconciliation, lease abstraction, case-file drafting, inbound calls in <em>14 languages, Arabic included</em>. Hubs in <em>Melbourne, Dubai, Riyadh</em>. You pay per completed outcome — never per seat, never per token.
+          </p>
+
+          <p class="home-dek home-dek-short reveal delay-2">
+            We build vertical AI agents that <em>complete your workflows</em> — billed per finished job, not per token. If the agent misses SLA, you don't pay.
           </p>
 
           <div class="home-cta reveal delay-2">
             <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-            <a href="cases.html" class="btn btn-lg">What you can achieve</a>
+            <a href="cases.html" class="btn btn-lg">See what we achieve</a>
           </div>
 
           <div class="home-proof reveal delay-3">
@@ -1871,7 +1969,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   </div>
 </footer>
 
-<script src="assets/site.js?v=6"></script>
+<script src="assets/site.js?v=7"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {
