@@ -287,4 +287,110 @@
     style.textContent = '@keyframes rotateWord {0%{opacity:0;transform:translateY(12px);filter:blur(3px)}100%{opacity:1;transform:none;filter:none}}';
     document.head.appendChild(style);
   }
+
+  // ---- Auto-stagger: apply incremental transition-delay to direct .reveal
+  //      children of any [data-stagger] container. Motion.css has a CSS
+  //      fallback; this handles counts > 8 and lets us keep things tidy.
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reducedMotion) {
+    document.querySelectorAll('[data-stagger]').forEach((container) => {
+      const step = parseInt(container.getAttribute('data-stagger-step') || '60', 10);
+      const max = parseInt(container.getAttribute('data-stagger-max') || '8', 10);
+      const children = container.querySelectorAll(':scope > .reveal');
+      children.forEach((child, i) => {
+        const n = Math.min(i, max);
+        child.style.transitionDelay = (n * step) + 'ms';
+      });
+    });
+  }
+
+  // ---- Count-up stats — animate any [data-count-to] element when it
+  //      enters the viewport. Supports integers and decimals; preserves
+  //      a leading sign or trailing symbol via data-prefix / data-suffix.
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    const targets = document.querySelectorAll('[data-count-to]');
+    if (targets.length) {
+      const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+      const animate = (el) => {
+        const to = parseFloat(el.getAttribute('data-count-to'));
+        if (isNaN(to)) return;
+        const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = parseInt(el.getAttribute('data-duration') || '1200', 10);
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const v = to * easeOutCubic(t);
+          el.textContent = prefix + v.toFixed(decimals) + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+          else el.classList.add('settled');
+        };
+        requestAnimationFrame(tick);
+      };
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            animate(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      targets.forEach((el) => {
+        el.classList.add('count-up');
+        el.textContent = (el.getAttribute('data-prefix') || '') + '0' + (el.getAttribute('data-suffix') || '');
+        io.observe(el);
+      });
+    }
+  }
+
+  // ---- Lazy fade-in for images marked .lazy-fade
+  document.querySelectorAll('img.lazy-fade').forEach((img) => {
+    if (img.complete) {
+      img.classList.add('ready');
+    } else {
+      img.addEventListener('load', () => img.classList.add('ready'), { once: true });
+      img.addEventListener('error', () => img.classList.add('ready'), { once: true });
+    }
+  });
+
+  // ---- Card cascade: when a grid enters the viewport, its children
+  //      fade in one after another. Works without modifying child markup.
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    const grids = [
+      '.roles-grid',
+      '.cs-list',
+      '.press-grid',
+      '.archive .grid',
+      '.int-grid'
+    ];
+    const selector = grids.join(',');
+    const nodes = document.querySelectorAll(selector);
+    if (nodes.length) {
+      const style = document.createElement('style');
+      style.textContent =
+        '.cascade > *{opacity:0;transform:translateY(10px);transition:opacity 520ms cubic-bezier(0.4,0,0.1,1),transform 520ms cubic-bezier(0.4,0,0.1,1)}' +
+        '.cascade.run > *{opacity:1;transform:none}';
+      document.head.appendChild(style);
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const grid = e.target;
+          const kids = grid.children;
+          for (let i = 0; i < kids.length; i++) {
+            const delay = Math.min(i * 55, 440);
+            kids[i].style.transitionDelay = delay + 'ms';
+          }
+          grid.classList.add('run');
+          io.unobserve(grid);
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+
+      nodes.forEach((g) => {
+        g.classList.add('cascade');
+        io.observe(g);
+      });
+    }
+  }
 })();
