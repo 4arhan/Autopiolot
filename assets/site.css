@@ -622,6 +622,50 @@ body.nav-locked {
   to   { opacity: 1; }
 }
 
+/* Mobile-nav explicit close button (injected by site.js) */
+.mnav-close {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .mobile-nav.open .mnav-close {
+    position: fixed !important;
+    top: calc(env(safe-area-inset-top, 0px) + 10px) !important;
+    right: max(var(--pad), 14px) !important;
+    z-index: 1002 !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 14px 0 12px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    box-shadow: 0 6px 18px -8px rgba(9,9,11,0.35);
+  }
+  .mobile-nav.open .mnav-close .x {
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 400;
+    margin-top: -2px;
+  }
+  .mobile-nav.open .mnav-close:hover,
+  .mobile-nav.open .mnav-close:focus-visible {
+    background: var(--accent);
+    border-color: var(--accent);
+    outline: none;
+  }
+}
+
 /* Narrow phones */
 @media (max-width: 520px) {
   .topbar-inner { padding: 0.55rem var(--pad) !important; min-height: 52px !important; }
@@ -1641,6 +1685,214 @@ blockquote {
   line-height: 1.55;
   color: var(--ink-2);
   margin: 1.5rem 0;
+}
+
+/* =========================================================
+   MOBILE-FIRST POLISH (2026-04)
+   Collapses the home hero, proof grid, footer, and the
+   sticky hero ledger below tablet widths so the landing
+   page reads cleanly on phones.
+   ========================================================= */
+
+/* Home hero: collapse two-col grid one step earlier */
+@media (max-width: 1000px) {
+  .home-grid {
+    grid-template-columns: 1fr !important;
+    gap: clamp(1.75rem, 4vw, 2.5rem) !important;
+  }
+  .home-hero .ledger {
+    position: static !important;
+    max-height: none !important;
+    order: 2;
+  }
+}
+
+/* Hero copy: tighten type + shrink headline on phones */
+@media (max-width: 720px) {
+  .home-hero { padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(2rem, 5vw, 3rem) !important; }
+  .home-headline { font-size: clamp(44px, 12vw, 72px) !important; line-height: 0.92 !important; }
+  .home-dek { font-size: 16px !important; line-height: 1.6 !important; }
+  .home-hero .meta-row { font-size: 10px; }
+  .home-cta .btn { flex: 1 1 auto; justify-content: center; min-height: 48px; }
+}
+
+/* Proof stats: 4 → 2 columns on small screens, 1 column on ultra-narrow */
+@media (max-width: 720px) {
+  .home-proof { grid-template-columns: repeat(2, 1fr) !important; }
+  .home-proof .p {
+    padding: 1rem 0.75rem 1rem 0 !important;
+  }
+  .home-proof .p:nth-child(2) { border-right: 0 !important; padding-right: 0 !important; }
+  .home-proof .p:nth-child(1), .home-proof .p:nth-child(2) {
+    border-bottom: 1px solid var(--line);
+  }
+  .home-proof .n { font-size: clamp(24px, 6vw, 32px) !important; }
+}
+@media (max-width: 380px) {
+  .home-proof { grid-template-columns: 1fr !important; }
+  .home-proof .p {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--line);
+    padding: 0.9rem 0 !important;
+  }
+  .home-proof .p:last-child { border-bottom: 0; }
+}
+
+/* Home ledger: shrink chrome + body on mobile so it doesn't dominate */
+@media (max-width: 720px) {
+  .ledger { max-height: 420px !important; }
+  .ledger-head, .ledger-row {
+    grid-template-columns: 56px 1fr 70px 60px !important;
+    gap: 0.5rem !important;
+    padding: 10px 12px !important;
+  }
+  .ledger-row { font-size: 12px !important; }
+  .ledger-chrome { height: 32px !important; font-size: 10px !important; }
+}
+
+/* Footer: collapse 4-col link blocks on phones */
+@media (max-width: 720px) {
+  .footer-top {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .footer-top { grid-template-columns: 1fr !important; }
+}
+
+/* Page hero (inner pages): more breathing room on phones */
+@media (max-width: 720px) {
+  .page-hero { padding: clamp(3rem, 8vw, 5rem) 0 clamp(2.5rem, 6vw, 4rem) !important; }
+  .hero-coord { gap: 0.5rem; font-size: 10px; }
+  .hero-coord .line { display: none; }
+}
+
+/* Tap-target floor for every in-flow button on touch screens */
+@media (max-width: 1024px) {
+  .btn, .btn-sm { min-height: 44px; }
+  .btn-lg { min-height: 52px; }
+}
+
+/* ==========================================================
+   "Not Google" ribbon — positions Autopilot Labs vs the
+   search giants. Reused on index / about / solutions / pricing.
+   ========================================================== */
+.vs-ribbon {
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(2.75rem, 6vw, 5rem) 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.vs-ribbon .vs-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.vs-ribbon .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.vs-ribbon .eyebrow::before {
+  content: '';
+  width: 18px; height: 1px;
+  background: var(--accent-2);
+}
+.vs-ribbon h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.25rem;
+  color: var(--paper);
+  text-wrap: balance;
+}
+.vs-ribbon h2 em {
+  color: var(--accent-2);
+  font-style: normal;
+  font-weight: 500;
+}
+.vs-ribbon p {
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.6;
+  color: rgba(255,255,255,0.75);
+  max-width: 46ch;
+}
+.vs-ribbon p em { color: var(--paper); font-weight: 500; font-style: normal; }
+.vs-ribbon .vs-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.vs-ribbon .vs-compare > div {
+  background: var(--ink);
+  padding: 1.25rem 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.vs-ribbon .vs-compare h6 {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+  margin: 0;
+}
+.vs-ribbon .vs-compare.us h6,
+.vs-ribbon .vs-compare > div.us h6 { color: var(--accent-2); }
+.vs-ribbon .vs-compare ul {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.vs-ribbon .vs-compare li {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.85);
+  display: flex;
+  gap: 0.6rem;
+}
+.vs-ribbon .vs-compare li::before {
+  content: '—';
+  color: rgba(255,255,255,0.35);
+  flex: 0 0 auto;
+}
+.vs-ribbon .vs-compare > div.us li::before { content: '✓'; color: var(--accent-2); }
+@media (max-width: 900px) {
+  .vs-ribbon .vs-inner { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .vs-ribbon .vs-compare { grid-template-columns: 1fr; }
+}
+
+/* Horizontal scroll fallback for wide tables/grids on phones */
+@media (max-width: 720px) {
+  .scroll-x-mobile {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .scroll-x-mobile > * { min-width: 620px; }
+}
+
+/* Prevent any hidden horizontal overflow on mobile */
+@media (max-width: 720px) {
+  html, body { overflow-x: hidden; }
 }
 
 /* --- Details/summary polish --- */

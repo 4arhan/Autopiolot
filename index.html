@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5">
+<link rel="stylesheet" href="assets/site.css?v=6">
 <link rel="stylesheet" href="assets/motion.css">
 
 <style>
@@ -1156,6 +1156,48 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   .diff-card, .case-card, .logo-card, .ops-card { transition: none; }
   .skeleton { animation: none; }
 }
+
+/* Mobile nav pitch (Google-positioning) */
+.mnav-pitch { display: none; }
+@media (max-width: 1024px) {
+  .mnav-pitch {
+    display: block;
+    padding: 1rem 1.1rem 1.15rem;
+    border: 1px solid var(--line-strong);
+    background: var(--paper-3);
+    margin-bottom: 0.25rem;
+  }
+  .mnav-pitch-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .mnav-pitch p {
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0 0 0.6rem;
+  }
+  .mnav-pitch p em { color: var(--accent); font-style: normal; font-weight: 500; }
+  .mnav-pitch-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 3px;
+  }
+  .mnav-pitch-link .ar { font-family: var(--font-mono); }
+}
 </style>
 </head>
 <body>
@@ -1225,6 +1267,11 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
     <div></div>
     <div class="mobile-nav-inner">
+      <div class="mnav-pitch" aria-hidden="false">
+        <span class="mnav-pitch-eyebrow">Why us, not Google?</span>
+        <p>Google hands you a toolbox. We hand you the <em>finished work</em> — billed per outcome, not per token.</p>
+        <a href="about.html" class="mnav-pitch-link">Read the case <span class="ar">→</span></a>
+      </div>
       <div class="mnav-group">
         <h5>Work</h5>
         <ul class="mnav-list">
@@ -1255,7 +1302,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     <div class="container">
       <div class="meta-row reveal">
         <span>◎ <b>Autopilot Labs</b> · Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
-        <span>Vertical AI agents · Per-outcome pricing · <span class="accent">14 languages · Arabic included</span></span>
+        <span>Not a chatbot · Not a Google re-skin · <span class="accent">Outcome-billed AI agents</span></span>
       </div>
 
       <div class="home-grid">
@@ -1265,7 +1312,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
           </h1>
 
           <p class="home-dek reveal delay-2">
-            Autopilot Labs builds <em>vertical AI agents</em> that do your team's most repetitive work — patient intake, invoice reconciliation, lease abstraction, case-file drafting, inbound phone calls <em>in 14 languages, Arabic included</em>. Hubs in <em>Melbourne, Dubai and Riyadh</em>, deployed globally. You pay when the AI ships the outcome. Not per seat. Not per token.
+            Google, Microsoft and OpenAI sell you <em>tools</em>. We ship you the <em>outcome</em>. Autopilot Labs builds <em>vertical AI agents</em> that complete your team's repetitive work — patient intake, invoice reconciliation, lease abstraction, case-file drafting, inbound calls in <em>14 languages, Arabic included</em>. Hubs in <em>Melbourne, Dubai, Riyadh</em>. You pay per completed outcome — never per seat, never per token.
           </p>
 
           <div class="home-cta reveal delay-2">
@@ -1600,6 +1647,41 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     </div>
   </section>
 
+  <!-- ========== VS. GOOGLE RIBBON ========== -->
+  <section class="vs-ribbon reveal">
+    <div class="container">
+      <div class="vs-inner">
+        <div>
+          <div class="eyebrow">Autopilot Labs vs. the platforms</div>
+          <h2>Google sells you a model.<br>We ship you the <em>finished work</em>.</h2>
+          <p>Gemini, Vertex AI Agent Builder, Copilot, OpenAI Assistants — they all hand you a toolbox and a bill per token. That's the <em>starting line</em>, not the finish line. Autopilot Labs runs the last mile: our agents are embedded in your workflows, audited live, and <em>billed per outcome that passes SLA</em>. If the job doesn't ship, you don't pay.</p>
+        </div>
+        <div class="vs-compare">
+          <div>
+            <h6>Platforms (Google, Microsoft, OpenAI)</h6>
+            <ul>
+              <li>You rent a model and a console</li>
+              <li>Billed per token, per seat, per call</li>
+              <li>You hire the team to wire it up</li>
+              <li>You own every failed run</li>
+              <li>Generic — built for everyone</li>
+            </ul>
+          </div>
+          <div class="us">
+            <h6>Autopilot Labs</h6>
+            <ul>
+              <li>We deliver a live, vertical agent</li>
+              <li>Billed per SLA-passing outcome</li>
+              <li>Deploy in 14 days, we do the wiring</li>
+              <li>If it misses SLA, we don't invoice</li>
+              <li>Purpose-built per industry</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== OPS CONSOLE ========== -->
   <section class="ops">
     <div class="container">
@@ -1789,7 +1871,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   </div>
 </footer>
 
-<script src="assets/site.js?v=5"></script>
+<script src="assets/site.js?v=6"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {
