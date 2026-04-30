@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=10">
+<link rel="stylesheet" href="assets/site.css?v=11">
 <link rel="stylesheet" href="assets/motion.css?v=1">
 
 <style>
@@ -307,7 +307,7 @@
 
 /* hero responsive: handled in the MOBILE HERO block above */
 
-/* ---------- WHAT WE DO — 14 practice areas ---------- */
+/* ---------- WHAT WE DO — vertical agents + voice ---------- */
 .do-section { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); }
 .do-head {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
@@ -1476,6 +1476,131 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   }
   .mnav-pitch-link .ar { font-family: var(--font-mono); }
 }
+
+/* ---------- CUSTOM INDUSTRY SECTION ---------- */
+.cust-section {
+  padding: clamp(5rem, 9vw, 9rem) 0;
+  background: var(--paper-3);
+  border-bottom: 1px solid var(--line);
+}
+.cust-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+.cust-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.cust-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.4vw, 64px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  max-width: 18ch;
+}
+.cust-head h2 em {
+  color: var(--accent);
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+}
+.cust-head p {
+  font-size: clamp(15.5px, 1.1vw, 18px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 50ch;
+}
+.cust-head p em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.cust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.cust-card {
+  background: var(--paper);
+  padding: 1.75rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background .25s var(--ease);
+  position: relative;
+}
+.cust-card:hover { background: var(--paper-2); }
+.cust-card .cust-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.cust-card .cust-cat {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cust-card h4 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0.35rem 0 0.5rem;
+}
+.cust-card p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+
+.cust-foot {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-top: clamp(2rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+.cust-foot p {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.5vw, 22px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-weight: 500;
+  max-width: 36ch;
+}
+
+@media (max-width: 900px) {
+  .cust-head { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .cust-grid { grid-template-columns: 1fr; }
+  .cust-card { padding: 1.5rem 1.25rem 1.35rem; }
+  .cust-foot { flex-direction: column; align-items: stretch; text-align: left; }
+  .cust-foot .btn { width: 100%; justify-content: center; }
+}
 </style>
 </head>
 <body>
@@ -1489,7 +1614,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
       <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
       <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
       <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
       <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
       <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
       <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
@@ -1505,7 +1630,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
       <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
       <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
       <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
       <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
       <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
       <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
@@ -1591,7 +1716,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
           </h1>
 
           <p class="home-dek home-dek-long reveal delay-2">
-            Autopilot Labs builds <em>professional AI agents</em> that take over the repetitive, manual work your team does every day — answering inbound calls, booking patients, chasing invoices, abstracting leases, dispatching drivers, replying to refunds — and ships the <em>finished outcome</em> straight back into your existing systems. Voice, email, chat and back-office, in <em>14 languages, Arabic included</em>, on a written SLA. You pay per completed job — never per seat, never per token.
+            Autopilot Labs builds <em>professional AI agents</em> that take over the repetitive, manual work your team does every day — answering inbound calls, booking patients, chasing invoices, abstracting leases, dispatching drivers, replying to refunds — and ships the <em>finished outcome</em> straight back into your existing systems. Voice, email, chat and back-office, <em>multilingual</em> (Arabic included), on a written SLA. <em>If we haven't shipped your industry yet, we custom-build it</em> on the same per-outcome contract. You pay per completed job — never per seat, never per token.
           </p>
 
           <p class="home-dek home-dek-short reveal delay-2">
@@ -1605,20 +1730,20 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
 
           <div class="home-proof reveal delay-3">
             <div class="p">
-              <div class="n"><span data-count-to="14">14</span></div>
-              <div class="l">Practice areas</div>
-            </div>
-            <div class="p">
               <div class="n"><span data-count-to="150">150</span><em>+</em></div>
               <div class="l">Agents in catalogue</div>
             </div>
             <div class="p">
-              <div class="n"><span data-count-to="14">14</span></div>
-              <div class="l">Voice languages · incl. Arabic</div>
-            </div>
-            <div class="p">
               <div class="n">24/7</div>
               <div class="l">Always-on · Global delivery</div>
+            </div>
+            <div class="p">
+              <div class="n">&lt;2 <em>rings</em></div>
+              <div class="l">Multilingual voice answer time</div>
+            </div>
+            <div class="p">
+              <div class="n"><em>0</em></div>
+              <div class="l">Per-token · per-seat charges</div>
             </div>
           </div>
         </div>
@@ -1656,7 +1781,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
           <h2 id="roles-h2">Hire an <em>AI</em><br>for the desk.</h2>
         </div>
         <p>
-          Every box below is a <em>professional role</em> we ship as an AI agent — answering the phone, taking the booking, chasing the invoice, opening the file. Trained on your scripts, plugged into your systems, billed per finished job. Your team stops doing the repetitive part. The role still shows up — just <em>at 03:00, in 14 languages, for a fraction of the cost</em>.
+          Every box below is a <em>professional role</em> we ship as an AI agent — answering the phone, taking the booking, chasing the invoice, opening the file. Trained on your scripts, plugged into your systems, billed per finished job. Your team stops doing the repetitive part. The role still shows up — just <em>at 03:00, in your customers' languages, for a fraction of the cost</em>.
         </p>
       </div>
 
@@ -1746,7 +1871,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
           <div class="role-num"><span>11 · Voice</span><span class="channel">Hospitality</span></div>
           <h3 class="role-name"><em>Concierge</em> &amp; booking desk</h3>
           <div class="role-replaces">Replaces <b>night-audit + reception</b></div>
-          <p class="role-does">Takes booking calls in 14 languages, answers FAQ on the property, processes upsells (late checkout, breakfast, transfer), sends confirmations, and drops a post-stay review request at the right moment. Fully PMS-integrated.</p>
+          <p class="role-does">Takes booking calls in your guests' languages, answers FAQ on the property, processes upsells (late checkout, breakfast, transfer), sends confirmations, and drops a post-stay review request at the right moment. Fully PMS-integrated.</p>
           <div class="role-stat"><b>+12%</b> upsell · per booking</div>
         </article>
 
@@ -1767,16 +1892,16 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     </div>
   </section>
 
-  <!-- ========== WHAT WE DO — 13 industries + voice ========== -->
+  <!-- ========== WHAT WE DO — vertical agents + voice ========== -->
   <section class="do-section">
     <div class="container">
       <div class="do-head reveal">
         <div>
           <div class="do-eyebrow">What we do · § 02</div>
-          <h2>Thirteen industries.<br><em>One-hundred-fifty+</em> ready agents.</h2>
+          <h2>Specialised industries.<br><em>And custom-built</em> where you need them.</h2>
         </div>
         <p>
-          We don't build horizontal AI. Each practice area ships a <em>pre-priced catalogue</em> of agents, a target SLA, and a shortlist of workflows we're ready to audit, build and run — plus an always-on <em>voice desk in 14 languages</em> (Arabic included) that slots into Aircall, Twilio, RingCentral, or your existing phone stack. <em>Available globally · always-on.</em>
+          We don't build horizontal AI. Each practice area ships a <em>pre-priced catalogue</em> of agents, a target SLA, and a shortlist of workflows we're ready to audit, build and run — plus an always-on <em>multilingual voice desk</em> (Arabic included) that slots into Aircall, Twilio, RingCentral, or your existing phone stack. <em>Don't see your industry? We custom-build a vertical</em> on the same per-outcome contract. <em>Available globally · always-on.</em>
         </p>
       </div>
 
@@ -1939,15 +2064,74 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
 
         <a href="solutions.html#voice" class="cell cell-feature cell-feature-voice">
           <div class="cell-top">
-            <span class="cell-num">14 · Voice agents · 14 languages</span>
+            <span class="cell-num">— · Voice agents · multilingual</span>
             <span class="cell-glyph" style="--glyph:url('assets/verticals/voice.svg')" aria-hidden="true"></span>
           </div>
           <div class="cell-feature-body">
-            <div class="cell-name">Voice · 14 languages</div>
-            <p class="cell-work">AI phone desk that crosses every industry. Inbound, outbound, multilingual (Arabic · Mandarin · Hindi · Spanish · +10 more). &lt; 2 rings to answer, writes the CRM note for you.</p>
+            <div class="cell-name">Multilingual voice desk</div>
+            <p class="cell-work">AI phone desk that crosses every industry. Inbound, outbound, multilingual — Arabic, English, Mandarin, Hindi, Spanish and the languages your customers actually call in. &lt; 2 rings to answer, writes the CRM note for you.</p>
           </div>
           <div class="cell-meta"><span>FLAGSHIP · 16 SKUs · &lt; 2 rings</span><span class="go">Open →</span></div>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CUSTOM INDUSTRY ========== -->
+  <section class="cust-section">
+    <div class="container">
+      <div class="cust-head reveal">
+        <div>
+          <div class="cust-eyebrow">Custom verticals · § 02b</div>
+          <h2>Don't see your industry?<br>We <em>custom-build</em> a vertical.</h2>
+        </div>
+        <p>
+          Same per-outcome contract. Same SLA. Same multilingual voice desk. We've spun up new verticals from a one-page brief in <em>4 to 8 weeks</em> — model picked for the workflow, integrations wired into your stack, agents priced per finished job before we ship a single one. If your industry isn't in the catalogue above, that's a feature, not a missing line item.
+        </p>
+      </div>
+
+      <div class="cust-grid reveal delay-1">
+        <article class="cust-card">
+          <div class="cust-num">A</div>
+          <div class="cust-cat">Pharma · field reps</div>
+          <h4>Sample-tracking &amp; HCP follow-up</h4>
+          <p>AI agent reconciles rep visit notes with sample-drop logs, drafts the next-touch email per HCP, files into Veeva. Per completed touch.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">B</div>
+          <div class="cust-cat">Construction · permits</div>
+          <h4>Council permit chase</h4>
+          <p>Calls councils, files RFIs, tracks lodgement IDs and approval status across multi-jurisdiction projects. Per resolved permit line.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">C</div>
+          <div class="cust-cat">Legal aid · intake</div>
+          <h4>After-hours legal-aid intake</h4>
+          <p>Multilingual triage of new matter calls, eligibility screen, conflict check, calendar booking with the duty solicitor. Per qualified intake.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">D</div>
+          <div class="cust-cat">Auto dealer · service</div>
+          <h4>Service-desk &amp; loaner-car</h4>
+          <p>Books service appointments, confirms loaner availability, handles WISMO calls on parts ETA, writes back to DMS. Per completed booking.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">E</div>
+          <div class="cust-cat">Aged care · roster</div>
+          <h4>Carer shift-fill desk</h4>
+          <p>Calls down the casual list when a shift opens, confirms compliance currency (NDIS, police check), books the cover, files the timesheet. Per shift filled.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">F</div>
+          <div class="cust-cat">Energy retail · metering</div>
+          <h4>Meter-reading reconciliation</h4>
+          <p>Cross-checks AMI reads against billing extract, opens dispute tickets, voice-confirms with site contact when reads diverge. Per reconciled meter.</p>
+        </article>
+      </div>
+
+      <div class="cust-foot reveal delay-2">
+        <p>If you can describe the workflow in a paragraph, we can quote it in a week.</p>
+        <a href="contact.html" class="btn btn-primary">Brief us on a custom vertical <span class="arrow">↗</span></a>
       </div>
     </div>
   </section>
@@ -1958,7 +2142,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
       <div class="vf-head reveal">
         <div>
           <div class="vf-eyebrow">Flagship · cross-cutting · § 03</div>
-          <h2>A voice desk.<br>In <em>14 languages</em>.<br>That never misses a ring.</h2>
+          <h2>A voice desk.<br><em>Multilingual</em>.<br>That never misses a ring.</h2>
         </div>
         <div>
           <p>One AI phone desk that plugs into <em>Aircall · Twilio · RingCentral · Zoom Phone · GoTo</em>. Answers inbound in under two rings, runs outbound against your list, warm-transfers on edge cases, <em>writes the CRM note</em> and the action items. Every call transcribed, scored and replayable on the ops console.</p>
@@ -2039,8 +2223,8 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
           <div class="no">— 03 · Vertical depth</div>
           <div class="fig">14<sub>practice areas</sub></div>
           <div class="figLabel">Nothing else</div>
-          <h3>Fourteen areas. <em>Nothing else.</em></h3>
-          <p>We don't do "AI for everything." Thirteen industries plus an always-on voice desk in 14 languages — and we turn down work outside them. Depth beats breadth, every single quarter.</p>
+          <h3>Specialised. <em>Custom-built where it counts.</em></h3>
+          <p>We don't do "AI for everything." Specialised industries plus an always-on multilingual voice desk — and a custom vertical when you bring us one we haven't shipped yet. Depth beats breadth, every single quarter.</p>
           <div class="vs">
             <b>Versus</b>
             Horizontal AI consultancies relearn your domain on every project. We already know what a SOAP note is, what a FNOL packet needs, what a chain-of-custody log requires, and why your LegalHold tag matters.
@@ -2178,8 +2362,8 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
         </article>
         <article class="principle">
           <span class="pn">— 04 · Vertical-only</span>
-          <h3>Fourteen areas. <em>Full stop.</em></h3>
-          <p>Thirteen industries plus a voice desk in 14 languages — and we turn down work outside them. You hire people who already speak the domain.</p>
+          <h3>Specialised. <em>Or custom-built.</em></h3>
+          <p>Specialised industries plus a multilingual voice desk — and a custom vertical when yours isn't on the shelf. You hire people who already speak the domain.</p>
         </article>
       </div>
     </div>
@@ -2207,7 +2391,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
     <div class="footer-top">
       <div class="footer-brand">
         <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat. Not per token.</p>
+        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk (Arabic, English and your customers' languages). We bill per completed outcome. Not per seat. Not per token.</p>
       </div>
       <div class="footer-col">
         <h5>Work</h5>
@@ -2274,7 +2458,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   </div>
 </footer>
 
-<script src="assets/site.js?v=10"></script>
+<script src="assets/site.js?v=11"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {
