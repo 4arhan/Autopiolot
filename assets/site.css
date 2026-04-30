@@ -1957,3 +1957,228 @@ summary:hover { color: var(--accent); }
   cursor: not-allowed;
   pointer-events: none;
 }
+
+/* =========================================================
+   MOBILE OVERHAUL 2026-04-30
+   Final pass: prevent iOS form-zoom, collapse grids late,
+   tighten section rhythm, ensure 44px tap targets, safe-area
+   insets, and softer typography across phones.
+   This block is intentionally last so it wins specificity ties.
+   ========================================================= */
+
+/* iOS Safari zooms text fields under 16px. Force >=16px on touch. */
+@media (max-width: 1024px) {
+  input, select, textarea,
+  .field input, .field select, .field textarea {
+    font-size: 16px !important;
+    line-height: 1.45;
+  }
+  .field input, .field select, .field textarea {
+    padding: 0.85rem 0.95rem;
+    min-height: 48px;
+  }
+  .field textarea { min-height: 120px; }
+}
+
+/* Tighter container padding on phones; safe-area friendly. */
+@media (max-width: 720px) {
+  :root { --pad: 16px; }
+  .container, .container-wide {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+}
+@media (max-width: 380px) {
+  :root { --pad: 14px; }
+  .container, .container-wide { padding-left: 14px; padding-right: 14px; }
+}
+
+/* Universal grid collapse — any 2-3 col grid shrinks to 1col under 560px. */
+@media (max-width: 560px) {
+  .ind-grid,
+  .roles-grid,
+  .cs-list,
+  .cs-grid,
+  .int-grid,
+  .arch-grid,
+  .article-grid,
+  .auth-grid,
+  .collab-grid,
+  .detail-grid,
+  .err-grid,
+  .ev-list,
+  .hours-grid,
+  .mark-grid,
+  .motion-grid,
+  .past-grid,
+  .principles-grid,
+  .pwall-grid,
+  .reach-grid,
+  .scenarios-list,
+  .spec-grid,
+  .voice-grid,
+  .form-row-grid,
+  .field-row {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+/* Stat strip: collapse to 1col on phones. */
+@media (max-width: 520px) {
+  .stat-strip { grid-template-columns: 1fr !important; }
+  .stat-cell {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--line);
+    padding: 1.5rem 1rem !important;
+  }
+  .stat-cell:last-child { border-bottom: 0; }
+  .stat-v { font-size: clamp(34px, 9vw, 48px) !important; }
+}
+
+/* Card padding tighter so two-line items don't crush text. */
+@media (max-width: 520px) {
+  .card { padding: 1.25rem 1.1rem; }
+}
+
+/* All hero/CTA action rows stack and go full-width on phones. */
+@media (max-width: 600px) {
+  .hero-actions,
+  .home-cta,
+  .cs-hero .acts,
+  .ab-hero .acts,
+  .end-cta .btns,
+  .cs-cta .acts,
+  .vf-cta,
+  .ops-cta,
+  .form-submit {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.65rem !important;
+  }
+  .hero-actions .btn,
+  .home-cta .btn,
+  .cs-hero .acts .btn,
+  .ab-hero .acts .btn,
+  .end-cta .btns .btn,
+  .cs-cta .acts .btn,
+  .vf-cta .btn,
+  .ops-cta .btn,
+  .form-submit .btn {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 50px;
+  }
+}
+
+/* Universal tap-target floor. Anchor-buttons + chips get min height. */
+@media (max-width: 1024px) {
+  a.btn, button, .chip, .menu-toggle, .mnav-close,
+  details summary {
+    min-height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .chip { padding: 9px 14px; }
+}
+
+/* Section rhythm: less vertical space on phones across all named sections. */
+@media (max-width: 720px) {
+  .section,
+  .home-hero,
+  .roles-section,
+  .do-section,
+  .voice-flag,
+  .diff,
+  .ops,
+  .proof,
+  .end-cta,
+  .ab-what,
+  .ab-bench,
+  .reach,
+  .pri,
+  .vs-ribbon,
+  .cs-cta,
+  .page-hero {
+    padding-top: clamp(2.75rem, 8vw, 4.5rem) !important;
+    padding-bottom: clamp(2.75rem, 8vw, 4.5rem) !important;
+  }
+}
+
+/* Section heads: stack columns; reduce big numerals. */
+@media (max-width: 720px) {
+  .section-head { grid-template-columns: 1fr !important; gap: 0.75rem !important; margin-bottom: 2rem !important; }
+  .section-num .big { font-size: 36px; margin-top: 0.25rem; }
+  .section-title { font-size: clamp(28px, 7vw, 42px); max-width: none; }
+}
+
+/* Tighten ticker on phones (already hidden on small, but the markup may show on tablets). */
+@media (max-width: 1024px) {
+  .ticker-track { gap: 1.25rem; }
+  .ticker-item { font-size: 10px; }
+}
+
+/* Footer safe-area & spacing. */
+@media (max-width: 720px) {
+  footer.site-footer, footer {
+    padding-top: 3rem;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important;
+  }
+  .footer-brand h3 { font-size: clamp(36px, 10vw, 56px); }
+  .footer-col h5 { margin-bottom: 0.85rem; padding-bottom: 0.5rem; }
+}
+
+/* Sticky topbar + scroll-prog: cover the safe-area on iOS. */
+.topbar { padding-top: env(safe-area-inset-top, 0px); }
+
+/* Make any wide table or pre block scroll cleanly on phones. */
+@media (max-width: 720px) {
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  pre, code {
+    word-break: normal;
+    white-space: pre;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+  pre { font-size: 12px; }
+}
+
+/* Eyebrow / mono labels readable at small sizes. */
+@media (max-width: 480px) {
+  .eyebrow { font-size: 9.5px; letter-spacing: 0.16em; }
+  .stat-k, .footer-col h5, .ticker-item { letter-spacing: 0.12em; }
+}
+
+/* Topbar refinement: subtle shadow once scrolled, tighter brand-mark on phone. */
+.topbar.is-scrolled {
+  box-shadow: 0 1px 0 var(--line), 0 8px 24px -16px rgba(9,9,11,0.18);
+}
+@media (max-width: 1024px) {
+  .topbar.is-scrolled { box-shadow: 0 1px 0 var(--line), 0 6px 18px -14px rgba(9,9,11,0.22); }
+  .brand-mark { width: 22px; height: 22px; }
+}
+
+/* Mobile-nav: smoother open animation, tap-friendly link rows. */
+@media (max-width: 1024px) {
+  .mobile-nav.open { animation: mnavSlide .26s var(--ease-out); }
+  .mnav-group:not(.secondary) a:active,
+  .mnav-group.secondary a:active { background: var(--paper-2); }
+  .mnav-group:not(.secondary) a { padding: 16px 4px !important; }
+  .mnav-group.secondary a { padding: 13px 4px !important; }
+}
+@keyframes mnavSlide {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Stop horizontal scroll from any rogue element site-wide on phones. */
+@media (max-width: 720px) {
+  body, main, section, header, footer { max-width: 100vw; }
+  img, svg, video, iframe { max-width: 100% !important; height: auto; }
+}
+
+/* Reduce-motion respect for the new keyframes. */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav.open { animation: none !important; }
+}
