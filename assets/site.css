@@ -212,7 +212,26 @@ em, .italic {
   background: var(--accent);
   color: var(--accent-fg);
   border-color: var(--accent);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(255,255,255,0.28) 50%,
+    transparent 65%,
+    transparent 100%);
+  transform: translateX(-100%);
+  transition: transform .9s var(--ease);
+  pointer-events: none;
+  z-index: -1;
+}
+.btn-primary:hover::after { transform: translateX(100%); }
 .btn-primary:hover {
   background: var(--accent-3);
   border-color: var(--accent-3);
