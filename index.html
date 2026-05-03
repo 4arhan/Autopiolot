@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=17">
+<link rel="stylesheet" href="assets/site.css?v=18">
 <link rel="stylesheet" href="assets/motion.css?v=1">
 
 <style>
@@ -44,17 +44,18 @@
   z-index: -2;
   opacity: 0.85;
 }
-/* Ambient backdrop layer 2: visible mesh of cobalt orbs that drift */
+/* Ambient backdrop layer 2: vivid mesh of cobalt + violet orbs */
 .home-hero::after {
   content: '';
   position: absolute;
   inset: -15%;
   background:
-    radial-gradient(ellipse 38% 42% at 92% 12%, rgba(0,82,255,0.42), transparent 62%),
-    radial-gradient(ellipse 28% 30% at 78% 60%, rgba(0,82,255,0.18), transparent 65%),
-    radial-gradient(ellipse 30% 28% at 8% 92%, rgba(0,82,255,0.16), transparent 62%),
-    radial-gradient(ellipse 18% 18% at 50% 0%,  rgba(0,82,255,0.08), transparent 70%);
-  filter: blur(40px);
+    radial-gradient(ellipse 42% 48% at 92% 8%,  rgba(0,82,255,0.55),  transparent 60%),
+    radial-gradient(ellipse 32% 34% at 78% 58%, rgba(98,38,255,0.22), transparent 62%),
+    radial-gradient(ellipse 32% 30% at 8% 92%,  rgba(0,180,255,0.20), transparent 60%),
+    radial-gradient(ellipse 22% 22% at 18% 18%, rgba(140,72,255,0.16), transparent 60%),
+    radial-gradient(ellipse 18% 20% at 50% -2%, rgba(0,82,255,0.12),  transparent 70%);
+  filter: blur(48px);
   pointer-events: none;
   z-index: -1;
   animation: heroOrbs 22s ease-in-out infinite alternate;
@@ -3351,7 +3352,7 @@ body::before {
   </div>
 </footer>
 
-<script src="assets/site.js?v=17"></script>
+<script src="assets/site.js?v=18"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {

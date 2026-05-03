@@ -2201,3 +2201,259 @@ summary:hover { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   .mobile-nav.open { animation: none !important; }
 }
+
+/* =========================================================
+   UNIVERSAL CARD POLISH 2026-05
+   Cobalt-glow lift on hover, layered shadows, accent corner stroke
+   — applied to every card-like element so the whole page feels
+   premium without per-section overrides.
+   ========================================================= */
+.card,
+.role,
+.cs-item,
+.ind,
+.cust-card,
+.diff-card,
+.case-card,
+.logo-card,
+.ops-card,
+.dir-panel,
+.sol-card,
+.stub,
+.svc-row,
+.faq-item,
+.partner-card,
+.author-card,
+.pri-card,
+.ev-card,
+.wp-paper,
+.dp-a {
+  transition:
+    transform .35s var(--ease),
+    box-shadow .35s var(--ease),
+    border-color .25s var(--ease),
+    background-color .2s var(--ease) !important;
+}
+@media (hover: hover) {
+  .card:hover,
+  .role:hover,
+  .cs-item:hover,
+  .ind:hover,
+  .cust-card:hover,
+  .diff-card:hover,
+  .case-card:hover,
+  .logo-card:hover,
+  .ops-card:hover,
+  .stub:hover,
+  .partner-card:hover,
+  .pri-card:hover,
+  .ev-card:hover {
+    transform: translateY(-4px) !important;
+    border-color: var(--line-accent) !important;
+    box-shadow:
+      0 0 0 1px rgba(0,82,255,0.06) inset,
+      0 12px 28px -16px rgba(9,9,11,0.20),
+      0 30px 56px -28px rgba(0,82,255,0.30) !important;
+  }
+}
+
+/* Section eyebrow upgrade: animated accent stroke that draws in on view */
+.eyebrow,
+.do-eyebrow,
+.cust-eyebrow,
+.vf-eyebrow,
+.dp-eyebrow,
+.diff-eyebrow,
+.ops-eyebrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 0;
+}
+.eyebrow::before {
+  content: none;
+}
+.eyebrow.accent::before,
+.do-eyebrow::before,
+.cust-eyebrow::before,
+.vf-eyebrow::before,
+.dp-eyebrow::before,
+.diff-eyebrow::before,
+.ops-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+  flex-shrink: 0;
+  display: inline-block;
+  position: relative;
+  overflow: visible;
+}
+.eyebrow.accent::after,
+.do-eyebrow::after,
+.cust-eyebrow::after,
+.vf-eyebrow::after,
+.dp-eyebrow::after,
+.diff-eyebrow::after,
+.ops-eyebrow::after {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-left: -32px;
+  margin-right: 4px;
+  animation: eyebrowDot 3s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(0,82,255,0.5);
+}
+@keyframes eyebrowDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,82,255,0.5); }
+  50%      { box-shadow: 0 0 0 6px rgba(0,82,255,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow.accent::after,
+  .do-eyebrow::after,
+  .cust-eyebrow::after,
+  .vf-eyebrow::after,
+  .dp-eyebrow::after,
+  .diff-eyebrow::after,
+  .ops-eyebrow::after { animation: none !important; }
+}
+
+/* Section transition divider — drop in between major sections */
+.section-divider {
+  position: relative;
+  height: 1px;
+  background: var(--line);
+  overflow: visible;
+}
+.section-divider::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  width: 80px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 1px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 5px rgba(0,82,255,0.10);
+}
+.section-divider::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+  opacity: 0.35;
+  animation: dividerSweep 7s ease-in-out infinite;
+}
+@keyframes dividerSweep {
+  0%, 100% { opacity: 0.15; transform: scaleX(0.4); }
+  50%      { opacity: 0.55; transform: scaleX(1); }
+}
+
+/* End-CTA cinematic upgrade — wherever .end-cta is used */
+.end-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #050510 !important;
+  color: var(--paper) !important;
+  border-top: 1px solid #1A1A22 !important;
+  border-bottom: 1px solid #1A1A22 !important;
+  padding: clamp(5rem, 10vw, 10rem) 0 !important;
+}
+.end-cta::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(ellipse 45% 55% at 88%  10%, rgba(0,82,255,0.55),  transparent 60%),
+    radial-gradient(ellipse 35% 35% at 12%  88%, rgba(98,38,255,0.32), transparent 60%),
+    radial-gradient(ellipse 30% 30% at 70%  70%, rgba(0,180,255,0.20), transparent 60%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: -1;
+  animation: endCTAOrbs 24s ease-in-out infinite alternate;
+}
+@keyframes endCTAOrbs {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-3%, 2%, 0) scale(1.06); }
+  100% { transform: translate3d(2%, -2%, 0) scale(0.97); }
+}
+.end-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, transparent 90%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, transparent 90%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.7;
+}
+.end-cta h2,
+.end-cta .h2 {
+  color: var(--paper) !important;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(40px, 5.4vw, 84px) !important;
+  letter-spacing: -0.045em;
+  line-height: 1.0;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  text-wrap: balance;
+}
+.end-cta h2 em, .end-cta .h2 em {
+  background: linear-gradient(135deg, #4A8BFF 0%, #A07BFF 50%, #4A8BFF 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  animation: endCTAGrad 8s ease-in-out infinite;
+  font-style: normal;
+  font-weight: 500;
+}
+@keyframes endCTAGrad {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.end-cta p { color: rgba(255,255,255,0.72) !important; }
+.end-cta p em { color: var(--paper) !important; font-weight: 500; }
+.end-cta .btns { gap: 0.75rem; }
+.end-cta .btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, #1A6BFF 100%) !important;
+  border-color: transparent !important;
+  color: var(--paper) !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.12) inset,
+    0 12px 32px -10px rgba(0,82,255,0.6),
+    0 0 0 0 rgba(0,82,255,0.4) !important;
+  transition: box-shadow .35s var(--ease), transform .35s var(--ease) !important;
+}
+.end-cta .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.18) inset,
+    0 18px 40px -12px rgba(0,82,255,0.75),
+    0 0 0 6px rgba(0,82,255,0.18) !important;
+}
+.end-cta .btn:not(.btn-primary) {
+  background: rgba(255,255,255,0.04) !important;
+  color: var(--paper) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.end-cta .btn:not(.btn-primary):hover {
+  background: rgba(255,255,255,0.10) !important;
+  border-color: rgba(255,255,255,0.32) !important;
+  color: var(--paper) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .end-cta::before { animation: none !important; }
+  .end-cta h2 em { animation: none !important; }
+}
