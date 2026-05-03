@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=14">
+<link rel="stylesheet" href="assets/site.css?v=15">
 <link rel="stylesheet" href="assets/motion.css?v=1">
 
 <style>
@@ -121,19 +121,19 @@
 .live-hud {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 8px 14px 8px 12px;
-  border: 1px solid var(--line-strong);
-  background: rgba(255,255,255,0.72);
+  gap: 10px;
+  padding: 6px 12px 6px 10px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.85);
   -webkit-backdrop-filter: saturate(160%) blur(8px);
   backdrop-filter: saturate(160%) blur(8px);
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: 10px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   width: fit-content;
 }
 .live-hud .lh-dot {
@@ -202,64 +202,45 @@
 
 .home-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
 }
 
 .home-headline {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(44px, 7vw, 108px);
-  line-height: 0.92;
-  letter-spacing: -0.05em;
+  font-size: clamp(38px, 4.6vw, 68px);
+  line-height: 1.0;
+  letter-spacing: -0.04em;
   color: var(--ink);
-  margin-bottom: clamp(1.5rem, 2.5vw, 2.25rem);
+  margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
   text-wrap: balance;
-  max-width: 14ch;
+  max-width: 16ch;
 }
 .home-headline em {
   color: var(--accent);
   position: relative;
-  display: inline-block;
-  background: linear-gradient(180deg, transparent 0%, transparent 60%, rgba(0,82,255,0.12) 60%, rgba(0,82,255,0.12) 92%, transparent 92%);
-  padding: 0 0.04em;
-}
-.home-headline em::before {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  bottom: -0.02em;
-  height: 0.12em;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: railDraw 1.4s cubic-bezier(.22,.61,.36,1) 0.5s forwards;
+  font-style: normal;
+  font-weight: 500;
 }
 .home-headline em::after {
   content: '';
   position: absolute;
-  right: -0.18em;
-  top: 0.12em;
-  width: 0.18em;
-  height: 0.18em;
+  left: 0; right: 0;
+  bottom: 0.04em;
+  height: 0.06em;
   background: var(--accent);
-  border-radius: 50%;
-  transform: scale(0);
-  animation: dotPop 0.6s cubic-bezier(.22,.61,.36,1) 1.6s forwards;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: railDraw 1.4s cubic-bezier(.22,.61,.36,1) 0.5s forwards;
+  opacity: 0.5;
 }
 @keyframes railDraw {
   to { transform: scaleX(1); }
 }
-@keyframes dotPop {
-  0%   { transform: scale(0); }
-  60%  { transform: scale(1.4); }
-  100% { transform: scale(1); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .home-headline em::before,
-  .home-headline em::after { animation: none !important; transform: none !important; }
-  .home-headline em::before { transform: scaleX(1) !important; }
+  .home-headline em::after { animation: none !important; transform: scaleX(1) !important; }
 }
 
 /* Scroll-for-more affordance at hero bottom */
@@ -305,53 +286,55 @@
 
 .home-dek {
   font-family: var(--font-display);
-  font-size: clamp(17px, 1.35vw, 21px);
+  font-size: clamp(15.5px, 1.1vw, 17.5px);
   line-height: 1.55;
   color: var(--ink-3);
-  max-width: 58ch;
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
-  padding-left: 1rem;
-  border-left: 2px solid var(--accent);
-  position: relative;
+  max-width: 52ch;
+  margin-bottom: clamp(1.75rem, 3vw, 2.25rem);
 }
 .home-dek em { color: var(--ink); font-weight: 500; }
-@media (max-width: 720px) {
-  .home-dek { padding-left: 0.85rem; border-left-width: 2px; }
-}
 
 .home-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
 
 .home-proof {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
+  background: var(--paper);
+  position: relative;
+  z-index: 2;
 }
 .home-proof .p {
-  padding: 1.25rem 1.25rem 1.25rem 0;
+  padding: clamp(1.5rem, 2.4vw, 2.25rem) clamp(1rem, 1.6vw, 1.75rem);
   border-right: 1px solid var(--line);
   position: relative;
-  transition: padding-left .35s var(--ease), background .25s var(--ease);
+  transition: background .25s var(--ease);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: hidden;
 }
 .home-proof .p::before {
   content: '';
   position: absolute;
   left: 0; right: 0;
-  bottom: -1px;
+  top: 0;
   height: 2px;
   background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .45s var(--ease);
 }
-.home-proof .p:hover { padding-left: 0.6rem; background: var(--paper-3); }
+.home-proof .p:hover { background: var(--paper-3); }
 .home-proof .p:hover::before { transform: scaleX(1); }
-.home-proof .p:last-child { border-right: 0; padding-right: 0; }
+.home-proof .p:last-child { border-right: 0; }
 .home-proof .n {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(36px, 3.4vw, 54px);
-  letter-spacing: -0.045em;
-  line-height: 0.95;
+  font-size: clamp(40px, 4.2vw, 64px);
+  letter-spacing: -0.05em;
+  line-height: 0.92;
   color: var(--ink);
   margin-bottom: 0.4rem;
   font-variant-numeric: tabular-nums;
@@ -451,17 +434,18 @@
   background: var(--paper);
   position: sticky; top: 104px;
   display: flex; flex-direction: column;
-  max-height: 640px;
+  max-height: 580px;
   overflow: hidden;
   box-shadow:
-    0 2px 0 var(--ink),
-    0 24px 50px -28px rgba(9,9,11,0.35),
-    0 60px 120px -60px rgba(0,82,255,0.28);
-  transform: perspective(1400px) rotateY(-1.5deg) rotateX(0.4deg);
-  transition: transform .5s var(--ease);
+    0 22px 44px -24px rgba(9,9,11,0.30),
+    0 60px 100px -60px rgba(0,82,255,0.32);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
 }
 .ledger:hover {
-  transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-3px);
+  transform: translateY(-3px);
+  box-shadow:
+    0 28px 56px -22px rgba(9,9,11,0.36),
+    0 70px 130px -55px rgba(0,82,255,0.40);
 }
 .ledger::before {
   content: '';
@@ -2475,25 +2459,6 @@ body::before {
             <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
             <a href="cases.html" class="btn btn-lg">See what we achieve</a>
           </div>
-
-          <div class="home-proof reveal delay-3">
-            <div class="p">
-              <div class="n"><span data-count-to="150">150</span><em>+</em></div>
-              <div class="l">Agents in catalogue</div>
-            </div>
-            <div class="p">
-              <div class="n">24/7</div>
-              <div class="l">Always-on · Global delivery</div>
-            </div>
-            <div class="p">
-              <div class="n">&lt;2 <em>rings</em></div>
-              <div class="l">Multilingual voice answer time</div>
-            </div>
-            <div class="p">
-              <div class="n"><em>0</em></div>
-              <div class="l">Per-token · per-seat charges</div>
-            </div>
-          </div>
         </div>
 
         <aside class="ledger reveal delay-3" aria-label="Sample outcomes ledger">
@@ -2516,6 +2481,25 @@ body::before {
             <a href="solutions.html">See the catalogue →</a>
           </div>
         </aside>
+      </div>
+
+      <div class="home-proof reveal delay-3">
+        <div class="p">
+          <div class="n"><span data-count-to="150">150</span><em>+</em></div>
+          <div class="l">Agents in catalogue</div>
+        </div>
+        <div class="p">
+          <div class="n">24/7</div>
+          <div class="l">Always-on · Global delivery</div>
+        </div>
+        <div class="p">
+          <div class="n">&lt;2 <em>rings</em></div>
+          <div class="l">Multilingual voice answer time</div>
+        </div>
+        <div class="p">
+          <div class="n"><em>0</em></div>
+          <div class="l">Per-token · per-seat charges</div>
+        </div>
       </div>
     </div>
     <div class="scroll-cue" aria-hidden="true">
@@ -3367,7 +3351,7 @@ body::before {
   </div>
 </footer>
 
-<script src="assets/site.js?v=14"></script>
+<script src="assets/site.js?v=15"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {
