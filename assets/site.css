@@ -46,8 +46,8 @@
   --radius-lg: 4px;
 
   /* Type — sans-only, no serif anywhere */
-  --font-display: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-serif:   'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-serif:   'Instrument Serif', 'Georgia', 'Times New Roman', serif;
   --font-mono:    'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   /* Motion */
@@ -87,8 +87,8 @@ body {
   width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'ss01' 1, 'cv11' 1;
-  letter-spacing: -0.01em;
+  font-feature-settings: 'cv11' 1, 'ss01' 1, 'ss03' 1;
+  letter-spacing: -0.005em;
   font-synthesis: none;
 }
 img, svg, video, iframe { max-width: 100%; height: auto; }
@@ -140,7 +140,7 @@ h1, h2, h3, h4 {
   line-height: 0.98;
   color: inherit; /* inherit from parent so dark-bg sections show white text */
 }
-h1 { font-size: clamp(52px, 8vw, 140px); font-weight: 500; letter-spacing: -0.048em; line-height: 0.9; }
+h1 { font-size: clamp(52px, 8vw, 140px); font-weight: 600; letter-spacing: -0.035em; line-height: 0.94; }
 h2 { font-size: clamp(34px, 4.4vw, 72px); letter-spacing: -0.04em; line-height: 0.95; }
 h3 { font-size: clamp(22px, 2.1vw, 32px); letter-spacing: -0.025em; font-weight: 500; line-height: 1.1; }
 h4 { font-size: 18px; font-weight: 500; letter-spacing: -0.015em; }
@@ -2481,3 +2481,103 @@ summary:hover { color: var(--accent); }
   .end-cta::before { animation: none !important; }
   .end-cta h2 em { animation: none !important; }
 }
+
+/* =========================================================
+   INTER TYPOGRAPHY TUNING + MOBILE POLISH 2026-05
+   Inter sits a bit looser than Geist; tighten body, soften
+   heading clamps, and ensure every recent section is mobile-first.
+   ========================================================= */
+
+/* Tighter mono cards everywhere — Inter looks better with a touch
+   less aggressive negative tracking */
+h2, h3 {
+  font-feature-settings: 'cv11' 1, 'ss01' 1;
+}
+
+/* The cobalt gradient text fill (used in .home-headline em, .wi-h1 em,
+   .roles-head h2 em, etc.) — ensure subpixel rendering on Inter */
+[style*="gradient"], em[style], .wi-h1 em, .home-headline em,
+.roles-head h2 em, .how-head h2 em, .tsh-h2 em, .end-cta h2 em {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Serif accent class — opt-in for editorial moments */
+.serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+/* What-is.html — extra mobile polish */
+@media (max-width: 720px) {
+  .wi-hero { padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(2rem, 4vw, 3rem); }
+  .wi-h1 { font-size: clamp(34px, 10vw, 56px); line-height: 1.02; max-width: 14ch; }
+  .wi-dek { font-size: 16px; line-height: 1.55; max-width: none; }
+  .wi-kicker { flex-direction: column; gap: 0.25rem; align-items: flex-start; }
+  .wi-def { margin: 2rem 0; }
+  .wi-def > div { padding: 1.5rem 1.25rem; }
+  .wi-def-v { font-size: clamp(20px, 6vw, 30px); }
+  .wi-vs-head h2 { font-size: clamp(26px, 7vw, 38px); max-width: none; }
+  .wi-anatomy-head { grid-template-columns: 1fr; gap: 1rem; }
+  .wi-anatomy-head h2 { font-size: clamp(28px, 8vw, 42px); max-width: 14ch; }
+  .wi-faq summary { font-size: 16.5px; padding-right: 28px; }
+  .wi-faq details { padding: 1.1rem 0; }
+  .wi-cta h2 { font-size: clamp(26px, 8vw, 40px); }
+  .wi-cta .acts { flex-direction: column; align-items: stretch; }
+  .wi-cta .acts .btn { width: 100%; justify-content: center; }
+}
+
+/* How-it-works section mobile-first */
+@media (max-width: 720px) {
+  .how-section { padding: clamp(3rem, 8vw, 5rem) 0; }
+  .how-head h2 { font-size: clamp(28px, 8vw, 44px); max-width: 14ch; }
+  .how-head p { font-size: 15px; line-height: 1.55; }
+  .how-steps .hs { padding: 1.3rem 1.15rem 1.25rem; }
+  .how-steps .hs h4 { font-size: 17.5px; }
+  .how-steps .hs p { font-size: 13px; }
+  .how-steps .hs-no { font-size: 26px; }
+  .how-foot { gap: 0.85rem 1.5rem; font-size: 10px; }
+  .how-foot .hf-stat b { font-size: 13.5px; }
+}
+
+/* Trust-strip mobile polish */
+@media (max-width: 720px) {
+  .trust-section-head { padding-bottom: 1.75rem; margin-bottom: 1.75rem; }
+  .tsh-h2 { font-size: clamp(26px, 7.5vw, 38px); max-width: 14ch; }
+  .tsh-dek { font-size: 15px; line-height: 1.55; }
+  .trust-eyebrow-cta { display: none; }
+  .stack-grid .sg { min-height: 0; padding: 1.2rem 0.95rem 1.1rem; }
+  .stack-grid .sg .sg-pill { font-size: 8.5px; padding: 2px 6px; top: 10px; right: 24px; }
+  .stack-grid .sg::after { right: 12px; top: 12px; }
+  .stack-grid .sg-label { font-size: 14px; }
+  .stack-grid .sg-sub { font-size: 9px; }
+}
+
+/* Roles section mobile */
+@media (max-width: 720px) {
+  .roles-head h2 { font-size: clamp(30px, 9vw, 52px); }
+  .role-card { padding: 1.4rem 1.2rem 1.3rem; min-height: 0; gap: 0.55rem; }
+  .role-name { font-size: 19px; }
+  .role-does { font-size: 13px; }
+  .role-stat { padding: 0.7rem 0.7rem 0.7rem 0.8rem; font-size: 9.5px; }
+}
+@media (max-width: 500px) {
+  .roles-grid { grid-template-columns: 1fr; }
+}
+
+/* Custom verticals mobile — 17 cards need to flow well */
+@media (max-width: 720px) {
+  .cust-head h2 { font-size: clamp(26px, 7.5vw, 38px); max-width: 16ch; }
+  .cust-head p { font-size: 15px; }
+  .cust-card { padding: 1.4rem 1.2rem 1.25rem; }
+  .cust-card h4 { font-size: 17px; }
+  .cust-card p { font-size: 13px; }
+}
+
+/* Smooth heading rendering — Inter benefits from text-wrap balance */
+h1, h2, h3, h4 { text-wrap: balance; }
+
+/* Inter-friendly form labels */
+input, select, textarea, button { font-family: var(--font-display); }
