@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=19">
+<link rel="stylesheet" href="assets/site.css?v=20">
 <link rel="stylesheet" href="assets/motion.css?v=1">
 
 <style>
@@ -2378,22 +2378,41 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   border: 1px solid var(--line);
 }
 .cust-card {
-  background: var(--paper);
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
   padding: 1.75rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  transition: background .25s var(--ease);
+  transition: background .25s var(--ease), transform .35s var(--ease);
   position: relative;
+  overflow: hidden;
 }
-.cust-card:hover { background: var(--paper-2); }
+.cust-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .45s var(--ease);
+}
+.cust-card:hover {
+  background: linear-gradient(180deg, var(--paper) 0%, #F4F7FF 100%);
+}
+.cust-card:hover::before { transform: scaleX(1); }
 .cust-card .cust-num {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
   color: var(--accent);
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  background: var(--accent-soft);
+  border: 1px solid var(--line-accent);
+  padding: 3px 8px;
+  border-radius: 999px;
+  width: fit-content;
+  margin-bottom: 0.4rem;
 }
 .cust-card .cust-cat {
   font-family: var(--font-mono);
@@ -2416,6 +2435,20 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   line-height: 1.55;
   color: var(--ink-3);
 }
+/* Blank closer card — "Bring us your one-page brief" */
+.cust-card.cust-card-blank {
+  background:
+    linear-gradient(135deg, rgba(0,82,255,0.06) 0%, rgba(110,111,255,0.10) 100%),
+    repeating-linear-gradient(135deg, transparent 0 14px, rgba(0,82,255,0.04) 14px 15px);
+  border: 1px dashed var(--line-accent);
+}
+.cust-card.cust-card-blank::before { background: linear-gradient(90deg, var(--accent), #6E6FFF); }
+.cust-card.cust-card-blank:hover {
+  background:
+    linear-gradient(135deg, rgba(0,82,255,0.10) 0%, rgba(110,111,255,0.14) 100%),
+    repeating-linear-gradient(135deg, transparent 0 14px, rgba(0,82,255,0.06) 14px 15px);
+}
+.cust-card.cust-card-blank h4 { color: var(--accent); }
 
 .cust-foot {
   margin-top: clamp(2rem, 4vw, 3rem);
@@ -2667,8 +2700,8 @@ body::before {
 
       <div class="home-proof reveal delay-3">
         <div class="p">
-          <div class="n"><span data-count-to="150">150</span><em>+</em></div>
-          <div class="l">Agents in catalogue</div>
+          <div class="n"><em>∞</em></div>
+          <div class="l">Custom agents shipped</div>
         </div>
         <div class="p">
           <div class="n">24/7</div>
@@ -2968,7 +3001,7 @@ body::before {
           <h2>Specialised industries.<br><em>And custom-built</em> where you need them.</h2>
         </div>
         <p>
-          We don't build horizontal AI. Each practice area ships a <em>pre-priced catalogue</em> of agents, a target SLA, and a shortlist of workflows we're ready to audit, build and run — plus an always-on <em>multilingual voice desk</em> (Arabic included) that slots into Aircall, Twilio, RingCentral, or your existing phone stack. <em>Don't see your industry? We custom-build a vertical</em> on the same per-outcome contract. <em>Available globally · always-on.</em>
+          We don't build horizontal AI. Each practice area ships a <em>custom-built portfolio</em> of agents, a target SLA, and a shortlist of workflows we're ready to audit, build and run — plus an always-on <em>multilingual voice desk</em> (Arabic included) that slots into Aircall, Twilio, RingCentral, or your existing phone stack. <em>Don't see your industry? We custom-build a vertical</em> on the same per-outcome contract. <em>Available globally · always-on.</em>
         </p>
       </div>
 
@@ -3149,56 +3182,122 @@ body::before {
     <div class="container">
       <div class="cust-head reveal">
         <div>
-          <div class="cust-eyebrow">Custom verticals · § 02b</div>
-          <h2>Don't see your industry?<br>We <em>custom-build</em> a vertical.</h2>
+          <div class="cust-eyebrow">Unlimited use cases · § 02b</div>
+          <h2>If you can describe the workflow,<br>we <em>build the agent</em>.</h2>
         </div>
         <p>
-          Same per-outcome contract. Same SLA. Same multilingual voice desk. We've spun up new verticals from a one-page brief in <em>4 to 8 weeks</em> — model picked for the workflow, integrations wired into your stack, agents priced per finished job before we ship a single one. If your industry isn't in the catalogue above, that's a feature, not a missing line item.
+          Nothing on this page is a shelf product. Every engagement is a <em>custom-built vertical</em> — model picked for the workflow, integrations wired into your stack, agents priced per finished job before we ship a single one. Most go from one-page brief to live production in <em>4 to 8 weeks</em>. The list below is a small sample of what we've shipped recently — your workflow probably isn't on it, and that's the point.
         </p>
       </div>
 
       <div class="cust-grid reveal delay-1">
         <article class="cust-card">
-          <div class="cust-num">A</div>
-          <div class="cust-cat">Pharma · field reps</div>
-          <h4>Sample-tracking &amp; HCP follow-up</h4>
-          <p>AI agent reconciles rep visit notes with sample-drop logs, drafts the next-touch email per HCP, files into Veeva. Per completed touch.</p>
+          <div class="cust-num">01</div>
+          <div class="cust-cat">Sales · agentic SDR</div>
+          <h4>Agentic outbound &amp; pipeline rep</h4>
+          <p>Researches ICP accounts, drafts hyper-personalised email + LinkedIn sequences, handles objections, books meetings, and writes the discovery doc before the call. Per qualified meeting booked.</p>
         </article>
         <article class="cust-card">
-          <div class="cust-num">B</div>
+          <div class="cust-num">02</div>
+          <div class="cust-cat">Support · RAG agent</div>
+          <h4>RAG-powered support deflector</h4>
+          <p>Reads your docs, KB, tickets and product code; answers customer questions with citations; escalates the 12% it can't close — with a full thread summary attached. Per resolved ticket.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">03</div>
+          <div class="cust-cat">Voice · cloned brand</div>
+          <h4>Brand-voice phone agent</h4>
+          <p>Custom-trained on your CSR call recordings to match your tone, pacing and brand vocabulary. After-hours, multilingual, fully transcribed. Per call resolved.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">04</div>
+          <div class="cust-cat">Finance · quote desk</div>
+          <h4>Quote-to-cash agent</h4>
+          <p>Parses RFQs from email + portal, prices against your rate card and rules, drafts the quote in your template, routes for approval, writes back to CPQ. Per quote shipped.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">05</div>
+          <div class="cust-cat">Pharma · field reps</div>
+          <h4>Sample-tracking &amp; HCP follow-up</h4>
+          <p>Reconciles rep visit notes with sample-drop logs, drafts the next-touch email per HCP, files into Veeva. Per completed touch.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">06</div>
           <div class="cust-cat">Construction · permits</div>
           <h4>Council permit chase</h4>
           <p>Calls councils, files RFIs, tracks lodgement IDs and approval status across multi-jurisdiction projects. Per resolved permit line.</p>
         </article>
         <article class="cust-card">
-          <div class="cust-num">C</div>
-          <div class="cust-cat">Legal aid · intake</div>
-          <h4>After-hours legal-aid intake</h4>
-          <p>Multilingual triage of new matter calls, eligibility screen, conflict check, calendar booking with the duty solicitor. Per qualified intake.</p>
+          <div class="cust-num">07</div>
+          <div class="cust-cat">Legal · doc review</div>
+          <h4>Contract review &amp; redline agent</h4>
+          <p>Reads MSAs / NDAs against your playbook, flags deviations with rationale, drafts redlines in tracked-changes, escalates the edge cases. Per agreement reviewed.</p>
         </article>
         <article class="cust-card">
-          <div class="cust-num">D</div>
-          <div class="cust-cat">Auto dealer · service</div>
-          <h4>Service-desk &amp; loaner-car</h4>
-          <p>Books service appointments, confirms loaner availability, handles WISMO calls on parts ETA, writes back to DMS. Per completed booking.</p>
+          <div class="cust-num">08</div>
+          <div class="cust-cat">Compliance · risk</div>
+          <h4>Policy &amp; compliance reviewer</h4>
+          <p>Cross-checks new marketing, sales decks and code commits against your compliance policy (GDPR, HIPAA, ASIC). Flags violations with citations. Per artefact reviewed.</p>
         </article>
         <article class="cust-card">
-          <div class="cust-num">E</div>
+          <div class="cust-num">09</div>
+          <div class="cust-cat">Onboarding · training</div>
+          <h4>AI onboarding coach</h4>
+          <p>Walks new hires through your SOPs in their language, answers questions from your internal wiki, certifies on-the-job competency, files the completion record. Per certified onboarding.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">10</div>
+          <div class="cust-cat">Ops · field service</div>
+          <h4>Field-service dispatcher</h4>
+          <p>Triages inbound service requests, matches to nearest qualified tech with right parts/licenses, books the visit, sends ETA, writes back to your FSM. Per dispatched job.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">11</div>
+          <div class="cust-cat">Procurement · AP</div>
+          <h4>Procurement reconciliation</h4>
+          <p>Matches invoices to POs and goods-receipt, chases vendors on discrepancies, drafts the GL coding, and routes for approval. Per reconciled invoice.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">12</div>
+          <div class="cust-cat">Security · SOC tier-1</div>
+          <h4>SecOps triage agent</h4>
+          <p>Ingests alerts from your SIEM, enriches with threat intel, suppresses known false-positives, opens incidents on real ones with a draft IR plan attached. Per resolved alert.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">13</div>
+          <div class="cust-cat">CX · multilingual</div>
+          <h4>Multilingual customer success</h4>
+          <p>Reads support tickets, account usage and CSAT signals; sends personalised check-ins in the customer's language; flags churn risks to CSMs. Per managed account.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">14</div>
           <div class="cust-cat">Aged care · roster</div>
           <h4>Carer shift-fill desk</h4>
-          <p>Calls down the casual list when a shift opens, confirms compliance currency (NDIS, police check), books the cover, files the timesheet. Per shift filled.</p>
+          <p>Calls down the casual list when a shift opens, confirms compliance currency (NDIS, police check), books cover, files the timesheet. Per shift filled.</p>
         </article>
         <article class="cust-card">
-          <div class="cust-num">F</div>
+          <div class="cust-num">15</div>
           <div class="cust-cat">Energy retail · metering</div>
           <h4>Meter-reading reconciliation</h4>
           <p>Cross-checks AMI reads against billing extract, opens dispute tickets, voice-confirms with site contact when reads diverge. Per reconciled meter.</p>
+        </article>
+        <article class="cust-card">
+          <div class="cust-num">16</div>
+          <div class="cust-cat">Real estate · enquiry</div>
+          <h4>Listing &amp; enquiry concierge</h4>
+          <p>Qualifies inbound enquiries 24/7, books inspections, sends property packs in the buyer's language, drafts the agent's morning brief. Per booked inspection.</p>
+        </article>
+        <article class="cust-card cust-card-blank">
+          <div class="cust-num">17+</div>
+          <div class="cust-cat">Your workflow · here</div>
+          <h4>Bring us your one-page brief</h4>
+          <p>Whatever your team does on repeat — that's the agent we'll quote. No vertical is off-limits. No ready-made shelf product, no per-token bill, no upsell tier — just a custom agent priced per finished job.</p>
         </article>
       </div>
 
       <div class="cust-foot reveal delay-2">
         <p>If you can describe the workflow in a paragraph, we can quote it in a week.</p>
-        <a href="contact.html" class="btn btn-primary">Brief us on a custom vertical <span class="arrow">↗</span></a>
+        <a href="contact.html" class="btn btn-primary">Brief us on your use case <span class="arrow">↗</span></a>
       </div>
     </div>
   </section>
@@ -3544,7 +3643,7 @@ body::before {
   </div>
 </footer>
 
-<script src="assets/site.js?v=19"></script>
+<script src="assets/site.js?v=20"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {
