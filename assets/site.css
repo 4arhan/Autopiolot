@@ -2202,6 +2202,30 @@ summary:hover { color: var(--accent); }
   .mobile-nav.open { animation: none !important; }
 }
 
+/* Nav "What is" explainer link — subtle cobalt treatment */
+.primary-nav a.nav-explainer {
+  color: var(--accent);
+  font-weight: 600;
+  padding-left: 22px;
+  position: relative;
+}
+.primary-nav a.nav-explainer::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(0,82,255,0.5);
+  animation: pulseDot 2.4s ease-in-out infinite;
+}
+.primary-nav a.nav-explainer:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
 /* =========================================================
    UNIVERSAL CARD POLISH 2026-05
    Cobalt-glow lift on hover, layered shadows, accent corner stroke

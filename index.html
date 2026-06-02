@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20">
+<link rel="stylesheet" href="assets/site.css?v=21">
 <link rel="stylesheet" href="assets/motion.css?v=1">
 
 <style>
@@ -2322,6 +2322,207 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus
   .mnav-pitch-link .ar { font-family: var(--font-mono); }
 }
 
+/* ---------- HOW IT WORKS — 4-step process ---------- */
+.how-section {
+  padding: clamp(5rem, 9vw, 9rem) 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.how-section::before {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(ellipse 36% 40% at 12% 8%,  rgba(0,82,255,0.10),  transparent 60%),
+    radial-gradient(ellipse 30% 32% at 88% 92%, rgba(110,111,255,0.08), transparent 60%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: -1;
+}
+.how-section > .container { position: relative; z-index: 1; }
+.how-head {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--line);
+  align-items: end;
+}
+.how-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.how-eyebrow::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulseDot 2.4s ease-in-out infinite;
+}
+.how-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 68px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  margin: 0;
+  text-wrap: balance;
+}
+.how-head h2 em {
+  background: linear-gradient(135deg, var(--accent) 0%, #6E6FFF 50%, var(--accent) 100%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: normal;
+  font-weight: 500;
+  animation: rolesGrad 8s ease-in-out infinite;
+}
+.how-head p {
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  margin: 0;
+  max-width: 46ch;
+}
+.how-head p em { color: var(--ink); font-style: normal; font-weight: 500; }
+
+.how-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--line-strong);
+  box-shadow: 0 28px 60px -32px rgba(0,82,255,0.18);
+}
+.how-steps .hs {
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
+  padding: 1.85rem 1.6rem 1.6rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: background .25s var(--ease);
+  min-height: 240px;
+}
+.how-steps .hs:hover { background: linear-gradient(180deg, var(--paper) 0%, #F4F7FF 100%); }
+.how-steps .hs + .hs { border-left: 1px solid var(--line-strong); }
+.how-steps .hs-no {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  line-height: 1;
+}
+.how-steps .hs-line {
+  position: absolute;
+  top: 38px;
+  right: -1px;
+  width: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  z-index: 2;
+}
+.how-steps .hs-line::after {
+  content: '→';
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+.how-steps .hs.hs-final .hs-line { display: none; }
+.how-steps .hs h4 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0;
+}
+.how-steps .hs h4 em { color: var(--accent); font-style: normal; font-weight: 500; }
+.how-steps .hs p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  flex: 1;
+}
+.how-steps .hs-time {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--line-strong);
+}
+
+.how-foot {
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.how-foot .hf-stat b { color: var(--ink); font-weight: 600; letter-spacing: -0.005em; font-family: var(--font-display); font-size: 14.5px; margin-right: 6px; }
+.how-foot .hf-link {
+  margin-left: auto;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+.how-foot .hf-link:hover { color: var(--accent-3); }
+
+@media (max-width: 1000px) {
+  .how-head { grid-template-columns: 1fr; align-items: start; gap: 1.25rem; }
+  .how-steps { grid-template-columns: repeat(2, 1fr); }
+  .how-steps .hs:nth-child(3) { border-left: 0; border-top: 1px solid var(--line-strong); }
+  .how-steps .hs:nth-child(4) { border-top: 1px solid var(--line-strong); }
+  .how-steps .hs-line { display: none; }
+}
+@media (max-width: 600px) {
+  .how-steps { grid-template-columns: 1fr; }
+  .how-steps .hs { min-height: 0; }
+  .how-steps .hs + .hs { border-left: 0; border-top: 1px solid var(--line-strong); }
+  .how-foot .hf-link { margin-left: 0; }
+}
+
 /* ---------- CUSTOM INDUSTRY SECTION ---------- */
 .cust-section {
   padding: clamp(5rem, 9vw, 9rem) 0;
@@ -2582,8 +2783,7 @@ body::before {
       <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
       <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
     </a>
-    <nav class="primary-nav" aria-label="Primary">
-      <a href="solutions.html" data-nav="solutions">Solutions</a>
+    <nav class="primary-nav" aria-label="Primary"><a href="what-is.html" data-nav="what-is" class="nav-explainer">What is an AI agent?</a><a href="what-is.html" data-nav="what-is">What is an AI agent?</a>      <a href="solutions.html" data-nav="solutions">Solutions</a>
       <a href="cases.html" data-nav="cases">Achieve</a>
       <a href="demo.html" data-nav="demo">Demo</a>
       <a href="pricing.html" data-nav="pricing">Pricing</a>
@@ -3302,6 +3502,54 @@ body::before {
     </div>
   </section>
 
+  <!-- ========== HOW IT WORKS ========== -->
+  <section class="how-section">
+    <div class="container">
+      <div class="how-head reveal">
+        <div>
+          <div class="how-eyebrow">How it works · § 02c</div>
+          <h2>Brief on Monday.<br><em>Live agent</em> in weeks, not quarters.</h2>
+        </div>
+        <p>Four steps from "we should automate this" to a shipping agent on a written SLA. <em>No procurement cycle, no PoC theatre, no per-token bills.</em> The first one is a free audit.</p>
+      </div>
+      <ol class="how-steps reveal delay-1">
+        <li class="hs">
+          <div class="hs-no">01</div>
+          <div class="hs-line" aria-hidden="true"></div>
+          <h4>Brief — one page</h4>
+          <p>You send us a paragraph describing the workflow. Or we sit in your operation for two days and write it for you. Free.</p>
+          <span class="hs-time">Day 0–2</span>
+        </li>
+        <li class="hs">
+          <div class="hs-no">02</div>
+          <div class="hs-line" aria-hidden="true"></div>
+          <h4>Audit &amp; quote</h4>
+          <p>We measure the current baseline — time, cost, error rate. Then we quote one unit price per finished outcome. You see the math.</p>
+          <span class="hs-time">Week 1</span>
+        </li>
+        <li class="hs">
+          <div class="hs-no">03</div>
+          <div class="hs-line" aria-hidden="true"></div>
+          <h4>Build &amp; integrate</h4>
+          <p>We pick the model, wire integrations (OAuth/SCIM/webhooks), build escalation rules, and stress-test against your real data. SLA in writing before launch.</p>
+          <span class="hs-time">Weeks 2–6</span>
+        </li>
+        <li class="hs hs-final">
+          <div class="hs-no">04</div>
+          <h4>Ship &amp; bill — per outcome</h4>
+          <p>Agent goes live in production. Meter ticks per clean pass. Failed attempts and escalations are free. You see the ledger we see.</p>
+          <span class="hs-time">Week 7+</span>
+        </li>
+      </ol>
+      <div class="how-foot reveal delay-2">
+        <span class="hf-stat"><b>4–8 weeks</b> average brief-to-live</span>
+        <span class="hf-stat"><b>0 invoices</b> until the meter ticks</span>
+        <span class="hf-stat"><b>1 SLA</b> per workflow, in writing</span>
+        <a href="process.html" class="hf-link">Full process &nbsp;→</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== VOICE FLAGSHIP ========== -->
   <section class="voice-flag">
     <div class="container">
@@ -3643,7 +3891,7 @@ body::before {
   </div>
 </footer>
 
-<script src="assets/site.js?v=20"></script>
+<script src="assets/site.js?v=21"></script>
 <script>
 /* ---------- Live outcomes ledger ---------- */
 (function () {
