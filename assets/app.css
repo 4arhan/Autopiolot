@@ -314,19 +314,23 @@ em { font-style: normal; color: var(--acc); font-weight: 600; }
   .hero-actions .btn { flex: 1 1 auto; }
 }
 
-/* === Section header ==================================== */
-.shead { max-width: 720px; margin-bottom: clamp(36px, 5vw, 56px); }
-.shead .h2 { margin: 14px 0 14px; }
+/* === Section header — always stacked, one column ======
+   eyebrow → headline → short dek, left-aligned, readable width.
+   (No split headline/paragraph layout — it left big empty gaps
+   and misaligned tops.) */
+.shead { max-width: 760px; margin-bottom: clamp(36px, 5vw, 56px); }
+.shead .h2 { margin: 16px 0 16px; }
 .shead .lede { max-width: 60ch; }
-.shead--split {
-  max-width: none;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: clamp(24px, 4vw, 56px); align-items: end;
-}
-.shead--split .lede { margin: 0; }
-@media (max-width: 820px) {
-  .shead--split { grid-template-columns: 1fr; gap: 16px; align-items: start; }
-}
+/* .shead--split kept as an alias so existing markup still works,
+   but it now renders identically to a normal stacked head. */
+.shead--split { max-width: 760px; display: block; }
+.shead--split > div { margin-bottom: 16px; }
+.shead--split .h2 { margin-bottom: 16px; }
+.shead--split .lede { margin: 0; max-width: 60ch; }
+/* Centered variant for full-width moments */
+.shead--center { margin-left: auto; margin-right: auto; text-align: center; }
+.shead--center .eyebrow { justify-content: center; }
+.shead--center .lede { margin-left: auto; margin-right: auto; }
 
 /* === Card grid system ================================== */
 .grid { display: grid; gap: 16px; }
