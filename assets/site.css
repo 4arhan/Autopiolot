@@ -3090,3 +3090,455 @@ h3, h4 {
     max-width: none !important;
   }
 }
+
+/* =========================================================
+   DESIGN RESET 2026-05
+   Complete overhaul to a clean, Apple-style aesthetic:
+   emerald accent, no gradient meshes, no glass morphism,
+   restrained motion, generous whitespace.
+
+   Strategy: this block overrides every loud decoration the
+   site had picked up over the iteration cycle. It does not
+   change markup or content.
+   ========================================================= */
+
+/* === 1. Colour tokens — cobalt → emerald ============== */
+:root {
+  --accent:       #0F9D58;   /* confident emerald — Google green family */
+  --accent-2:     #1AAE6F;
+  --accent-3:     #0B7A45;
+  --accent-fg:    #FFFFFF;
+  --accent-soft:  rgba(15,157,88,0.07);
+  --line-accent:  rgba(15,157,88,0.30);
+  --highlight:    #0F9D58;
+  --accent-glow:  rgba(15,157,88,0.10);
+  --accent-dim:   #0B7A45;
+}
+
+/* === 2. Kill every decorative gradient mesh =========== */
+.home-hero,
+.end-cta,
+.ent-section,
+.roles-section,
+.how-section,
+.voice-flag,
+.ops,
+.wi-hero,
+.wi-cta {
+  background: var(--paper) !important;
+}
+.home-hero::before,
+.home-hero::after,
+.end-cta::before,
+.end-cta::after,
+.ent-section::before,
+.ent-section::after,
+.roles-section::before,
+.roles-section::after,
+.how-section::before,
+.how-section::after,
+.voice-flag::before,
+.voice-flag::after,
+.ops::before,
+.ops::after,
+.wi-hero::before,
+.wi-hero::after,
+.hero-ring,
+.scroll-cue,
+.section-divider::after,
+.section-divider::before {
+  display: none !important;
+}
+
+/* === 3. Dark sections become quiet light sections ===== */
+.voice-flag,
+.ops {
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line) !important;
+}
+.voice-flag .vf-head h2,
+.voice-flag .vf-head p,
+.voice-flag p,
+.ops .ops-head h2,
+.ops .ops-head p {
+  color: var(--ink) !important;
+}
+.voice-flag .vf-head h2 em,
+.ops .ops-head h2 em {
+  color: var(--accent) !important;
+}
+.voice-flag .vf-eyebrow,
+.ops .ops-eyebrow {
+  color: var(--accent) !important;
+}
+.voice-flag .vf-wave {
+  background: var(--paper-3) !important;
+  border-color: var(--line) !important;
+  border-left-color: var(--accent) !important;
+}
+.voice-flag .vf-wave-chrome,
+.voice-flag .vf-wave-label,
+.voice-flag .vf-wave-cap,
+.voice-flag .vf-wave-side {
+  color: var(--ink-3) !important;
+}
+.voice-flag .vf-wave-side em { color: var(--accent) !important; }
+.voice-flag .vf-langs .lg {
+  background: var(--paper-3);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+}
+
+/* End-CTA stays understated, just a quiet emerald wash */
+.end-cta {
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%) !important;
+  color: var(--ink) !important;
+  border-top: 1px solid var(--line) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+.end-cta h2,
+.end-cta p {
+  color: var(--ink) !important;
+}
+.end-cta h2 em {
+  color: var(--accent) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--accent) !important;
+  animation: none !important;
+}
+.end-cta .btn-primary {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  box-shadow: none !important;
+}
+.end-cta .btn-primary:hover {
+  background: var(--accent-3) !important;
+  border-color: var(--accent-3) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.end-cta .btn:not(.btn-primary) {
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  border-color: var(--line-strong) !important;
+}
+.end-cta .btn:not(.btn-primary):hover {
+  background: var(--paper-3) !important;
+  border-color: var(--ink) !important;
+}
+
+/* === 4. Console / ledger — simple, no perspective, no glow */
+.ledger {
+  box-shadow: 0 1px 3px rgba(9,9,11,0.04), 0 8px 24px -12px rgba(9,9,11,0.08) !important;
+  transform: none !important;
+  border: 1px solid var(--line-strong) !important;
+  border-radius: 12px !important;
+  background: var(--paper) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.ledger:hover {
+  transform: none !important;
+  box-shadow: 0 1px 3px rgba(9,9,11,0.04), 0 12px 32px -12px rgba(9,9,11,0.10) !important;
+}
+.ledger::before { display: none !important; }
+.ledger-chrome {
+  background: var(--paper-3) !important;
+  border-bottom: 1px solid var(--line) !important;
+  color: var(--ink-3) !important;
+}
+.ledger-chrome .u::before { border-color: var(--accent) !important; }
+.ledger-chrome .u { color: var(--ink-3) !important; }
+.ledger-chrome .r {
+  background: var(--accent-soft) !important;
+  border-color: var(--line-accent) !important;
+  color: var(--accent) !important;
+}
+.ledger-chrome .r .status-dot { background: var(--accent) !important; }
+.ledger-chrome .r .status-dot::after { display: none !important; }
+.ledger-row { font-size: 13px !important; }
+.ledger-row::before { display: none !important; }
+.ledger-row .p { color: var(--accent) !important; }
+.ledger-row .s { color: var(--accent) !important; }
+.ledger-row .s .tick { color: var(--accent) !important; }
+.ledger-foot a { color: var(--accent) !important; }
+
+/* === 5. Strip live HUD pill on hero & kicker (already hidden) */
+.home-hero .live-hud,
+.home-hero .hero-kicker { display: none !important; }
+
+/* === 6. Buttons — Apple/Google green pill =============*/
+.btn-primary {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.btn-primary::after { display: none !important; }
+.btn-primary:hover {
+  background: var(--accent-3) !important;
+  border-color: var(--accent-3) !important;
+  transform: none !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.btn:not(.btn-primary) {
+  background: var(--paper) !important;
+  border-color: var(--line-strong) !important;
+  color: var(--ink) !important;
+}
+.btn:not(.btn-primary):hover {
+  background: var(--paper-3) !important;
+  border-color: var(--ink) !important;
+  color: var(--ink) !important;
+  transform: none !important;
+}
+
+/* === 7. Cards: hairline border, gentle radius, no
+         layered shadows, no gradient backgrounds ==== */
+.role-card,
+.cust-card,
+.ent-card,
+.diff-card,
+.cs-item,
+.ind,
+.principle,
+.wi-part,
+.trust-badges .tb,
+.stack-grid .sg,
+.hs {
+  background: var(--paper) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.role-card:hover,
+.cust-card:hover,
+.ent-card:hover,
+.diff-card:hover,
+.cs-item:hover,
+.ind:hover,
+.principle:hover,
+.wi-part:hover,
+.trust-badges .tb:hover,
+.stack-grid .sg:hover,
+.hs:hover {
+  background: var(--paper-3) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.role-card::before, .role-card::after,
+.cust-card::before, .cust-card::after,
+.diff-card::after, .principle::before,
+.trust-badges .tb::before, .stack-grid .sg::after,
+.how-steps .hs-line { display: none !important; }
+
+/* Card grids: simple rounded shell, hairline divider */
+.roles-grid,
+.cust-grid,
+.ent-grid,
+.how-steps,
+.ind-grid,
+.trust-badges,
+.stack-grid,
+.pri-row {
+  border: 1px solid var(--line-strong) !important;
+  border-radius: 12px !important;
+  background: var(--line-strong) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+/* Enterprise featured card stays restrained */
+.ent-card-feature {
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+}
+.ent-card-feature:hover { background: #15151E !important; }
+.ent-card-feature h3,
+.ent-card-feature p,
+.ent-card-feature .ent-list li { color: var(--paper) !important; opacity: 1; }
+.ent-card-feature p { opacity: 0.72; }
+.ent-card-feature .ent-list li { opacity: 0.82; }
+.ent-card-feature .ent-card-ic {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+  color: #fff !important;
+}
+
+/* === 8. Number badges — small, restrained, no neon */
+.role-num > span:first-child,
+.cust-card .cust-num,
+.hs-no,
+.wi-part .no,
+.stack-grid .sg .sg-pill,
+.principle .pn,
+.diff-card .no {
+  background: var(--accent-soft) !important;
+  border: 1px solid var(--line-accent) !important;
+  color: var(--accent) !important;
+  font-weight: 600 !important;
+}
+.role-stat {
+  background: var(--accent-soft) !important;
+  border-color: var(--line-accent) !important;
+  border-left-color: var(--accent) !important;
+}
+.role-stat b { color: var(--accent) !important; }
+
+/* === 9. Typography refinement — Apple-feel rhythm ===== */
+body {
+  font-size: 16.5px !important;
+  line-height: 1.6 !important;
+  color: var(--ink) !important;
+}
+:where(p) { color: var(--ink-2); }
+
+/* Every accent em now uses solid colour and removes any
+   gradient/fill/animation leftovers in one sweep */
+em {
+  color: var(--accent) !important;
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  animation: none !important;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* === 10. Topbar — minimal, no glass blur =============== */
+.topbar {
+  background: rgba(255,255,255,0.92) !important;
+  border-bottom: 1px solid var(--line) !important;
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  backdrop-filter: saturate(160%) blur(12px);
+  box-shadow: none !important;
+}
+.topbar.is-scrolled {
+  background: rgba(255,255,255,0.96) !important;
+  box-shadow: 0 1px 0 var(--line) !important;
+}
+.primary-nav a {
+  color: var(--ink-2) !important;
+  font-weight: 500 !important;
+}
+.primary-nav a:hover {
+  background: var(--paper-2) !important;
+  color: var(--ink) !important;
+}
+.primary-nav a.nav-explainer {
+  color: var(--accent) !important;
+}
+.primary-nav a.nav-explainer::before {
+  background: var(--accent) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+.primary-nav a.nav-explainer:hover {
+  background: var(--accent-soft) !important;
+}
+.status-pill,
+.ticker-item .tup { color: var(--accent) !important; }
+.ticker { display: none !important; }
+.topbar.is-scrolled .ticker { display: none !important; }
+
+/* === 11. VS-ribbon — drop the heavy dark band ========= */
+.vs-ribbon {
+  background: var(--paper-3) !important;
+  color: var(--ink) !important;
+  border-top: 1px solid var(--line) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+.vs-ribbon h2,
+.vs-ribbon p { color: var(--ink) !important; }
+.vs-ribbon h2 em { color: var(--accent) !important; }
+.vs-ribbon .vs-compare,
+.vs-ribbon .vs-compare > div {
+  background: var(--paper) !important;
+  border-color: var(--line) !important;
+}
+.vs-ribbon .vs-compare h6 { color: var(--muted) !important; }
+.vs-ribbon .vs-compare li { color: var(--ink-2) !important; }
+.vs-ribbon .vs-compare > div.us h6 { color: var(--accent) !important; }
+.vs-ribbon .vs-compare > div.us li::before { color: var(--accent) !important; }
+
+/* === 12. Footer — clean & calm ========================= */
+.site-footer {
+  background: var(--paper-3) !important;
+  color: var(--ink-2) !important;
+}
+.site-footer h3,
+.site-footer h5,
+.site-footer .footer-brand p,
+.site-footer a,
+.site-footer .footer-bottom { color: var(--ink-2) !important; }
+.site-footer .footer-brand h3 em { color: var(--accent) !important; }
+.site-footer a:hover { color: var(--accent) !important; }
+.site-footer .footer-bottom { border-top-color: var(--line) !important; }
+.site-footer .footer-col h5 { border-bottom-color: var(--line) !important; }
+.site-footer .footer-top { border-bottom-color: var(--line) !important; }
+.site-footer .footer-col a::before { color: var(--muted) !important; }
+.site-footer .footer-col a:hover::before { color: var(--accent) !important; }
+
+/* === 13. Definition card on what-is page — restrained ==*/
+.wi-def > div:first-child {
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+}
+.wi-def > div:first-child .wi-def-v em {
+  color: var(--accent-2) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--accent-2) !important;
+}
+.wi-def {
+  box-shadow: 0 1px 3px rgba(9,9,11,0.04), 0 8px 24px -12px rgba(9,9,11,0.08) !important;
+  border-color: var(--line-strong) !important;
+}
+
+/* === 14. Universal: kill any leftover heavy shadows ===== */
+.diff, .reach, .pri, .ab-what, .trust-strip,
+.cust-section, .roles-section, .how-section,
+.ent-section, .voice-flag, .ops, .home-hero {
+  box-shadow: none !important;
+}
+
+/* === 15. Tighter mobile rhythm everywhere ============== */
+@media (max-width: 720px) {
+  section { padding-top: clamp(2.5rem, 7vw, 4rem) !important;
+            padding-bottom: clamp(2.5rem, 7vw, 4rem) !important; }
+  .container { padding-left: 20px !important; padding-right: 20px !important; }
+  .home-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .ledger { max-height: 380px !important; }
+}
+
+/* === 16. Hero proof stats — quieter, smaller numbers === */
+.home-proof .n {
+  font-size: clamp(26px, 2.4vw, 36px) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--ink) !important;
+}
+.home-proof .n em {
+  color: var(--accent) !important;
+  -webkit-text-fill-color: var(--accent) !important;
+}
+.home-proof { border-color: var(--line) !important; background: transparent !important; }
+.home-proof .p { background: transparent !important; border-color: var(--line) !important; }
+
+/* === 17. Disable any leftover keyframe animations on
+         heavy decorative elements ===================== */
+.k-line::after,
+.eyebrow.accent::after,
+.do-eyebrow::after,
+.cust-eyebrow::after,
+.vf-eyebrow::after,
+.dp-eyebrow::after,
+.diff-eyebrow::after,
+.ops-eyebrow::after,
+.tsh-eyebrow .tsh-dot,
+.ent-eyebrow .ent-dot,
+.how-eyebrow::before,
+.trust-eyebrow .dot,
+.stack-eyebrow .dot { animation: none !important; }
