@@ -2918,3 +2918,175 @@ h3, h4 {
   .ent-foot { flex-direction: column; align-items: stretch; }
   .ent-foot .btn { width: 100%; justify-content: center; }
 }
+
+/* =========================================================
+   GLOBAL MODERNIZATION PASS 2026-05
+   The repeating "section head" pattern (giant left headline +
+   tiny bottom-aligned right paragraph) read as unbalanced and
+   amateur. This block normalises every head across the site:
+   align to top, cap headline size for the system-font stack,
+   raise dek size/contrast, and steady the vertical rhythm.
+   ========================================================= */
+
+/* 1 — All two-column section heads align to TOP, not bottom.
+   (align-items:end was dropping the small dek to the baseline of
+   a 3-line headline, leaving a big empty gap top-right.) */
+.proof-head,
+.do-head,
+.roles-head,
+.ab-what-head,
+.wi-anatomy-head,
+.how-head,
+.trust-section-head,
+.diff-head,
+.vf-head {
+  align-items: start !important;
+}
+
+/* 2 — Cap section headline sizes. System fonts render larger than
+   Geist did; the old 64–88px maxes were oversized. Modern SaaS
+   sits headings around 32–48px. */
+.proof-head h2,
+.do-head h2,
+.roles-head h2,
+.ab-what-head h2,
+.reach h2,
+.pri-head h2,
+.ops-head h2,
+.vf-head h2,
+.diff-head h2,
+.how-head h2,
+.cust-head h2,
+.tsh-h2,
+.ent-h2,
+.wi-vs-head h2,
+.wi-anatomy-head h2,
+.end-cta h2,
+.cs-cta h2,
+.wi-h1 {
+  font-size: clamp(28px, 3.6vw, 46px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.02em !important;
+  font-weight: 600 !important;
+}
+
+/* Hero headline can be a touch larger — it's the one true H1 */
+.home-headline {
+  font-size: clamp(36px, 5vw, 62px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.022em !important;
+  font-weight: 600 !important;
+}
+
+/* 3 — Section deks: bigger, darker, properly leading. The 15–17px
+   muted-grey paragraphs were too quiet next to the huge headings. */
+.proof-head .r p,
+.do-head p,
+.roles-head p,
+.ab-what-head p,
+.how-head p,
+.ent-dek,
+.cust-head p,
+.tsh-dek {
+  font-size: clamp(16px, 1.15vw, 18px) !important;
+  line-height: 1.6 !important;
+  color: var(--ink-2) !important;
+  max-width: 52ch;
+}
+
+/* 4 — Accent em in headings: solid colour, weight match, no
+   leftover gradient/underline artefacts. */
+.proof-head h2 em,
+.do-head h2 em,
+.roles-head h2 em,
+.ab-what-head h2 em,
+.reach h2 em,
+.pri-head h2 em,
+.ops-head h2 em,
+.vf-head h2 em,
+.how-head h2 em,
+.cust-head h2 em,
+.tsh-h2 em,
+.ent-h2 em,
+.home-headline em {
+  color: var(--accent) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--accent) !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  font-style: normal;
+  font-weight: 600;
+  padding-bottom: 0 !important;
+  background-size: 0 0 !important;
+}
+
+/* 5 — Eyebrows: consistent, quieter, modern. */
+.proof-head .eyebrow,
+.do-eyebrow,
+.roles-head .eyebrow,
+.ab-what-head .eyebrow,
+.pri-head .eyebrow,
+.ops-eyebrow,
+.vf-eyebrow,
+.how-eyebrow,
+.cust-eyebrow,
+.tsh-eyebrow,
+.ent-eyebrow,
+.diff-eyebrow {
+  font-size: 11px !important;
+  letter-spacing: 0.12em !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.9rem !important;
+}
+
+/* 6 — Steady the section vertical rhythm. The 9vw clamp maxes made
+   sections feel hollow on wide screens. */
+.proof, .do-section, .roles-section, .voice-flag, .diff, .ops,
+.reach, .pri, .ab-what, .how-section, .cust-section, .ent-section,
+.trust-strip, .end-cta, .vs-ribbon {
+  padding-top: clamp(3.5rem, 6vw, 6rem) !important;
+  padding-bottom: clamp(3.5rem, 6vw, 6rem) !important;
+}
+
+/* 7 — Heads: reduce the bottom margin so the headline sits closer
+   to its content. */
+.proof-head, .do-head, .roles-head, .ab-what-head, .how-head,
+.trust-section-head, .ent-head {
+  padding-bottom: clamp(1.75rem, 3vw, 2.5rem) !important;
+  margin-bottom: clamp(2rem, 3.5vw, 3rem) !important;
+}
+
+/* 8 — Section number 'big' numeral was enormous; tame it. */
+.section-num .big { font-size: clamp(36px, 4vw, 56px) !important; }
+
+/* 9 — Buttons: consistent modern pill across the whole site. */
+.btn {
+  border-radius: 999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+}
+
+/* 10 — MOBILE: section heads single-column, headline + dek tight. */
+@media (max-width: 820px) {
+  .proof-head, .do-head, .roles-head, .ab-what-head, .wi-anatomy-head,
+  .how-head, .trust-section-head, .diff-head, .vf-head, .ent-head {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+  }
+  .proof-head h2, .do-head h2, .roles-head h2, .ab-what-head h2,
+  .reach h2, .pri-head h2, .ops-head h2, .vf-head h2, .diff-head h2,
+  .how-head h2, .cust-head h2, .tsh-h2, .ent-h2, .end-cta h2,
+  .wi-h1, .wi-vs-head h2, .wi-anatomy-head h2 {
+    font-size: clamp(26px, 7vw, 38px) !important;
+    line-height: 1.1 !important;
+  }
+  .home-headline {
+    font-size: clamp(30px, 9vw, 44px) !important;
+    line-height: 1.08 !important;
+  }
+  .proof-head .r p, .do-head p, .roles-head p, .ab-what-head p,
+  .how-head p, .ent-dek, .cust-head p, .tsh-dek {
+    font-size: 15.5px !important;
+    max-width: none !important;
+  }
+}

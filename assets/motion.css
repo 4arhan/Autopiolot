@@ -411,26 +411,9 @@ textarea:focus-visible,
     animation: dotPulse 2.4s var(--ease-sharp) infinite;
   }
 
-  /* ---- 16.5  Section-head em underline sweep ---------------
-     Italic <em> inside section titles gets a cobalt underline
-     that sweeps in after the reveal lands. */
-  .section-title em,
-  .hero-title em,
-  h1 em,
-  h2 em {
-    background-image: linear-gradient(var(--accent), var(--accent));
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    background-size: 0% 1px;
-    transition: background-size 600ms 200ms var(--ease-sharp);
-    padding-bottom: 0.05em;
-  }
-  .reveal.is-visible .section-title em,
-  .reveal.is-visible.hero-title em,
-  .reveal.is-visible h1 em,
-  .reveal.is-visible h2 em {
-    background-size: 100% 1px;
-  }
+  /* ---- 16.5  (removed) Section-head em underline sweep —
+     the swept underline read as dated; accent ems now stand on
+     colour alone. */
 
   /* ---- 16.6  Count-up number transition --------------------
      Stats fed by JS counter use tabular-nums and a slight
