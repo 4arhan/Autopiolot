@@ -46,9 +46,9 @@
   --radius-lg: 4px;
 
   /* Type — sans-only, no serif anywhere */
-  --font-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-serif:   'Instrument Serif', 'Georgia', 'Times New Roman', serif;
-  --font-mono:    'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-display: 'Roboto Flex', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-serif:   'Roboto Flex', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono:    'Roboto Mono', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   /* Motion */
   --ease:      cubic-bezier(.22,.61,.36,1);
@@ -78,8 +78,8 @@ html {
 body {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 15.5px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.6;
   color: var(--ink);
   background: var(--paper);
   min-height: 100vh;
@@ -87,8 +87,8 @@ body {
   width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'cv11' 1, 'ss01' 1, 'ss03' 1;
-  letter-spacing: -0.005em;
+  font-variation-settings: "wdth" 100, "GRAD" 0, "slnt" 0, "YOPQ" 79, "YTLC" 514, "YTUC" 712, "XOPQ" 96, "XTRA" 468;
+  letter-spacing: 0;
   font-synthesis: none;
 }
 img, svg, video, iframe { max-width: 100%; height: auto; }
@@ -140,7 +140,7 @@ h1, h2, h3, h4 {
   line-height: 0.98;
   color: inherit; /* inherit from parent so dark-bg sections show white text */
 }
-h1 { font-size: clamp(52px, 8vw, 140px); font-weight: 600; letter-spacing: -0.035em; line-height: 0.94; }
+h1 { font-size: clamp(40px, 6.4vw, 96px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.04; }
 h2 { font-size: clamp(34px, 4.4vw, 72px); letter-spacing: -0.04em; line-height: 0.95; }
 h3 { font-size: clamp(22px, 2.1vw, 32px); letter-spacing: -0.025em; font-weight: 500; line-height: 1.1; }
 h4 { font-size: 18px; font-weight: 500; letter-spacing: -0.015em; }
@@ -2576,8 +2576,171 @@ h2, h3 {
   .cust-card p { font-size: 13px; }
 }
 
-/* Smooth heading rendering — Inter benefits from text-wrap balance */
+/* Roboto rendering — text-wrap balance for headings */
 h1, h2, h3, h4 { text-wrap: balance; }
-
-/* Inter-friendly form labels */
 input, select, textarea, button { font-family: var(--font-display); }
+
+/* =========================================================
+   ROBOTO TUNING + HERO SIMPLIFICATION 2026-05
+   Roboto reads heavier than Inter/Geist. Soften every aggressive
+   negative letter-spacing site-wide and simplify the busy hero.
+   ========================================================= */
+
+/* Global tracking softening for headings */
+h1, .home-headline, .cs-hero h1, .ab-hero h1, .hero-careers h1,
+.hero-int h1, .hero-research h1, .calc-hero h1, .status-hero h1,
+.placeholder .hd, .wi-h1 {
+  letter-spacing: -0.022em !important;
+  font-weight: 500;
+}
+h2, .vf-head h2, .do-head h2, .diff-head h2, .ops-head h2,
+.proof-head h2, .end-cta h2, .cs-cta h2, .reach h2, .pri-head h2,
+.roles-head h2, .tsh-h2, .how-head h2, .cust-head h2, .wi-vs-head h2,
+.wi-anatomy-head h2, .wi-cta h2, .ab-what-head h2 {
+  letter-spacing: -0.018em !important;
+}
+h3, h4 {
+  letter-spacing: -0.014em !important;
+}
+
+/* Roboto Mono labels look cleaner with slightly less tracking */
+.eyebrow, .stat-k, .footer-col h5, .role-num, .cust-cat, .cust-num,
+.hs-time, .tb-l span, .sg-sub, .sg-pill, .stack-eyebrow, .stack-meta,
+.trust-eyebrow, .ticker-item, .vf-eyebrow, .ops-eyebrow, .diff-eyebrow,
+.cust-eyebrow, .how-eyebrow, .do-eyebrow {
+  letter-spacing: 0.08em !important;
+}
+
+/* Simplify the home hero — hide the kicker bar and live HUD pill
+   so the headline is the focal point */
+.home-hero .hero-kicker,
+.home-hero .live-hud { display: none !important; }
+
+/* Hero: give the headline real breathing room, Google-product style */
+.home-hero {
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem) !important;
+}
+.home-grid {
+  align-items: center !important;
+  gap: clamp(2rem, 5vw, 5rem) !important;
+}
+.home-headline {
+  font-size: clamp(40px, 5.6vw, 80px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.022em !important;
+  font-weight: 500 !important;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem) !important;
+  max-width: 14ch !important;
+}
+.home-headline em {
+  color: var(--accent) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--accent) !important;
+  font-style: normal;
+}
+.home-headline em::after { display: none !important; }
+.home-dek {
+  font-size: clamp(16px, 1.1vw, 18px) !important;
+  line-height: 1.6 !important;
+  color: var(--ink-3) !important;
+  max-width: 56ch !important;
+  margin-bottom: clamp(1.5rem, 2.5vw, 2rem) !important;
+  padding-left: 0 !important;
+  border-left: 0 !important;
+}
+.home-cta { gap: 0.6rem; }
+.home-cta .btn {
+  border-radius: 999px !important;
+  padding: 0.85rem 1.5rem !important;
+  font-size: 14.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+}
+.home-cta .btn-lg { padding: 1rem 1.75rem !important; }
+
+/* Proof stats — Google-product cleanliness, no aggressive treatment */
+.home-proof {
+  border-top: 1px solid var(--line) !important;
+  border-bottom: 1px solid var(--line) !important;
+  background: transparent !important;
+}
+.home-proof .p {
+  padding: clamp(1.5rem, 2vw, 2rem) clamp(1rem, 1.5vw, 1.5rem) !important;
+}
+.home-proof .p::before { display: none !important; }
+.home-proof .n {
+  font-size: clamp(28px, 2.6vw, 40px) !important;
+  letter-spacing: -0.02em !important;
+  font-weight: 500 !important;
+  color: var(--ink) !important;
+}
+.home-proof .n em {
+  background: none !important;
+  -webkit-text-fill-color: var(--accent) !important;
+  color: var(--accent) !important;
+  font-style: normal;
+}
+.home-proof .l {
+  font-family: var(--font-mono) !important;
+  font-size: 10.5px !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Topbar: rounder, lighter, more Google-feel */
+.topbar {
+  background: rgba(255,255,255,0.92) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar.is-scrolled {
+  background: rgba(255,255,255,0.96) !important;
+  box-shadow: 0 1px 0 var(--line), 0 4px 16px -8px rgba(9,9,11,0.06) !important;
+}
+.primary-nav a {
+  border-radius: 999px;
+  font-weight: 500;
+  letter-spacing: 0 !important;
+}
+.btn {
+  border-radius: 999px !important;
+  letter-spacing: 0 !important;
+  font-weight: 500;
+}
+
+/* MOBILE — extra tight on the hero so it doesn't feel busy on phones */
+@media (max-width: 720px) {
+  .home-headline {
+    font-size: clamp(34px, 9vw, 52px) !important;
+    line-height: 1.06 !important;
+    text-align: left;
+    max-width: none !important;
+  }
+  .home-dek {
+    font-size: 15.5px !important;
+    line-height: 1.6 !important;
+    max-width: 42ch !important;
+    text-align: left;
+  }
+  .home-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .home-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .home-eyebrow {
+    display: inline-flex !important;
+  }
+  .home-left {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+  .home-proof .n {
+    font-size: clamp(24px, 7vw, 32px) !important;
+  }
+}
+@media (max-width: 480px) {
+  .home-headline { font-size: clamp(32px, 10vw, 44px) !important; }
+}
