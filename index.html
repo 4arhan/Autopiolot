@@ -3,3879 +3,320 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Autopilot Labs — Agents that finish the job</title>
-<meta name="description" content="Autopilot Labs builds vertical AI agents that do your team's most repetitive work — intake, reconciliation, diligence, inbound calls. You pay per completed outcome. Not per seat. Not per token.">
+<title>Autopilot Labs — AI agents that finish the job, billed per outcome</title>
+<meta name="description" content="Autopilot Labs builds vertical AI agents that take over repetitive work — calls, intake, reconciliation, dispatch — and ship the finished outcome into your systems. Billed per completed job, never per token. In-house cloud, enterprise & federal deployment.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/site.css?v=27">
-<link rel="stylesheet" href="assets/motion.css?v=2">
-
-<style>
-/* =========================================================
-   HOMEPAGE — 2026 rewrite
-   Load-bearing: HERO live ledger, 9 practice-area grid,
-   3 pillars with inline stats, ops console, press+cases,
-   end CTA. Minimal chrome; the content does the work.
-   ========================================================= */
-
-/* ---------- HERO ---------- */
-.home-hero {
-  padding: clamp(3.5rem, 7vw, 6.5rem) 0 clamp(3rem, 5vw, 5rem);
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  background: linear-gradient(180deg, #FAFBFF 0%, #FFFFFF 60%);
-}
-/* Ambient backdrop layer 1: dot grid, masked into a soft ellipse */
-.home-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(0,82,255,0.10) 1px, transparent 0);
-  background-size: 22px 22px;
-  background-position: -1px -1px;
-  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 70% 35%, #000 0%, #000 40%, transparent 92%);
-  mask-image: radial-gradient(ellipse 75% 65% at 70% 35%, #000 0%, #000 40%, transparent 92%);
-  pointer-events: none;
-  z-index: -2;
-  opacity: 0.85;
-}
-/* Ambient backdrop layer 2: vivid mesh of cobalt + violet orbs */
-.home-hero::after {
-  content: '';
-  position: absolute;
-  inset: -15%;
-  background:
-    radial-gradient(ellipse 42% 48% at 92% 8%,  rgba(0,82,255,0.55),  transparent 60%),
-    radial-gradient(ellipse 32% 34% at 78% 58%, rgba(98,38,255,0.22), transparent 62%),
-    radial-gradient(ellipse 32% 30% at 8% 92%,  rgba(0,180,255,0.20), transparent 60%),
-    radial-gradient(ellipse 22% 22% at 18% 18%, rgba(140,72,255,0.16), transparent 60%),
-    radial-gradient(ellipse 18% 20% at 50% -2%, rgba(0,82,255,0.12),  transparent 70%);
-  filter: blur(48px);
-  pointer-events: none;
-  z-index: -1;
-  animation: heroOrbs 22s ease-in-out infinite alternate;
-}
-@keyframes heroOrbs {
-  0%   { transform: translate3d(0, 0, 0)         scale(1); }
-  50%  { transform: translate3d(-2.5%, 1.5%, 0)  scale(1.06); }
-  100% { transform: translate3d(2%, -2%, 0)      scale(0.98); }
-}
-.home-hero .container { position: relative; z-index: 1; }
-
-/* Editorial kicker bar that sits flush at the very top of the hero */
-.hero-kicker {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 1.25rem;
-  padding-bottom: 1.25rem;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-  border-bottom: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.hero-kicker .k-left { color: var(--ink); font-weight: 500; }
-.hero-kicker .k-left b { color: var(--accent); font-weight: 600; }
-.hero-kicker .k-line {
-  height: 1px;
-  background: linear-gradient(90deg, var(--line) 0%, var(--accent) 100%);
-  min-width: 0;
-  position: relative;
-  overflow: hidden;
-}
-.hero-kicker .k-line::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: -1px;
-  width: 32px;
-  height: 3px;
-  background: var(--accent);
-  animation: kLineSlide 5s ease-in-out infinite;
-}
-@keyframes kLineSlide {
-  0%   { left: -10%; opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { left: 100%; opacity: 0; }
-}
-.hero-kicker .k-right {
-  color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.14em;
-}
-.hero-kicker .k-right .accent { color: var(--accent); font-weight: 600; }
-@media (max-width: 720px) {
-  .hero-kicker { grid-template-columns: 1fr; gap: 0.5rem; }
-  .hero-kicker .k-line { display: none; }
-}
-
-/* Live activity counter — sits in the hero like a HUD */
-.live-hud {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 12px 6px 10px;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,0.85);
-  -webkit-backdrop-filter: saturate(160%) blur(8px);
-  backdrop-filter: saturate(160%) blur(8px);
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1.25rem;
-  width: fit-content;
-}
-.live-hud .lh-dot {
-  width: 7px; height: 7px;
-  background: var(--accent);
-  border-radius: 50%;
-  position: relative;
-  flex-shrink: 0;
-}
-.live-hud .lh-dot::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-  opacity: 0;
-  animation: lhPing 2s ease-out infinite;
-}
-@keyframes lhPing {
-  0%   { transform: scale(0.6); opacity: 0.6; }
-  80%  { transform: scale(1.8); opacity: 0; }
-  100% { transform: scale(1.8); opacity: 0; }
-}
-.live-hud .lh-num {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: -0.005em;
-  color: var(--accent);
-  text-transform: none;
-  font-variant-numeric: tabular-nums;
-}
-.live-hud .lh-bar {
-  width: 1px; height: 14px;
-  background: var(--line-strong);
-}
-
-/* Mobile eyebrow badge */
-.home-eyebrow {
-  display: none; /* shown only on mobile via media query below */
-  align-items: center;
-  gap: 8px;
-  padding: 5px 14px 5px 10px;
-  background: var(--accent-soft);
-  border: 1px solid var(--line-accent);
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  width: fit-content;
-  margin-bottom: 1.5rem;
-}
-.home-eyebrow-dot {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  flex-shrink: 0;
-  animation: pulse 1.8s infinite ease-in-out;
-}
-@keyframes pulse { 50% { opacity: 0.35; } }
-
-/* Short mobile dek — hidden on desktop */
-.home-dek-short { display: none !important; }
-
-.home-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: center;
-}
-
-.home-headline {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(38px, 4.6vw, 68px);
-  line-height: 1.0;
-  letter-spacing: -0.04em;
-  color: var(--ink);
-  margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
-  text-wrap: balance;
-  max-width: 16ch;
-}
-.home-headline em {
-  color: var(--accent);
-  position: relative;
-  font-style: normal;
-  font-weight: 500;
-}
-.home-headline em::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  bottom: 0.04em;
-  height: 0.06em;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: railDraw 1.4s cubic-bezier(.22,.61,.36,1) 0.5s forwards;
-  opacity: 0.5;
-}
-@keyframes railDraw {
-  to { transform: scaleX(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-headline em::after { animation: none !important; transform: scaleX(1) !important; }
-}
-
-/* Scroll-for-more affordance at hero bottom */
-.scroll-cue {
-  position: absolute;
-  left: 50%;
-  bottom: 12px;
-  transform: translateX(-50%);
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  pointer-events: none;
-  z-index: 2;
-}
-.scroll-cue .sc-line {
-  width: 1px;
-  height: 36px;
-  background: linear-gradient(180deg, transparent 0%, var(--accent) 100%);
-  position: relative;
-  overflow: hidden;
-}
-.scroll-cue .sc-line::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  top: 0;
-  height: 12px;
-  background: linear-gradient(180deg, transparent, var(--accent));
-  animation: scrollCue 2.4s ease-in-out infinite;
-}
-@keyframes scrollCue {
-  0%   { transform: translateY(-100%); opacity: 0; }
-  35%  { opacity: 1; }
-  100% { transform: translateY(280%); opacity: 0; }
-}
-@media (max-width: 1024px) { .scroll-cue { display: none; } }
-
-.home-dek {
-  font-family: var(--font-display);
-  font-size: clamp(15.5px, 1.1vw, 17.5px);
-  line-height: 1.55;
-  color: var(--ink-3);
-  max-width: 52ch;
-  margin-bottom: clamp(1.75rem, 3vw, 2.25rem);
-}
-.home-dek em { color: var(--ink); font-weight: 500; }
-
-.home-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
-
-.home-proof {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  margin-top: clamp(2.5rem, 4vw, 3.5rem);
-  background: var(--paper);
-  position: relative;
-  z-index: 2;
-}
-.home-proof .p {
-  padding: clamp(1.5rem, 2.4vw, 2.25rem) clamp(1rem, 1.6vw, 1.75rem);
-  border-right: 1px solid var(--line);
-  position: relative;
-  transition: background .25s var(--ease);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  overflow: hidden;
-}
-.home-proof .p::before {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  top: 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .45s var(--ease);
-}
-.home-proof .p:hover { background: var(--paper-3); }
-.home-proof .p:hover::before { transform: scaleX(1); }
-.home-proof .p:last-child { border-right: 0; }
-.home-proof .n {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(40px, 4.2vw, 64px);
-  letter-spacing: -0.05em;
-  line-height: 0.92;
-  color: var(--ink);
-  margin-bottom: 0.4rem;
-  font-variant-numeric: tabular-nums;
-}
-.home-proof .n em { color: var(--accent); }
-.home-proof .l {
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* ===== MOBILE HERO — completely re-done ===== */
-@media (max-width: 1000px) {
-  .home-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .ledger { position: static !important; max-height: 460px; }
-}
-
-@media (max-width: 768px) {
-  .home-hero {
-    padding: 2.75rem 0 3rem;
-  }
-
-  /* Show mobile eyebrow, hide desktop meta-row */
-  .home-eyebrow { display: inline-flex; }
-
-  /* Centered single-column layout */
-  .home-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .home-headline {
-    font-size: clamp(54px, 15vw, 80px) !important;
-    line-height: 0.9 !important;
-    letter-spacing: -0.05em !important;
-    margin-bottom: 1.25rem !important;
-  }
-
-  /* Swap deks: hide long, show short */
-  .home-dek-long  { display: none !important; }
-  .home-dek-short {
-    display: block !important;
-    font-size: 17px !important;
-    line-height: 1.65 !important;
-    text-align: center;
-    max-width: 34ch !important;
-    margin: 0 auto 1.75rem !important;
-    color: var(--ink-3);
-  }
-
-  /* Stack CTAs full-width */
-  .home-cta {
-    flex-direction: column;
-    width: 100%;
-    max-width: 340px;
-    gap: 0.65rem !important;
-    margin-bottom: 2rem !important;
-  }
-  .home-cta .btn {
-    width: 100%;
-    justify-content: center;
-    min-height: 52px;
-  }
-
-  /* Stats: 2 × 2 grid, centered text */
-  .home-proof {
-    grid-template-columns: repeat(2, 1fr) !important;
-    width: 100%;
-    border-left: 1px solid var(--line);
-  }
-  .home-proof .p {
-    padding: 1.25rem 1rem !important;
-    text-align: center;
-    border-right: 1px solid var(--line) !important;
-    border-bottom: 1px solid var(--line);
-  }
-  /* kill right border on even items (col 2) */
-  .home-proof .p:nth-child(2n) { border-right: 0 !important; }
-  /* kill bottom border on last row */
-  .home-proof .p:nth-child(3),
-  .home-proof .p:nth-child(4) { border-bottom: 0; }
-  .home-proof .n { font-size: clamp(30px, 8vw, 42px) !important; }
-  .home-proof .l { font-size: 10px; }
-
-  /* Ledger: compact version below the fold */
-  .ledger {
-    max-height: 340px !important;
-  }
-  .ledger-chrome .u { display: none; }
-}
-
-/* ---------- LIVE LEDGER (hero right) ---------- */
-.ledger {
-  border: 1px solid var(--ink);
-  background: var(--paper);
-  position: sticky; top: 104px;
-  display: flex; flex-direction: column;
-  max-height: 580px;
-  overflow: hidden;
-  box-shadow:
-    0 22px 44px -24px rgba(9,9,11,0.30),
-    0 60px 100px -60px rgba(0,82,255,0.32);
-  transition: transform .5s var(--ease), box-shadow .5s var(--ease);
-}
-.ledger:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 28px 56px -22px rgba(9,9,11,0.36),
-    0 70px 130px -55px rgba(0,82,255,0.40);
-}
-.ledger::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,82,255,0.04) 0%, transparent 30%);
-  pointer-events: none;
-  z-index: 1;
-}
-.ledger-chrome {
-  display: flex; align-items: center; gap: 8px;
-  height: 38px; padding: 0 14px;
-  border-bottom: 1px solid var(--ink);
-  font-family: var(--font-mono);
-  font-size: 10.5px; color: var(--muted);
-  background: linear-gradient(180deg, var(--paper-3) 0%, var(--paper) 100%);
-  position: relative; z-index: 2;
-}
-.ledger-chrome .d {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  border: none;
-}
-.ledger-chrome .d:nth-of-type(1) { background: #FF5F57; }
-.ledger-chrome .d:nth-of-type(2) { background: #FEBC2E; }
-.ledger-chrome .d:nth-of-type(3) { background: #28C840; }
-.ledger-chrome .u {
-  margin-left: 14px; color: var(--ink-3); letter-spacing: 0.04em;
-  font-weight: 400;
-  display: inline-flex; align-items: center; gap: 8px;
-}
-.ledger-chrome .u::before {
-  content: '';
-  width: 10px; height: 10px;
-  border: 1px solid var(--accent);
-  border-radius: 2px;
-  display: inline-block;
-}
-.ledger-chrome .r {
-  margin-left: auto; color: var(--accent); font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 3px 8px;
-  background: var(--accent-soft);
-  border: 1px solid var(--line-accent);
-  border-radius: 999px;
-  font-size: 9.5px;
-}
-.ledger-chrome .r .status-dot {
-  width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
-  animation: pulse 1.8s infinite ease-in-out;
-  position: relative;
-}
-.ledger-chrome .r .status-dot::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-  opacity: 0;
-  animation: ledgerPing 2s ease-out infinite;
-}
-@keyframes ledgerPing {
-  0%   { transform: scale(0.6); opacity: 0.6; }
-  80%  { transform: scale(2.2); opacity: 0; }
-  100% { transform: scale(2.2); opacity: 0; }
-}
-@keyframes pulse { 50% { opacity: 0.35; } }
-@media (prefers-reduced-motion: reduce) {
-  .ledger { transform: none !important; }
-}
-@media (max-width: 1000px) {
-  .ledger { transform: none !important; }
-}
-
-.ledger-head {
-  display: grid;
-  grid-template-columns: 72px 1fr 82px 74px;
-  gap: 0.75rem;
-  padding: 10px 14px;
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted);
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-3);
-}
-
-.ledger-body {
-  flex: 1; overflow: hidden;
-  position: relative;
-}
-.ledger-list {
-  list-style: none; margin: 0; padding: 0;
-}
-.ledger-row {
-  display: grid;
-  grid-template-columns: 72px 1fr 82px 74px;
-  gap: 0.75rem; align-items: center;
-  padding: 12px 14px;
-  border-bottom: 1px dashed var(--line);
-  font-size: 13px;
-  animation: rowIn .5s var(--ease-out);
-  position: relative;
-}
-.ledger-row::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 2px;
-  background: var(--accent);
-  transform: scaleY(0);
-  transform-origin: top;
-  animation: ledgerTick 6s ease-in-out infinite;
-}
-.ledger-row:nth-child(2n)::before { animation-delay: -1.2s; }
-.ledger-row:nth-child(3n)::before { animation-delay: -2.4s; }
-.ledger-row:nth-child(4n)::before { animation-delay: -3.6s; }
-.ledger-row:nth-child(5n)::before { animation-delay: -4.8s; }
-@keyframes rowIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes ledgerTick {
-  0%   { transform: scaleY(0); opacity: 0; }
-  6%   { transform: scaleY(1); opacity: 1; }
-  18%  { transform: scaleY(1); opacity: 0.6; }
-  100% { transform: scaleY(0); opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .ledger-row::before { animation: none !important; }
-}
-.ledger-row .t {
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--muted);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-}
-.ledger-row .w {
-  font-family: var(--font-display);
-  font-weight: 500; color: var(--ink);
-  letter-spacing: -0.01em;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.ledger-row .w span {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10px; color: var(--muted);
-  font-weight: 400;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  margin-top: 2px;
-}
-.ledger-row .p {
-  font-family: var(--font-display);
-  font-weight: 500; color: var(--accent);
-  font-size: 13.5px; letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums; text-align: right;
-}
-.ledger-row .s {
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--accent); text-align: right;
-  display: inline-flex; align-items: center; gap: 4px; justify-content: flex-end;
-}
-.ledger-row .s .tick { color: var(--accent); }
-
-.ledger-foot {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 14px;
-  border-top: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--muted); background: var(--paper-3);
-}
-.ledger-foot a { color: var(--accent); font-weight: 600; }
-.ledger-foot a:hover { text-decoration: underline; }
-
-/* hero responsive: handled in the MOBILE HERO block above */
-
-/* ---------- WHAT WE DO — vertical agents + voice ---------- */
-.do-section { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); }
-.do-head {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: clamp(2rem, 4vw, 4rem);
-  padding-bottom: clamp(2.5rem, 5vw, 4rem);
-  border-bottom: 1px solid var(--line-strong);
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
-  align-items: end;
-}
-.do-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500;
-  margin-bottom: 1rem;
-}
-.do-head h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(32px, 3.8vw, 56px);
-  line-height: 1.04;
-  letter-spacing: -0.035em;
-  color: var(--ink);
-  text-wrap: balance;
-  max-width: 18ch;
-}
-.do-head h2 em { color: var(--accent); }
-.do-head p {
-  font-size: clamp(15px, 1.1vw, 17px);
-  line-height: 1.55;
-  color: var(--ink-3);
-  max-width: 46ch;
-}
-.do-head p em { color: var(--ink); font-weight: 500; }
-
-.grid-9 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--line-strong);
-  background: var(--line-strong);
-  gap: 1px;
-}
-.cell {
-  background: var(--paper);
-  padding: 2rem 1.75rem 1.75rem;
-  min-height: 260px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  position: relative;
-  transition: background .25s var(--ease);
-  text-decoration: none; color: inherit;
-  overflow: hidden;
-}
-.cell:hover { background: var(--paper-3); }
-.cell::after {
-  content: ''; position: absolute; inset: auto 0 0 0; height: 2px;
-  background: var(--accent);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .35s var(--ease);
-}
-.cell:hover::after { transform: scaleX(1); }
-
-.cell-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-.cell-num {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted);
-}
-.cell-glyph {
-  width: 52px; height: 52px;
-  background: currentColor;
-  color: var(--ink);
-  opacity: 0.88;
-  -webkit-mask: var(--glyph) center/contain no-repeat;
-  mask: var(--glyph) center/contain no-repeat;
-  transition: color .25s, transform .3s var(--ease);
-}
-.cell:hover .cell-glyph { color: var(--accent); transform: translate(2px, -2px); }
-
-.cell-name {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 1.9vw, 28px);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.05;
-  margin-top: 1.75rem;
-}
-.cell-work {
-  margin-top: 0.6rem;
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--ink-3);
-  max-width: 28ch;
-}
-.cell-meta {
-  margin-top: 1.25rem;
-  padding-top: 0.9rem;
-  border-top: 1px dashed var(--line);
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted);
-}
-.cell-meta .go { color: var(--accent); font-weight: 500; }
-
-.cell.voice { background: var(--ink); color: var(--paper); }
-.cell.voice .cell-num,
-.cell.voice .cell-meta { color: rgba(255,255,255,0.55); }
-.cell.voice .cell-meta { border-top-color: rgba(255,255,255,0.16); }
-.cell.voice .cell-glyph { color: var(--paper); }
-.cell.voice .cell-work { color: rgba(255,255,255,0.7); }
-.cell.voice .cell-meta .go { color: var(--accent-2); }
-.cell.voice:hover { background: #0b0b0f; }
-.cell.voice:hover .cell-glyph { color: var(--accent); }
-
-.grid-9 .cell:nth-child(3n) { border-right: 0; }
-@media (max-width: 900px) {
-  .do-head { grid-template-columns: 1fr; }
-  .grid-9 { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .grid-9 { grid-template-columns: 1fr; }
-}
-
-/* ---------- GRID-12 — new 4×3 industries grid ---------- */
-.grid-12 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--line-strong);
-  background: var(--line-strong);
-  gap: 1px;
-}
-.grid-12 .cell {
-  background: var(--paper);
-  padding: 1.75rem 1.5rem 1.5rem;
-  min-height: 230px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  position: relative;
-  transition: background .25s var(--ease);
-  text-decoration: none; color: inherit;
-  overflow: hidden;
-}
-.grid-12 .cell:hover { background: var(--paper-3); }
-.grid-12 .cell::after {
-  content: ''; position: absolute; inset: auto 0 0 0; height: 2px;
-  background: var(--accent);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .35s var(--ease);
-}
-.grid-12 .cell:hover::after { transform: scaleX(1); }
-@media (max-width: 1100px) { .grid-12 { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 780px)  { .grid-12 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px)  { .grid-12 { grid-template-columns: 1fr; } }
-
-/* 13th + 14th cells — twin half-width feature cards */
-.grid-12 .cell-feature {
-  grid-column: span 2;
-  background: var(--ink); color: var(--paper);
-  padding: clamp(1.75rem, 2.6vw, 2.5rem);
-  min-height: 260px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  position: relative;
-  gap: 1rem;
-}
-.grid-12 .cell-feature::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 70% at 100% 100%, rgba(0,82,255,0.14), transparent 60%);
-  pointer-events: none;
-}
-.grid-12 .cell-feature > * { position: relative; z-index: 1; }
-.grid-12 .cell-feature::after { background: var(--accent); }
-.grid-12 .cell-feature:hover { background: #0b0b0f; }
-
-.grid-12 .cell-feature .cell-num {
-  color: rgba(255,255,255,0.55);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-}
-.grid-12 .cell-feature .cell-glyph {
-  color: var(--paper);
-  width: 56px; height: 56px;
-}
-.grid-12 .cell-feature:hover .cell-glyph { color: var(--accent-2); }
-.grid-12 .cell-feature .cell-feature-body .cell-name {
-  font-size: clamp(24px, 2.2vw, 32px);
-  margin-top: 1.25rem;
-  letter-spacing: -0.03em;
-}
-.grid-12 .cell-feature .cell-feature-body .cell-work {
-  color: rgba(255,255,255,0.72);
-  margin-top: 0.6rem;
-  max-width: 46ch;
-}
-.grid-12 .cell-feature .cell-meta {
-  border-top: 1px dashed rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.55);
-  padding-top: 0.9rem;
-  margin-top: 1.25rem;
-}
-.grid-12 .cell-feature .cell-meta .go { color: var(--accent-2); }
-
-/* Voice feature cell — lighter accent gradient */
-.grid-12 .cell-feature-voice::before {
-  background:
-    radial-gradient(ellipse 70% 80% at 0% 0%, rgba(0,82,255,0.18), transparent 55%),
-    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(74,139,255,0.10), transparent 55%);
-}
-.grid-12 .cell-feature-voice .cell-name em,
-.grid-12 .cell-feature .cell-name em { color: #4A8BFF; }
-
-@media (max-width: 1100px) {
-  .grid-12 .cell-feature { grid-column: span 3; }
-}
-@media (max-width: 780px) {
-  .grid-12 .cell-feature { grid-column: span 2; }
-}
-@media (max-width: 520px) {
-  .grid-12 .cell-feature { grid-column: 1 / -1; }
-}
-
-/* ---------- VOICE FLAGSHIP — full-width dark band ---------- */
-.voice-flag {
-  padding: clamp(5rem, 9vw, 9rem) 0;
-  background: var(--ink); color: var(--paper);
-  border-bottom: 1px solid var(--ink);
-  position: relative; overflow: hidden;
-}
-.voice-flag::before {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 15% 0%, rgba(0,82,255,0.14), transparent 55%),
-    radial-gradient(ellipse 55% 45% at 90% 100%, rgba(0,82,255,0.10), transparent 55%);
-  pointer-events: none;
-}
-.voice-flag::after {
-  content: ''; position: absolute; inset: 0;
-  background-image: linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px);
-  background-size: 96px 100%; pointer-events: none;
-}
-.voice-flag .container { position: relative; z-index: 1; }
-.vf-head {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-  border-bottom: 1px solid rgba(255,255,255,0.14);
-  align-items: end;
-}
-.vf-head .vf-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: #4A8BFF; font-weight: 500; margin-bottom: 1rem;
-}
-.vf-head h2 {
-  font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(36px, 5vw, 76px);
-  line-height: 0.96; letter-spacing: -0.045em;
-  text-wrap: balance;
-  max-width: 16ch;
-}
-.vf-head { align-items: start; }
-.vf-head h2 em { color: #4A8BFF; }
-.vf-head p {
-  font-size: clamp(16px, 1.2vw, 19px); line-height: 1.55;
-  color: rgba(255,255,255,0.75); max-width: 48ch;
-  margin-bottom: 1rem;
-}
-.vf-head p em { color: var(--paper); font-weight: 500; }
-@media (max-width: 900px) { .vf-head { grid-template-columns: 1fr; } }
-
-/* live voice waveform */
-.vf-wave {
-  margin: clamp(2rem, 4vw, 3rem) 0;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(255,255,255,0.10);
-  border-left: 2px solid var(--accent-2);
-  padding: 1.25rem 1.5rem 1.4rem;
-  position: relative;
-  overflow: hidden;
-}
-.vf-wave-chrome {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
-  padding-bottom: 1rem;
-  border-bottom: 1px dashed rgba(255,255,255,0.12);
-}
-.vf-wave-dot {
-  width: 8px; height: 8px;
-  background: #ff5470;
-  border-radius: 50%;
-  flex-shrink: 0;
-  animation: recDot 1.4s ease-in-out infinite;
-  box-shadow: 0 0 0 0 rgba(255,84,112,0.55);
-}
-@keyframes recDot {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,84,112,0.55); opacity: 1; }
-  50%      { box-shadow: 0 0 0 6px rgba(255,84,112,0);   opacity: 0.6; }
-}
-.vf-wave-label { flex: 1 1 auto; color: rgba(255,255,255,0.85); font-weight: 500; }
-.vf-wave-meta {
-  font-variant-numeric: tabular-nums;
-  color: var(--accent-2);
-  letter-spacing: 0.14em;
-}
-.vf-wave-bars {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4px;
-  height: 64px;
-  padding: 0.85rem 0;
-  border-bottom: 1px dashed rgba(255,255,255,0.12);
-}
-.vf-wave-bars span {
-  flex: 1 1 auto;
-  height: 30%;
-  background: linear-gradient(180deg, var(--accent-2) 0%, var(--accent) 100%);
-  border-radius: 1px;
-  animation: vwBar 1.6s ease-in-out infinite;
-  transform-origin: center;
-}
-.vf-wave-bars span:nth-child(1)  { animation-delay: -0.10s; height: 25%; }
-.vf-wave-bars span:nth-child(2)  { animation-delay: -0.30s; height: 65%; }
-.vf-wave-bars span:nth-child(3)  { animation-delay: -0.45s; height: 40%; }
-.vf-wave-bars span:nth-child(4)  { animation-delay: -0.60s; height: 80%; }
-.vf-wave-bars span:nth-child(5)  { animation-delay: -0.20s; height: 55%; }
-.vf-wave-bars span:nth-child(6)  { animation-delay: -0.75s; height: 35%; }
-.vf-wave-bars span:nth-child(7)  { animation-delay: -0.40s; height: 70%; }
-.vf-wave-bars span:nth-child(8)  { animation-delay: -0.55s; height: 45%; }
-.vf-wave-bars span:nth-child(9)  { animation-delay: -0.05s; height: 85%; }
-.vf-wave-bars span:nth-child(10) { animation-delay: -0.95s; height: 30%; }
-.vf-wave-bars span:nth-child(11) { animation-delay: -0.25s; height: 75%; }
-.vf-wave-bars span:nth-child(12) { animation-delay: -0.35s; height: 50%; }
-.vf-wave-bars span:nth-child(13) { animation-delay: -0.85s; height: 60%; }
-.vf-wave-bars span:nth-child(14) { animation-delay: -0.55s; height: 90%; }
-.vf-wave-bars span:nth-child(15) { animation-delay: -0.65s; height: 35%; }
-.vf-wave-bars span:nth-child(16) { animation-delay: -0.45s; height: 55%; }
-.vf-wave-bars span:nth-child(17) { animation-delay: -0.15s; height: 78%; }
-.vf-wave-bars span:nth-child(18) { animation-delay: -0.95s; height: 42%; }
-.vf-wave-bars span:nth-child(19) { animation-delay: -0.35s; height: 68%; }
-.vf-wave-bars span:nth-child(20) { animation-delay: -0.75s; height: 50%; }
-.vf-wave-bars span:nth-child(21) { animation-delay: -0.25s; height: 82%; }
-.vf-wave-bars span:nth-child(22) { animation-delay: -0.65s; height: 38%; }
-.vf-wave-bars span:nth-child(23) { animation-delay: -0.05s; height: 60%; }
-.vf-wave-bars span:nth-child(24) { animation-delay: -0.45s; height: 72%; }
-.vf-wave-bars span:nth-child(25) { animation-delay: -0.85s; height: 28%; }
-.vf-wave-bars span:nth-child(26) { animation-delay: -0.35s; height: 92%; }
-.vf-wave-bars span:nth-child(27) { animation-delay: -0.55s; height: 45%; }
-.vf-wave-bars span:nth-child(28) { animation-delay: -0.15s; height: 65%; }
-.vf-wave-bars span:nth-child(29) { animation-delay: -0.95s; height: 38%; }
-.vf-wave-bars span:nth-child(30) { animation-delay: -0.55s; height: 78%; }
-.vf-wave-bars span:nth-child(31) { animation-delay: -0.25s; height: 52%; }
-.vf-wave-bars span:nth-child(32) { animation-delay: -0.65s; height: 70%; }
-.vf-wave-bars span:nth-child(33) { animation-delay: -0.45s; height: 35%; }
-.vf-wave-bars span:nth-child(34) { animation-delay: -0.85s; height: 88%; }
-.vf-wave-bars span:nth-child(35) { animation-delay: -0.35s; height: 48%; }
-.vf-wave-bars span:nth-child(36) { animation-delay: -0.75s; height: 62%; }
-.vf-wave-bars span:nth-child(37) { animation-delay: -0.05s; height: 30%; }
-.vf-wave-bars span:nth-child(38) { animation-delay: -0.65s; height: 55%; }
-.vf-wave-bars span:nth-child(39) { animation-delay: -0.25s; height: 80%; }
-.vf-wave-bars span:nth-child(40) { animation-delay: -0.95s; height: 42%; }
-@keyframes vwBar {
-  0%, 100% { transform: scaleY(0.45); opacity: 0.65; }
-  50%      { transform: scaleY(1.10); opacity: 1; }
-}
-.vf-wave-foot {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding-top: 0.85rem;
-  flex-wrap: wrap;
-}
-.vf-wave-cap {
-  font-family: var(--font-display);
-  font-size: 14px;
-  line-height: 1.45;
-  color: rgba(255,255,255,0.85);
-  font-style: normal;
-  max-width: 60ch;
-}
-.vf-wave-cap::before { content: '“'; color: var(--accent-2); margin-right: 4px; }
-.vf-wave-cap::after  { content: '”'; color: var(--accent-2); margin-left: 4px; }
-.vf-wave-side {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
-  white-space: nowrap;
-}
-.vf-wave-side em {
-  color: var(--accent-2);
-  font-style: normal;
-  font-weight: 600;
-}
-@media (prefers-reduced-motion: reduce) {
-  .vf-wave-bars span { animation: none !important; transform: none; }
-  .vf-wave-dot { animation: none !important; }
-}
-@media (max-width: 720px) {
-  .vf-wave { padding: 1rem 1.1rem 1.2rem; }
-  .vf-wave-bars { height: 48px; gap: 3px; }
-  .vf-wave-cap { font-size: 13px; }
-  .vf-wave-chrome { font-size: 10px; flex-wrap: wrap; }
-}
-
-/* language chips */
-.vf-langs {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  padding: 1.25rem 0; margin-bottom: clamp(2rem, 4vw, 3rem);
-  border-top: 1px dashed rgba(255,255,255,0.14);
-  border-bottom: 1px dashed rgba(255,255,255,0.14);
-}
-.vf-langs .lg {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 7px 14px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.02);
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
-  transition: background .2s, border-color .2s, color .2s;
-}
-.vf-langs .lg:hover { background: rgba(0,82,255,0.18); border-color: #4A8BFF; color: var(--paper); }
-.vf-langs .lg .code { color: #4A8BFF; font-weight: 500; }
-
-/* voice SKU grid */
-.vf-skus {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06); gap: 1px;
-}
-.vf-sku {
-  background: var(--ink); padding: 1.25rem 1.5rem;
-  display: flex; flex-direction: column; gap: 0.5rem;
-  transition: background .2s;
-}
-.vf-sku:hover { background: #0b0b0f; }
-.vf-sku .sn {
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-}
-.vf-sku h4 {
-  font-family: var(--font-display); font-weight: 500;
-  font-size: 17px; letter-spacing: -0.02em; line-height: 1.1;
-  color: var(--paper);
-}
-.vf-sku p {
-  font-family: var(--font-mono); font-size: 10.5px;
-  letter-spacing: 0.06em; color: rgba(255,255,255,0.6);
-  text-transform: uppercase;
-}
-.vf-sku .ft {
-  margin-top: auto; padding-top: 0.75rem;
-  border-top: 1px dashed rgba(255,255,255,0.12);
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-}
-.vf-sku .ft .p {
-  color: #4A8BFF; font-weight: 500;
-  letter-spacing: -0.005em; text-transform: none;
-  font-family: var(--font-display); font-size: 13.5px;
-}
-@media (max-width: 1000px) { .vf-skus { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px)  { .vf-skus { grid-template-columns: 1fr; } }
-
-.vf-cta {
-  margin-top: clamp(2rem, 3vw, 3rem);
-  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
-}
-.vf-cta .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-.vf-cta .btn:hover { background: #4A8BFF; color: var(--paper); border-color: #4A8BFF; }
-.vf-cta .note { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); }
-
-/* ---------- HOW IT'S DIFFERENT — 3 pillars ---------- */
-.diff { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); background: var(--paper-3); }
-.diff-head { max-width: 48rem; margin-bottom: clamp(3rem, 5vw, 4.5rem); }
-.diff-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500; margin-bottom: 1rem;
-}
-.diff-head h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: 1.02; letter-spacing: -0.04em; color: var(--ink);
-  text-wrap: balance;
-}
-.diff-head h2 em { color: var(--accent); }
-.diff-head p {
-  margin-top: 1.25rem;
-  font-size: clamp(15px, 1.1vw, 17px);
-  color: var(--ink-3); max-width: 46ch; line-height: 1.55;
-}
-
-.diff-row {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--line-strong);
-  background: var(--line-strong); gap: 1px;
-}
-.diff-card {
-  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
-  padding: clamp(2rem, 3vw, 2.75rem);
-  display: flex; flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.diff-card::after {
-  content: '';
-  position: absolute;
-  inset: auto -25% -30% auto;
-  width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(0,82,255,0.10), transparent 65%);
-  filter: blur(24px);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .4s var(--ease);
-  z-index: -1;
-}
-.diff-card:hover::after { opacity: 1; }
-.diff-card .no {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 4px 10px;
-  background: var(--accent-soft);
-  border: 1px solid var(--line-accent);
-  border-radius: 999px;
-  margin-bottom: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-}
-.diff-card .fig {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(54px, 7vw, 104px);
-  line-height: 0.92; letter-spacing: -0.055em;
-  color: var(--ink); margin-bottom: 0.5rem;
-  font-variant-numeric: tabular-nums;
-}
-.diff-card .fig em { color: var(--accent); }
-.diff-card .fig sub { font-size: 0.34em; color: var(--muted); letter-spacing: 0; font-weight: 400; vertical-align: 22%; margin-left: 4px; }
-.diff-card .figLabel {
-  font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted);
-  padding-bottom: 1.25rem; margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--line);
-}
-.diff-card h3 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(22px, 2vw, 30px);
-  letter-spacing: -0.03em; line-height: 1.1;
-  margin-bottom: 0.75rem;
-}
-.diff-card h3 em { color: var(--accent); }
-.diff-card p {
-  font-size: 14.5px; line-height: 1.6; color: var(--ink-3);
-}
-.diff-card .vs {
-  margin-top: auto; padding-top: 1.5rem;
-  border-top: 1px dashed var(--line);
-  font-family: var(--font-mono);
-  font-size: 11px; line-height: 1.6;
-  color: var(--muted); letter-spacing: 0;
-}
-.diff-card .vs b { display: block; color: var(--accent); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; font-size: 10px; margin-bottom: 0.5rem; }
-
-@media (max-width: 900px) { .diff-row { grid-template-columns: 1fr; } }
-
-/* ---------- OPS CONSOLE — moved up, trimmed ---------- */
-.ops { padding: clamp(5rem, 9vw, 9rem) 0; background: #050510; color: var(--paper); border-bottom: 1px solid #1A1A22; position: relative; overflow: hidden; isolation: isolate; }
-.ops::before {
-  content: ''; position: absolute; inset: -10%;
-  background:
-    radial-gradient(ellipse 45% 50% at 12% 8%,  rgba(0,82,255,0.42), transparent 60%),
-    radial-gradient(ellipse 32% 32% at 88% 90%, rgba(110,111,255,0.30), transparent 60%),
-    radial-gradient(ellipse 28% 28% at 70% 30%, rgba(0,180,255,0.15), transparent 60%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: -1;
-}
-.ops::after {
-  content: ''; position: absolute; inset: 0;
-  background-image: linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px);
-  background-size: 96px 100%;
-  pointer-events: none;
-}
-.ops .container { position: relative; z-index: 1; }
-.ops-head { max-width: 58rem; margin-bottom: clamp(3rem, 5vw, 4.5rem); }
-.ops-eyebrow {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: #4A8BFF; margin-bottom: 1rem;
-}
-.ops-head h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: 1.02; letter-spacing: -0.04em;
-  text-wrap: balance;
-}
-.ops-head h2 em { color: #4A8BFF; }
-.ops-head p {
-  margin-top: 1.25rem;
-  font-size: clamp(15px, 1.1vw, 17px);
-  color: rgba(255,255,255,0.65);
-  max-width: 48ch; line-height: 1.55;
-}
-.ops-device {
-  border: 1px solid rgba(255,255,255,0.14);
-  background: var(--paper);
-  overflow: hidden;
-  margin-bottom: clamp(2rem, 3vw, 3rem);
-}
-.ops-chrome {
-  display: flex; align-items: center; gap: 8px;
-  height: 36px; padding: 0 14px;
-  border-bottom: 1px solid var(--ink);
-  background: var(--paper);
-  font-family: var(--font-mono);
-  font-size: 10.5px; color: var(--muted);
-}
-.ops-chrome .d { width: 7px; height: 7px; border: 1px solid var(--ink); }
-.ops-chrome .u { margin-left: 14px; color: var(--ink); }
-.ops-chrome .r {
-  margin-left: auto; color: var(--accent); font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase;
-}
-.ops-canvas { display: block; width: 100%; aspect-ratio: 1200/720; border: 0; background: var(--paper); }
-
-.ops-bullets {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  border-top: 1px solid rgba(255,255,255,0.14);
-  border-bottom: 1px solid rgba(255,255,255,0.14);
-  list-style: none;
-}
-.ops-bullets li {
-  padding: 1.4rem clamp(1rem, 2vw, 1.75rem);
-  border-right: 1px solid rgba(255,255,255,0.1);
-  font-family: var(--font-display);
-  font-size: 15px; color: rgba(255,255,255,0.88);
-}
-.ops-bullets li:last-child { border-right: 0; }
-.ops-bullets li b {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: #4A8BFF; font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-.ops-cta { margin-top: 2rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-.ops-cta .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-.ops-cta .btn:hover { background: var(--accent); color: var(--paper); border-color: var(--accent); }
-.ops-cta .note { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); }
-
-@media (max-width: 900px) {
-  .ops-bullets { grid-template-columns: 1fr; }
-  .ops-bullets li { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-  .ops-bullets li:last-child { border-bottom: 0; }
-}
-
-/* ---------- PROOF: CASES + PRESS combined ---------- */
-.proof { padding: clamp(5rem, 9vw, 9rem) 0; border-bottom: 1px solid var(--line); }
-.proof-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(2rem, 4vw, 4rem); align-items: end; padding-bottom: clamp(2.5rem, 5vw, 4rem); margin-bottom: clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid var(--line-strong); }
-.proof-head .l .eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500; margin-bottom: 1rem;
-}
-.proof-head h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: 1.02; letter-spacing: -0.04em;
-  text-wrap: balance;
-}
-.proof-head h2 em { color: var(--accent); }
-.proof-head .r p {
-  font-size: clamp(15px, 1.1vw, 17px); color: var(--ink-3); line-height: 1.55;
-  max-width: 48ch;
-}
-.proof-head .r p em { color: var(--ink); font-weight: 500; }
-
-.cases-row {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--line-strong);
-  background: var(--line-strong); gap: 1px;
-  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-}
-.case-card { background: var(--paper); padding: 2.25rem 2rem; display: flex; flex-direction: column; gap: 1.25rem; }
-.case-tag {
-  font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500;
-  display: inline-flex; align-items: center; gap: 8px;
-}
-.case-tag .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
-.case-card blockquote {
-  font-family: var(--font-display);
-  font-size: clamp(18px, 1.5vw, 22px);
-  line-height: 1.4; letter-spacing: -0.018em;
-  font-weight: 500; color: var(--ink);
-  border-left: 2px solid var(--accent); padding-left: 1rem;
-  text-wrap: balance;
-}
-.case-card blockquote em { color: var(--accent); }
-.case-by { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
-.case-by b { display: block; color: var(--ink); font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: -0.005em; margin-bottom: 2px; text-transform: none; }
-.case-kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: auto; border: 1px solid var(--line); }
-.case-kpi > div { padding: 0.9rem 1rem; border-right: 1px solid var(--line); }
-.case-kpi > div:last-child { border-right: 0; }
-.case-kpi .k { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-.case-kpi .v { font-family: var(--font-display); font-weight: 500; font-size: 22px; letter-spacing: -0.025em; color: var(--accent); }
-
-.press-row {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0; border-top: 1px solid var(--line-strong);
-}
-.press-cell {
-  padding: 2rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
-  display: flex; flex-direction: column; gap: 1.25rem;
-  transition: background .25s;
-}
-.press-cell:nth-child(3n) { border-right: 0; }
-.press-cell:nth-last-child(-n+3) { border-bottom: 0; }
-.press-cell:hover { background: var(--paper-3); }
-.press-mark {
-  font-family: var(--font-display);
-  font-size: 18px; font-weight: 700; letter-spacing: -0.025em;
-  padding-bottom: 1rem; border-bottom: 1px solid var(--ink);
-}
-.press-mark.afr { text-transform: uppercase; font-stretch: condensed; font-weight: 800; }
-.press-mark.bloomberg { letter-spacing: -0.035em; }
-.press-mark.tc { font-family: var(--font-mono); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; text-transform: lowercase; }
-.press-mark.forbes small { font-size: 10px; letter-spacing: 0.12em; margin-left: 4px; color: var(--muted); text-transform: uppercase; font-weight: 400; }
-.press-mark.capital { font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; }
-.press-mark.smart { font-weight: 400; font-size: 16px; letter-spacing: -0.025em; }
-.press-mark.smart b { font-weight: 700; }
-.press-quote {
-  font-family: var(--font-display);
-  font-size: clamp(16px, 1.25vw, 20px);
-  line-height: 1.3; letter-spacing: -0.02em; font-weight: 500;
-  color: var(--ink); text-wrap: balance;
-}
-.press-quote::before { content: '\201C'; margin-right: 0.05em; }
-.press-quote::after { content: '\201D'; margin-left: 0.05em; }
-.press-quote em { color: var(--accent); }
-.press-by {
-  margin-top: auto;
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted);
-  padding-top: 1rem; border-top: 1px solid var(--line);
-}
-.press-by .author { color: var(--ink); font-weight: 500; }
-
-@media (max-width: 900px) {
-  .proof-head { grid-template-columns: 1fr; }
-  .cases-row, .press-row { grid-template-columns: 1fr; }
-  .press-cell { border-right: 0; }
-  .press-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
-  .press-cell:last-child { border-bottom: 0; }
-}
-@media (max-width: 520px) {
-  .case-card { padding: 1.5rem 1.25rem; }
-  .case-card blockquote { font-size: 16px; padding-left: 0.75rem; }
-  .case-kpi > div { padding: 0.75rem 0.85rem; }
-  .case-kpi .v { font-size: 19px; }
-  .press-cell { padding: 1.5rem 1.25rem; gap: 1rem; }
-  .end-cta .btns .btn { width: 100%; }
-  .end-cta .btns { display: flex; flex-direction: column; align-items: stretch; gap: 0.6rem; }
-  .cell { min-height: 0; padding: 1.75rem 1.25rem 1.5rem; }
-  .cell-name { font-size: clamp(19px, 6vw, 22px) !important; margin-top: 1.25rem; }
-  .grid-12 .cell { min-height: 0; padding: 1.5rem 1.1rem; }
-  .grid-12 .cell-feature { min-height: 0; padding: 1.75rem 1.25rem; }
-  .grid-12 .cell-feature .cell-glyph { width: 44px; height: 44px; }
-  .diff-card { padding: 1.75rem 1.25rem; }
-  .diff-card .fig { font-size: clamp(44px, 13vw, 64px); }
-  .diff-card .figLabel { padding-bottom: 1rem; margin-bottom: 1rem; }
-  .vf-sku { padding: 1.1rem 1.25rem; }
-  .ops-bullets li { padding: 1.1rem 1rem; font-size: 14px; }
-  .proof-head, .do-head { gap: 1.25rem; padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
-}
-@media (max-width: 380px) {
-  .cell-glyph { width: 40px; height: 40px; }
-  .cell-feature .cell-glyph { width: 40px; height: 40px; }
-  .diff-card .fig { font-size: clamp(40px, 14vw, 52px); }
-  .end-cta h2 { font-size: clamp(32px, 13vw, 48px); letter-spacing: -0.04em; }
-  .vf-head h2 { font-size: clamp(32px, 12vw, 48px); letter-spacing: -0.04em; }
-}
-
-/* ---------- END CTA ---------- */
-.end-cta { padding: clamp(6rem, 10vw, 10rem) 0 clamp(5rem, 8vw, 8rem); background: var(--paper); }
-.end-cta .inner {
-  max-width: 68rem; margin: 0 auto; text-align: center;
-}
-.end-cta .eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--accent); font-weight: 500; margin-bottom: 1.5rem;
-}
-.end-cta h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(44px, 7vw, 108px);
-  line-height: 0.96; letter-spacing: -0.05em;
-  color: var(--ink); margin-bottom: 1.75rem;
-  text-wrap: balance;
-}
-.end-cta h2 em { color: var(--accent); }
-.end-cta p {
-  font-size: clamp(16px, 1.2vw, 19px);
-  color: var(--ink-3); line-height: 1.5;
-  max-width: 46rem; margin: 0 auto 2.5rem;
-}
-.end-cta .btns { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
-
-/* =========================================================
-   MOBILE — aggressive rewrite (820 / 720 / 520 / 380)
-   ========================================================= */
-
-@media (max-width: 820px) {
-  /* HERO */
-  .home-hero { padding: 3rem 0 2.5rem; }
-  .home-hero .meta-row { font-size: 10px; letter-spacing: 0.1em; gap: 0.5rem 0.75rem; padding-bottom: 1rem; margin-bottom: 1.5rem; }
-  .home-grid { grid-template-columns: 1fr !important; gap: 1.75rem; }
-  .home-headline { font-size: clamp(40px, 10.5vw, 64px) !important; line-height: 0.92; letter-spacing: -0.04em; margin-bottom: 1.25rem; }
-  .home-dek { font-size: 15.5px; line-height: 1.5; margin-bottom: 1.5rem; }
-  .home-cta { gap: 0.6rem; margin-bottom: 1.75rem; }
-  .home-proof { grid-template-columns: repeat(2, 1fr); }
-  .home-proof .p { padding: 0.9rem 1rem 0.9rem 0; }
-  .home-proof .n { font-size: 26px !important; }
-  .home-proof .l { font-size: 9.5px; }
-
-  /* LEDGER */
-  .ledger { position: static !important; max-height: 420px; }
-
-  /* WHAT WE DO */
-  .do-section { padding: 3.5rem 0; }
-  .do-head { grid-template-columns: 1fr !important; gap: 1.25rem; padding-bottom: 1.75rem; margin-bottom: 1.75rem; align-items: start; }
-  .do-head h2 { font-size: clamp(28px, 7.5vw, 44px) !important; line-height: 1.05; letter-spacing: -0.03em; }
-  .do-head p { font-size: 15px; line-height: 1.55; }
-  .grid-12 { grid-template-columns: repeat(2, 1fr); }
-  .cell { padding: 1.5rem 1.25rem 1.25rem; min-height: 0; }
-  .cell-name { font-size: 19px !important; margin-top: 1rem; }
-  .cell-work { font-size: 13px; }
-  .cell-glyph { width: 44px; height: 44px; }
-
-  /* VOICE FLAGSHIP */
-  .voice-flag { padding: 3.5rem 0; }
-  .vf-head { grid-template-columns: 1fr !important; gap: 1.25rem; padding-bottom: 1.75rem; margin-bottom: 1.5rem; align-items: start; }
-  .vf-head h2 { font-size: clamp(34px, 9vw, 56px) !important; line-height: 0.96; letter-spacing: -0.04em; }
-  .vf-head p { font-size: 15px; }
-  .vf-skus { grid-template-columns: repeat(2, 1fr); }
-  .vf-sku { padding: 1.1rem 1.25rem; }
-  .vf-langs { padding: 1rem 0; margin-bottom: 1.5rem; gap: 6px; }
-  .vf-langs .lg { padding: 5px 10px; font-size: 10px; letter-spacing: 0.06em; }
-  .vf-cta { flex-direction: column; align-items: stretch; gap: 0.75rem; margin-top: 1.5rem; }
-  .vf-cta .btn { width: 100%; text-align: center; justify-content: center; }
-
-  /* DIFFERENTIATORS */
-  .diff { padding: 3.5rem 0; }
-  .diff-head { margin-bottom: 1.75rem; }
-  .diff-head h2 { font-size: clamp(28px, 7.5vw, 44px) !important; line-height: 1.05; letter-spacing: -0.03em; }
-  .diff-head p { font-size: 15px; margin-top: 1rem; }
-  .diff-row { grid-template-columns: 1fr !important; }
-  .diff-card { padding: 1.75rem 1.5rem; }
-  .diff-card .fig { font-size: clamp(48px, 12vw, 72px) !important; }
-  .diff-card h3 { font-size: 22px !important; }
-
-  /* OPS */
-  .ops { padding: 3.5rem 0; }
-  .ops-head { margin-bottom: 1.75rem; }
-  .ops-head h2 { font-size: clamp(28px, 7.5vw, 44px) !important; line-height: 1.05; letter-spacing: -0.03em; }
-  .ops-head p { font-size: 15px; margin-top: 1rem; }
-  .ops-bullets { grid-template-columns: 1fr !important; }
-  .ops-bullets li { border-right: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1.1rem 1rem; font-size: 14px; }
-  .ops-bullets li:last-child { border-bottom: 0; }
-  .ops-cta { flex-direction: column; align-items: stretch; gap: 0.75rem; margin-top: 1.5rem; }
-  .ops-cta .btn { width: 100%; text-align: center; justify-content: center; }
-  .ops-chrome { height: 32px; padding: 0 10px; font-size: 9.5px; gap: 6px; }
-  .ops-chrome .u { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .ops-chrome .r { font-size: 9.5px; }
-
-  /* PROOF / HOW WE WORK */
-  .proof { padding: 3.5rem 0; }
-  .proof-head { grid-template-columns: 1fr !important; gap: 1.25rem; padding-bottom: 1.75rem; margin-bottom: 1.75rem; align-items: start; }
-  .proof-head h2 { font-size: clamp(28px, 7.5vw, 44px) !important; line-height: 1.05; letter-spacing: -0.03em; }
-  .proof-head .r p { font-size: 15px; }
-  .principles-row { grid-template-columns: repeat(2, 1fr) !important; }
-  .principle { padding: 1.5rem 1.25rem !important; }
-  .principle h3 { font-size: 19px !important; }
-  .cases-row { grid-template-columns: 1fr !important; }
-  .case-card { padding: 1.75rem 1.5rem; }
-  .press-row { grid-template-columns: 1fr !important; }
-  .press-cell { border-right: 0 !important; padding: 1.5rem 1.25rem; }
-  .press-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
-  .press-cell:last-child { border-bottom: 0; }
-
-  /* END CTA */
-  .end-cta { padding: 3.5rem 0 3rem; }
-  .end-cta h2 { font-size: clamp(36px, 9vw, 60px) !important; line-height: 1; letter-spacing: -0.04em; margin-bottom: 1rem; }
-  .end-cta p { font-size: 15.5px; margin-bottom: 1.75rem; }
-  .end-cta .btns { flex-direction: column; align-items: stretch; gap: 0.6rem; width: 100%; }
-  .end-cta .btns .btn { width: 100%; text-align: center; justify-content: center; }
-}
-
-@media (max-width: 520px) {
-  /* HERO — phone */
-  .home-hero { padding: 2.25rem 0 2rem; }
-  .home-hero .meta-row { font-size: 9.5px; flex-direction: column; align-items: flex-start; gap: 0.35rem; }
-  .home-headline { font-size: clamp(36px, 11vw, 44px) !important; line-height: 0.92; letter-spacing: -0.035em; }
-  .home-dek { font-size: 15px !important; line-height: 1.55; }
-  .home-cta { flex-direction: column; align-items: stretch; gap: 0.55rem; }
-  .home-cta .btn { width: 100%; text-align: center; justify-content: center; }
-  .home-proof { grid-template-columns: 1fr !important; }
-  .home-proof .p { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; padding: 0.85rem 0 !important; }
-  .home-proof .p:last-child { border-bottom: 0 !important; }
-  .home-proof .n { font-size: 24px !important; }
-
-  /* LEDGER — tighten columns */
-  .ledger { max-height: 400px; }
-  .ledger-chrome { padding: 0 10px; font-size: 9.5px; gap: 6px; }
-  .ledger-chrome .u { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 160px; }
-  .ledger-head { grid-template-columns: 48px 1fr 58px 46px; padding: 8px 10px; font-size: 9px; gap: 0.4rem; }
-  .ledger-row { grid-template-columns: 48px 1fr 58px 46px; padding: 10px 10px; gap: 0.4rem; font-size: 12px; }
-  .ledger-row .t { font-size: 10px; }
-  .ledger-row .w { font-size: 11.5px; }
-  .ledger-row .w span { font-size: 9px; }
-  .ledger-row .p { font-size: 11.5px; }
-  .ledger-row .s { font-size: 9px; }
-  .ledger-foot { padding: 9px 10px; font-size: 9px; gap: 0.5rem; }
-
-  /* WHAT WE DO — phone */
-  .do-section { padding: 2.75rem 0; }
-  .do-head h2 { font-size: clamp(26px, 8vw, 34px) !important; }
-  .do-head p { font-size: 14.5px !important; }
-  .grid-12 { grid-template-columns: 1fr !important; }
-  .grid-12 .cell { min-height: 0; padding: 1.35rem 1.1rem; }
-  .grid-12 .cell-feature { grid-column: 1 / -1 !important; min-height: 0; padding: 1.5rem 1.25rem; }
-  .grid-12 .cell-feature .cell-glyph { width: 40px; height: 40px; }
-  .grid-12 .cell-feature .cell-feature-body .cell-name { font-size: 22px !important; margin-top: 1rem; }
-  .cell-top { gap: 0.5rem; }
-  .cell-name { font-size: 18px !important; margin-top: 0.9rem; }
-  .cell-work { font-size: 13px; max-width: 100%; }
-  .cell-meta { font-size: 9.5px; margin-top: 1rem; padding-top: 0.75rem; }
-  .cell-glyph { width: 40px; height: 40px; }
-
-  /* VOICE FLAGSHIP — phone */
-  .voice-flag { padding: 2.75rem 0; }
-  .vf-head h2 { font-size: clamp(30px, 9vw, 40px) !important; }
-  .vf-head p { font-size: 14.5px !important; }
-  .vf-skus { grid-template-columns: 1fr !important; }
-  .vf-sku { padding: 1rem 1.15rem; }
-  .vf-langs { gap: 5px; padding: 0.85rem 0; margin-bottom: 1.25rem; }
-  .vf-langs .lg { padding: 4px 8px; font-size: 9.5px; }
-
-  /* DIFF — phone */
-  .diff { padding: 2.75rem 0; }
-  .diff-head h2 { font-size: clamp(26px, 8vw, 34px) !important; }
-  .diff-head p { font-size: 14.5px !important; }
-  .diff-card { padding: 1.5rem 1.25rem !important; }
-  .diff-card .fig { font-size: clamp(42px, 13vw, 56px) !important; }
-  .diff-card .figLabel { font-size: 9.5px; padding-bottom: 0.85rem; margin-bottom: 1rem; }
-  .diff-card h3 { font-size: 19px !important; }
-  .diff-card p { font-size: 14px; }
-  .diff-card .vs { font-size: 10.5px; padding-top: 1.1rem; }
-
-  /* OPS — phone */
-  .ops { padding: 2.75rem 0; }
-  .ops-head h2 { font-size: clamp(26px, 8vw, 34px) !important; }
-  .ops-head p { font-size: 14.5px !important; }
-  .ops-bullets li { padding: 1rem 0.9rem; font-size: 13.5px; }
-  .ops-bullets li b { font-size: 9.5px; }
-  .ops-chrome .u { max-width: 170px; }
-
-  /* PROOF — phone */
-  .proof { padding: 2.75rem 0; }
-  .proof-head h2 { font-size: clamp(26px, 8vw, 34px) !important; }
-  .proof-head .r p { font-size: 14.5px !important; }
-  .principles-row { grid-template-columns: 1fr !important; }
-  .principle { padding: 1.35rem 1.15rem !important; }
-  .principle h3 { font-size: 18px !important; }
-  .principle p { font-size: 13.5px; }
-  .case-card { padding: 1.4rem 1.15rem; gap: 1rem; }
-  .case-card blockquote { font-size: 15.5px; padding-left: 0.75rem; line-height: 1.4; }
-  .case-kpi > div { padding: 0.7rem 0.85rem; }
-  .case-kpi .k { font-size: 8.5px; }
-  .case-kpi .v { font-size: 18px; }
-  .press-cell { padding: 1.4rem 1.15rem; gap: 0.9rem; }
-  .press-quote { font-size: 15.5px; line-height: 1.35; }
-  .press-mark { font-size: 16px; }
-
-  /* END CTA — phone */
-  .end-cta { padding: 2.75rem 0 2.5rem; }
-  .end-cta .eyebrow { font-size: 10px; margin-bottom: 1rem; }
-  .end-cta h2 { font-size: clamp(32px, 10vw, 44px) !important; letter-spacing: -0.035em; line-height: 1; }
-  .end-cta p { font-size: 14.5px !important; margin-bottom: 1.5rem; }
-  .end-cta .btns { width: 100%; display: flex; flex-direction: column; gap: 0.55rem; }
-  .end-cta .btns .btn { width: 100%; text-align: center; justify-content: center; }
-}
-
-@media (max-width: 380px) {
-  .home-hero { padding: 2rem 0 1.75rem; }
-  .home-headline { font-size: clamp(30px, 12vw, 38px) !important; }
-  .home-dek { font-size: 14.5px !important; }
-  .home-proof .n { font-size: 22px !important; }
-
-  .ledger-chrome .u { display: none; }
-  .ledger-head, .ledger-row { grid-template-columns: 42px 1fr 52px 40px; padding: 8px 8px; gap: 0.3rem; }
-  .ledger-row { font-size: 11.5px; }
-  .ledger-row .w { font-size: 11px; }
-
-  .do-head h2,
-  .diff-head h2,
-  .ops-head h2,
-  .proof-head h2 { font-size: clamp(24px, 8.5vw, 30px) !important; }
-  .vf-head h2 { font-size: clamp(28px, 9.5vw, 36px) !important; }
-  .end-cta h2 { font-size: clamp(28px, 10.5vw, 38px) !important; }
-
-  .cell-glyph,
-  .grid-12 .cell-feature .cell-glyph { width: 36px; height: 36px; }
-  .cell-name { font-size: 17px !important; }
-  .diff-card .fig { font-size: clamp(38px, 14vw, 48px) !important; }
-  .case-kpi .v { font-size: 16px; }
-}
-
-/* Anything that might overflow horizontally — guard */
-@media (max-width: 820px) {
-  main img, main svg, main object { max-width: 100%; height: auto; }
-  .ops-canvas { aspect-ratio: 16/11; }
-}
-
-/* === 2026 modernization polish ============================ */
-/* Hairline accents + subtle glass on hero/overlay surfaces */
-.hero-overlay, .diff-card, .case-card, .logo-card, .ops-card {
-  border: 1px solid rgba(0,82,255,0.08);
-  transition: transform .25s var(--ease-out, ease-out),
-              box-shadow .25s var(--ease-out, ease-out),
-              border-color .25s var(--ease-out, ease-out);
-}
-.hero-overlay { backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px); }
-
-/* Refined elevation hover (no hard color swap) */
-.diff-card:hover, .case-card:hover, .logo-card:hover, .ops-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0,82,255,0.18);
-  box-shadow: 0 10px 30px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
-}
-@supports (background: color-mix(in oklab, red, blue)) {
-  .diff-card:hover, .case-card:hover, .logo-card:hover, .ops-card:hover {
-    box-shadow: 0 12px 32px -18px color-mix(in oklab, var(--accent) 45%, transparent),
-                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
-  }
-}
-
-/* Underline animation for in-content links */
-main p a:not(.btn):not(.btn-link)::after {
-  content: ""; display: block; height: 1px;
-  background: var(--accent);
-  transform: scaleX(0); transform-origin: left center;
-  transition: transform .25s var(--ease-out, ease-out);
-}
-main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
-
-/* Gradient text on key emphasis spans */
-.hi-grad, h1 em, .dek em {
-  background: linear-gradient(90deg, var(--accent), var(--accent-3));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-
-/* Focus-visible ring */
-a:focus-visible, button:focus-visible, [role="button"]:focus-visible, .btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* Skeleton shimmer */
-.skeleton {
-  background: linear-gradient(90deg, rgba(10,12,20,0.04) 25%, rgba(10,12,20,0.08) 37%, rgba(10,12,20,0.04) 63%);
-  background-size: 400% 100%;
-  animation: shimmer 1.4s linear infinite;
-  border-radius: 4px;
-}
-@keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
-
-/* Scroll snap on horizontal scrollers */
-.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
-.scroll-x > * { scroll-snap-align: start; }
-
-/* Tabular figures on stats */
-.case-kpi .v, .diff-card .fig, .stat .v, .ticker-item .tup, .num, [data-tnum] {
-  font-feature-settings: 'tnum' 1, 'lnum' 1, 'ss01' 1;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .diff-card, .case-card, .logo-card, .ops-card { transition: none; }
-  .skeleton { animation: none; }
-}
-
-/* ---------- TRUST · COMPLIANCE · STACK ---------- */
-.trust-section-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: end;
-  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  border-bottom: 1px solid var(--line);
-}
-.tsh-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-.tsh-eyebrow .tsh-dot {
-  width: 7px; height: 7px;
-  background: var(--accent);
-  border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(0,82,255,0.5);
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-.tsh-h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(34px, 4.2vw, 60px);
-  line-height: 1.0;
-  letter-spacing: -0.04em;
-  color: var(--ink);
-  text-wrap: balance;
-  max-width: 16ch;
-}
-.tsh-h2 em {
-  color: var(--accent);
-  font-style: normal;
-  font-weight: 500;
-}
-.tsh-dek {
-  font-family: var(--font-display);
-  font-size: clamp(15.5px, 1.1vw, 17.5px);
-  line-height: 1.55;
-  color: var(--ink-3);
-  max-width: 50ch;
-}
-.trust-eyebrow-cta {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  text-transform: uppercase;
-}
-@media (max-width: 900px) {
-  .trust-section-head { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
-}
-
-.trust-strip {
-  padding: clamp(3.5rem, 6vw, 5.5rem) 0;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper);
-}
-.trust-row {
-  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  border-bottom: 1px solid var(--line);
-  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-}
-.trust-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-}
-.trust-eyebrow .dot {
-  width: 7px; height: 7px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-@keyframes pulseDot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.55; }
-}
-.trust-badges {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 0;
-  border: 1px solid var(--line);
-  background: var(--line);
-}
-.trust-badges .tb {
-  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.7rem;
-  padding: 1.85rem 1rem 1.6rem;
-  position: relative;
-  transition: background .25s var(--ease), color .25s var(--ease), transform .35s var(--ease);
-  color: var(--ink-3);
-  overflow: hidden;
-}
-.trust-badges .tb::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .45s var(--ease);
-}
-.trust-badges .tb:hover {
-  background: linear-gradient(180deg, var(--paper) 0%, var(--accent-soft) 100%);
-  color: var(--accent);
-}
-.trust-badges .tb:hover::before { transform: scaleX(1); }
-.trust-badges .tb svg {
-  width: 44px; height: 44px;
-  stroke: currentColor;
-  fill: none;
-  transition: transform .35s var(--ease);
-}
-.trust-badges .tb:hover svg { transform: translateY(-2px) scale(1.06); }
-.trust-badges .tb-l strong {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 13.5px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-}
-.trust-badges .tb:hover .tb-l strong { color: var(--accent); }
-.trust-badges .tb-l span {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 3px;
-}
-
-/* Stack categories grid */
-.stack-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-bottom: 1.25rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--line);
-}
-.stack-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink);
-  font-weight: 500;
-}
-.stack-eyebrow .dot {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-.stack-meta {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.stack-grid {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0;
-  border: 1px solid var(--line);
-  background: var(--line);
-}
-.stack-grid .sg {
-  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
-  padding: 1.5rem 1.1rem 1.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  align-items: flex-start;
-  position: relative;
-  transition: background .25s var(--ease), transform .35s var(--ease);
-  overflow: hidden;
-  min-height: 168px;
-}
-.stack-grid .sg::after {
-  content: '';
-  position: absolute;
-  right: 14px;
-  top: 14px;
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  opacity: 0.35;
-  animation: stackPulse 3.2s ease-in-out infinite;
-  pointer-events: none;
-}
-.stack-grid .sg .sg-pill {
-  position: absolute;
-  top: 12px; right: 28px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border: 1px solid var(--line-accent);
-  padding: 3px 7px;
-  border-radius: 999px;
-  font-weight: 600;
-}
-.stack-grid .sg:nth-child(2)::after { animation-delay: -0.4s; }
-.stack-grid .sg:nth-child(3)::after { animation-delay: -0.8s; }
-.stack-grid .sg:nth-child(4)::after { animation-delay: -1.2s; }
-.stack-grid .sg:nth-child(5)::after { animation-delay: -1.6s; }
-.stack-grid .sg:nth-child(6)::after { animation-delay: -2.0s; }
-.stack-grid .sg:nth-child(7)::after { animation-delay: -2.4s; }
-.stack-grid .sg:nth-child(8)::after { animation-delay: -2.8s; }
-.stack-grid .sg:nth-child(9)::after { animation-delay: -3.0s; }
-.stack-grid .sg:nth-child(10)::after { animation-delay: -1.4s; }
-@keyframes stackPulse {
-  0%, 100% { opacity: 0.18; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.6); }
-}
-.stack-grid .sg:hover { background: var(--paper-3); }
-.stack-grid .sg:hover::after { opacity: 1; }
-.stack-grid .sg-icon {
-  width: 32px; height: 32px;
-  color: var(--ink-3);
-  transition: color .25s var(--ease), transform .35s var(--ease);
-  display: inline-block;
-}
-.stack-grid .sg-icon svg { width: 100%; height: 100%; }
-.stack-grid .sg:hover .sg-icon {
-  color: var(--accent);
-  transform: translateY(-2px);
-}
-.stack-grid .sg-label {
-  font-family: var(--font-display);
-  font-size: 14.5px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin-top: 0.4rem;
-}
-.stack-grid .sg-sub {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  text-transform: uppercase;
-  line-height: 1.4;
-}
-
-@media (max-width: 1000px) {
-  .trust-badges { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .stack-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-@media (max-width: 600px) {
-  .trust-badges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .stack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .trust-badges .tb { padding: 1.25rem 0.85rem 1.2rem; }
-  .stack-grid .sg { padding: 1.15rem 0.95rem 1.25rem; }
-}
-@media (max-width: 380px) {
-  .trust-badges { grid-template-columns: 1fr; }
-  .stack-grid { grid-template-columns: 1fr; }
-}
-
-/* ---------- ROLES WE REPLACE — professional AI agents ---------- */
-.roles-section {
-  padding: clamp(5rem, 9vw, 9rem) 0;
-  border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, #FAFBFF 0%, #FFFFFF 50%, #FAFBFF 100%);
-  position: relative;
-  overflow: hidden;
-}
-.roles-section::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 50% 32% at 90% 8%,  rgba(0,82,255,0.10), transparent 60%),
-    radial-gradient(ellipse 38% 25% at 5% 100%, rgba(98,38,255,0.08), transparent 60%),
-    radial-gradient(ellipse 22% 22% at 50% 50%, rgba(0,82,255,0.04), transparent 70%);
-  pointer-events: none;
-}
-.roles-section > .container { position: relative; z-index: 1; }
-.roles-head {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: clamp(2rem, 5vw, 4.5rem);
-  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  border-bottom: 1px solid var(--line);
-  align-items: end;
-}
-.roles-head .eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.25rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-.roles-head .eyebrow::before {
-  content: '';
-  width: 7px; height: 7px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-.roles-head h2 {
-  font-family: var(--font-display);
-  font-size: clamp(38px, 5.4vw, 76px);
-  font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.045em;
-  color: var(--ink);
-  margin: 0;
-  text-wrap: balance;
-}
-.roles-head h2 em {
-  background: linear-gradient(135deg, var(--accent) 0%, #6E6FFF 50%, var(--accent) 100%);
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: normal;
-  font-weight: 500;
-  animation: rolesGrad 8s ease-in-out infinite;
-}
-@keyframes rolesGrad {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
-}
-.roles-head p {
-  font-family: var(--font-display);
-  font-size: 16.5px;
-  line-height: 1.6;
-  color: var(--ink-3);
-  margin: 0;
-  max-width: 48ch;
-}
-.roles-head p em { color: var(--ink); font-style: normal; font-weight: 500; }
-.roles-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line-strong);
-  border: 1px solid var(--line-strong);
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 28px 60px -32px rgba(0,82,255,0.18);
-}
-.role-card {
-  padding: 2rem 1.7rem 1.6rem;
-  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  transition: background 280ms var(--ease), transform 280ms var(--ease), box-shadow 280ms var(--ease);
-  position: relative;
-  min-height: 320px;
-  isolation: isolate;
-}
-.role-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent), #6E6FFF);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 380ms var(--ease);
-  z-index: 2;
-}
-.role-card::after {
-  content: '';
-  position: absolute;
-  inset: auto -20% -20% auto;
-  width: 240px; height: 240px;
-  background: radial-gradient(circle, rgba(0,82,255,0.12), transparent 65%);
-  filter: blur(20px);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .35s var(--ease);
-  z-index: -1;
-}
-.role-card:hover {
-  background: linear-gradient(180deg, var(--paper) 0%, #F4F7FF 100%);
-  transform: translateY(-3px);
-}
-.role-card:hover::before { transform: scaleX(1); }
-.role-card:hover::after  { opacity: 1; }
-
-.role-num {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.25rem;
-}
-.role-num > span:first-child {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  background: var(--accent-soft);
-  border: 1px solid var(--line-accent);
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-.role-num .channel {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  color: var(--muted);
-  font-weight: 500;
-  text-transform: uppercase;
-}
-.role-name {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 1.85vw, 26px);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.1;
-  color: var(--ink);
-  margin: 0.15rem 0 0;
-  text-wrap: balance;
-}
-.role-name em { color: var(--accent); font-style: normal; font-weight: 500; }
-
-.role-replaces {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding-bottom: 0.85rem;
-  border-bottom: 1px dashed var(--line-strong);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.role-replaces::before {
-  content: '↳';
-  color: var(--accent);
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1;
-  margin-top: -1px;
-}
-.role-replaces b {
-  color: var(--ink);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-decoration: line-through;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 2px;
-}
-
-.role-does {
-  font-size: 13.5px;
-  color: var(--ink-3);
-  line-height: 1.55;
-}
-
-.role-stat {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 0.85rem 0.85rem 0.85rem 0.95rem;
-  margin-top: auto;
-  background: rgba(0,82,255,0.045);
-  border: 1px solid var(--line-accent);
-  border-left: 3px solid var(--accent);
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  text-transform: uppercase;
-  position: relative;
-  overflow: hidden;
-}
-.role-stat b {
-  color: var(--accent);
-  font-weight: 700;
-  font-feature-settings: 'tnum' 1, 'lnum' 1;
-}
-
-.roles-foot {
-  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 1rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.roles-foot a {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 2px;
-  font-weight: 600;
-  transition: color 180ms, transform .25s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.roles-foot a:hover { transform: translateX(3px); color: var(--accent-3); }
-@media (max-width: 1024px) {
-  .roles-head { grid-template-columns: 1fr; align-items: start; gap: 1.25rem; }
-  .roles-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .roles-grid { grid-template-columns: 1fr; }
-  .role-card { padding: 1.4rem 1.2rem 1.2rem; min-height: 0; }
-  .role-name { font-size: 20px; }
-  .role-does { font-size: 13px; }
-}
-
-/* Mobile nav pitch (vs. token-meter vendors) */
-.mnav-pitch { display: none; }
-@media (max-width: 1024px) {
-  .mnav-pitch {
-    display: block;
-    padding: 1rem 1.1rem 1.15rem;
-    border: 1px solid var(--line-strong);
-    background: var(--paper-3);
-    margin-bottom: 0.25rem;
-  }
-  .mnav-pitch-eyebrow {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-  .mnav-pitch p {
-    font-family: var(--font-display);
-    font-size: 15.5px;
-    line-height: 1.45;
-    color: var(--ink);
-    margin: 0 0 0.6rem;
-  }
-  .mnav-pitch p em { color: var(--accent); font-style: normal; font-weight: 500; }
-  .mnav-pitch-link {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink);
-    text-decoration: none;
-    display: inline-flex; align-items: center; gap: 6px;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 3px;
-  }
-  .mnav-pitch-link .ar { font-family: var(--font-mono); }
-}
-
-/* ---------- HOW IT WORKS — 4-step process ---------- */
-.how-section {
-  padding: clamp(5rem, 9vw, 9rem) 0;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper);
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.how-section::before {
-  content: '';
-  position: absolute;
-  inset: -10%;
-  background:
-    radial-gradient(ellipse 36% 40% at 12% 8%,  rgba(0,82,255,0.10),  transparent 60%),
-    radial-gradient(ellipse 30% 32% at 88% 92%, rgba(110,111,255,0.08), transparent 60%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: -1;
-}
-.how-section > .container { position: relative; z-index: 1; }
-.how-head {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: clamp(2rem, 5vw, 4.5rem);
-  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  border-bottom: 1px solid var(--line);
-  align-items: end;
-}
-.how-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.25rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-.how-eyebrow::before {
-  content: '';
-  width: 7px; height: 7px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-.how-head h2 {
-  font-family: var(--font-display);
-  font-size: clamp(34px, 5vw, 68px);
-  font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.045em;
-  color: var(--ink);
-  margin: 0;
-  text-wrap: balance;
-}
-.how-head h2 em {
-  background: linear-gradient(135deg, var(--accent) 0%, #6E6FFF 50%, var(--accent) 100%);
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: normal;
-  font-weight: 500;
-  animation: rolesGrad 8s ease-in-out infinite;
-}
-.how-head p {
-  font-family: var(--font-display);
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--ink-3);
-  margin: 0;
-  max-width: 46ch;
-}
-.how-head p em { color: var(--ink); font-style: normal; font-weight: 500; }
-
-.how-steps {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border: 1px solid var(--line-strong);
-  border-radius: 6px;
-  overflow: hidden;
-  background: var(--line-strong);
-  box-shadow: 0 28px 60px -32px rgba(0,82,255,0.18);
-}
-.how-steps .hs {
-  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
-  padding: 1.85rem 1.6rem 1.6rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  transition: background .25s var(--ease);
-  min-height: 240px;
-}
-.how-steps .hs:hover { background: linear-gradient(180deg, var(--paper) 0%, #F4F7FF 100%); }
-.how-steps .hs + .hs { border-left: 1px solid var(--line-strong); }
-.how-steps .hs-no {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 32px;
-  letter-spacing: -0.04em;
-  color: var(--accent);
-  line-height: 1;
-}
-.how-steps .hs-line {
-  position: absolute;
-  top: 38px;
-  right: -1px;
-  width: 24px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  z-index: 2;
-}
-.how-steps .hs-line::after {
-  content: '→';
-  position: absolute;
-  right: -10px;
-  top: -10px;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1;
-}
-.how-steps .hs.hs-final .hs-line { display: none; }
-.how-steps .hs h4 {
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: var(--ink);
-  margin: 0;
-}
-.how-steps .hs h4 em { color: var(--accent); font-style: normal; font-weight: 500; }
-.how-steps .hs p {
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--ink-3);
-  flex: 1;
-}
-.how-steps .hs-time {
-  margin-top: auto;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  padding-top: 0.85rem;
-  border-top: 1px dashed var(--line-strong);
-}
-
-.how-foot {
-  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-  display: flex;
-  justify-content: flex-start;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 2rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.how-foot .hf-stat b { color: var(--ink); font-weight: 600; letter-spacing: -0.005em; font-family: var(--font-display); font-size: 14.5px; margin-right: 6px; }
-.how-foot .hf-link {
-  margin-left: auto;
-  color: var(--accent);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 2px;
-}
-.how-foot .hf-link:hover { color: var(--accent-3); }
-
-@media (max-width: 1000px) {
-  .how-head { grid-template-columns: 1fr; align-items: start; gap: 1.25rem; }
-  .how-steps { grid-template-columns: repeat(2, 1fr); }
-  .how-steps .hs:nth-child(3) { border-left: 0; border-top: 1px solid var(--line-strong); }
-  .how-steps .hs:nth-child(4) { border-top: 1px solid var(--line-strong); }
-  .how-steps .hs-line { display: none; }
-}
-@media (max-width: 600px) {
-  .how-steps { grid-template-columns: 1fr; }
-  .how-steps .hs { min-height: 0; }
-  .how-steps .hs + .hs { border-left: 0; border-top: 1px solid var(--line-strong); }
-  .how-foot .hf-link { margin-left: 0; }
-}
-
-/* ---------- CUSTOM INDUSTRY SECTION ---------- */
-.cust-section {
-  padding: clamp(5rem, 9vw, 9rem) 0;
-  background: var(--paper-3);
-  border-bottom: 1px solid var(--line);
-}
-.cust-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: start;
-  margin-bottom: clamp(3rem, 6vw, 5rem);
-}
-.cust-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1rem;
-}
-.cust-head h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(32px, 4.4vw, 64px);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
-  color: var(--ink);
-  max-width: 18ch;
-}
-.cust-head h2 em {
-  color: var(--accent);
-  font-family: inherit;
-  font-style: normal;
-  font-weight: 500;
-}
-.cust-head p {
-  font-size: clamp(15.5px, 1.1vw, 18px);
-  line-height: 1.55;
-  color: var(--ink-3);
-  max-width: 50ch;
-}
-.cust-head p em {
-  color: var(--accent);
-  font-style: normal;
-  font-weight: 500;
-}
-
-.cust-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
-.cust-card {
-  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
-  padding: 1.75rem 1.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  transition: background .25s var(--ease), transform .35s var(--ease);
-  position: relative;
-  overflow: hidden;
-}
-.cust-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .45s var(--ease);
-}
-.cust-card:hover {
-  background: linear-gradient(180deg, var(--paper) 0%, #F4F7FF 100%);
-}
-.cust-card:hover::before { transform: scaleX(1); }
-.cust-card .cust-num {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  color: var(--accent);
-  font-weight: 600;
-  background: var(--accent-soft);
-  border: 1px solid var(--line-accent);
-  padding: 3px 8px;
-  border-radius: 999px;
-  width: fit-content;
-  margin-bottom: 0.4rem;
-}
-.cust-card .cust-cat {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.cust-card h4 {
-  font-family: var(--font-display);
-  font-size: 19px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  line-height: 1.2;
-  margin: 0.35rem 0 0.5rem;
-}
-.cust-card p {
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--ink-3);
-}
-/* Blank closer card — "Bring us your one-page brief" */
-.cust-card.cust-card-blank {
-  background:
-    linear-gradient(135deg, rgba(0,82,255,0.06) 0%, rgba(110,111,255,0.10) 100%),
-    repeating-linear-gradient(135deg, transparent 0 14px, rgba(0,82,255,0.04) 14px 15px);
-  border: 1px dashed var(--line-accent);
-}
-.cust-card.cust-card-blank::before { background: linear-gradient(90deg, var(--accent), #6E6FFF); }
-.cust-card.cust-card-blank:hover {
-  background:
-    linear-gradient(135deg, rgba(0,82,255,0.10) 0%, rgba(110,111,255,0.14) 100%),
-    repeating-linear-gradient(135deg, transparent 0 14px, rgba(0,82,255,0.06) 14px 15px);
-}
-.cust-card.cust-card-blank h4 { color: var(--accent); }
-
-.cust-foot {
-  margin-top: clamp(2rem, 4vw, 3rem);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  padding-top: clamp(2rem, 3vw, 2.5rem);
-  border-top: 1px solid var(--line);
-}
-.cust-foot p {
-  font-family: var(--font-display);
-  font-size: clamp(18px, 1.5vw, 22px);
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  font-weight: 500;
-  max-width: 36ch;
-}
-
-@media (max-width: 900px) {
-  .cust-head { grid-template-columns: 1fr; gap: 1.5rem; }
-  .cust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 600px) {
-  .cust-grid { grid-template-columns: 1fr; }
-  .cust-card { padding: 1.5rem 1.25rem 1.35rem; }
-  .cust-foot { flex-direction: column; align-items: stretch; text-align: left; }
-  .cust-foot .btn { width: 100%; justify-content: center; }
-}
-
-/* ---------- SECTION DIVIDER STROKE ---------- */
-.section-rule {
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--line-strong) 18%, var(--line-strong) 82%, transparent 100%);
-  position: relative;
-  overflow: hidden;
-}
-.section-rule::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: -1px;
-  width: 60px;
-  height: 3px;
-  background: var(--accent);
-  transform: translateX(-50%);
-  border-radius: 1px;
-  box-shadow: 0 0 0 4px rgba(0,82,255,0.08);
-}
-
-/* ---------- VOICE FLAG: deepen gradient for premium feel ---------- */
-.voice-flag::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 12% 0%,  rgba(0,82,255,0.22), transparent 60%),
-    radial-gradient(ellipse 55% 50% at 88% 100%, rgba(0,82,255,0.16), transparent 60%),
-    radial-gradient(ellipse 80% 40% at 50% 50%, rgba(74,139,255,0.05), transparent 70%);
-  pointer-events: none;
-}
-.voice-flag::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 96px 100%, 100% 96px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, transparent 90%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, transparent 90%);
-  pointer-events: none;
-}
-
-/* ---------- BODY CANVAS: subtle gradient lift ---------- */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 30% at 80% 0%, rgba(0,82,255,0.025), transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-}
-</style>
+<link rel="stylesheet" href="assets/app.css?v=1">
 </head>
 <body>
-<div class="scroll-prog" aria-hidden="true"></div>
 
-<!-- ========== TOPBAR ========== -->
-<header class="topbar">
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-    </div>
-  </div>
-  <div class="topbar-inner">
-    <a href="index.html" class="brand">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
-      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
-    </a>
-    <nav class="primary-nav" aria-label="Primary"><a href="what-is.html" data-nav="what-is" class="nav-explainer">What is an AI agent?</a>      <a href="solutions.html" data-nav="solutions">Solutions</a>
-      <a href="cases.html" data-nav="cases">Achieve</a>
-      <a href="demo.html" data-nav="demo">Demo</a>
-      <a href="pricing.html" data-nav="pricing">Pricing</a>
-      <a href="process.html" data-nav="process">Process</a>
-      <a href="about.html" data-nav="about">About</a>
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="what-is.html" class="is-accent">What is an AI agent?</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="cases.html">Cases</a>
+      <a href="demo.html">Demo</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
     </nav>
-    <div class="topbar-cta">
-      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
-      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
-      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <span class="bar b1" aria-hidden="true"></span>
-        <span class="bar b2" aria-hidden="true"></span>
-        <span class="bar b3" aria-hidden="true"></span>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Book a free audit</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <div></div>
-    <div class="mobile-nav-inner">
-      <div class="mnav-pitch" aria-hidden="false">
-        <span class="mnav-pitch-eyebrow">Why us, not a chatbot?</span>
-        <p>Most AI vendors hand you a toolbox. We hand you the <em>finished work</em> — billed per outcome, not per token.</p>
-        <a href="about.html" class="mnav-pitch-link">Read the case <span class="ar">→</span></a>
-      </div>
-      <div class="mnav-group">
-        <h5>Work</h5>
-        <ul class="mnav-list">
-          <li><a href="what-is.html" data-nav="what-is">What is an AI agent? <span class="ar">→</span></a></li>
-          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
-          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
-          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
-          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
-          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
-          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
-          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mobile-nav-foot">
-      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-      <div class="mfoot-meta">
-        <span>Global · 24/7 · <span data-clock>—</span></span>
-        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
-      </div>
-    </div>
+  <nav class="msheet" id="msheet" aria-label="Mobile">
+    <a href="what-is.html">What is an AI agent? <span class="ar">→</span></a>
+    <a href="solutions.html">Solutions <span class="ar">→</span></a>
+    <a href="cases.html">Cases <span class="ar">→</span></a>
+    <a href="demo.html">Demo <span class="ar">→</span></a>
+    <a href="pricing.html">Pricing &amp; calculator <span class="ar">→</span></a>
+    <a href="process.html">Process <span class="ar">→</span></a>
+    <a href="about.html">About <span class="ar">→</span></a>
+    <a href="contact.html">Contact <span class="ar">→</span></a>
+    <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit</a>
   </nav>
 </header>
 
 <main>
 
   <!-- ========== HERO ========== -->
-  <section class="home-hero">
-    <div class="container">
-
-      <div class="hero-kicker reveal" aria-label="Section kicker">
-        <span class="k-left">§ 01 · <b>Autopilot Labs</b> — vertical AI agent studio</span>
-        <span class="k-line" aria-hidden="true"></span>
-        <span class="k-right">Live system · <span class="accent">2026 EDITION</span></span>
-      </div>
-
-      <div class="home-grid">
-        <div class="home-left">
-
-          <div class="live-hud reveal" aria-label="Live activity">
-            <span class="lh-dot" aria-hidden="true"></span>
-            <span>Live · outcomes shipped today</span>
-            <span class="lh-bar" aria-hidden="true"></span>
-            <span class="lh-num"><span data-count-to="12847">12,847</span></span>
-          </div>
-
-          <div class="home-eyebrow reveal">
-            <span class="home-eyebrow-dot" aria-hidden="true"></span>
-            AI agents that automate the manual work · Pay per outcome
-          </div>
-
-          <h1 class="home-headline reveal delay-1">
-            We replace the<br><em>repetitive</em> job.
-          </h1>
-
-          <p class="home-dek home-dek-long reveal delay-2">
-            Autopilot Labs builds <em>professional AI agents</em> that take over the repetitive, manual work your team does every day — answering inbound calls, booking patients, chasing invoices, abstracting leases, dispatching drivers, replying to refunds — and ships the <em>finished outcome</em> straight back into your existing systems. Voice, email, chat and back-office, <em>multilingual</em> (Arabic included), on a written SLA. <em>If we haven't shipped your industry yet, we custom-build it</em> on the same per-outcome contract. You pay per completed job — never per seat, never per token.
-          </p>
-
-          <p class="home-dek home-dek-short reveal delay-2">
-            Professional AI agents that <em>do the manual work</em> for you — inbound calls, intake, reconciliation, dispatch — billed per finished job, not per token. Miss the SLA, you don't pay.
-          </p>
-
-          <div class="home-cta reveal delay-2">
-            <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-            <a href="cases.html" class="btn btn-lg">See what we achieve</a>
-          </div>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="pill">AI agents · billed per outcome</span>
+        <h1 class="display hero-display">We replace the <em>repetitive</em> job.</h1>
+        <p class="lede hero-lede">Autopilot Labs builds professional AI agents that do the manual work your team repeats every day — answering calls, booking patients, chasing invoices, dispatching drivers — and ship the <em>finished outcome</em> back into your systems. You pay per completed job. Never per seat, never per token.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="ar">↗</span></a>
+          <a href="cases.html" class="btn btn-ghost btn-lg">See what we achieve</a>
         </div>
-
-        <aside class="ledger reveal delay-3" aria-label="Sample outcomes ledger">
-          <div class="ledger-chrome" aria-hidden="true">
-            <span class="d"></span><span class="d"></span><span class="d"></span>
-            <span class="u">ops.autopilotlabs.io / outcomes / sample</span>
-            <span class="r"><span class="status-dot"></span> PREVIEW</span>
-          </div>
-          <div class="ledger-head">
-            <span>Time</span>
-            <span>Outcome</span>
-            <span style="text-align:right">Billed</span>
-            <span style="text-align:right">SLA</span>
-          </div>
-          <div class="ledger-body">
-            <ul class="ledger-list" id="ledger-list" role="list" aria-live="polite"></ul>
-          </div>
-          <div class="ledger-foot">
-            <span>FIG. 01 — Sample console · illustrative</span>
-            <a href="solutions.html">See the catalogue →</a>
-          </div>
-        </aside>
-      </div>
-
-      <div class="home-proof reveal delay-3">
-        <div class="p">
-          <div class="n"><em>∞</em></div>
-          <div class="l">Custom agents shipped</div>
-        </div>
-        <div class="p">
-          <div class="n">24/7</div>
-          <div class="l">Always-on · Global delivery</div>
-        </div>
-        <div class="p">
-          <div class="n">&lt;2 <em>rings</em></div>
-          <div class="l">Multilingual voice answer time</div>
-        </div>
-        <div class="p">
-          <div class="n"><em>0</em></div>
-          <div class="l">Per-token · per-seat charges</div>
+        <div class="hero-trust">
+          <div><div class="ht-n"><em>∞</em></div><div class="ht-l">Custom agents shipped</div></div>
+          <div><div class="ht-n">24/7</div><div class="ht-l">Always-on · global</div></div>
+          <div><div class="ht-n">&lt;2<em> rings</em></div><div class="ht-l">Voice answer time</div></div>
+          <div><div class="ht-n"><em>0</em></div><div class="ht-l">Per-token charges</div></div>
         </div>
       </div>
-    </div>
-    <div class="scroll-cue" aria-hidden="true">
-      <span>Scroll</span>
-      <span class="sc-line"></span>
+
+      <aside class="console reveal" aria-label="Sample outcomes ledger">
+        <div class="console-bar" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">ops.autopilotlabs.io / outcomes</span>
+          <span class="live">LIVE</span>
+        </div>
+        <div class="console-head">
+          <span>Time</span><span>Outcome</span><span style="text-align:right">Billed</span><span style="text-align:right">SLA</span>
+        </div>
+        <ul id="ledger" style="list-style:none" aria-live="polite"></ul>
+        <div class="console-foot">
+          <span>Sample console · illustrative</span>
+          <a href="solutions.html">See the catalogue →</a>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <!-- ========== TRUST · COMPLIANCE · STACK ========== -->
-  <section class="trust-strip" aria-label="Compliance and integrations">
-    <div class="container">
-
-      <header class="trust-section-head reveal">
-        <div class="tsh-eyebrow">
-          <span class="tsh-dot"></span>
-          <span>§ 02 · Procurement-ready</span>
-        </div>
-        <h2 class="tsh-h2">Audit-ready on day one.<br><em>Plugs into</em> what you already run.</h2>
-        <p class="tsh-dek">Compliance evidence, signed SLAs, and SCIM-grade access control come standard — not as an "enterprise tier" upsell. Runs on our in-house AI cloud or inside your own VPC, data centre, or air-gapped enclave. Your security team won't have to chase us for a SOC 2 report or wait six weeks for SAML.</p>
-      </header>
-
-      <div class="trust-row reveal delay-1">
-        <div class="trust-eyebrow">
-          <span class="dot"></span>
-          <span>Compliance posture · independently audited</span>
-          <span class="trust-eyebrow-cta">All reports available under NDA →</span>
-        </div>
-        <ul class="trust-badges" aria-label="Compliance certifications">
-          <li class="tb">
-            <svg viewBox="0 0 56 56" aria-hidden="true">
-              <rect x="6" y="6" width="44" height="44" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/>
-              <path d="M16 28 L25 36 L41 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="tb-l">
-              <strong>SOC&nbsp;2</strong>
-              <span>Type II</span>
-            </div>
-          </li>
-          <li class="tb">
-            <svg viewBox="0 0 56 56" aria-hidden="true">
-              <path d="M28 6 L48 14 V28 C48 40 39 48 28 50 C17 48 8 40 8 28 V14 Z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-              <path d="M22 28 L26 32 L34 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="tb-l">
-              <strong>HIPAA</strong>
-              <span>Aligned</span>
-            </div>
-          </li>
-          <li class="tb">
-            <svg viewBox="0 0 56 56" aria-hidden="true">
-              <circle cx="28" cy="28" r="20" fill="none" stroke="currentColor" stroke-width="1.4"/>
-              <path d="M28 8 V48 M8 28 H48 M14 14 L42 42 M42 14 L14 42" fill="none" stroke="currentColor" stroke-width="0.9"/>
-              <text x="28" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="currentColor">EU</text>
-            </svg>
-            <div class="tb-l">
-              <strong>GDPR</strong>
-              <span>EU residency</span>
-            </div>
-          </li>
-          <li class="tb">
-            <svg viewBox="0 0 56 56" aria-hidden="true">
-              <rect x="8" y="10" width="40" height="36" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
-              <path d="M8 20 H48" stroke="currentColor" stroke-width="1.4"/>
-              <text x="28" y="38" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="currentColor">27001</text>
-            </svg>
-            <div class="tb-l">
-              <strong>ISO 27001</strong>
-              <span>Certified</span>
-            </div>
-          </li>
-          <li class="tb">
-            <svg viewBox="0 0 56 56" aria-hidden="true">
-              <path d="M22 26 V20 a6 6 0 0 1 12 0 V26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              <rect x="16" y="26" width="24" height="20" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
-              <circle cx="28" cy="36" r="2.5" fill="currentColor"/>
-            </svg>
-            <div class="tb-l">
-              <strong>SSO · SAML</strong>
-              <span>Okta · Entra · Workspace</span>
-            </div>
-          </li>
-          <li class="tb">
-            <svg viewBox="0 0 56 56" aria-hidden="true">
-              <rect x="8" y="14" width="40" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/>
-              <path d="M8 22 H48" stroke="currentColor" stroke-width="1.4"/>
-              <rect x="14" y="30" width="10" height="6" rx="0.5" fill="currentColor" opacity="0.85"/>
-              <text x="42" y="36" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="currentColor">PCI</text>
-            </svg>
-            <div class="tb-l">
-              <strong>PCI DSS</strong>
-              <span>L1 processor</span>
-            </div>
-          </li>
-        </ul>
+  <!-- ========== TRUST / COMPLIANCE ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Procurement-ready</span>
+        <h2 class="h2">Audit-ready on day one. <em>Plugs into</em> what you already run.</h2>
+        <p class="lede">Compliance evidence, signed SLAs and SCIM-grade access control come standard — not as an enterprise upsell. Runs on our in-house AI cloud, or inside your own VPC, data centre or air-gapped enclave.</p>
       </div>
 
-      <div class="stack-row reveal delay-2" aria-label="Plugs into your stack">
-        <div class="stack-head">
-          <span class="stack-eyebrow"><span class="dot"></span> Wires into your existing stack</span>
-          <span class="stack-meta">10+ system categories · 120+ named integrations · OAuth · SCIM · Webhooks</span>
-        </div>
-        <ul class="stack-grid">
-          <li class="sg" style="--n:'01'"><span class="sg-pill">14 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M4 12 H28 M10 6 V4 M22 6 V4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="11" cy="19" r="1.5" fill="currentColor"/><circle cx="16" cy="19" r="1.5" fill="currentColor"/><circle cx="21" cy="19" r="1.5" fill="currentColor"/></svg></span>
-            <span class="sg-label">CRM</span>
-            <span class="sg-sub">Salesforce · HubSpot · Pipedrive</span>
-          </li>
-          <li class="sg"><span class="sg-pill">9 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><path d="M16 4 L26 9 V18 C26 23 22 27 16 28 C10 27 6 23 6 18 V9 Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M12 16 H20 M12 20 H18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-            <span class="sg-label">EMR · Health</span>
-            <span class="sg-sub">Epic · Cerner · Athena</span>
-          </li>
-          <li class="sg"><span class="sg-pill">11 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><path d="M9 6 H13 L16 11 L13 13 C14.5 16 16 17.5 19 19 L21 16 L26 19 V23 C26 25 24 27 22 27 C13 27 5 19 5 10 C5 8 7 6 9 6 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
-            <span class="sg-label">Voice · Phone</span>
-            <span class="sg-sub">Twilio · Aircall · RingCentral</span>
-          </li>
-          <li class="sg"><span class="sg-pill">12 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M11 16 L15 20 L22 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span class="sg-label">Helpdesk</span>
-            <span class="sg-sub">Zendesk · Intercom · Freshdesk</span>
-          </li>
-          <li class="sg"><span class="sg-pill">8 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><rect x="5" y="9" width="22" height="14" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 9 L16 17 L27 9" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>
-            <span class="sg-label">Email</span>
-            <span class="sg-sub">Gmail · Outlook · Postmark</span>
-          </li>
-          <li class="sg"><span class="sg-pill">7 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><rect x="5" y="7" width="22" height="20" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 12 H27 M11 4 V10 M21 4 V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><rect x="11" y="16" width="4" height="4" fill="currentColor" opacity="0.85"/></svg></span>
-            <span class="sg-label">Calendar</span>
-            <span class="sg-sub">Google · O365 · Calendly</span>
-          </li>
-          <li class="sg"><span class="sg-pill">10 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><path d="M5 26 V18 H10 V26 M14 26 V11 H19 V26 M23 26 V6 H28 V26" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M3 26 H29" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-            <span class="sg-label">BI · Data</span>
-            <span class="sg-sub">Snowflake · BigQuery · dbt</span>
-          </li>
-          <li class="sg"><span class="sg-pill">9 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><rect x="6" y="9" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6 14 H26" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="19" r="1.4" fill="currentColor"/><path d="M15 19 H22" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-            <span class="sg-label">Payments</span>
-            <span class="sg-sub">Stripe · Adyen · Xero</span>
-          </li>
-          <li class="sg"><span class="sg-pill">6 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><circle cx="16" cy="13" r="5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6 27 C6 21 10 18 16 18 C22 18 26 21 26 27" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
-            <span class="sg-label">Identity</span>
-            <span class="sg-sub">Okta · Entra · Auth0</span>
-          </li>
-          <li class="sg"><span class="sg-pill">8 connectors</span>
-            <span class="sg-icon"><svg viewBox="0 0 32 32"><path d="M16 6 V14 M9 9 L13 13 M23 9 L19 13 M6 16 H14 M18 16 H26 M16 18 V26 M9 23 L13 19 M23 23 L19 19" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="16" cy="16" r="2.5" fill="currentColor"/></svg></span>
-            <span class="sg-label">Comms</span>
-            <span class="sg-sub">Slack · Teams · WhatsApp</span>
-          </li>
-        </ul>
+      <div class="grid grid-3 reveal" style="margin-bottom:16px">
+        <div class="card"><span class="kicker">SOC 2 · Type II</span><h3>Independently audited</h3><p>Full report available under NDA. SAML, SCIM and role-based access down to the agent level.</p></div>
+        <div class="card"><span class="kicker">HIPAA · GDPR · ISO 27001</span><h3>Regulated-ready</h3><p>EU data residency, BAA on request, ISO-certified controls and PCI DSS L1 processing.</p></div>
+        <div class="card"><span class="kicker">SSO · SAML · PCI DSS</span><h3>Wires into identity</h3><p>Okta, Entra and Google Workspace. OAuth, SCIM and webhooks across 120+ named integrations.</p></div>
+      </div>
+
+      <div class="grid grid-4 reveal">
+        <div class="card"><span class="kicker">CRM</span><h3 style="font-size:16px">Salesforce · HubSpot</h3><p>Read &amp; write the record the agent acts on.</p></div>
+        <div class="card"><span class="kicker">EMR · Health</span><h3 style="font-size:16px">Epic · Cerner · Athena</h3><p>Clinical intake straight into the chart.</p></div>
+        <div class="card"><span class="kicker">Voice · Phone</span><h3 style="font-size:16px">Twilio · Aircall · RingCentral</h3><p>The agent answers on your numbers.</p></div>
+        <div class="card"><span class="kicker">Data · BI</span><h3 style="font-size:16px">Snowflake · BigQuery · dbt</h3><p>Outcomes land in your warehouse.</p></div>
       </div>
     </div>
   </section>
 
   <!-- ========== ENTERPRISE & PUBLIC SECTOR ========== -->
-  <section class="ent-section" aria-label="Enterprise and public sector">
-    <div class="container">
-      <header class="ent-head reveal">
-        <div class="ent-eyebrow"><span class="ent-dot"></span> Enterprise &amp; public sector</div>
-        <h2 class="ent-h2">Run on <em>our cloud</em> — or inside <em>yours</em>.</h2>
-        <p class="ent-dek">We operate our own in-house AI cloud, so your agents don't sit on a third-party reseller's margin or a shared multi-tenant queue. For regulated and sovereign workloads, the same agents deploy inside your VPC, your data centre, or an air-gapped government enclave — your data never leaves your boundary.</p>
-      </header>
+  <section class="section">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Enterprise &amp; public sector</span>
+        <h2 class="h2">Run on <em>our cloud</em> — or inside <em>yours</em>.</h2>
+        <p class="lede">We operate our own in-house AI cloud, so your agents don't sit on a reseller's margin or a shared queue. For regulated and sovereign workloads, the same agents deploy inside your VPC, your data centre, or an air-gapped government enclave — your data never leaves your boundary.</p>
+      </div>
 
-      <div class="ent-grid reveal delay-1">
-        <article class="ent-card">
-          <div class="ent-card-ic" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none"><path d="M12 26a7 7 0 0 1-.5-14 9 9 0 0 1 17.3 2.2A6 6 0 0 1 28 26z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 19v9M16 24l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+      <div class="grid grid-3 reveal">
+        <article class="card ent-card">
+          <span class="ic"><svg viewBox="0 0 40 40" fill="none"><path d="M12 26a7 7 0 0 1-.5-14 9 9 0 0 1 17.3 2.2A6 6 0 0 1 28 26z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 19v9M16 24l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <h3>In-house AI cloud</h3>
-          <p>Our own GPU fleet and inference stack — no reseller markup, no shared rate limits, no surprise model deprecations. Capacity reserved per client.</p>
-          <ul class="ent-list">
+          <p>Our own GPU fleet and inference stack — no reseller markup, no shared rate limits, no surprise model deprecations.</p>
+          <ul class="checks">
             <li>Dedicated inference, reserved throughput</li>
             <li>Model choice we control end-to-end</li>
-            <li>Cost stability — priced per outcome, not per token</li>
+            <li>Priced per outcome, not per token</li>
           </ul>
         </article>
-
-        <article class="ent-card ent-card-feature">
-          <div class="ent-card-ic" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none"><path d="M20 5l13 5v8c0 8-5.5 13.5-13 16-7.5-2.5-13-8-13-16v-8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 20l4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+        <article class="card ent-card feature">
+          <span class="ic"><svg viewBox="0 0 40 40" fill="none"><path d="M20 5l13 5v8c0 8-5.5 13.5-13 16-7.5-2.5-13-8-13-16v-8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 20l4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <h3>Large enterprise</h3>
-          <p>Built for the security review, not around it. SSO/SCIM, role-based access to the agent level, full audit logs, data-residency controls, and a written SLA on every workflow.</p>
-          <ul class="ent-list">
+          <p>Built for the security review, not around it. Written SLA on every workflow.</p>
+          <ul class="checks">
             <li>SOC 2 Type II · ISO 27001 · GDPR · HIPAA</li>
             <li>SSO &amp; SCIM — Okta, Entra, Workspace</li>
             <li>VPC / private-link deployment, BYO-keys</li>
             <li>Dedicated solutions team &amp; 24/7 on-call</li>
           </ul>
         </article>
-
-        <article class="ent-card">
-          <div class="ent-card-ic" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none"><path d="M6 34h28M9 34V16M31 34V16M20 34V16M6 16l14-9 14 9z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+        <article class="card ent-card">
+          <span class="ic"><svg viewBox="0 0 40 40" fill="none"><path d="M6 34h28M9 34V16M31 34V16M20 34V16M6 16l14-9 14 9z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <h3>Federal &amp; government</h3>
-          <p>Sovereign by design. Agents deploy into an air-gapped enclave or accredited gov cloud, with chain-of-custody logging and citizen-data handling that stays inside your jurisdiction.</p>
-          <ul class="ent-list">
+          <p>Sovereign by design. Air-gapped or accredited gov cloud, with chain-of-custody logging.</p>
+          <ul class="checks">
             <li>Air-gapped &amp; on-prem deployment</li>
             <li>Data sovereignty — in-region, in-boundary</li>
-            <li>Chain-of-custody &amp; tamper-evident audit trail</li>
+            <li>Chain-of-custody audit trail</li>
             <li>Cleared-personnel delivery on request</li>
           </ul>
         </article>
       </div>
-
-      <div class="ent-foot reveal delay-2">
-        <span class="ent-foot-l">Deployable on our cloud, your VPC, your data centre, or air-gapped.</span>
-        <a href="contact.html" class="btn btn-primary">Talk to our solutions team <span class="arrow">↗</span></a>
+      <div class="center" style="margin-top:28px">
+        <a href="contact.html" class="btn btn-primary btn-lg">Talk to our solutions team <span class="ar">↗</span></a>
       </div>
     </div>
   </section>
 
-  <!-- ========== ROLES WE REPLACE — professional AI agents ========== -->
-  <section class="roles-section" aria-labelledby="roles-h2">
-    <div class="container">
-      <div class="roles-head reveal">
+  <!-- ========== ROLES WE REPLACE ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead shead--split reveal">
         <div>
-          <div class="eyebrow">Roles we replace · § 01</div>
-          <h2 id="roles-h2">Hire an <em>AI</em><br>for the desk.</h2>
+          <span class="eyebrow">Roles we replace</span>
+          <h2 class="h2" style="margin-bottom:0">Hire an <em>AI</em> for the desk.</h2>
         </div>
-        <p>
-          Every box below is a <em>professional role</em> we ship as an AI agent — answering the phone, taking the booking, chasing the invoice, opening the file. Trained on your scripts, plugged into your systems, billed per finished job. Your team stops doing the repetitive part. The role still shows up — just <em>at 03:00, in your customers' languages, for a fraction of the cost</em>.
-        </p>
+        <p class="lede">Every card is a professional role we ship as an AI agent — answering the phone, taking the booking, chasing the invoice. Trained on your scripts, plugged into your systems, billed per finished job — at 03:00, in your customers' languages, for a fraction of the cost.</p>
       </div>
 
-      <div class="roles-grid reveal delay-1">
-
-        <article class="role-card">
-          <div class="role-num"><span>01 · Voice</span><span class="channel">Inbound</span></div>
-          <h3 class="role-name"><em>Inbound</em> call-center agent</h3>
-          <div class="role-replaces">Replaces <b>Tier-1 phone rep</b></div>
-          <p class="role-does">Picks up in &lt; 2 rings, identifies the caller against your CRM, triages intent, answers FAQ from your knowledge base, books or reschedules, and writes the disposition note back into the system. Escalates the 8% it can't close — with full context attached.</p>
-          <div class="role-stat"><b>14</b> languages · <b>24/7</b> · per call</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>02 · Voice</span><span class="channel">Outbound</span></div>
-          <h3 class="role-name"><em>Outbound</em> call-center agent</h3>
-          <div class="role-replaces">Replaces <b>dialer team</b></div>
-          <p class="role-does">Runs your outbound list — appointment confirmations, AR collections, surveys, lead-qualification, win-back. Books to your calendar, captures payment intents, respects DNC, retries on a sane cadence, and drops a clean call-summary into the CRM after every dial.</p>
-          <div class="role-stat"><b>~40</b> dials/hr · per connect</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>03 · Voice</span><span class="channel">Healthcare</span></div>
-          <h3 class="role-name"><em>Medical</em> receptionist</h3>
-          <div class="role-replaces">Replaces <b>front-desk staff</b></div>
-          <p class="role-does">Answers patient calls, books and reschedules appointments, takes refill requests, captures insurance details and copay, runs eligibility checks, and writes the visit note straight into the EMR. HIPAA-aware, audit-logged, with a same-day human handoff for clinical questions.</p>
-          <div class="role-stat"><b>EMR-native</b> · per booking</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>04 · Voice + Email</span><span class="channel">Insurance</span></div>
-          <h3 class="role-name"><em>Claims</em> intake (FNOL)</h3>
-          <div class="role-replaces">Replaces <b>FNOL desk</b></div>
-          <p class="role-does">Takes the first-notice-of-loss call 24/7, captures structured fields (location, parties, photos), opens the claim file in the carrier's system, dispatches the assessor, and sends a written summary to the insured before the call ends.</p>
-          <div class="role-stat"><b>24/7</b> intake · per FNOL</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>05 · Voice + Email</span><span class="channel">Legal</span></div>
-          <h3 class="role-name"><em>Legal</em> intake specialist</h3>
-          <div class="role-replaces">Replaces <b>new-matter intake</b></div>
-          <p class="role-does">Qualifies new matters from inbound calls and forms, runs conflict checks against your case database, books the consult, opens the matter, sends the engagement letter, and routes the file to the right partner with a one-page brief attached.</p>
-          <div class="role-stat"><b>Conflict-checked</b> · per matter</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>06 · Voice + Email</span><span class="channel">Finance</span></div>
-          <h3 class="role-name"><em>AR &amp; collections</em> specialist</h3>
-          <div class="role-replaces">Replaces <b>AR analyst</b></div>
-          <p class="role-does">Calls and emails customers about overdue invoices, takes promise-to-pay, captures partial payments, schedules follow-ups, and escalates the disputes worth a human's time. Posts every interaction back into the ledger and the CRM.</p>
-          <div class="role-stat">DSO <b>↓ 18%</b> · per recovery</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>07 · Multi-channel</span><span class="channel">Sales</span></div>
-          <h3 class="role-name"><em>Sales</em> development rep</h3>
-          <div class="role-replaces">Replaces <b>SDR / BDR</b></div>
-          <p class="role-does">Researches accounts against your ICP, drafts personalised outreach (email, LinkedIn, voice drop), runs cadences, handles common objections, books qualified meetings on your AE's calendar, and pre-fills the discovery doc before the call.</p>
-          <div class="role-stat"><b>5×</b> meeting volume · per booked</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>08 · Voice</span><span class="channel">HR</span></div>
-          <h3 class="role-name"><em>HR</em> phone screener</h3>
-          <div class="role-replaces">Replaces <b>first-round recruiter</b></div>
-          <p class="role-does">Runs structured first-round screens against your scoring rubric, books the on-site for the keepers, sends declines with feedback, and writes a 5-line summary into the ATS for every candidate it talked to. Bias-controlled, transcript on file.</p>
-          <div class="role-stat"><b>15-min</b> turnaround · per screen</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>09 · Email + Chat</span><span class="channel">Support</span></div>
-          <h3 class="role-name"><em>Customer support</em> Tier-1</h3>
-          <div class="role-replaces">Replaces <b>L1 support agent</b></div>
-          <p class="role-does">Handles the 80% of repeat tickets — refunds, WISMO, password resets, invoice copies, plan changes — end-to-end, in your tone of voice. Escalates the rest with a clean handoff packet so your humans walk into context, not chaos.</p>
-          <div class="role-stat"><b>82%</b> deflection · per resolved</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>10 · Voice</span><span class="channel">Logistics</span></div>
-          <h3 class="role-name"><em>Dispatch</em> &amp; driver liaison</h3>
-          <div class="role-replaces">Replaces <b>dispatch desk</b></div>
-          <p class="role-does">Answers the driver hotline 24/7, handles ETA changes, re-routes around exceptions, reschedules deliveries with the customer, opens incident tickets, and pings the on-call human only when the rules say so.</p>
-          <div class="role-stat"><b>24/7</b> coverage · per shipment</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>11 · Voice</span><span class="channel">Hospitality</span></div>
-          <h3 class="role-name"><em>Concierge</em> &amp; booking desk</h3>
-          <div class="role-replaces">Replaces <b>night-audit + reception</b></div>
-          <p class="role-does">Takes booking calls in your guests' languages, answers FAQ on the property, processes upsells (late checkout, breakfast, transfer), sends confirmations, and drops a post-stay review request at the right moment. Fully PMS-integrated.</p>
-          <div class="role-stat"><b>+12%</b> upsell · per booking</div>
-        </article>
-
-        <article class="role-card">
-          <div class="role-num"><span>12 · Voice</span><span class="channel">Front office</span></div>
-          <h3 class="role-name"><em>Reception</em> &amp; switchboard</h3>
-          <div class="role-replaces">Replaces <b>front desk / receptionist</b></div>
-          <p class="role-does">Greets every call, takes structured messages, books meetings into shared calendars, routes to the right person, sends follow-up emails, and covers the line after-hours so no caller hits a voicemail dead-end. Speaks in your brand's tone.</p>
-          <div class="role-stat"><b>0</b> missed calls · per call</div>
-        </article>
-
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Voice · Inbound</span><h3><em>Inbound</em> call-center agent</h3><p>Picks up in &lt;2 rings, identifies the caller against your CRM, triages, answers FAQ, books or reschedules, writes the disposition note. Escalates the 8% it can't close.</p><div class="stat-chip"><b>14</b>&nbsp;languages · <b>24/7</b> · per call</div></article>
+        <article class="card"><span class="kicker">02 · Voice · Outbound</span><h3><em>Outbound</em> call-center agent</h3><p>Runs your list — confirmations, AR collections, surveys, win-back. Books to calendar, captures payment intents, respects DNC, drops a clean summary into the CRM.</p><div class="stat-chip"><b>~40</b>&nbsp;dials/hr · per connect</div></article>
+        <article class="card"><span class="kicker">03 · Voice · Healthcare</span><h3><em>Medical</em> receptionist</h3><p>Answers patient calls, books and reschedules, takes refills, captures insurance &amp; copay, runs eligibility, writes the visit note into the EMR. HIPAA-aware, audit-logged.</p><div class="stat-chip"><b>EMR-native</b> · per booking</div></article>
+        <article class="card"><span class="kicker">04 · Voice+Email · Insurance</span><h3><em>Claims</em> intake (FNOL)</h3><p>Takes first-notice-of-loss 24/7, captures structured fields, opens the claim file, dispatches the assessor, and sends a written summary before the call ends.</p><div class="stat-chip"><b>24/7</b>&nbsp;intake · per FNOL</div></article>
+        <article class="card"><span class="kicker">05 · Voice+Email · Legal</span><h3><em>Legal</em> intake specialist</h3><p>Qualifies matters from calls and forms, runs conflict checks, books the consult, opens the matter, sends the engagement letter, routes to the right partner with a brief.</p><div class="stat-chip"><b>Conflict-checked</b> · per matter</div></article>
+        <article class="card"><span class="kicker">06 · Voice+Email · Finance</span><h3><em>AR &amp; collections</em> specialist</h3><p>Calls and emails on overdue invoices, takes promise-to-pay, captures partial payments, escalates the disputes worth a human. Posts every interaction to the ledger.</p><div class="stat-chip">DSO <b>↓18%</b> · per recovery</div></article>
+        <article class="card"><span class="kicker">07 · Multi-channel · Sales</span><h3><em>Sales</em> development rep</h3><p>Researches ICP accounts, drafts personalised outreach, runs cadences, handles objections, books qualified meetings, and pre-fills the discovery doc.</p><div class="stat-chip"><b>5×</b>&nbsp;meeting volume · per booked</div></article>
+        <article class="card"><span class="kicker">08 · Voice · HR</span><h3><em>HR</em> phone screener</h3><p>Runs structured first-round screens to your rubric, books on-sites for the keepers, sends declines with feedback, writes a 5-line ATS summary. Bias-controlled.</p><div class="stat-chip"><b>15-min</b>&nbsp;turnaround · per screen</div></article>
+        <article class="card"><span class="kicker">09 · Email+Chat · Support</span><h3><em>Customer support</em> Tier-1</h3><p>Handles 80% of repeat tickets — refunds, WISMO, resets, plan changes — end-to-end, in your tone. Escalates the rest with a clean handoff packet.</p><div class="stat-chip"><b>82%</b>&nbsp;deflection · per resolved</div></article>
       </div>
-
-      <div class="roles-foot">
-        <span>◎ Don't see your role? · We custom-build new ones in 2 weeks.</span>
-        <a href="contact.html">Brief us on the role →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== WHAT WE DO — vertical agents + voice ========== -->
-  <section class="do-section">
-    <div class="container">
-      <div class="do-head reveal">
-        <div>
-          <div class="do-eyebrow">What we do · § 02</div>
-          <h2>Specialised industries.<br><em>And custom-built</em> where you need them.</h2>
-        </div>
-        <p>
-          We don't build horizontal AI. Each practice area ships a <em>custom-built portfolio</em> of agents, a target SLA, and a shortlist of workflows we're ready to audit, build and run — plus an always-on <em>multilingual voice desk</em> (Arabic included) that slots into Aircall, Twilio, RingCentral, or your existing phone stack. <em>Don't see your industry? We custom-build a vertical</em> on the same per-outcome contract. <em>Available globally · always-on.</em>
-        </p>
-      </div>
-
-      <div class="grid-12 reveal delay-1">
-        <a href="solutions.html#healthcare" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">01 · Healthcare</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/healthcare.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Healthcare</div>
-            <p class="cell-work">Intake, prior-auth, ICD/CPT coding, refill voice, denial appeals.</p>
-          </div>
-          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#legal" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">02 · Legal</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/legal.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Legal</div>
-            <p class="cell-work">Discovery, leases, client intake voice, depo summaries.</p>
-          </div>
-          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#finance" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">03 · Finance</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/finance.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Finance</div>
-            <p class="cell-work">Reconciliation, AR voice, close drafter, KYC voice.</p>
-          </div>
-          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#real-estate" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">04 · Real estate</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/real-estate.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Real estate</div>
-            <p class="cell-work">Listings, enquiry voice, inspection booking, settlements.</p>
-          </div>
-          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#ecommerce" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">05 · E-commerce</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/ecommerce.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">E-commerce</div>
-            <p class="cell-work">Refunds, chargebacks, WISMO voice, restock, review replies.</p>
-          </div>
-          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#hr" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">06 · HR &amp; hiring</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/hr.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">HR &amp; hiring</div>
-            <p class="cell-work">Shortlist, phone-screen voice, offer, exit interview voice.</p>
-          </div>
-          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#marketing" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">07 · Marketing</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/marketing.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Marketing</div>
-            <p class="cell-work">Briefs, ad-creative, outbound SDR voice, PR monitor.</p>
-          </div>
-          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#manufacturing" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">08 · Manufacturing</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/manufacturing.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Manufacturing</div>
-            <p class="cell-work">QA-log, CAPA, supplier-chase voice, near-miss intake.</p>
-          </div>
-          <div class="cell-meta"><span>9 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#education" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">09 · Education</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/education.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Education</div>
-            <p class="cell-work">Admissions triage, student-services voice, tutor dispatch.</p>
-          </div>
-          <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#insurance" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">10 · Insurance</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/insurance.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Insurance</div>
-            <p class="cell-work">FNOL voice, claims triage, fraud flags, underwriting packs.</p>
-          </div>
-          <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#hospitality" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">11 · Hospitality</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/hospitality.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Hospitality</div>
-            <p class="cell-work">Booking voice, concierge, upsell, review replies, overflow.</p>
-          </div>
-          <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#logistics" class="cell">
-          <div class="cell-top">
-            <span class="cell-num">12 · Logistics</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/logistics.svg')" aria-hidden="true"></span>
-          </div>
-          <div>
-            <div class="cell-name">Logistics</div>
-            <p class="cell-work">Dispatch voice, track &amp; trace, exception packs, POD capture.</p>
-          </div>
-          <div class="cell-meta"><span>NEW · 8 agents</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#public-safety" class="cell cell-feature">
-          <div class="cell-top">
-            <span class="cell-num">13 · Public safety &amp; justice</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/public-safety.svg')" aria-hidden="true"></span>
-          </div>
-          <div class="cell-feature-body">
-            <div class="cell-name">Public safety &amp; justice</div>
-            <p class="cell-work">Incident reports, evidence inventory with chain-of-custody, court filings, FOI triage, AML scoring, witness-statement voice, fraud case-builder.</p>
-          </div>
-          <div class="cell-meta"><span>NEW · 10 agents · sovereign deploy</span><span class="go">Open →</span></div>
-        </a>
-
-        <a href="solutions.html#voice" class="cell cell-feature cell-feature-voice">
-          <div class="cell-top">
-            <span class="cell-num">— · Voice agents · multilingual</span>
-            <span class="cell-glyph" style="--glyph:url('assets/verticals/voice.svg')" aria-hidden="true"></span>
-          </div>
-          <div class="cell-feature-body">
-            <div class="cell-name">Multilingual voice desk</div>
-            <p class="cell-work">AI phone desk that crosses every industry. Inbound, outbound, multilingual — Arabic, English, Mandarin, Hindi, Spanish and the languages your customers actually call in. &lt; 2 rings to answer, writes the CRM note for you.</p>
-          </div>
-          <div class="cell-meta"><span>FLAGSHIP · 16 SKUs · &lt; 2 rings</span><span class="go">Open →</span></div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== CUSTOM INDUSTRY ========== -->
-  <section class="cust-section">
-    <div class="container">
-      <div class="cust-head reveal">
-        <div>
-          <div class="cust-eyebrow">Unlimited use cases · § 02b</div>
-          <h2>If you can describe the workflow,<br>we <em>build the agent</em>.</h2>
-        </div>
-        <p>
-          Nothing on this page is a shelf product. Every engagement is a <em>custom-built vertical</em> — model picked for the workflow, integrations wired into your stack, agents priced per finished job before we ship a single one. Most go from one-page brief to live production in <em>4 to 8 weeks</em>. The list below is a small sample of what we've shipped recently — your workflow probably isn't on it, and that's the point.
-        </p>
-      </div>
-
-      <div class="cust-grid reveal delay-1">
-        <article class="cust-card">
-          <div class="cust-num">01</div>
-          <div class="cust-cat">Sales · agentic SDR</div>
-          <h4>Agentic outbound &amp; pipeline rep</h4>
-          <p>Researches ICP accounts, drafts hyper-personalised email + LinkedIn sequences, handles objections, books meetings, and writes the discovery doc before the call. Per qualified meeting booked.</p>
-        </article>
-        <article class="cust-card">
-          <div class="cust-num">02</div>
-          <div class="cust-cat">Support · RAG agent</div>
-          <h4>RAG-powered support deflector</h4>
-          <p>Reads your docs, KB, tickets and product code; answers customer questions with citations; escalates the 12% it can't close — with a full thread summary attached. Per resolved ticket.</p>
-        </article>
-        <article class="cust-card">
-          <div class="cust-num">03</div>
-          <div class="cust-cat">Voice · cloned brand</div>
-          <h4>Brand-voice phone agent</h4>
-          <p>Custom-trained on your CSR call recordings to match your tone, pacing and brand vocabulary. After-hours, multilingual, fully transcribed. Per call resolved.</p>
-        </article>
-        <article class="cust-card">
-          <div class="cust-num">04</div>
-          <div class="cust-cat">Finance · quote desk</div>
-          <h4>Quote-to-cash agent</h4>
-          <p>Parses RFQs from email + portal, prices against your rate card and rules, drafts the quote in your template, routes for approval, writes back to CPQ. Per quote shipped.</p>
-        </article>
-        <article class="cust-card">
-          <div class="cust-num">05</div>
-          <div class="cust-cat">Pharma · field reps</div>
-          <h4>Sample-tracking &amp; HCP follow-up</h4>
-          <p>Reconciles rep visit notes with sample-drop logs, drafts the next-touch email per HCP, files into Veeva. Per completed touch.</p>
-        </article>
-        <article class="cust-card">
-          <div class="cust-num">06</div>
-          <div class="cust-cat">Construction · permits</div>
-          <h4>Council permit chase</h4>
-          <p>Calls councils, files RFIs, tracks lodgement IDs and approval status across multi-jurisdiction projects. Per resolved permit line.</p>
-        </article>
-        <article class="cust-card">
-          <div class="cust-num">07</div>
-          <div class="cust-cat">Legal · doc review</div>
-          <h4>Contract review &amp; redline agent</h4>
-          <p>Reads MSAs / NDAs against your playbook, flags deviations with rationale, drafts redlines in tracked-changes, escalates the edge cases. Per agreement reviewed.</p>
-        </article>
-        <article class="cust-card">
-          <div class="cust-num">08</div>
-          <div class="cust-cat">Compliance · risk</div>
-          <h4>Policy &amp; compliance reviewer</h4>
-          <p>Cross-checks new marketing, sales decks and code commits against your compliance policy (GDPR, HIPAA, ASIC). Flags violations with citations. Per artefact reviewed.</p>
-        </article>
-        <article class="cust-card">
-          <div class="cust-num">09</div>
-          <div class="cust-cat">CX · multilingual</div>
-          <h4>Multilingual customer success</h4>
-          <p>Reads support tickets, account usage and CSAT signals; sends personalised check-ins in the customer's language; flags churn risks to CSMs. Per managed account.</p>
-        </article>
-        <article class="cust-card cust-card-blank">
-          <div class="cust-num">10+</div>
-          <div class="cust-cat">Your workflow · here</div>
-          <h4>Bring us your one-page brief</h4>
-          <p>Whatever your team does on repeat — that's the agent we'll quote. No shelf product, no per-token bill, no upsell tier — just a custom agent priced per finished job.</p>
-        </article>
-      </div>
-
-      <div class="cust-foot reveal delay-2">
-        <p>If you can describe the workflow in a paragraph, we can quote it in a week.</p>
-        <a href="contact.html" class="btn btn-primary">Brief us on your use case <span class="arrow">↗</span></a>
+      <div class="center" style="margin-top:28px">
+        <a href="solutions.html" class="btn btn-ghost btn-lg">See all roles &amp; verticals <span class="ar">→</span></a>
       </div>
     </div>
   </section>
 
   <!-- ========== HOW IT WORKS ========== -->
-  <section class="how-section">
-    <div class="container">
-      <div class="how-head reveal">
+  <section class="section">
+    <div class="wrap">
+      <div class="shead shead--split reveal">
         <div>
-          <div class="how-eyebrow">How it works · § 02c</div>
-          <h2>Brief on Monday.<br><em>Live agent</em> in weeks, not quarters.</h2>
+          <span class="eyebrow">How it works</span>
+          <h2 class="h2" style="margin-bottom:0">Brief on Monday. <em>Live agent</em> in weeks.</h2>
         </div>
-        <p>Four steps from "we should automate this" to a shipping agent on a written SLA. <em>No procurement cycle, no PoC theatre, no per-token bills.</em> The first one is a free audit.</p>
+        <p class="lede">Four steps from "we should automate this" to a shipping agent on a written SLA. No procurement cycle, no PoC theatre, no per-token bills. The first step is a free audit.</p>
       </div>
-      <ol class="how-steps reveal delay-1">
-        <li class="hs">
-          <div class="hs-no">01</div>
-          <div class="hs-line" aria-hidden="true"></div>
-          <h4>Brief — one page</h4>
-          <p>You send us a paragraph describing the workflow. Or we sit in your operation for two days and write it for you. Free.</p>
-          <span class="hs-time">Day 0–2</span>
-        </li>
-        <li class="hs">
-          <div class="hs-no">02</div>
-          <div class="hs-line" aria-hidden="true"></div>
-          <h4>Audit &amp; quote</h4>
-          <p>We measure the current baseline — time, cost, error rate. Then we quote one unit price per finished outcome. You see the math.</p>
-          <span class="hs-time">Week 1</span>
-        </li>
-        <li class="hs">
-          <div class="hs-no">03</div>
-          <div class="hs-line" aria-hidden="true"></div>
-          <h4>Build &amp; integrate</h4>
-          <p>We pick the model, wire integrations (OAuth/SCIM/webhooks), build escalation rules, and stress-test against your real data. SLA in writing before launch.</p>
-          <span class="hs-time">Weeks 2–6</span>
-        </li>
-        <li class="hs hs-final">
-          <div class="hs-no">04</div>
-          <h4>Ship &amp; bill — per outcome</h4>
-          <p>Agent goes live in production. Meter ticks per clean pass. Failed attempts and escalations are free. You see the ledger we see.</p>
-          <span class="hs-time">Week 7+</span>
-        </li>
-      </ol>
-      <div class="how-foot reveal delay-2">
-        <span class="hf-stat"><b>4–8 weeks</b> average brief-to-live</span>
-        <span class="hf-stat"><b>0 invoices</b> until the meter ticks</span>
-        <span class="hf-stat"><b>1 SLA</b> per workflow, in writing</span>
-        <a href="process.html" class="hf-link">Full process &nbsp;→</a>
+      <div class="grid grid-4 steps reveal">
+        <article class="card step"><span class="n">01</span><h3>Brief — one page</h3><p>Send us a paragraph describing the workflow. Or we sit in your operation for two days and write it for you. Free.</p><span class="when">Day 0–2</span></article>
+        <article class="card step"><span class="n">02</span><h3>Audit &amp; quote</h3><p>We measure the current baseline — time, cost, error rate. Then quote one price per finished outcome. You see the math.</p><span class="when">Week 1</span></article>
+        <article class="card step"><span class="n">03</span><h3>Build &amp; integrate</h3><p>We pick the model, wire integrations, build escalation rules, stress-test on real data. SLA in writing before launch.</p><span class="when">Weeks 2–6</span></article>
+        <article class="card step"><span class="n">04</span><h3>Ship &amp; bill per outcome</h3><p>Agent goes live. Meter ticks per clean pass. Failed attempts are free. You see the ledger we see.</p><span class="when">Week 7+</span></article>
       </div>
     </div>
   </section>
 
   <!-- ========== VOICE FLAGSHIP ========== -->
-  <section class="voice-flag">
-    <div class="container">
-      <div class="vf-head reveal">
+  <section class="section dark">
+    <div class="wrap">
+      <div class="shead shead--split reveal">
         <div>
-          <div class="vf-eyebrow">Flagship · cross-cutting · § 03</div>
-          <h2>A voice desk.<br><em>Multilingual</em>.<br>That never misses a ring.</h2>
+          <span class="eyebrow">Flagship · cross-cutting</span>
+          <h2 class="h2" style="margin-bottom:0">A voice desk. <em>Multilingual</em>. That never misses a ring.</h2>
         </div>
-        <div>
-          <p>One AI phone desk that plugs into <em>Aircall · Twilio · RingCentral · Zoom Phone · GoTo</em>. Answers inbound in under two rings, runs outbound against your list, warm-transfers on edge cases, <em>writes the CRM note</em> and the action items. Every call transcribed, scored and replayable on the ops console.</p>
-          <p>Fluent, not translated: real-time conversation in the caller's language, regional accents supported, tone-matched to your brand voice.</p>
-        </div>
+        <p class="lede">One AI phone desk that plugs into Aircall, Twilio, RingCentral, Zoom Phone and GoTo. Answers inbound in under two rings, runs outbound, warm-transfers edge cases, <em>writes the CRM note</em>. Every call transcribed, scored and replayable. Fluent, not translated — real-time, accent-aware, tone-matched to your brand.</p>
       </div>
 
-      <div class="vf-wave reveal delay-1" aria-hidden="true">
-        <div class="vf-wave-chrome">
-          <span class="vf-wave-dot"></span>
-          <span class="vf-wave-label">Live · multilingual voice agent · &lt; 2 rings to answer</span>
-          <span class="vf-wave-meta">REC · 00:00:42</span>
-        </div>
-        <div class="vf-wave-bars">
-          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-        <div class="vf-wave-foot">
-          <span class="vf-wave-cap">"Hi, I'm calling about my appointment for Tuesday — can I move it to Thursday morning?"</span>
-          <span class="vf-wave-side">Outcome billed: <em>1 reschedule</em></span>
-        </div>
+      <div class="langs reveal" style="margin-bottom:28px">
+        <span class="lang"><span class="code">EN</span> English</span>
+        <span class="lang"><span class="code">ES</span> Spanish</span>
+        <span class="lang"><span class="code">ZH</span> Mandarin</span>
+        <span class="lang"><span class="code">AR</span> Arabic</span>
+        <span class="lang"><span class="code">HI</span> Hindi</span>
+        <span class="lang"><span class="code">VI</span> Vietnamese</span>
+        <span class="lang"><span class="code">PT</span> Portuguese</span>
+        <span class="lang"><span class="code">FR</span> French</span>
+        <span class="lang"><span class="code">DE</span> German</span>
+        <span class="lang"><span class="code">JA</span> Japanese</span>
+        <span class="lang"><span class="code">KO</span> Korean</span>
+        <span class="lang"><span class="code">+more</span> on request</span>
       </div>
 
-      <div class="vf-langs reveal delay-1" aria-label="Languages">
-        <span class="lg"><span class="code">EN</span> English</span>
-        <span class="lg"><span class="code">ES</span> Spanish</span>
-        <span class="lg"><span class="code">ZH</span> Mandarin</span>
-        <span class="lg"><span class="code">AR</span> Arabic</span>
-        <span class="lg"><span class="code">HI</span> Hindi</span>
-        <span class="lg"><span class="code">VI</span> Vietnamese</span>
-        <span class="lg"><span class="code">PT</span> Portuguese</span>
-        <span class="lg"><span class="code">FR</span> French</span>
-        <span class="lg"><span class="code">DE</span> German</span>
-        <span class="lg"><span class="code">JA</span> Japanese</span>
-        <span class="lg"><span class="code">KO</span> Korean</span>
-        <span class="lg"><span class="code">TH</span> Thai</span>
-        <span class="lg"><span class="code">ID</span> Indonesian</span>
-        <span class="lg"><span class="code">IT</span> Italian</span>
+      <div class="grid grid-4 reveal" style="gap:1px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);overflow:hidden">
+        <div style="background:var(--ink-bg);padding:22px"><div class="note" style="color:var(--acc-2)">per answered · A$0.38</div><h3 style="color:#fff;font-size:17px;margin-top:8px">Inbound receptionist</h3><p style="color:rgba(234,242,238,0.6);font-size:13.5px;margin-top:6px">24/7 greet · route · capture</p></div>
+        <div style="background:var(--ink-bg);padding:22px"><div class="note" style="color:var(--acc-2)">per meeting · A$38</div><h3 style="color:#fff;font-size:17px;margin-top:8px">Outbound SDR</h3><p style="color:rgba(234,242,238,0.6);font-size:13.5px;margin-top:6px">List → meeting booked</p></div>
+        <div style="background:var(--ink-bg);padding:22px"><div class="note" style="color:var(--acc-2)">per resolved · A$1.80</div><h3 style="color:#fff;font-size:17px;margin-top:8px">Tier-1 support</h3><p style="color:rgba(234,242,238,0.6);font-size:13.5px;margin-top:6px">KB · deflect · warm-transfer</p></div>
+        <div style="background:var(--ink-bg);padding:22px"><div class="note" style="color:var(--acc-2)">per FNOL · A$6.80</div><h3 style="color:#fff;font-size:17px;margin-top:8px">FNOL claims intake</h3><p style="color:rgba(234,242,238,0.6);font-size:13.5px;margin-top:6px">First-notice-of-loss · scored</p></div>
       </div>
-
-      <div class="vf-skus reveal delay-2">
-        <article class="vf-sku"><span class="sn">01</span><h4>Inbound receptionist</h4><p>24/7 greet · route · capture</p><div class="ft"><span>per answered</span><span class="p">A$0.38</span></div></article>
-        <article class="vf-sku"><span class="sn">02</span><h4>Outbound SDR</h4><p>List → meeting booked</p><div class="ft"><span>per meeting</span><span class="p">A$38</span></div></article>
-        <article class="vf-sku"><span class="sn">03</span><h4>Appointment booker</h4><p>Live calendar · confirm</p><div class="ft"><span>per booked</span><span class="p">A$1.60</span></div></article>
-        <article class="vf-sku"><span class="sn">04</span><h4>Tier-1 support</h4><p>KB · deflect · warm-transfer</p><div class="ft"><span>per resolved</span><span class="p">A$1.80</span></div></article>
-        <article class="vf-sku"><span class="sn">05</span><h4>Multilingual interpreter</h4><p>Live EN ↔ 13 others</p><div class="ft"><span>per minute</span><span class="p">A$0.22</span></div></article>
-        <article class="vf-sku"><span class="sn">06</span><h4>FNOL claims intake</h4><p>First-notice-of-loss · scored</p><div class="ft"><span>per FNOL</span><span class="p">A$6.80</span></div></article>
-        <article class="vf-sku"><span class="sn">07</span><h4>Collections &amp; payments</h4><p>Promise-to-pay · Stripe link</p><div class="ft"><span>recovered</span><span class="p">3.4%</span></div></article>
-        <article class="vf-sku"><span class="sn">08</span><h4>Overflow concierge</h4><p>Spike handler · hotel / clinic</p><div class="ft"><span>per minute</span><span class="p">A$0.18</span></div></article>
-      </div>
-
-      <div class="vf-cta">
-        <a href="cases.html" class="btn btn-primary btn-lg">See all 16 voice SKUs <span class="arrow">↗</span></a>
-        <span class="note">2-week audit → live in your phone stack in week 3.</span>
+      <div class="center" style="margin-top:28px">
+        <a href="cases.html" class="btn btn-light btn-lg">See all 16 voice SKUs <span class="ar">↗</span></a>
       </div>
     </div>
   </section>
 
   <!-- ========== HOW IT'S DIFFERENT ========== -->
-  <section class="diff">
-    <div class="container">
-      <div class="diff-head reveal">
-        <div class="diff-eyebrow">Why we exist · § 04</div>
-        <h2>Three things every other<br>AI agency gets <em>wrong</em>.</h2>
-        <p>Most AI agencies sell a chatbot and a subscription. We sell finished work, measured in units your CFO already tracks.</p>
+  <section class="section">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Why we exist</span>
+        <h2 class="h2">Three things every other AI agency gets <em>wrong</em>.</h2>
+        <p class="lede">Most AI agencies sell a chatbot and a subscription. We sell finished work, measured in units your CFO already tracks.</p>
       </div>
-
-      <div class="diff-row reveal delay-1">
-        <article class="diff-card">
-          <div class="no">— 01 · Workflow-first</div>
-          <div class="fig">14<sub>days</sub></div>
-          <div class="figLabel">Free audit · no obligation</div>
-          <h3>We audit <em>before</em> we build.</h3>
-          <p>Every engagement starts with a two-week workflow audit. We map the manual path end-to-end, find the bottlenecks, and price only the jobs we can confidently automate. No audit, no build.</p>
-          <div class="vs">
-            <b>Versus</b>
-            Most agencies open with a 90-slide "AI transformation roadmap" and a six-figure retainer. Ours opens with a pen, a whiteboard, and your own people.
-          </div>
-        </article>
-
-        <article class="diff-card">
-          <div class="no">— 02 · Outcome pricing</div>
-          <div class="fig"><em>A$</em>0.40<sub>from · per outcome</sub></div>
-          <div class="figLabel">Tiered by complexity</div>
-          <h3>You pay <em>per completed task</em>.</h3>
-          <p>Tokens are our cost, not yours. Seats are a rounding error. You pay a rate per finished unit — a triaged claim, a tagged lease, a resolved ticket, an answered call — with an SLA in the contract. Miss the SLA, you don't pay.</p>
-          <div class="vs">
-            <b>Versus</b>
-            SaaS vendors charge per seat whether the work happens or not. We only get paid when the outcome does.
-          </div>
-        </article>
-
-        <article class="diff-card">
-          <div class="no">— 03 · Vertical depth</div>
-          <div class="fig">14<sub>practice areas</sub></div>
-          <div class="figLabel">Nothing else</div>
-          <h3>Specialised. <em>Custom-built where it counts.</em></h3>
-          <p>We don't do "AI for everything." Specialised industries plus an always-on multilingual voice desk — and a custom vertical when you bring us one we haven't shipped yet. Depth beats breadth, every single quarter.</p>
-          <div class="vs">
-            <b>Versus</b>
-            Horizontal AI consultancies relearn your domain on every project. We already know what a SOAP note is, what a FNOL packet needs, what a chain-of-custody log requires, and why your LegalHold tag matters.
-          </div>
-        </article>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="pill">Workflow-first</span><h3>We audit <em>before</em> we build.</h3><p>Every engagement starts with a two-week workflow audit. We map the manual path end-to-end, find the bottlenecks, and price only the jobs we can confidently automate. No audit, no build.</p></article>
+        <article class="card"><span class="pill">Outcome pricing</span><h3>You pay <em>per completed task</em>.</h3><p>Tokens are our cost, not yours. Seats are a rounding error. You pay a rate per finished unit — a triaged claim, a tagged lease, a resolved ticket — with an SLA in the contract. Miss it, you don't pay.</p></article>
+        <article class="card"><span class="pill">Vertical depth</span><h3>Specialised. <em>Custom-built where it counts.</em></h3><p>We don't do "AI for everything." Specialised industries plus a multilingual voice desk — and a custom vertical when you bring us one we haven't shipped. We already know what a SOAP note and an FNOL packet need.</p></article>
       </div>
     </div>
   </section>
 
-  <!-- ========== VS. GOOGLE RIBBON ========== -->
-  <section class="vs-ribbon reveal">
-    <div class="container">
-      <div class="vs-inner">
+  <!-- ========== VS PLATFORMS ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Autopilot Labs vs. the platforms</span>
+        <h2 class="h2">Most AI vendors sell you a model. We ship the <em>finished work</em>.</h2>
+        <p class="lede">Off-the-shelf agent builders hand you a toolbox and a bill per token — the starting line, not the finish. We run the last mile: agents embedded in your workflows, audited live, billed per outcome that passes SLA. If the job doesn't ship, you don't pay.</p>
+      </div>
+      <div class="compare reveal">
+        <div class="them">
+          <h4>Token-meter AI vendors</h4>
+          <ul>
+            <li>You rent a model and a console</li>
+            <li>Billed per token, per seat, per call</li>
+            <li>You hire the team to wire it up</li>
+            <li>You own every failed run</li>
+            <li>Generic — built for everyone</li>
+          </ul>
+        </div>
+        <div class="us">
+          <h4>Autopilot Labs</h4>
+          <ul>
+            <li>We deliver a live, vertical agent</li>
+            <li>Billed per SLA-passing outcome</li>
+            <li>Deploy in 14 days, we do the wiring</li>
+            <li>If it misses SLA, we don't invoice</li>
+            <li>Purpose-built per industry</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRINCIPLES ========== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="shead shead--split reveal">
         <div>
-          <div class="eyebrow">Autopilot Labs vs. the platforms</div>
-          <h2>Most AI vendors sell you a model.<br>We ship you the <em>finished work</em>.</h2>
-          <p>Off-the-shelf agent builders all hand you a toolbox and a bill per token. That's the <em>starting line</em>, not the finish line. Autopilot Labs runs the last mile: our agents are embedded in your workflows, audited live, and <em>billed per outcome that passes SLA</em>. If the job doesn't ship, you don't pay.</p>
+          <span class="eyebrow">How we work</span>
+          <h2 class="h2" style="margin-bottom:0">Four principles on every <em>contract</em>.</h2>
         </div>
-        <div class="vs-compare">
-          <div>
-            <h6>Token-meter AI vendors</h6>
-            <ul>
-              <li>You rent a model and a console</li>
-              <li>Billed per token, per seat, per call</li>
-              <li>You hire the team to wire it up</li>
-              <li>You own every failed run</li>
-              <li>Generic — built for everyone</li>
-            </ul>
-          </div>
-          <div class="us">
-            <h6>Autopilot Labs</h6>
-            <ul>
-              <li>We deliver a live, vertical agent</li>
-              <li>Billed per SLA-passing outcome</li>
-              <li>Deploy in 14 days, we do the wiring</li>
-              <li>If it misses SLA, we don't invoice</li>
-              <li>Purpose-built per industry</li>
-            </ul>
-          </div>
-        </div>
+        <p class="lede">The rules we won't negotiate — in writing, on every statement of work. Audit-first, outcomes-only, vertical-deep, and always with a named human accountable for the agent that runs the job.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- ========== OPS CONSOLE ========== -->
-  <section class="ops">
-    <div class="container">
-      <div class="ops-head reveal">
-        <div class="ops-eyebrow">What you see · § 05</div>
-        <h2>Every outcome, <em>audited</em>.<br>Every SLA, <em>live</em>.</h2>
-        <p>One console, live, for every seat on your team. No screenshots, no PDFs, no "ask your CSM." A read-only seat lands in your inbox within 24 hours of signing the audit letter.</p>
-      </div>
-
-      <figure class="ops-device reveal delay-1">
-        <div class="ops-chrome" aria-hidden="true">
-          <span class="d"></span><span class="d"></span><span class="d"></span>
-          <span class="u">your-team.autopilotlabs.io / ops / patient-intake</span>
-          <span class="r">LIVE · 14:27 AEST</span>
-        </div>
-        <object class="ops-canvas" type="image/svg+xml" data="assets/ops-dashboard.svg" aria-label="Autopilot Labs operations console showing live outcomes, SLA meter, and cost-per-outcome"></object>
-      </figure>
-
-      <ul class="ops-bullets reveal delay-2">
-        <li><b>+ Live stream</b>Every outcome, timestamped and billed in real time.</li>
-        <li><b>+ SLA credit-back</b>Miss the SLA, the outcome is free. Automatic on the invoice.</li>
-        <li><b>+ Full audit log</b>Every agent action, every document, every call — replayable.</li>
-      </ul>
-
-      <div class="ops-cta">
-        <a href="contact.html" class="btn btn-primary btn-lg">Request a read-only seat <span class="arrow">↗</span></a>
-        <span class="note">Issued within 24 hours. No sales call.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== HOW WE WORK — principles ========== -->
-  <section class="proof">
-    <style>
-      .principles-row {
-        display: grid; grid-template-columns: repeat(4, 1fr);
-        border: 1px solid var(--line-strong);
-        background: var(--line-strong); gap: 1px;
-      }
-      .principle {
-        background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
-        padding: clamp(1.75rem, 2.4vw, 2.25rem);
-        display: flex; flex-direction: column; gap: 0.75rem;
-        position: relative;
-        overflow: hidden;
-        transition: background .25s var(--ease);
-      }
-      .principle::before {
-        content: '';
-        position: absolute;
-        left: 0; top: 0; right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, var(--accent), #6E6FFF);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform .4s var(--ease);
-      }
-      .principle:hover { background: linear-gradient(180deg, var(--paper) 0%, #F4F7FF 100%); }
-      .principle:hover::before { transform: scaleX(1); }
-      .principle .pn {
-        font-family: var(--font-mono);
-        font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
-        color: var(--accent); font-weight: 600;
-        padding: 4px 10px;
-        background: var(--accent-soft);
-        border: 1px solid var(--line-accent);
-        border-radius: 999px;
-        width: fit-content;
-      }
-      .principle h3 {
-        font-family: var(--font-display);
-        font-weight: 500; font-size: clamp(20px, 1.7vw, 26px);
-        line-height: 1.1; letter-spacing: -0.025em;
-        margin-top: 0.5rem;
-      }
-      .principle h3 em { color: var(--accent); }
-      .principle p {
-        font-size: 14px; line-height: 1.55; color: var(--ink-3);
-      }
-      @media (max-width: 900px) { .principles-row { grid-template-columns: repeat(2, 1fr); } }
-      @media (max-width: 600px) { .principles-row { grid-template-columns: 1fr; } }
-    </style>
-
-    <div class="container">
-      <div class="proof-head reveal">
-        <div class="l">
-          <div class="eyebrow">How we work · § 06</div>
-          <h2>Four principles on<br>every <em>contract</em>.</h2>
-        </div>
-        <div class="r">
-          <p>The rules we won't negotiate — in writing, on every statement of work we sign. Audit-first, outcomes-only, vertical-deep, and always with a named human accountable for the agent that runs the job.</p>
-        </div>
-      </div>
-
-      <div class="principles-row reveal delay-1">
-        <article class="principle">
-          <span class="pn">— 01 · Audit-first</span>
-          <h3>Two weeks <em>free</em>.</h3>
-          <p>Every engagement starts with a 10-working-day workflow audit — observing, measuring, mapping. We only propose what we can ship.</p>
-        </article>
-        <article class="principle">
-          <span class="pn">— 02 · No audit, no build</span>
-          <h3>We'll say <em>no</em>.</h3>
-          <p>If we can't confidently automate a workflow to SLA, we decline the work and hand you the diagnostic. No retainers for vapour.</p>
-        </article>
-        <article class="principle">
-          <span class="pn">— 03 · Paid on outcomes</span>
-          <h3>Miss SLA, <em>free</em>.</h3>
-          <p>Every outcome ships against a contract SLA. If the agent misses, the outcome is credited back automatically on the invoice.</p>
-        </article>
-        <article class="principle">
-          <span class="pn">— 04 · Vertical-only</span>
-          <h3>Specialised. <em>Or custom-built.</em></h3>
-          <p>Specialised industries plus a multilingual voice desk — and a custom vertical when yours isn't on the shelf. You hire people who already speak the domain.</p>
-        </article>
+      <div class="grid grid-4 reveal">
+        <article class="card"><span class="pill">01 · Audit-first</span><h3>Two weeks <em>free</em>.</h3><p>Every engagement starts with a 10-day workflow audit — observing, measuring, mapping. We only propose what we can ship.</p></article>
+        <article class="card"><span class="pill">02 · No audit, no build</span><h3>We'll say <em>no</em>.</h3><p>If we can't confidently automate to SLA, we decline and hand you the diagnostic. No retainers for vapour.</p></article>
+        <article class="card"><span class="pill">03 · Paid on outcomes</span><h3>Miss SLA, <em>free</em>.</h3><p>Every outcome ships against a contract SLA. If the agent misses, it's credited back automatically on the invoice.</p></article>
+        <article class="card"><span class="pill">04 · Vertical-only</span><h3>Specialised. <em>Or custom-built.</em></h3><p>Specialised industries plus a multilingual voice desk — and a custom vertical when yours isn't on the shelf.</p></article>
       </div>
     </div>
   </section>
 
   <!-- ========== END CTA ========== -->
-  <section class="end-cta">
-    <div class="container">
-      <div class="inner reveal">
-        <div class="eyebrow">Start with an audit, not a pitch</div>
-        <h2>Two weeks.<br>One workflow.<br><em>No obligation.</em></h2>
-        <p>We spend 10 working days inside your team — observing, measuring, mapping. If we find a workflow we can ship agents for, we price it. If we don't, you walk away with a full diagnostic report, on us.</p>
+  <section class="section dark cta-band">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" style="justify-content:center">Start with an audit, not a pitch</span>
+        <h2 class="h2">Two weeks. One workflow. <em>No obligation.</em></h2>
+        <p class="lede">We spend 10 working days inside your team — observing, measuring, mapping. If we find a workflow we can ship agents for, we price it. If we don't, you walk away with a full diagnostic, on us.</p>
         <div class="btns">
-          <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
-          <a href="process.html" class="btn btn-lg">How it works</a>
+          <a href="contact.html" class="btn btn-light btn-lg">Book my audit <span class="ar">↗</span></a>
+          <a href="process.html" class="btn btn-outline-light btn-lg">How it works</a>
         </div>
       </div>
     </div>
@@ -3883,144 +324,112 @@ body::before {
 </main>
 
 <!-- ========== FOOTER ========== -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk (Arabic, English and your customers' languages). We bill per completed outcome. Not per seat. Not per token.</p>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <h3>Agents that <em>finish</em>.</h3>
+        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk. We bill per completed outcome. Not per seat. Not per token.</p>
       </div>
-      <div class="footer-col">
-        <h5>Work</h5>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="process.html">Process</a></li>
-          <li><a href="cases.html">Case studies</a></li>
-          <li><a href="calculator.html">Calculator</a></li>
-          <li><a href="integrations.html">Integrations</a></li>
-          <li><a href="demo.html">Live demo</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Product</h5>
-        <ul>
-          <li><a href="docs.html">API docs</a></li>
-          <li><a href="watch.html">Watch</a></li>
-          <li><a href="status.html">Status</a></li>
-          <li><a href="security.html">Security</a></li>
-          <li><a href="trust.html">Trust</a></li>
-          <li><a href="changelog.html">Changelog</a></li>
-          <li><a href="roadmap.html">Roadmap</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="careers.html">Careers</a></li>
-          <li><a href="manifesto.html">Manifesto</a></li>
-          <li><a href="press.html">Press</a></li>
-          <li><a href="partners.html">Partners</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Learn</h5>
-        <ul>
-          <li><a href="journal.html">Journal</a></li>
-          <li><a href="help.html">Help center</a></li>
-          <li><a href="glossary.html">Glossary</a></li>
-          <li><a href="research.html">Research</a></li>
-          <li><a href="report-2026.html">H1 2026 report</a></li>
-          <li><a href="sitemap.html">Sitemap</a></li>
-        </ul>
-      </div>
+      <div class="foot-col"><h5>Work</h5><ul>
+        <li><a href="what-is.html">What is an AI agent?</a></li>
+        <li><a href="solutions.html">Solutions</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="cases.html">Case studies</a></li>
+        <li><a href="calculator.html">Calculator</a></li>
+        <li><a href="demo.html">Live demo</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Product</h5><ul>
+        <li><a href="docs.html">API docs</a></li>
+        <li><a href="integrations.html">Integrations</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="status.html">Status</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Company</h5><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+        <li><a href="press.html">Press</a></li>
+        <li><a href="partners.html">Partners</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Learn</h5><ul>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="help.html">Help center</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="sitemap.html">Sitemap</a></li>
+      </ul></div>
     </div>
-    <div class="footer-bottom">
-      <div class="left">
-        <span>© 2026 Autopilot Labs Pty Ltd</span>
-        <span>·</span>
-        <span>Global · Remote-first · 24/7 delivery</span>
-        <span>·</span>
-        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
-      </div>
-      <div class="right">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">SLA</a>
-      </div>
+    <div class="foot-bottom">
+      <div class="left">© 2026 Autopilot Labs Pty Ltd · Global · Remote-first · 24/7 delivery · <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></div>
+      <div class="right"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">SLA</a></div>
     </div>
   </div>
 </footer>
 
-<script src="assets/site.js?v=27"></script>
 <script>
-/* ---------- Live outcomes ledger ---------- */
-(function () {
-  const list = document.getElementById('ledger-list');
-  if (!list) return;
+/* mobile nav */
+(function(){
+  var t = document.getElementById('navToggle'), s = document.getElementById('msheet');
+  if(!t||!s) return;
+  t.addEventListener('click', function(){
+    var open = s.classList.toggle('open');
+    t.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('lock', open);
+  });
+  s.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ s.classList.remove('open'); document.body.classList.remove('lock'); t.setAttribute('aria-expanded','false'); }); });
+})();
 
-  const pool = [
-    { w: 'Patient intake normaliser', s: 'Healthcare',     p: 'A$1.80' },
-    { w: 'Prior-auth packet',          s: 'Healthcare',     p: 'A$6.40' },
-    { w: 'ICD / CPT coder',            s: 'Healthcare',     p: 'A$2.20' },
-    { w: 'Discovery tagger',           s: 'Legal',          p: 'A$68' },
-    { w: 'Lease abstractor',           s: 'Legal',          p: 'A$14' },
-    { w: 'Reconciliation entry',       s: 'Finance',        p: 'A$0.41' },
-    { w: 'Invoice coder',              s: 'Finance',        p: 'A$0.85' },
-    { w: 'Month-end draft',            s: 'Finance',        p: 'A$240' },
-    { w: 'Inbound receptionist',       s: 'Voice · EN',     p: 'A$0.38' },
-    { w: 'AR collections voice',       s: 'Voice · ES',     p: 'A$12' },
-    { w: 'Chargeback evidence pack',   s: 'E-commerce',     p: 'A$22' },
-    { w: 'CV shortlister',             s: 'HR & hiring',    p: 'A$0.60' },
-    { w: 'Phone-screener voice',       s: 'Voice · ZH',     p: 'A$5.80' },
-    { w: 'Ad-creative variant',        s: 'Marketing',      p: 'A$2.20' },
-    { w: 'QA-log watcher',             s: 'Manufacturing',  p: 'A$12' },
-    { w: 'Appointment booker voice',   s: 'Voice · AR',     p: 'A$1.60' },
-    { w: 'WISMO voice call',           s: 'Voice · EN',     p: 'A$0.95' },
-    { w: 'Listing copywriter',         s: 'Real estate',    p: 'A$4.40' },
-    { w: 'Refund resolution',          s: 'E-commerce',     p: 'A$3.80' },
-    { w: 'Interview scheduler',        s: 'HR & hiring',    p: 'A$1.40' },
-    { w: 'Admissions triage',          s: 'Education',      p: 'A$2.40' },
-    { w: 'Student-services voice',     s: 'Voice · HI',     p: 'A$1.20' },
-    { w: 'FNOL claims intake',         s: 'Insurance',      p: 'A$6.80' },
-    { w: 'Claims fraud scorer',        s: 'Insurance',      p: 'A$0.85' },
-    { w: 'Hotel booking voice',        s: 'Voice · JA',     p: 'A$1.60' },
-    { w: 'Concierge upsell',           s: 'Hospitality',    p: 'A$2.80' },
-    { w: 'Dispatch voice',             s: 'Voice · VI',     p: 'A$0.42' },
-    { w: 'POD exception packet',       s: 'Logistics',      p: 'A$3.60' },
-    { w: 'Driver ETA update',          s: 'Logistics',      p: 'A$0.18' },
-    { w: 'Translation hotline',        s: 'Voice · FR',     p: 'A$0.28' },
+/* reveal on scroll */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+})();
+
+/* live outcomes ledger */
+(function(){
+  var list = document.getElementById('ledger');
+  if(!list) return;
+  var pool = [
+    {w:'Patient intake normaliser',s:'Healthcare',p:'A$1.80'},
+    {w:'Prior-auth packet',s:'Healthcare',p:'A$6.40'},
+    {w:'ICD / CPT coder',s:'Healthcare',p:'A$2.20'},
+    {w:'Discovery tagger',s:'Legal',p:'A$68'},
+    {w:'Lease abstractor',s:'Legal',p:'A$14'},
+    {w:'Reconciliation entry',s:'Finance',p:'A$0.41'},
+    {w:'Month-end draft',s:'Finance',p:'A$240'},
+    {w:'Inbound receptionist',s:'Voice · EN',p:'A$0.38'},
+    {w:'AR collections voice',s:'Voice · ES',p:'A$12'},
+    {w:'Chargeback evidence pack',s:'E-commerce',p:'A$22'},
+    {w:'CV shortlister',s:'HR & hiring',p:'A$0.60'},
+    {w:'Phone-screener voice',s:'Voice · ZH',p:'A$5.80'},
+    {w:'Appointment booker voice',s:'Voice · AR',p:'A$1.60'},
+    {w:'Listing copywriter',s:'Real estate',p:'A$4.40'},
+    {w:'Refund resolution',s:'E-commerce',p:'A$3.80'},
+    {w:'FNOL claims intake',s:'Insurance',p:'A$6.80'},
+    {w:'Hotel booking voice',s:'Voice · JA',p:'A$1.60'},
+    {w:'Dispatch voice',s:'Voice · VI',p:'A$0.42'},
+    {w:'POD exception packet',s:'Logistics',p:'A$3.60'},
+    {w:'Translation hotline',s:'Voice · FR',p:'A$0.28'}
   ];
-
-  function now() {
-    const d = new Date();
-    const p = n => String(n).padStart(2, '0');
-    return `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
-  }
-
-  const MAX_ROWS = 7;
-
-  function addRow() {
-    const r = pool[Math.floor(Math.random() * pool.length)];
-    const li = document.createElement('li');
-    li.className = 'ledger-row';
-    li.innerHTML = `
-      <span class="t">${now()}</span>
-      <span class="w">${r.w}<span>${r.s}</span></span>
-      <span class="p">${r.p}</span>
-      <span class="s"><span class="tick">✓</span> Pass</span>
-    `;
+  function now(){ var d=new Date(), p=function(n){return String(n).padStart(2,'0');}; return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds()); }
+  function add(){
+    var r = pool[Math.floor(Math.random()*pool.length)];
+    var li = document.createElement('li');
+    li.className = 'console-row';
+    li.innerHTML = '<span class="t">'+now()+'</span><span class="w">'+r.w+'<span>'+r.s+'</span></span><span class="p">'+r.p+'</span><span class="s">✓ Pass</span>';
     list.insertBefore(li, list.firstChild);
-    while (list.children.length > MAX_ROWS) list.removeChild(list.lastChild);
+    while(list.children.length > 6) list.removeChild(list.lastChild);
   }
-
-  // Seed with 5 rows
-  for (let i = 0; i < 5; i++) addRow();
-  // Then tick
-  setInterval(addRow, 2800);
+  for(var i=0;i<6;i++) add();
+  setInterval(add, 2800);
 })();
 </script>
 </body>
