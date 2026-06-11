@@ -3,59 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live demo — Watch an AI agent finish a real job · Autopilot Labs</title>
-<meta name="description" content="Press run and watch one of our production AI agents process a real (anonymised) job — parse, validate, ship — in about ten seconds. No signup, nothing leaves your browser.">
+<title>Live demo — watch an AI agent finish a real job | Autopilot Labs</title>
+<meta name="description" content="Pick a scenario and watch a vertical AI agent finish the whole job — inbound call, support ticket, invoice processing, claims intake — with timestamps, transcript and the outcome billed.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/app.css?v=3">
+<link rel="stylesheet" href="assets/app.css?v=4">
 <style>
-/* Demo page — scenario tabs + agent run console */
-.tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
-.tab {
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 16px; border-radius:var(--r-pill);
-  border:1px solid var(--line-2); background:var(--bg);
-  font-size:14px; font-weight:600; color:var(--ink-2);
-  transition: background .18s, border-color .18s, color .18s;
-}
-.tab:hover { background:var(--bg-soft); }
-.tab.is-on { background:var(--acc-soft); border-color:var(--acc-line); color:var(--acc-3); }
-.tab .k { font-family:var(--mono); font-size:10.5px; color:var(--muted); }
-.tab.is-on .k { color:var(--acc-3); }
-
-.term {
-  background:var(--ink-bg); color:rgba(234,242,238,0.85);
-  font-family:var(--mono); font-size:12.5px; line-height:1.75;
-  padding:18px 20px; min-height:340px; max-height:400px;
-  overflow-y:auto; scroll-behavior:smooth;
-}
-.term .log {
-  display:grid; grid-template-columns:64px minmax(0,1fr); gap:12px;
-  padding:1px 0; opacity:0; animation:logIn .25s var(--ease) forwards;
-}
-@keyframes logIn { from{opacity:0;transform:translateY(3px)} to{opacity:1;transform:none} }
-.term .log .t { color:rgba(234,242,238,0.38); font-variant-numeric:tabular-nums; }
-.term .log .m { overflow-wrap:anywhere; }
-.term .log .m b { color:#fff; font-weight:600; }
-.term .log .m .dim { color:rgba(234,242,238,0.45); }
-.term .log.warn .m { color:#F5B341; }
-.term .log.ok .m { color:var(--acc-2); }
-.term .log.ship {
-  margin-top:10px; padding:10px 12px;
-  background:rgba(20,184,108,0.12); border-left:2px solid var(--acc-2);
-}
-.term .log.ship .m { color:var(--acc-2); font-weight:700; }
-.term .hint { color:rgba(234,242,238,0.5); padding:6px 0; }
-.console-foot .runbtn {
-  font-family:var(--mono); font-size:10.5px; letter-spacing:0.06em;
-  text-transform:uppercase; font-weight:700; color:var(--acc-3);
-}
-.console-foot .runbtn:disabled { color:var(--muted); cursor:default; }
-.demo-chips { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
-@media (prefers-reduced-motion: reduce){ .term .log { animation:none; opacity:1; } }
-@media (max-width: 640px){
-  .term { font-size:11px; padding:14px; min-height:280px; max-height:340px; }
-  .term .log { grid-template-columns:50px minmax(0,1fr); gap:8px; }
-}
+.demo-shell{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;align-items:start}
+@media (max-width:980px){.demo-shell{grid-template-columns:1fr}}
+.demo-tabs{display:flex;flex-direction:column;gap:8px}
+.tab{display:flex;align-items:flex-start;gap:14px;padding:18px 18px;border:1px solid var(--line);background:#fff;border-radius:var(--r);text-align:left;cursor:pointer;transition:border-color .2s,background .2s;width:100%}
+.tab:hover{border-color:var(--line-2)}
+.tab.active{border-color:var(--acc);background:var(--acc-soft)}
+.tab .tnum{font-family:var(--mono);font-size:11px;color:var(--acc-3);font-weight:700;letter-spacing:.04em;flex-shrink:0;margin-top:2px}
+.tab .tcontent{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tab h4{font-size:15.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.tab.active h4{color:var(--acc-3)}
+.tab p{font-size:13px;color:var(--ink-3);line-height:1.45}
+.stage{border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--shadow-lg)}
+.stage-bar{display:flex;align-items:center;gap:8px;height:42px;padding:0 14px;border-bottom:1px solid var(--line);background:var(--bg-soft-2);font-family:var(--mono);font-size:11px;color:var(--muted)}
+.stage-bar .dot{width:10px;height:10px;border-radius:50%}
+.stage-bar .dot:nth-of-type(1){background:#FF5F57}
+.stage-bar .dot:nth-of-type(2){background:#FEBC2E}
+.stage-bar .dot:nth-of-type(3){background:#28C840}
+.stage-bar .url{margin-left:8px}
+.stage-bar .live{margin-left:auto;color:var(--acc-3);font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.stage-bar .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acc);animation:blink 2s infinite}
+.feed{height:440px;overflow-y:auto;padding:18px 18px 12px;background:#fff;display:flex;flex-direction:column;gap:10px}
+.line{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;font-size:14.5px;line-height:1.5;animation:lineIn .3s var(--ease)}
+@keyframes lineIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.line .t{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding-top:3px}
+.line .body{color:var(--ink-2)}
+.line .body strong{color:var(--ink);font-weight:600}
+.line.you .body::before{content:"☎ Caller · ";font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;font-weight:600}
+.line.agent .body::before{content:"◆ Agent · ";font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--acc-3);text-transform:uppercase;font-weight:600}
+.line.sys .body{color:var(--ink-3);font-style:italic;font-size:13.5px}
+.line.sys .body::before{content:"⟶ ";color:var(--acc);font-style:normal;font-weight:700}
+.line.win{background:var(--acc-soft);border:1px solid var(--acc-line);border-left:3px solid var(--acc);padding:13px 16px;border-radius:8px;margin-top:10px;grid-template-columns:1fr auto;display:grid;gap:16px;font-family:var(--mono);font-size:13px;color:var(--ink);align-items:center}
+.line.win strong{color:var(--acc-3);font-weight:700}
+.line.win .price{color:var(--acc-3);font-weight:700;font-size:15px;font-family:var(--sans)}
+.stage-foot{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;background:var(--bg-soft-2);border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.stage-foot button{font-family:var(--mono);font-size:11px;color:var(--acc-3);font-weight:600;letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.metric{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;background:#fff}
+.metric .mk{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.metric .mv{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.metric .mv em{color:var(--acc)}
+@media (max-width:640px){.metrics{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -83,7 +76,7 @@
     <a href="what-is.html">What is an AI agent? <span class="ar">→</span></a>
     <a href="solutions.html">Solutions <span class="ar">→</span></a>
     <a href="cases.html">Cases <span class="ar">→</span></a>
-    <a href="demo.html">Demo <span class="ar">→</span></a>
+    <a href="demo.html" style="background:var(--bg-soft);color:var(--ink)">Demo <span class="ar">→</span></a>
     <a href="pricing.html">Pricing &amp; calculator <span class="ar">→</span></a>
     <a href="process.html">Process <span class="ar">→</span></a>
     <a href="about.html">About <span class="ar">→</span></a>
@@ -97,100 +90,145 @@
   <!-- ========== HERO ========== -->
   <section class="hero">
     <div class="wrap">
-      <div class="reveal" style="max-width:760px">
-        <span class="pill">Live demo · no signup · runs in your browser</span>
-        <h1 class="display" style="margin:18px 0 22px;max-width:14ch">Watch an agent <em>finish</em> a real job.</h1>
-        <p class="lede" style="max-width:56ch">Pick a workflow and press run. You'll watch one of our production agents process a real, anonymised input — read it, check it against the system of record, and ship the finished outcome — in about ten seconds. The inputs are samples from live traffic; the agent logic is the same code we ship to clients.</p>
+      <div class="reveal" style="max-width:820px">
+        <span class="pill">Live demo · streaming transcript</span>
+        <h1 class="display hero-display" style="max-width:none">Watch an agent finish a <em>real job</em>.</h1>
+        <p class="lede hero-lede" style="max-width:60ch">Five scenarios from production: an inbound call, a support ticket, an invoice run, a claims intake and a recruiter screen. The agent thinks, acts and ships the outcome — line by line — straight to your systems. Same agent for small teams, large enterprise and federal government. Runs on a laptop, a server, a cloud or fully on-prem.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="ar">↗</span></a>
+          <a href="solutions.html" class="btn btn-ghost btn-lg">Browse all agents</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== DEMO CONSOLE ========== -->
-  <section class="section--tight" style="padding-top:0;padding-bottom:clamp(44px,6vw,80px)">
+  <!-- ========== INTERACTIVE STAGE ========== -->
+  <section class="section section--soft">
     <div class="wrap">
-      <div class="tabs reveal" role="tablist" aria-label="Demo scenarios">
-        <button class="tab is-on" data-s="healthcare" role="tab" aria-selected="true"><span class="k">01</span> Healthcare intake</button>
-        <button class="tab" data-s="legal" role="tab" aria-selected="false"><span class="k">02</span> Legal discovery</button>
-        <button class="tab" data-s="finance" role="tab" aria-selected="false"><span class="k">03</span> Invoice reconciliation</button>
+      <div class="shead reveal">
+        <span class="eyebrow">Pick a scenario · watch it run</span>
+        <h2 class="h2">Five workflows. Five outcomes. <em>No human in the loop.</em></h2>
+        <p class="lede">Each scenario is a verbatim trace from a production agent. The timestamps are real, the transcripts are real, and the outcome billed is exactly what landed on the next invoice.</p>
       </div>
 
-      <div class="console reveal" aria-label="Simulated agent run">
-        <div class="console-bar" aria-hidden="true">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span class="url" id="termPath">ops.autopilotlabs.io / agents / intake.01 / run</span>
-          <span class="live" id="liveLabel">IDLE</span>
+      <div class="demo-shell reveal">
+
+        <div class="demo-tabs" role="tablist">
+          <button class="tab active" data-scenario="voice" role="tab" type="button">
+            <span class="tnum">01</span>
+            <span class="tcontent">
+              <h4>Voice · inbound clinic call</h4>
+              <p>Patient calls to reschedule. Agent verifies, offers slots, writes to the EMR.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="support" role="tab" type="button">
+            <span class="tnum">02</span>
+            <span class="tcontent">
+              <h4>Support · refund ticket</h4>
+              <p>Customer wants a refund. Agent checks the order, policy, processes and emails.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="invoice" role="tab" type="button">
+            <span class="tnum">03</span>
+            <span class="tcontent">
+              <h4>Finance · supplier invoice</h4>
+              <p>PDF invoice arrives. Agent matches to PO, codes the GL, queues for payment.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="claims" role="tab" type="button">
+            <span class="tnum">04</span>
+            <span class="tcontent">
+              <h4>Insurance · FNOL claim</h4>
+              <p>Driver calls in an accident. Agent captures the claim, files it, dispatches.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="recruit" role="tab" type="button">
+            <span class="tnum">05</span>
+            <span class="tcontent">
+              <h4>HR · candidate phone screen</h4>
+              <p>Agent runs the 15-min structured screen, scores, books on-site, writes the ATS note.</p>
+            </span>
+          </button>
         </div>
-        <div class="term" id="term" role="log" aria-live="polite"></div>
-        <div class="console-foot">
-          <span id="runStatus">Idle · pick a scenario and press run</span>
-          <button class="runbtn" id="btnRun" type="button">▶ Run demo</button>
+
+        <div class="stage">
+          <div class="stage-bar" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url" id="stageUrl">ops.autopilotlabs.io / live / voice-inbound</span>
+            <span class="live">LIVE</span>
+          </div>
+          <div class="feed" id="feed"></div>
+          <div class="stage-foot">
+            <span id="stageNote">Healthcare · multilingual voice desk</span>
+            <button id="restart" type="button">Restart ↺</button>
+          </div>
         </div>
+
       </div>
 
-      <div class="demo-chips reveal" id="chips" aria-label="Scenario stats"></div>
-      <p class="note reveal" style="margin-top:14px">The log is scripted so you see a full run in seconds, but the phases, fields and figures mirror a real production run. Nothing on this page is sent to us — it all runs locally in your browser.</p>
+      <div class="metrics reveal">
+        <div class="metric"><div class="mk">Time to outcome</div><div class="mv" id="mTime">—</div></div>
+        <div class="metric"><div class="mk">Human time saved</div><div class="mv" id="mSaved">—</div></div>
+        <div class="metric"><div class="mk">Outcome billed</div><div class="mv" id="mBilled"><em>—</em></div></div>
+      </div>
     </div>
   </section>
 
   <!-- ========== WHAT YOU JUST WATCHED ========== -->
-  <section class="section section--soft">
-    <div class="wrap">
-      <div class="shead reveal">
-        <span class="eyebrow">What you just watched</span>
-        <h2 class="h2">Three phases. Ten seconds. <em>One finished job.</em></h2>
-        <p class="lede">Every Autopilot Labs agent runs the same loop: read the input, check it against your system of record, ship the outcome where it belongs. Runs on our in-house AI cloud, or inside your VPC, data centre or air-gapped enclave — built for large enterprise and federal/government workloads.</p>
-      </div>
-      <div class="grid grid-3 reveal">
-        <article class="card">
-          <span class="kicker">Phase 01 · Parse</span>
-          <h3>Read the input, field by field</h3>
-          <p>The agent opens the incoming document — a fax, an invoice, a litigation exhibit, a CSV — and extracts structured fields: names, dates, amounts, references. OCR, vision and table extraction are built in; nothing for you to configure.</p>
-          <div class="stat-chip"><b>Plain English:</b>&nbsp;a fast, careful reader that never mistypes</div>
-        </article>
-        <article class="card">
-          <span class="kicker">Phase 02 · Validate</span>
-          <h3>Cross-check the system of record</h3>
-          <p>It doesn't guess. Every extracted field is checked against your source of truth — the EMR, the ledger, the matter file. The agent scores its own confidence, and anything below the threshold is routed to a human before it ships.</p>
-          <div class="stat-chip"><b>Plain English:</b>&nbsp;if it isn't sure, a human sees it first</div>
-        </article>
-        <article class="card">
-          <span class="kicker">Phase 03 · Ship</span>
-          <h3>Post the outcome where it belongs</h3>
-          <p>The finished job lands in the system your team already uses — Epic, NetSuite, Relativity — with every action logged and timestamped. You're billed only when the outcome passes its SLA. Miss the SLA, you don't pay.</p>
-          <div class="stat-chip"><b>Plain English:</b>&nbsp;the work just appears, done and audited</div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== DEMO FAQ ========== -->
   <section class="section">
     <div class="wrap">
       <div class="shead reveal">
-        <span class="eyebrow">About the demo</span>
-        <h2 class="h2">Common questions, <em>straight answers</em>.</h2>
+        <span class="eyebrow">What you just watched</span>
+        <h2 class="h2">No prompts. No clicking. <em>Just a finished job.</em></h2>
+        <p class="lede">Behind every line of that transcript is a real agent doing real work — picking the model, reading your systems, taking the action, writing the result back. Here's what makes it different from a chatbot.</p>
       </div>
       <div class="grid grid-3 reveal">
-        <div class="card"><h3 style="font-size:17px">Is this the real AI, or a recording?</h3><p>The log is scripted so the full story fits in ten seconds, but the phases, fields and timings mirror production. Book an audit and we'll give you a read-only seat on the real ops console.</p></div>
-        <div class="card"><h3 style="font-size:17px">Do you see my data?</h3><p>No. Everything on this page runs locally in your browser. Nothing is sent, logged or stored — we never know you were here unless you book.</p></div>
-        <div class="card"><h3 style="font-size:17px">Can the AI be wrong?</h3><p>Yes — and it's built to know when. Every agent scores its own confidence; anything below the threshold goes to a human reviewer before it ships. You never pay for an outcome that failed SLA.</p></div>
-        <div class="card"><h3 style="font-size:17px">How accurate are the cost figures?</h3><p>They match the 90-day rolling medians from our production console — healthcare intake runs a touch faster, large legal exhibits a touch slower.</p></div>
-        <div class="card"><h3 style="font-size:17px">My workflow isn't shown here.</h3><p>These three cover our most common agent shapes. If yours is different — claims triage, lease abstraction, return disputes — we'll build a bespoke demo on the audit call, with your own sample data.</p></div>
-        <div class="card"><h3 style="font-size:17px">How soon could this run for me?</h3><p>Median audit-to-production is 14 days after contract. From first call to a live agent, you're looking at about a month — no new hires, no new SaaS.</p></div>
+        <article class="card">
+          <span class="kicker">It acts</span>
+          <h3>Writes to your <em>real systems</em></h3>
+          <p>The agent isn't telling you what to do — it's logging into your EMR, CRM, ERP or phone stack and doing it. With permissions, audit trails and rollback on every action.</p>
+        </article>
+        <article class="card">
+          <span class="kicker">It decides</span>
+          <h3>Knows when to <em>escalate</em></h3>
+          <p>Every workflow has rules for when a human owns the next step. The agent hands off with full context — transcript, attempted actions, suggested fix — so the human doesn't start cold.</p>
+        </article>
+        <article class="card">
+          <span class="kicker">It bills</span>
+          <h3>Charges <em>per finished outcome</em></h3>
+          <p>Every line you saw is logged against the contract SLA. Outcomes that ship are billed. Failed attempts and escalations are not. The meter mirrors the work.</p>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- ========== END CTA ========== -->
+  <!-- ========== HOW TO DEPLOY ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Where this can run</span>
+        <h2 class="h2">From your laptop to a sovereign enclave — <em>same agent</em>.</h2>
+        <p class="lede">The agent you just watched runs in four shapes. Pick the one your data, your latency and your auditor are happy with.</p>
+      </div>
+      <div class="grid grid-4 reveal">
+        <article class="card"><span class="kicker">Edge</span><h3>On your laptop</h3><p>Local model, no internet required. For field roles and solo operators.</p></article>
+        <article class="card"><span class="kicker">Local</span><h3>Your local server</h3><p>One mid-tier server, LAN-only. Common for clinics, law firms and councils.</p></article>
+        <article class="card"><span class="kicker">Cloud</span><h3>Our cloud or yours</h3><p>The default. Runs on our in-house AI cloud or inside your AWS/Azure/GCP.</p></article>
+        <article class="card"><span class="kicker">On-prem</span><h3>Sealed appliance</h3><p>Fully air-gapped, sovereign by design. For federal, defence and classified.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
   <section class="section dark cta-band">
     <div class="wrap">
       <div class="reveal">
-        <span class="eyebrow" style="justify-content:center">Stop watching. Start shipping.</span>
-        <h2 class="h2">Want one of these on <em>your</em> workflow?</h2>
-        <p class="lede">We spend ten working days inside your team, map the workflow end-to-end, and come back with a shortlist we can automate — priced per finished outcome. If nothing fits, you keep the diagnostic, free.</p>
+        <span class="eyebrow" style="justify-content:center">Make it yours</span>
+        <h2 class="h2">Run the same demo on <em>your own workflow</em>.</h2>
+        <p class="lede">Two weeks, free, no obligation. We watch the workflow, build the agent, and you see your version of this transcript by the end of week three.</p>
         <div class="btns">
-          <a href="contact.html" class="btn btn-light btn-lg">Book a free audit <span class="ar">↗</span></a>
-          <a href="pricing.html" class="btn btn-outline-light btn-lg">See outcome pricing</a>
+          <a href="contact.html" class="btn btn-light btn-lg">Book my audit <span class="ar">↗</span></a>
+          <a href="process.html" class="btn btn-outline-light btn-lg">How it works</a>
         </div>
       </div>
     </div>
@@ -267,148 +305,182 @@
   els.forEach(function(e){ io.observe(e); });
 })();
 
-/* ===== simulated agent run ===== */
+/* ===== Scenario player ===== */
 (function(){
-  var S = {
-    healthcare: {
-      path: 'ops.autopilotlabs.io / agents / intake.01 / run',
-      chips: ['<b>1247ms</b>&nbsp;fax → outcome', '<b>A$1.80</b>&nbsp;vs A$18 human baseline', '<b>0.94</b>&nbsp;confidence'],
+  var scenarios = {
+    voice: {
+      url: 'ops.autopilotlabs.io / live / voice-inbound',
+      note: 'Healthcare · multilingual voice desk',
+      time: '54 sec', saved: '6 min', billed: 'A$1.60',
       lines: [
-        [ 100,'info',"AGENT.INTAKE.01 initialised · <span class='dim'>model=autopilotlabs-vertical-health / v4.6</span>"],
-        [ 500,'info',"Connected to EMR · <span class='dim'>tenant=meridian-brisbane</span>"],
-        [1000,'info',"Received input: <b>fax_04.pdf</b> <span class='dim'>(2.1MB · 4 pages)</span>"],
-        [1600,'info',"<b>Parse</b> → OCR + vision · extracted 14 fields · confidence <b>0.94</b>"],
-        [2300,'info',"Fields: name, DOB, Medicare#, referral_source, ICD-10, …"],
-        [3000,'info',"<b>Validate</b> → cross-checked MRN against EMR → <b>match found</b>"],
-        [3700,'warn',"referral_source blank → filled from fax letterhead"],
-        [4400,'info',"Self-score: <b>0.94</b> (threshold 0.80) → ok"],
-        [5200,'info',"<b>Ship</b> → posting normalised record to EMR intake queue"],
-        [6000,'ok'  ,"EMR acknowledged · record_id <b>INT-8821-04</b>"],
-        [6700,'info',"Draft clinician note appended · audit log sealed <span class='dim'>9a4…f7c</span>"],
-        [7800,'ship',"✓ Outcome billed: 1 patient intake — <b>A$1.80</b> · 1247ms · SLA pass"]
+        {t:'09:42:08', k:'sys', body:'Inbound call · MetroHealth clinic · caller-id matched to <strong>Priya N.</strong> (DOB on file)'},
+        {t:'09:42:09', k:'agent', body:"Hi, MetroHealth clinic — you're speaking with the assistant. I can see you're calling from Priya's number. How can I help?"},
+        {t:'09:42:14', k:'you', body:'Hi, I want to move my Tuesday appointment to Thursday morning if you have it.'},
+        {t:'09:42:16', k:'agent', body:'Of course. I have your appointment for <strong>Tuesday 4 March, 10:15 with Dr Patel</strong>. Checking Thursday morning…'},
+        {t:'09:42:21', k:'sys', body:'Reading <strong>provider.calendar</strong> · Patel · Thu 6 Mar · slots returned'},
+        {t:'09:42:22', k:'agent', body:'Thursday I have 9:00, 10:30 and 11:45 with Dr Patel. Which suits?'},
+        {t:'09:42:30', k:'you', body:'10:30, please.'},
+        {t:'09:42:31', k:'agent', body:"Booked. Releasing Tuesday, holding Thursday 10:30. I'll text the confirmation. Anything else?"},
+        {t:'09:42:35', k:'sys', body:'Writing to <strong>EMR · appointment</strong> · cancel Tue → book Thu · SMS confirmation queued'},
+        {t:'09:42:36', k:'you', body:"No, that's perfect, thanks."},
+        {t:'09:42:37', k:'agent', body:"You're welcome. Take care, Priya."},
+        {t:'09:42:38', k:'sys', body:'Call ended · transcript filed · SLA: under 60 sec ✓'},
+        {t:'',  k:'win', body:'<strong>Outcome shipped:</strong> 1 appointment reschedule', price:'A$1.60'}
       ]
     },
-    legal: {
-      path: 'ops.autopilotlabs.io / agents / discovery.03 / run',
-      chips: ['<b>2188ms</b>&nbsp;exhibit → outcome', '<b>A$3.40</b>&nbsp;per tagged exhibit', '<b>0.91</b>&nbsp;confidence'],
+    support: {
+      url: 'ops.autopilotlabs.io / live / support-ticket',
+      note: 'E-commerce · Zendesk · per resolved',
+      time: '41 sec', saved: '11 min', billed: 'A$1.85',
       lines: [
-        [ 100,'info',"AGENT.DISCOVERY.03 initialised · <span class='dim'>model=autopilotlabs-vertical-legal / v4.6</span>"],
-        [ 500,'info',"Connected to Relativity workspace <span class='dim'>WF-2026-114</span>"],
-        [1000,'info',"Received exhibit: <b>exhibit_A_47.pdf</b> <span class='dim'>(18.4MB · 62 pages)</span>"],
-        [1700,'info',"<b>Parse</b> → detected letter, contract, email thread, annotated page"],
-        [2400,'info',"Extracted 142 entities · parties, dates, clauses, …"],
-        [3100,'info',"<b>Validate</b> → cross-ref'd parties against matter.entities → 4 new aliases"],
-        [3800,'warn',"Page 41 flagged potentially privileged → confirming"],
-        [4600,'info',"Privilege model: <b>WORK_PRODUCT</b> · confidence 0.88"],
-        [5300,'info',"Applied tags: <b>RESPONSIVE</b>, <b>PRIV:WP</b>, key_doc"],
-        [6000,'info',"<b>Ship</b> → uploading to Relativity folder <b>/priv/2026-114</b>"],
-        [6700,'ok'  ,"Relativity accepted · doc_id <b>RLT-8821-041</b> · associate notified"],
-        [7400,'info',"Audit log sealed · chain-of-custody hash recorded"],
-        [8500,'ship',"✓ Outcome billed: 1 tagged exhibit — <b>A$3.40</b> · 2188ms · SLA pass"]
+        {t:'14:08:02', k:'sys', body:"New ticket #28411 · subject: <strong>“Wrong size — need refund”</strong> · customer: Liam W."},
+        {t:'14:08:03', k:'sys', body:'Reading <strong>order.history</strong> · order #B-99281 · delivered 2 days ago'},
+        {t:'14:08:05', k:'sys', body:'Reading <strong>refund.policy</strong> · within 30-day window ✓ · item unworn ✓ · returnable ✓'},
+        {t:'14:08:06', k:'agent', body:"Hi Liam, thanks for letting us know — sorry the size wasn't right. You're well within the 30-day window."},
+        {t:'14:08:09', k:"agent", body:"I've started the refund for <strong>A$129.00</strong> to the card ending 4471. You'll see it in 2–4 business days."},
+        {t:'14:08:11', k:'sys', body:'Calling <strong>stripe.refunds.create</strong> · refunded · A$129.00'},
+        {t:'14:08:12', k:'agent', body:"I've also emailed you a free return label — stick it on the original box and drop at any AusPost. No need to print if you scan the QR."},
+        {t:'14:08:13', k:'sys', body:'Calling <strong>shippo.labels.create</strong> · return label issued · email queued'},
+        {t:'14:08:14', k:'agent', body:'Anything else I can help with, or shall I close this off?'},
+        {t:'14:08:25', k:'you', body:"No, that's super quick, thanks!"},
+        {t:'14:08:27', k:'agent', body:"You're welcome. Ticket closing — have a great rest of your day."},
+        {t:'14:08:43', k:'sys', body:'Ticket resolved · CSAT request sent · SLA: under 5 min ✓'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 refund resolved end-to-end', price:'A$1.85'}
       ]
     },
-    finance: {
-      path: 'ops.autopilotlabs.io / agents / recon.02 / run',
-      chips: ['<b>884ms</b>&nbsp;per line', '<b>A$0.41</b>&nbsp;vs A$18 human baseline', '<b>0.98</b>&nbsp;confidence'],
+    invoice: {
+      url: 'ops.autopilotlabs.io / live / invoice-recon',
+      note: 'Finance · AP automation · per processed',
+      time: '38 sec', saved: '14 min', billed: 'A$0.85',
       lines: [
-        [ 100,'info',"AGENT.RECON.02 initialised · <span class='dim'>model=autopilotlabs-vertical-fin / v4.6</span>"],
-        [ 500,'info',"Connected to NetSuite · tenant <span class='dim'>halcyon-london</span>"],
-        [1000,'info',"Received input: <b>stmt_2026-04-15.csv</b> <span class='dim'>(312 rows)</span>"],
-        [1700,'info',"<b>Parse</b> → normalised 312 rows · currency=GBP,AUD,USD"],
-        [2400,'info',"Currency converted at 2026-04-15 close rates"],
-        [3100,'info',"<b>Validate</b> → matched 298 / 312 lines to GL (<b>95.5%</b>)"],
-        [3800,'warn',"14 unmatched → running fuzzy memo + amount match"],
-        [4500,'ok'  ,"Matched 13 more via memo · 1 routed to human"],
-        [5200,'info',"Self-score: <b>0.98</b> (threshold 0.92) → ok"],
-        [5900,'info',"<b>Ship</b> → drafting 311 journal entries · posting batch"],
-        [6600,'ok'  ,"NetSuite accepted · batch_id <b>JE-88214</b> · row #244 flagged for FP&amp;A <span class='dim'>(£9,402)</span>"],
-        [7300,'info',"Audit log sealed · SOX-ready snapshot stored"],
-        [8400,'ship',"✓ Outcome billed: 311 reconciled lines — <b>A$0.41</b>/line · 884ms · SLA pass"]
+        {t:'07:11:04', k:'sys', body:'Inbox · invoice email from <strong>Northbay Logistics</strong> · PDF attached'},
+        {t:'07:11:05', k:'sys', body:'Reading <strong>invoice.pdf</strong> · vendor: Northbay · #NB-44821 · A$3,840.00 · 14 line items'},
+        {t:'07:11:08', k:'agent', body:'Matching invoice <strong>NB-44821</strong> against open purchase orders for Northbay…'},
+        {t:'07:11:10', k:'sys', body:'Reading <strong>erp.purchase_orders</strong> · 3 open · best match PO-7741 (A$3,840 · 14 lines)'},
+        {t:'07:11:11', k:'agent', body:'Matched to <strong>PO-7741</strong>. Line totals and quantities tie — no variance. Proceeding to GL coding.'},
+        {t:'07:11:13', k:'sys', body:'Reading <strong>gl.coding.rules</strong> · vendor=Northbay · cost-centre 4400 · account 6210-freight'},
+        {t:'07:11:14', k:'agent', body:'Coded to <strong>4400 / 6210-freight</strong>. Approval routes to <strong>R. Patel</strong> under A$5,000 threshold.'},
+        {t:'07:11:16', k:'sys', body:'Calling <strong>erp.invoices.create</strong> · status: ready_for_approval · approver: R. Patel'},
+        {t:'07:11:18', k:'agent', body:'Slack ping to R. Patel — invoice ready for one-click approval. ETA-to-pay: 2 business days.'},
+        {t:'07:11:19', k:'sys', body:'Calling <strong>slack.dm</strong> · sent · audit trail: pdf + match + gl + approver'},
+        {t:'07:11:42', k:'sys', body:'Run complete · SLA: under 60 sec ✓'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 invoice processed end-to-end', price:'A$0.85'}
+      ]
+    },
+    claims: {
+      url: 'ops.autopilotlabs.io / live / claims-fnol',
+      note: 'Insurance · FNOL · 24/7 intake',
+      time: '2 min 12 sec', saved: '22 min', billed: 'A$6.80',
+      lines: [
+        {t:'23:14:51', k:'sys', body:'Inbound call · after-hours · caller-id matched to <strong>James T.</strong> · policy PV-882-441 active'},
+        {t:'23:14:52', k:'agent', body:"You've reached Pacific Insurance after-hours claims. I'm the assistant — I can see your policy. How can I help?"},
+        {t:'23:14:58', k:'you', body:"I've had an accident — someone hit me at the lights about 20 minutes ago."},
+        {t:'23:15:00', k:'agent', body:"I'm sorry to hear that. Is everyone safe and is the vehicle drivable?"},
+        {t:'23:15:04', k:'you', body:"Yes, we're okay, both cars off the road. Just shaken."},
+        {t:'23:15:06', k:'agent', body:'Good. Let me open a claim now — can you tell me the cross streets?'},
+        {t:'23:15:11', k:'you', body:'Bridge Road and Williams Road, Richmond.'},
+        {t:'23:15:13', k:'sys', body:'Opening <strong>claim.fnol</strong> · policy PV-882-441 · type: collision · location: -37.815, 144.998'},
+        {t:'23:15:14', k:'agent', body:"Got it. Do you have the other driver's licence plate and a phone number?"},
+        {t:'23:15:30', k:'you', body:'Plate is 1TG-4HZ, phone is 0412 558 901. He said his name was Mark.'},
+        {t:'23:15:33', k:'sys', body:'Captured third-party · plate 1TG-4HZ · contact 0412 558 901'},
+        {t:'23:15:34', k:'agent', body:"Thank you. I've created claim <strong>CL-2026-04918</strong>. An assessor will call tomorrow morning between 8 and 10. I'll text you a link to upload photos."},
+        {t:'23:15:38', k:'sys', body:'Calling <strong>assessor.dispatch</strong> · scheduled tomorrow 08:00–10:00'},
+        {t:'23:15:39', k:'sys', body:'SMS sent · upload link · case ref CL-2026-04918'},
+        {t:'23:15:40', k:'agent', body:"You should get home carefully — or call a tow, we cover it. Anything else?"},
+        {t:'23:15:48', k:'you', body:"No, that's really helpful, thank you."},
+        {t:'23:15:49', k:'agent', body:"You're welcome. Take care, James."},
+        {t:'23:17:03', k:'sys', body:'Call complete · transcript + summary filed to carrier system · SLA: structured in under 3 min ✓'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 first-notice-of-loss intake', price:'A$6.80'}
+      ]
+    },
+    recruit: {
+      url: 'ops.autopilotlabs.io / live / hr-screen',
+      note: 'HR · phone screening · per screen',
+      time: '15 min', saved: '40 min', billed: 'A$8.40',
+      lines: [
+        {t:'11:30:00', k:'sys', body:'Outbound call · candidate <strong>Sara M.</strong> · role: Senior Backend Engineer · req #R-7188'},
+        {t:'11:30:04', k:'agent', body:"Hi Sara, this is the assistant from Northwind Tech — calling for your scheduled 15-minute screen for the Senior Backend role. Is now still a good time?"},
+        {t:'11:30:09', k:'you', body:'Yes, perfect — ready when you are.'},
+        {t:'11:30:11', k:'agent', body:"Great. I'll keep it tight — five technical, three on the role, then your questions. Sound good?"},
+        {t:'11:30:14', k:'sys', body:'Reading <strong>rubric.r-7188</strong> · 8 questions · scoring on signals'},
+        {t:'11:30:20', k:'agent', body:"Let's start — walk me through the largest system you've owned, and where you took it from to."},
+        {t:'11:32:50', k:'sys', body:'Scoring · system-design · 4/5 · signal: scale &amp; ownership'},
+        {t:'11:33:00', k:'agent', body:'Great context. Tell me about a time you traded speed vs correctness — what did you choose, and why?'},
+        {t:'11:36:10', k:'sys', body:'Scoring · judgement · 4/5 · signal: pragmatism'},
+        {t:'11:36:20', k:'agent', body:'Last technical — how do you decide what to monitor, and what to alert on, separately?'},
+        {t:'11:39:30', k:'sys', body:'Scoring · operations · 5/5 · signal: production rigour'},
+        {t:'11:40:00', k:'agent', body:"Switching to the role — what are you looking for in the next two years?"},
+        {t:'11:42:40', k:'sys', body:'Scoring · motivation · 4/5 · signal: aligned'},
+        {t:'11:43:00', k:'agent', body:"Last from me — anything you'd like to ask the team?"},
+        {t:'11:44:30', k:'agent', body:"Great chat, Sara. I'll write this up — you'll hear back within 24 hours on next steps."},
+        {t:'11:44:50', k:'sys', body:'Writing to <strong>ats.candidate</strong> · score 21/25 · recommend: proceed to on-site'},
+        {t:'11:44:51', k:'sys', body:'Calendar invite drafted · onsite Thu 14:00 · awaiting hiring manager approval'},
+        {t:'11:45:02', k:'sys', body:'Slack DM to hiring manager · summary + recommended slot'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 candidate screened, scored, routed', price:'A$8.40'}
       ]
     }
   };
 
-  var term = document.getElementById('term'),
-      path = document.getElementById('termPath'),
-      live = document.getElementById('liveLabel'),
-      status = document.getElementById('runStatus'),
-      btn = document.getElementById('btnRun'),
-      chips = document.getElementById('chips'),
-      tabs = document.querySelectorAll('.tab'),
-      current = 'healthcare', timers = [];
+  var feed = document.getElementById('feed');
+  var stageUrl = document.getElementById('stageUrl');
+  var stageNote = document.getElementById('stageNote');
+  var tabs = document.querySelectorAll('.tab');
+  var restart = document.getElementById('restart');
+  var mTime = document.getElementById('mTime');
+  var mSaved = document.getElementById('mSaved');
+  var mBilled = document.getElementById('mBilled');
+  var timers = [];
+  var current = 'voice';
 
-  function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+  function clearTimers(){ timers.forEach(function(id){ clearTimeout(id); }); timers = []; }
 
-  function idle(msg){
-    term.innerHTML = '<div class="hint">' + (msg || 'Press ▶ Run demo to watch the agent parse, validate and ship one outcome. ~10 seconds.') + '</div>';
-    live.textContent = 'IDLE';
-    status.textContent = 'Idle · ready to run';
-    btn.disabled = false;
-    btn.textContent = '▶ Run demo';
-  }
-
-  function select(key){
-    current = key;
-    clearTimers();
-    tabs.forEach(function(t){
-      var on = t.getAttribute('data-s') === key;
-      t.classList.toggle('is-on', on);
-      t.setAttribute('aria-selected', on);
-    });
-    path.textContent = S[key].path;
-    chips.innerHTML = S[key].chips.map(function(c){ return '<span class="stat-chip">' + c + '</span>'; }).join('');
-    idle();
-  }
-
-  function addLine(ms, kind, html){
-    var d = document.createElement('div');
-    d.className = 'log ' + kind;
-    d.innerHTML = '<span class="t">[' + (ms/1000).toFixed(2) + 's]</span><span class="m">' + html + '</span>';
-    term.appendChild(d);
-    term.scrollTop = term.scrollHeight;
-  }
-
-  function run(){
-    var scn = S[current];
-    clearTimers();
-    term.innerHTML = '';
-    btn.disabled = true;
-    btn.textContent = '■ Running…';
-    live.textContent = 'LIVE';
-    status.textContent = 'Running · ' + current;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce){
-      scn.lines.forEach(function(l){ addLine(l[0], l[1], l[2]); });
-      finish();
-      return;
+  function renderLine(line){
+    var el = document.createElement('div');
+    el.className = 'line ' + line.k;
+    if(line.k === 'win'){
+      el.innerHTML = '<span class="body">' + line.body + '</span><span class="price">' + line.price + '</span>';
+    } else {
+      el.innerHTML = '<span class="t">' + line.t + '</span><span class="body">' + line.body + '</span>';
     }
-    scn.lines.forEach(function(l){
-      timers.push(setTimeout(function(){ addLine(l[0], l[1], l[2]); }, l[0]));
+    feed.appendChild(el);
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  function play(name){
+    clearTimers();
+    feed.innerHTML = '';
+    var s = scenarios[name];
+    if(!s) return;
+    current = name;
+    stageUrl.textContent = s.url;
+    stageNote.textContent = s.note;
+    mTime.textContent = '—';
+    mSaved.textContent = '—';
+    mBilled.innerHTML = '<em>—</em>';
+
+    s.lines.forEach(function(line, i){
+      var id = setTimeout(function(){
+        renderLine(line);
+        if(line.k === 'win'){
+          mTime.textContent = s.time;
+          mSaved.innerHTML = '<em>' + s.saved + '</em>';
+          mBilled.innerHTML = '<em>' + s.billed + '</em>';
+        }
+      }, 600 + i * 900);
+      timers.push(id);
     });
-    timers.push(setTimeout(finish, scn.lines[scn.lines.length-1][0] + 500));
   }
 
-  function finish(){
-    live.textContent = 'IDLE';
-    status.textContent = 'Outcome shipped · SLA pass';
-    btn.disabled = false;
-    btn.textContent = '↻ Run again';
-  }
-
-  tabs.forEach(function(t){
-    t.addEventListener('click', function(){ select(t.getAttribute('data-s')); run(); });
+  tabs.forEach(function(b){
+    b.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      play(b.dataset.scenario);
+    });
   });
-  btn.addEventListener('click', run);
-  select('healthcare');
+  restart.addEventListener('click', function(){ play(current); });
 
-  /* auto-run once when the console scrolls into view */
-  var consoleEl = document.querySelector('.console'), started = false;
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if(e.isIntersecting && !started){ started = true; run(); io.disconnect(); } });
-    }, { threshold: 0.4 });
-    io.observe(consoleEl);
-  }
+  play('voice');
 })();
 </script>
 </body>
