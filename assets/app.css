@@ -491,3 +491,74 @@ em { font-style: normal; color: var(--acc); font-weight: 600; }
 .center { text-align: center; }
 .mt-s { margin-top: 12px; }
 .note { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
+
+/* =========================================================
+   LABEL TYPOGRAPHY 2026-05
+   Marketing labels (kickers, pills, chips, eyebrows, footers)
+   move to the system sans. Monospace is reserved strictly for
+   console / terminal contexts (the live ledger & demo feed).
+   ========================================================= */
+.eyebrow, .pill, .kicker, .card .kicker, .stat-chip, .note,
+.card .meta, .step .n, .step .when, .lang .code, .compare h4,
+.foot-col h5, .foot-bottom {
+  font-family: var(--sans);
+}
+.eyebrow   { font-size: 12.5px; letter-spacing: 0.05em; }
+.pill      { font-size: 12px;   letter-spacing: 0.02em; }
+.kicker, .card .kicker { font-size: 12px; letter-spacing: 0.04em; }
+.stat-chip { font-size: 13px;   letter-spacing: 0; }
+.note      { letter-spacing: 0; }
+.card .meta{ letter-spacing: 0.03em; }
+.compare h4{ letter-spacing: 0.06em; }
+.foot-col h5{ letter-spacing: 0.06em; }
+.step .when{ letter-spacing: 0.04em; }
+.lang .code{ font-size: 11.5px; }
+
+/* =========================================================
+   HERO AMBIENCE — a quiet emerald wash, nothing loud
+   ========================================================= */
+.hero {
+  position: relative;
+  background:
+    radial-gradient(56% 64% at 88% -12%, rgba(15,157,88,0.07), transparent 70%),
+    radial-gradient(40% 52% at -6% 112%, rgba(15,157,88,0.05), transparent 70%);
+}
+
+/* =========================================================
+   USE-CASE MARQUEE — slow scrolling strip of jobs we automate
+   ========================================================= */
+.marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-soft-2);
+  padding: 16px 0;
+}
+.marquee-track {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  animation: marq 48s linear infinite;
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.mq {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 17px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #fff;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.mq::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--acc);
+}
+@keyframes marq { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; flex-wrap: wrap; width: auto; } }
