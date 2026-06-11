@@ -169,12 +169,20 @@ em { font-style: normal; color: var(--acc); font-weight: 600; }
 }
 
 /* === Topbar ============================================ */
+/* NOTE: backdrop-filter must NOT live on .nav itself — it would
+   create a containing block for the position:fixed .msheet inside,
+   trapping the mobile menu inside the 64px header. The frost lives
+   on a ::before pseudo instead (not an ancestor of .msheet). */
 .nav {
   position: sticky; top: 0; z-index: 100;
   background: rgba(255,255,255,0.8);
+  border-bottom: 1px solid var(--line);
+}
+.nav::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
   -webkit-backdrop-filter: saturate(180%) blur(16px);
   backdrop-filter: saturate(180%) blur(16px);
-  border-bottom: 1px solid var(--line);
 }
 .nav-inner {
   max-width: var(--maxw);
@@ -215,7 +223,9 @@ em { font-style: normal; color: var(--acc); font-weight: 600; }
   .nav-links, .nav-cta .btn { display: none; }
   .nav-toggle { display: inline-flex; margin-left: auto; }
   .msheet {
-    position: fixed; inset: 64px 0 0 0; z-index: 99;
+    position: fixed;
+    top: 64px; left: 0; right: 0; bottom: 0;
+    z-index: 99;
     background: var(--bg);
     padding: 16px var(--pad) calc(24px + env(safe-area-inset-bottom));
     flex-direction: column; gap: 4px;
