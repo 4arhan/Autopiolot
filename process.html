@@ -3,623 +3,279 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Process — Autopilot Labs</title>
-<meta name="description" content="The Autopilot Labs process: four phases from free workflow audit to outcome delivery. Global AI workflow agency.">
+<title>Process — From brief to billed outcome in four phases · Autopilot Labs</title>
+<meta name="description" content="How an Autopilot Labs engagement runs: brief, free audit and per-outcome quote, build and integrate, then ship and bill per outcome. 14 days from audit to production, with an SLA in writing.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/site.css?v=27">
-<link rel="stylesheet" href="assets/motion.css?v=2">
+<link rel="stylesheet" href="assets/app.css?v=3">
 <style>
-/* Process timeline */
-.timeline {
-  position: relative;
-}
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: calc(140px + 2.5rem + 24px);
-  top: 0; bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--line) 5%, var(--line) 95%, transparent);
-}
-.tl-step {
-  display: grid;
-  grid-template-columns: 140px 48px 1fr 240px;
-  gap: 2.5rem;
-  padding: 3rem 0;
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  transition: background .3s;
-  align-items: start;
-}
-.tl-step:first-child { border-top: 1px solid var(--line); }
-.tl-step:hover { background: var(--bg-elev); }
-.tl-num {
-  font-family: var(--font-serif);
-  font-size: 104px;
-  font-weight: 400;
-  line-height: 0.85;
-  letter-spacing: -0.035em;
-  color: var(--accent);
-  font-style: italic;
-}
-.tl-dot {
-  width: 14px; height: 14px;
-  background: var(--paper);
-  border: 2px solid var(--accent);
-  border-radius: 50%;
-  justify-self: center;
-  margin-top: 18px;
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px var(--line-accent);
-}
-.tl-content { max-width: 680px; }
-.tl-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-.tl-title {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 3.3vw, 52px);
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
-  margin-bottom: 1rem;
-}
-.tl-title em { color: var(--accent); }
-.tl-body {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--ink-dim);
-  margin-bottom: 1.5rem;
-}
-.tl-body em { color: var(--ink); font-family: var(--font-serif); font-style: italic; letter-spacing: -0.01em; }
-.tl-bullets {
-  display: flex; flex-direction: column; gap: 0.6rem;
-  padding: 1.25rem;
-  border: 1px solid var(--line);
-  background: var(--bg-elev);
-  border-radius: 4px;
-}
-.tl-bullets .b {
-  display: grid; grid-template-columns: 16px 1fr;
-  gap: 10px;
-  font-size: 13.5px;
-  color: var(--ink-dim);
-  line-height: 1.5;
-}
-.tl-bullets .b::before { content: '◆'; color: var(--accent); font-size: 10px; line-height: 1.5; }
-.tl-meta {
-  padding: 1.25rem;
-  border: 1px solid var(--line);
-  border-left: 2px solid var(--accent);
-  background: var(--bg-elev);
-  border-radius: 4px;
-}
-.tl-meta-k {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.tl-meta-row {
-  display: flex; justify-content: space-between;
-  padding: 0.4rem 0;
-  border-bottom: 1px dashed var(--line);
-  font-size: 12.5px;
-}
-.tl-meta-row:last-child { border: 0; }
-.tl-meta-row .l { color: var(--muted); font-family: var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase; font-size: 10.5px; }
-.tl-meta-row .v { color: var(--accent); font-family: var(--font-mono); font-weight: 500; font-size: 12px; }
-
-@media (max-width: 1100px) {
-  .tl-step { grid-template-columns: 90px 30px 1fr; }
-  .tl-meta { grid-column: 1 / -1; }
-  .timeline::before { left: calc(90px + 2.5rem + 15px); }
-  .tl-num { font-size: 64px; }
-}
-@media (max-width: 700px) {
-  .tl-step { grid-template-columns: 1fr; gap: 1rem; }
-  .tl-dot, .timeline::before { display: none; }
-}
-
-/* Manifesto articles */
-.manifesto {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 4rem;
-  align-items: start;
-}
-.m-head { position: sticky; top: 100px; }
-.m-title {
-  font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 72px);
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-  margin-bottom: 1.5rem;
-}
-.m-title em { color: var(--accent); }
-.m-body {
-  font-size: 16px;
-  color: var(--ink-dim);
-  line-height: 1.55;
-  max-width: 36ch;
-}
-.m-articles { display: flex; flex-direction: column; }
-.m-article {
-  display: grid;
-  grid-template-columns: 60px 1fr;
-  gap: 2rem;
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--line);
-}
-.m-article:first-child { border-top: 1px solid var(--accent); padding-top: 2rem; }
-.m-article:last-child { border-bottom: 1px solid var(--accent); }
-.m-roman {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 48px;
-  color: var(--accent);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.m-art-title {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin-bottom: 0.75rem;
-}
-.m-art-body {
-  font-size: 14.5px;
-  line-height: 1.65;
-  color: var(--ink-dim);
-}
-.m-art-body em { color: var(--ink); font-family: var(--font-serif); font-style: italic; letter-spacing: -0.01em; }
-
-@media (max-width: 900px) {
-  .manifesto { grid-template-columns: 1fr; gap: 2rem; }
-  .m-head { position: static; }
-  .m-article { grid-template-columns: 48px 1fr; gap: 1rem; }
-}
-@media (max-width: 820px) {
-  .tl-title { font-size: clamp(26px, 6vw, 36px); }
-  .manifesto { gap: 2.5rem; }
-}
-@media (max-width: 720px) {
-  .tl-step { padding: 2rem 0; }
-  .tl-num { font-size: 52px; }
-  .tl-title { font-size: clamp(22px, 6vw, 28px); }
-  .tl-body { font-size: 15px; }
-  .tl-bullets, .tl-meta { padding: 1rem; }
-  .tl-meta-row { flex-direction: column; align-items: flex-start; gap: 0.2rem; padding: 0.5rem 0; }
-  .tl-meta-row .l, .tl-meta-row .v { font-size: 11px; }
-  .m-roman { font-size: 36px; }
-  .m-art-title { font-size: 19px; }
-}
-@media (max-width: 520px) {
-  .tl-step { padding: 1.5rem 0; }
-  .tl-num { font-size: 44px; }
-  .tl-title { font-size: 22px; }
-  .tl-body { font-size: 14.5px; }
-  .tl-bullets .b { font-size: 13px; }
-  .m-article { grid-template-columns: 36px 1fr; gap: 0.75rem; padding: 1.25rem 0; }
-  .m-roman { font-size: 30px; }
-  .m-art-title { font-size: 17px; }
-  .m-art-body { font-size: 13.5px; }
-  .m-title { font-size: clamp(28px, 9vw, 40px); }
-  .m-body { font-size: 14.5px; }
-}
-@media (max-width: 380px) {
-  .tl-title { font-size: 20px; }
-  .m-title { font-size: 26px; }
-}
+/* Process page — stat strip numbers */
+.pstat .n { font-size: clamp(34px, 4vw, 44px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.pstat .n em { color: var(--acc); }
+.pstat .l { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.step--big h3 { font-size: clamp(20px, 2vw, 24px); }
+.step--big p { font-size: 15px; }
 </style>
 </head>
 <body>
-<div class="scroll-prog" aria-hidden="true"></div>
 
-<header class="topbar">
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-    </div>
-  </div>
-  <div class="topbar-inner">
-    <a href="index.html" class="brand">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
-      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
-    </a>
-    <nav class="primary-nav" aria-label="Primary"><a href="what-is.html" data-nav="what-is" class="nav-explainer">What is an AI agent?</a>      <a href="solutions.html" data-nav="solutions">Solutions</a>
-      <a href="cases.html" data-nav="cases">Achieve</a>
-      <a href="demo.html" data-nav="demo">Demo</a>
-      <a href="pricing.html" data-nav="pricing">Pricing</a>
-      <a href="process.html" data-nav="process">Process</a>
-      <a href="about.html" data-nav="about">About</a>
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="what-is.html" class="is-accent">What is an AI agent?</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="cases.html">Cases</a>
+      <a href="demo.html">Demo</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
     </nav>
-    <div class="topbar-cta">
-      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
-      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
-      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <span class="bar b1" aria-hidden="true"></span>
-        <span class="bar b2" aria-hidden="true"></span>
-        <span class="bar b3" aria-hidden="true"></span>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Book a free audit</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <div></div>
-    <div class="mobile-nav-inner">
-      <div class="mnav-group">
-        <h5>Work</h5>
-        <ul class="mnav-list">
-          <li><a href="what-is.html" data-nav="what-is">What is an AI agent? <span class="ar">→</span></a></li>
-          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
-          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
-          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
-          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
-          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
-          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
-          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mobile-nav-foot">
-      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-      <div class="mfoot-meta">
-        <span>Global · 24/7 · <span data-clock>—</span></span>
-        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
-      </div>
-    </div>
+  <nav class="msheet" id="msheet" aria-label="Mobile">
+    <a href="what-is.html">What is an AI agent? <span class="ar">→</span></a>
+    <a href="solutions.html">Solutions <span class="ar">→</span></a>
+    <a href="cases.html">Cases <span class="ar">→</span></a>
+    <a href="demo.html">Demo <span class="ar">→</span></a>
+    <a href="pricing.html">Pricing &amp; calculator <span class="ar">→</span></a>
+    <a href="process.html">Process <span class="ar">→</span></a>
+    <a href="about.html">About <span class="ar">→</span></a>
+    <a href="contact.html">Contact <span class="ar">→</span></a>
+    <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit</a>
   </nav>
 </header>
 
 <main>
+
   <!-- ========== HERO ========== -->
-  <section class="page-hero">
-    <div class="container">
-      <div class="hero-coord reveal">
-        <div class="c"><span>◎ Process · v.4.6</span></div>
-        <div class="line"></div>
-        <div class="c right"><span>14 days, audit → deploy</span></div>
-      </div>
-
-      <h1 class="hero-title reveal delay-1">
-        From <span class="strike">slide deck</span><br>
-        to <em>shipped work</em>.
-      </h1>
-
-      <div class="hero-lower reveal delay-2">
-        <p class="hero-dek">
-          Four steps to <em>automate a workflow with AI</em>. Fourteen working days from the first audit meeting to the first AI agent live in production. No transformation decks. No change-management theatre. Just work that used to be human, and isn't anymore.
-        </p>
+  <section class="hero">
+    <div class="wrap">
+      <div class="reveal" style="max-width:760px">
+        <span class="pill">Process · audit → deploy in 14 days</span>
+        <h1 class="display" style="margin:18px 0 22px;max-width:15ch">From brief to <em>billed outcome</em>.</h1>
+        <p class="lede" style="max-width:56ch;margin-bottom:30px">Every engagement runs the same four phases: a one-page brief, a free audit with a per-outcome quote, a build that runs beside your team before it replaces any work, and a live agent billed only for outcomes that pass SLA. No transformation decks. No change-management theatre.</p>
         <div class="hero-actions">
-          <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
-          <a href="pricing.html" class="btn btn-lg">See pricing</a>
+          <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="ar">↗</span></a>
+          <a href="pricing.html" class="btn btn-ghost btn-lg">See pricing</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ========== STAT STRIP ========== -->
-  <section class="stat-strip">
-    <div class="stat-cell"><div class="stat-k">◆ Avg audit → deploy</div><div class="stat-v"><em>14<span class="unit">d</span></em></div><div class="stat-foot">Across 38 engagements</div></div>
-    <div class="stat-cell"><div class="stat-k">◆ Audits that ship</div><div class="stat-v"><em>68<span class="unit">%</span></em></div><div class="stat-foot">We turn down ~1/3</div></div>
-    <div class="stat-cell"><div class="stat-k">◆ Retention at 12 mo</div><div class="stat-v"><em>94<span class="unit">%</span></em></div><div class="stat-foot">Clients who stay</div></div>
-    <div class="stat-cell"><div class="stat-k">◆ Median on-time SLA</div><div class="stat-v"><em>99.1<span class="unit">%</span></em></div><div class="stat-foot">Across 2026 YTD</div></div>
+  <section class="section--tight" style="padding-top:0">
+    <div class="wrap">
+      <div class="grid grid-4 reveal">
+        <div class="card pstat"><span class="kicker">Avg audit → deploy</span><div class="n">14<em>d</em></div><div class="l">Across 38 engagements</div></div>
+        <div class="card pstat"><span class="kicker">Audits that ship</span><div class="n">68<em>%</em></div><div class="l">We turn down roughly a third</div></div>
+        <div class="card pstat"><span class="kicker">Retention at 12 months</span><div class="n">94<em>%</em></div><div class="l">Clients who stay</div></div>
+        <div class="card pstat"><span class="kicker">Median on-time SLA</span><div class="n">99.1<em>%</em></div><div class="l">2026 year to date</div></div>
+      </div>
+    </div>
   </section>
 
   <!-- ========== TIMELINE ========== -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-num reveal">
-          <span>Section I · Process</span>
-          <span class="big">01</span>
-        </div>
-        <div class="section-title-col reveal delay-1">
-          <div class="eyebrow accent">Four phases · one fortnight</div>
-          <h2 class="section-title">How a workflow becomes<br>an <em>agent in production</em>.</h2>
-          <p class="dek">Every engagement follows the same four phases. The audit is on us. Only if we find work we can confidently automate do we quote.</p>
-        </div>
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Four phases · one fortnight</span>
+        <h2 class="h2">How a workflow becomes an <em>agent in production</em>.</h2>
+        <p class="lede">The audit is on us. We only quote when we find work we can confidently put under an SLA — and about a third of audits end with us walking away and handing you the diagnostic.</p>
       </div>
 
-      <div class="timeline reveal delay-2">
+      <div class="grid grid-2 steps reveal">
+        <article class="card step step--big">
+          <span class="n">Phase 01 · Brief</span>
+          <h3>Tell us the workflow — one page is enough.</h3>
+          <p>Send a paragraph describing the repetitive work: who does it, how often, in which systems. If it's easier, we sit inside your operation for two days and write the brief for you. All we need at this stage is a named owner on your side who knows the workflow first-hand.</p>
+          <ul class="checks">
+            <li>One-page brief — yours or written by us, free</li>
+            <li>A named workflow owner on your side</li>
+            <li>Agreement on which workflow to audit first</li>
+          </ul>
+          <span class="when">Days 0–2 · You receive: a scoped audit plan</span>
+        </article>
 
-        <div class="tl-step">
-          <div class="tl-num">01</div>
-          <div class="tl-dot"></div>
-          <div class="tl-content">
-            <div class="tl-eyebrow">Phase 01 · Days 1–5 · Workflow audit · <span class="accent">free</span></div>
-            <h3 class="tl-title">We sit inside your <em>actual</em> workflow.</h3>
-            <p class="tl-body">
-              A two-person Autopilot Labs team spends five working days embedded with the operators who do the work today. We shadow, we screen-record, we map every touch-point. <em>You keep the map whether or not you hire us.</em>
-            </p>
-            <div class="tl-bullets">
-              <div class="b">Observe 3–5 operators doing the work end-to-end</div>
-              <div class="b">Time-and-motion study · time-per-task heat map</div>
-              <div class="b">System inventory &amp; data-flow diagram</div>
-              <div class="b">Shortlist of 3–5 agent candidates, ranked by ROI</div>
-            </div>
-          </div>
-          <div class="tl-meta">
-            <div class="tl-meta-k">Deliverable</div>
-            <div class="tl-meta-row"><span class="l">Artefact</span><span class="v">Audit report</span></div>
-            <div class="tl-meta-row"><span class="l">Length</span><span class="v">18–24 pages</span></div>
-            <div class="tl-meta-row"><span class="l">Ownership</span><span class="v">You keep it</span></div>
-            <div class="tl-meta-row"><span class="l">Cost</span><span class="v">A$0</span></div>
-          </div>
+        <article class="card step step--big">
+          <span class="n">Phase 02 · Audit &amp; quote</span>
+          <h3>We measure the work, then price the <em>outcome</em>.</h3>
+          <p>A two-person team embeds with your operators for five working days — shadowing 3–5 people end-to-end, running a time-and-motion study, and mapping every system the work touches. From the shortlist, we quote one price per finished outcome, with an SLA and a 30-day kill-switch. If we can't ship confidently, we say so and walk.</p>
+          <ul class="checks">
+            <li>18–24 page audit report — you keep it either way, A$0</li>
+            <li>3–5 agent candidates ranked by ROI</li>
+            <li>6–8 page statement of work: per-outcome price, volume tiers, SLA &amp; credit-back schedule, data-handling terms</li>
+          </ul>
+          <span class="when">Days 1–8 · You receive: audit report + quote</span>
+        </article>
+
+        <article class="card step step--big">
+          <span class="n">Phase 03 · Build &amp; integrate</span>
+          <h3>The agent runs <em>beside</em> your team before it replaces any work.</h3>
+          <p>We build in about four working days — on your data, wired into your systems via OAuth, SSO and SCIM. The agent then runs in shadow mode: it produces every outcome, but a human still owns the final click. Only when it matches the human on 200 consecutive tasks do we flip it live, against go-live criteria agreed in writing. Runs on our in-house AI cloud, or inside your VPC, data centre or air-gapped enclave — built for large enterprise and federal/government workloads.</p>
+          <ul class="checks">
+            <li>Agent built on your data, not a generic model</li>
+            <li>Side-by-side shadow dashboard, 48–72 hours</li>
+            <li>Go-live gate: 200 clean consecutive runs — shadow period is free</li>
+          </ul>
+          <span class="when">Days 9–12 · You receive: a running agent in shadow</span>
+        </article>
+
+        <article class="card step step--big">
+          <span class="n">Phase 04 · Ship &amp; bill per outcome</span>
+          <h3>Live. Measured. <em>Paid only when it passes.</em></h3>
+          <p>The agent goes live and the meter ticks per clean pass. Every outcome appears in your ops dashboard — timestamped, costed, audit-trailed — with Slack or Teams alerting. SLA misses credit back automatically on the next invoice; you never raise a ticket. Monthly outcome reviews, quarterly rate reviews, and a 30-day off-ramp where your weights and data leave with you.</p>
+          <ul class="checks">
+            <li>Real-time ops dashboard · invoice based only on SLA-passing work</li>
+            <li>Automatic credit-back for misses</li>
+            <li>30-day exit: weights, logs and exports handed over</li>
+          </ul>
+          <span class="when">Day 14+ · You receive: outcomes, monthly</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GIVE / GET ========== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">The deal, plainly</span>
+        <h2 class="h2">What we need from you. <em>What you get back.</em></h2>
+      </div>
+      <div class="compare reveal">
+        <div class="them">
+          <h4>What we need from you</h4>
+          <ul>
+            <li>A named owner who knows the workflow first-hand</li>
+            <li>Access to 3–5 operators for five days of shadowing</li>
+            <li>Sample data and read access to the systems involved</li>
+            <li>Legal review of a 6–8 page statement of work (~48h)</li>
+            <li>A yes or no at the end of the quote — that's it</li>
+          </ul>
         </div>
-
-        <div class="tl-step">
-          <div class="tl-num">02</div>
-          <div class="tl-dot"></div>
-          <div class="tl-content">
-            <div class="tl-eyebrow">Phase 02 · Days 6–8 · Scope &amp; quote</div>
-            <h3 class="tl-title">We quote the <em>per-outcome rate</em> — or we walk.</h3>
-            <p class="tl-body">
-              From the shortlist, we pick the one or two agents we can confidently SLA. We quote a per-outcome price, an SLA, and a kill-switch. <em>If we don't find work we can ship, we tell you so.</em> About a third of audits end here.
-            </p>
-            <div class="tl-bullets">
-              <div class="b">Per-outcome price + volume tiers</div>
-              <div class="b">SLA contract — % on-time, credit-back schedule</div>
-              <div class="b">Data-handling &amp; residency agreement</div>
-              <div class="b">30-day kill-switch clause, no notice period</div>
-            </div>
-          </div>
-          <div class="tl-meta">
-            <div class="tl-meta-k">Deliverable</div>
-            <div class="tl-meta-row"><span class="l">Artefact</span><span class="v">Statement of work</span></div>
-            <div class="tl-meta-row"><span class="l">Length</span><span class="v">6–8 pages</span></div>
-            <div class="tl-meta-row"><span class="l">Legal review</span><span class="v">Yours, 48h</span></div>
-            <div class="tl-meta-row"><span class="l">Cost</span><span class="v">A$0</span></div>
-          </div>
-        </div>
-
-        <div class="tl-step">
-          <div class="tl-num">03</div>
-          <div class="tl-dot"></div>
-          <div class="tl-content">
-            <div class="tl-eyebrow">Phase 03 · Days 9–12 · Build &amp; shadow</div>
-            <h3 class="tl-title">Agents run <em>beside</em> your team, not over them.</h3>
-            <p class="tl-body">
-              We build in 4 working days. The agent runs in shadow mode — it produces every outcome, but a human still owns the final click. We compare. When the agent matches the human on 200 consecutive tasks, we flip it live.
-            </p>
-            <div class="tl-bullets">
-              <div class="b">Agent built on your data, not a generic model</div>
-              <div class="b">Integrations to your systems (OAuth, SCIM, SSO)</div>
-              <div class="b">Shadow mode · side-by-side comparison dashboard</div>
-              <div class="b">Go-live criteria published &amp; agreed in writing</div>
-            </div>
-          </div>
-          <div class="tl-meta">
-            <div class="tl-meta-k">Deliverable</div>
-            <div class="tl-meta-row"><span class="l">Artefact</span><span class="v">Running agent</span></div>
-            <div class="tl-meta-row"><span class="l">Shadow period</span><span class="v">48–72h</span></div>
-            <div class="tl-meta-row"><span class="l">Go-live gate</span><span class="v">200 clean runs</span></div>
-            <div class="tl-meta-row"><span class="l">Billable</span><span class="v">Shadow = free</span></div>
-          </div>
-        </div>
-
-        <div class="tl-step">
-          <div class="tl-num">04</div>
-          <div class="tl-dot"></div>
-          <div class="tl-content">
-            <div class="tl-eyebrow">Phase 04 · Day 14+ · Operate &amp; measure</div>
-            <h3 class="tl-title">Agents work. <em>We report.</em> You pay for outcomes.</h3>
-            <p class="tl-body">
-              The agent is live. You see every outcome in your ops dashboard — timestamped, costed, audit-trailed. You pay only for SLA-passing work. If we miss the SLA, the credit-back is automatic and appears on next month's invoice.
-            </p>
-            <div class="tl-bullets">
-              <div class="b">Real-time ops dashboard · Slack/Teams alerting</div>
-              <div class="b">Monthly outcome review · quarterly rate review</div>
-              <div class="b">Credit-back auto-applied for SLA misses</div>
-              <div class="b">30-day off-ramp · weights &amp; data go with you</div>
-            </div>
-          </div>
-          <div class="tl-meta">
-            <div class="tl-meta-k">Deliverable</div>
-            <div class="tl-meta-row"><span class="l">Artefact</span><span class="v">Outcomes, monthly</span></div>
-            <div class="tl-meta-row"><span class="l">Invoice basis</span><span class="v">Passed SLA</span></div>
-            <div class="tl-meta-row"><span class="l">Ops review</span><span class="v">30-day cadence</span></div>
-            <div class="tl-meta-row"><span class="l">Kill switch</span><span class="v">30d notice</span></div>
-          </div>
+        <div class="us">
+          <h4>What you get</h4>
+          <ul>
+            <li>An 18–24 page audit report you keep, free, either way</li>
+            <li>One per-outcome price with SLA and credit-back schedule in writing</li>
+            <li>A production agent integrated into your existing systems</li>
+            <li>A real-time ops dashboard with every outcome audit-trailed</li>
+            <li>A 30-day exit where weights, logs and data leave with you</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== MANIFESTO ========== -->
-  <section class="section" style="background:var(--bg-elev);">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-num reveal">
-          <span>Section II · Principles</span>
-          <span class="big">02</span>
-        </div>
-        <div class="section-title-col reveal delay-1">
-          <div class="eyebrow accent">What we refuse to do</div>
-          <h2 class="section-title">Eight articles we've<br>signed our <em>name</em> to.</h2>
-          <p class="dek">These aren't marketing. They're the clauses in our contracts — and the reasons we've turned down engagements that would have been easy revenue.</p>
-        </div>
+  <!-- ========== GUARANTEE ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">The guarantee</span>
+        <h2 class="h2">Miss the SLA, it's <em>free</em>. No audit, <em>no build</em>.</h2>
+        <p class="lede">These aren't marketing lines — they're clauses in every statement of work. If we ever violate one, the engagement terminates that day and every outcome billed in the breach period is refunded.</p>
       </div>
-
-      <div class="manifesto reveal delay-2">
-        <div class="m-head">
-          <h3 class="m-title">The Autopilot Labs <em>articles</em>.</h3>
-          <p class="m-body">We sign these into every statement of work. If we ever violate one, the engagement terminates that day and every outcome billed in the breach period is refunded.</p>
-        </div>
-        <div class="m-articles">
-          <div class="m-article">
-            <div class="m-roman">I.</div>
-            <div>
-              <h4 class="m-art-title">No seat-based billing.</h4>
-              <p class="m-art-body">Ever. <em>You pay for finished work, or you pay nothing.</em> Seats punish adoption; we want adoption.</p>
-            </div>
-          </div>
-          <div class="m-article">
-            <div class="m-roman">II.</div>
-            <div>
-              <h4 class="m-art-title">No token pass-through.</h4>
-              <p class="m-art-body">Inference cost is our problem. If our model gets cheaper, we keep the margin — and pass it on at the next quarterly rate review, in writing.</p>
-            </div>
-          </div>
-          <div class="m-article">
-            <div class="m-roman">III.</div>
-            <div>
-              <h4 class="m-art-title">We turn work down.</h4>
-              <p class="m-art-body">If the audit shows the workflow isn't ripe — not enough volume, too much judgement, bad data — we say so and we walk. <em>Roughly a third of audits end this way.</em></p>
-            </div>
-          </div>
-          <div class="m-article">
-            <div class="m-roman">IV.</div>
-            <div>
-              <h4 class="m-art-title">Humans own the final click.</h4>
-              <p class="m-art-body">For every regulated or high-blast-radius workflow, a human approves before anything irreversible. We make that click fast, not absent.</p>
-            </div>
-          </div>
-          <div class="m-article">
-            <div class="m-roman">V.</div>
-            <div>
-              <h4 class="m-art-title">SLA misses refund automatically.</h4>
-              <p class="m-art-body">No support ticket. No negotiation. <em>Missed outcomes credit back on the next invoice without you asking.</em></p>
-            </div>
-          </div>
-          <div class="m-article">
-            <div class="m-roman">VI.</div>
-            <div>
-              <h4 class="m-art-title">Your data leaves when you leave.</h4>
-              <p class="m-art-body">Weights trained on your corpus are yours. On churn, we hand over weights, logs, and export artefacts within 30 days — and purge our side.</p>
-            </div>
-          </div>
-          <div class="m-article">
-            <div class="m-roman">VII.</div>
-            <div>
-              <h4 class="m-art-title">We don't sell AGI.</h4>
-              <p class="m-art-body">We sell finished tasks in your industry. If the job needs cross-vertical general reasoning, we're honestly not the shop.</p>
-            </div>
-          </div>
-          <div class="m-article">
-            <div class="m-roman">VIII.</div>
-            <div>
-              <h4 class="m-art-title">Plain English, always.</h4>
-              <p class="m-art-body">If a clause in our contract needs a lawyer to translate, we rewrite it. <em>Your ops team should be able to audit our SLA without legal on the call.</em></p>
-            </div>
-          </div>
-        </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="pill">SLA miss = free</span><h3>Misses refund automatically</h3><p>No support ticket, no negotiation. Outcomes that miss the SLA credit back on the next invoice without you asking.</p></article>
+        <article class="card"><span class="pill">No audit, no build</span><h3>We turn work down</h3><p>If the audit shows the workflow isn't ripe — not enough volume, too much judgement, bad data — we say so and walk. Roughly a third of audits end this way, and you keep the diagnostic.</p></article>
+        <article class="card"><span class="pill">No seats · no tokens</span><h3>You pay for finished work only</h3><p>Inference cost is our problem, seats punish adoption. If our models get cheaper, the saving is passed on at the quarterly rate review, in writing.</p></article>
+        <article class="card"><span class="pill">Human final click</span><h3>People approve the irreversible</h3><p>For every regulated or high-blast-radius workflow, a human signs off before anything irreversible happens. We make that click fast — not absent.</p></article>
+        <article class="card"><span class="pill">Your data, your exit</span><h3>Everything leaves with you</h3><p>Weights trained on your corpus are yours. On exit, we hand over weights, logs and exports within 30 days — and purge our side.</p></article>
+        <article class="card"><span class="pill">Plain English</span><h3>Contracts your ops team can read</h3><p>If a clause needs a lawyer to translate, we rewrite it. Your ops team should be able to audit our SLA without legal on the call.</p></article>
       </div>
     </div>
   </section>
 
   <!-- ========== END CTA ========== -->
-  <section class="endcta">
-    <div class="container">
-      <div class="endcta-wrap reveal">
-        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">Phase 01 · days 1–5 · free</div>
-        <h2>Put one workflow<br>on the <em>audit schedule</em>.</h2>
-        <p class="dek">We've got four slots left for the Q2 audit cohort. If we can't ship, we won't quote. If we can, you'll see the per-outcome price before we write a line of code.</p>
-        <div class="actions">
-          <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
-          <a href="solutions.html" class="btn btn-lg">Browse the catalogue</a>
+  <section class="section dark cta-band">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" style="justify-content:center">Phase 01 starts free</span>
+        <h2 class="h2">Put one workflow on the <em>audit schedule</em>.</h2>
+        <p class="lede">If we can't ship, we won't quote. If we can, you'll see the per-outcome price before we write a line of code — and the audit report is yours either way.</p>
+        <div class="btns">
+          <a href="contact.html" class="btn btn-light btn-lg">Book my audit <span class="ar">↗</span></a>
+          <a href="solutions.html" class="btn btn-outline-light btn-lg">Browse the catalogue</a>
         </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk (Arabic, English and your customers' languages). We bill per completed outcome. Not per seat. Not per token.</p>
+<!-- ========== FOOTER ========== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <h3>Agents that <em>finish</em>.</h3>
+        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk. We bill per completed outcome. Not per seat. Not per token.</p>
       </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="process.html">Process</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="cases.html">Case studies</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="careers.html">Careers</a></li>
-          <li><a href="journal.html">Journal</a></li>
-          <li><a href="manifesto.html">Manifesto</a></li>
-          <li><a href="press.html">Press</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Verticals</h5>
-        <ul>
-          <li><a href="solutions.html#healthcare">Healthcare</a></li>
-          <li><a href="solutions.html#legal">Legal</a></li>
-          <li><a href="solutions.html#finance">Finance</a></li>
-          <li><a href="solutions.html#real-estate">Real estate</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Office</h5>
-        <ul>
-          <li><a href="#">L14 · 459 Collins St</a></li>
-          <li><a href="#">Global · Remote-first</a></li>
-          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
-          <li><a href="#">+61 3 9000 0000</a></li>
-        </ul>
-      </div>
+      <div class="foot-col"><h5>Work</h5><ul>
+        <li><a href="what-is.html">What is an AI agent?</a></li>
+        <li><a href="solutions.html">Solutions</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="cases.html">Case studies</a></li>
+        <li><a href="calculator.html">Calculator</a></li>
+        <li><a href="demo.html">Live demo</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Product</h5><ul>
+        <li><a href="docs.html">API docs</a></li>
+        <li><a href="integrations.html">Integrations</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="status.html">Status</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Company</h5><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+        <li><a href="press.html">Press</a></li>
+        <li><a href="partners.html">Partners</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Learn</h5><ul>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="help.html">Help center</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="sitemap.html">Sitemap</a></li>
+      </ul></div>
     </div>
-    <div class="footer-bottom">
-      <div class="left"><span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span></div>
-      <div class="right">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">SLA</a>
-        <span>v. 4.6 · build 2026.Q2</span>
-      </div>
+    <div class="foot-bottom">
+      <div class="left">© 2026 Autopilot Labs Pty Ltd · Global · Remote-first · 24/7 delivery · <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></div>
+      <div class="right"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">SLA</a></div>
     </div>
   </div>
 </footer>
 
-<script src="assets/site.js?v=27"></script>
+<script>
+/* mobile nav */
+(function(){
+  var t = document.getElementById('navToggle'), s = document.getElementById('msheet');
+  if(!t||!s) return;
+  t.addEventListener('click', function(){
+    var open = s.classList.toggle('open');
+    t.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('lock', open);
+  });
+  s.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ s.classList.remove('open'); document.body.classList.remove('lock'); t.setAttribute('aria-expanded','false'); }); });
+})();
+
+/* reveal on scroll */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
 </body>
 </html>
