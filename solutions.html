@@ -3,1150 +3,552 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Solutions — Autopilot Labs</title>
-<meta name="description" content="Specialised verticals, one agency. Pre-built AI agent catalogues for healthcare, legal, finance, real estate, e-commerce, HR, marketing, manufacturing and more — plus custom-built verticals on the same per-outcome contract.">
+<title>Solutions — AI agents by industry | Autopilot Labs</title>
+<meta name="description" content="The full Autopilot Labs catalogue: pre-built AI agents for healthcare, legal, finance, real estate, e-commerce, HR, marketing, manufacturing, education, insurance, hospitality, logistics and public safety — plus a 16-SKU multilingual voice desk. Every agent priced per finished outcome.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/site.css?v=27">
-<link rel="stylesheet" href="assets/motion.css?v=2">
+<link rel="stylesheet" href="assets/app.css?v=3">
 <style>
-/* ====== solutions page ====== */
-.directory {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  border: 1px solid var(--line);
-  background: var(--bg-elev);
-  min-height: 720px;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.dir-list {
-  border-right: 1px solid var(--line);
-  background: var(--bg);
-}
-.dir-head {
-  padding: 1.25rem 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  border-bottom: 1px solid var(--line);
-  display: flex; justify-content: space-between; align-items: center;
-}
-.dir-item {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 36px 26px minmax(0, 1fr) auto;
-  gap: 0.75rem;
-  padding: 1.1rem 1.5rem;
-  border-bottom: 1px solid var(--line);
-  text-align: left;
-  align-items: center;
-  cursor: pointer;
-  position: relative;
-  transition: background .2s, padding .2s;
-  color: var(--ink);
-}
-.dir-item::before {
-  content: '';
-  position: absolute; top: 0; bottom: 0; left: 0; width: 3px;
-  background: var(--accent);
-  transform: scaleY(0); transition: transform .2s var(--ease);
-}
-.dir-item:hover { background: var(--bg-elev); padding-left: 1.75rem; }
-.dir-item.active { background: var(--bg-elev); padding-left: 1.75rem; }
-.dir-item.active::before { transform: scaleY(1); }
-.dir-num {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
-.dir-item.active .dir-num { color: var(--accent); }
-.dir-glyph {
-  width: 26px; height: 26px;
-  display: inline-block;
-  background: currentColor;
-  color: var(--muted);
-  -webkit-mask: var(--glyph) center/contain no-repeat;
-  mask: var(--glyph) center/contain no-repeat;
-  transition: color .25s var(--ease);
-}
-.dir-item:hover .dir-glyph { color: var(--ink-2); }
-.dir-item.active .dir-glyph { color: var(--accent); }
-.dir-name {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.dir-arrow {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--muted-2);
-  opacity: 0; transition: opacity .2s, transform .2s, color .2s;
-}
-.dir-item:hover .dir-arrow, .dir-item.active .dir-arrow { opacity: 1; transform: translateX(3px); color: var(--accent); }
-
-.dir-panel { display: none; padding: 2.5rem; animation: fadeIn .4s; }
-.dir-panel.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
-
-.dp-top {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2rem;
-  padding-bottom: 1.75rem;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 2rem;
-}
-.dp-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.dp-title {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 3.2vw, 52px);
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
-  max-width: 22ch;
-}
-.dp-title em { color: var(--accent); }
-.dp-badge {
-  background: var(--bg);
-  border: 1px solid var(--line);
-  padding: 1rem 1.25rem;
-  text-align: right;
-  min-width: 160px;
-  border-radius: 4px;
-}
-.dp-badge-k {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  color: var(--muted);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.dp-badge-v {
-  font-family: var(--font-serif);
-  font-size: 40px;
-  line-height: 1;
-  letter-spacing: -0.025em;
-  color: var(--accent);
-  font-weight: 400;
-  font-style: italic;
-}
-.dp-badge-u {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  color: var(--muted-2);
-  letter-spacing: 0.1em;
-  margin-top: 4px;
-  text-transform: uppercase;
-}
-
-.dp-body {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--ink-dim);
-  margin-bottom: 2.5rem;
-  max-width: 70ch;
-}
-.dp-body em { color: var(--ink); font-family: var(--font-serif); font-style: italic; letter-spacing: -0.01em; }
-
-.dp-agents-head {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--line);
-  display: flex; justify-content: space-between;
-}
-.dp-agent {
-  display: grid;
-  grid-template-columns: 32px 1fr 140px 110px;
-  gap: 1rem;
-  padding: 1rem 0.25rem;
-  border-bottom: 1px dashed var(--line);
-  align-items: center;
-  transition: background .2s, padding .2s;
-}
-.dp-agent:hover { background: var(--bg); padding-left: 0.75rem; padding-right: 0.75rem; }
-.dp-a-num { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
-.dp-a-name {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-.dp-a-name span {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-  font-weight: 400;
-  margin-top: 3px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.dp-a-unit {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-}
-.dp-a-price {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 400;
-  color: var(--accent);
-  text-align: right;
-  letter-spacing: -0.015em;
-  font-style: italic;
-}
-
-.dp-foot {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2rem;
-  align-items: end;
-}
-.dp-quote {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--ink);
-  border-left: 2px solid var(--accent);
-  padding-left: 1.25rem;
-  max-width: 50ch;
-  line-height: 1.3;
-  letter-spacing: -0.015em;
-}
-.dp-quote cite {
-  display: block;
-  margin-top: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  font-style: normal;
-  text-transform: uppercase;
-}
-
-@media (max-width: 1000px) {
-  .directory { grid-template-columns: 1fr; min-height: 0; }
-  .dir-list { border-right: 0; border-bottom: 1px solid var(--line); }
-  .dp-top { grid-template-columns: 1fr; }
-  .dp-agent { grid-template-columns: 30px 1fr auto; }
-  .dp-a-unit { display: none; }
-  .dp-foot { grid-template-columns: 1fr; }
-}
-@media (max-width: 720px) {
-  .dir-panel { padding: 1.75rem 1.25rem; }
-  .dir-item { padding: 1rem 1.25rem; grid-template-columns: 28px 24px minmax(0, 1fr) auto; gap: 0.6rem; }
-  .dir-item:hover, .dir-item.active { padding-left: 1.25rem; }
-  .dir-glyph { width: 22px; height: 22px; }
-  .dir-arrow { opacity: 1; color: var(--muted-2); }
-  .dp-title { font-size: clamp(26px, 6.5vw, 36px); }
-  .dp-badge { min-width: 0; padding: 0.85rem 1rem; text-align: left; }
-  .dp-badge-v { font-size: 32px; }
-  .dp-agent { gap: 0.6rem; padding: 0.9rem 0.1rem; }
-  .dp-agent:hover { padding-left: 0.35rem; padding-right: 0.35rem; }
-  .dp-a-name { font-size: 14.5px; }
-  .dp-a-price { font-size: 19px; }
-  .dp-quote { font-size: 17px; padding-left: 0.9rem; }
-  .dp-foot .btn { width: 100%; justify-content: center; }
-}
-@media (max-width: 520px) {
-  .dir-panel { padding: 1.5rem 1rem; }
-  .dir-head { padding: 1rem 1.25rem; }
-  .dir-item { padding: 0.9rem 1rem; grid-template-columns: 24px 20px minmax(0, 1fr) 14px; gap: 0.5rem; }
-  .dir-glyph { width: 20px; height: 20px; }
-  .dir-name { font-size: 15px; }
-  .dp-top { gap: 1.25rem; margin-bottom: 1.5rem; padding-bottom: 1.25rem; }
-  .dp-title { font-size: clamp(24px, 7.5vw, 32px); letter-spacing: -0.03em; }
-  .dp-body { font-size: 14.5px; margin-bottom: 1.75rem; }
-  .dp-agent { grid-template-columns: 24px 1fr auto; gap: 0.5rem; padding: 0.8rem 0; }
-  .dp-agent:hover { padding-left: 0.2rem; padding-right: 0.2rem; }
-  .dp-a-name { font-size: 13.5px; }
-  .dp-a-name span { font-size: 10px; }
-  .dp-a-price { font-size: 17px; }
-  .dp-foot { margin-top: 1.5rem; padding-top: 1.5rem; gap: 1.25rem; }
-  .dp-quote { font-size: 15.5px; padding-left: 0.75rem; line-height: 1.35; }
-}
-@media (max-width: 380px) {
-  .dir-item { grid-template-columns: 22px 18px minmax(0, 1fr) 12px; gap: 0.45rem; padding: 0.85rem 0.85rem; }
-  .dir-glyph { width: 18px; height: 18px; }
-  .dir-name { font-size: 14px; }
-  .dir-panel { padding: 1.25rem 0.85rem; }
-  .dp-agents-head { font-size: 9.5px; }
-  .dp-a-price { font-size: 15.5px; }
-}
-
-/* === 2026 modernization polish ============================ */
-.dir-panel, .sol-card, .dp-a, .dir-item {
-  border: 1px solid rgba(0,82,255,0.08);
-  transition: transform .25s var(--ease-out, ease-out),
-              box-shadow .25s var(--ease-out, ease-out),
-              border-color .25s var(--ease-out, ease-out),
-              background-color .2s var(--ease-out, ease-out);
-}
-.sol-card:hover, .dp-a:hover, .dir-item:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0,82,255,0.18);
-  box-shadow: 0 10px 28px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
-}
-@supports (background: color-mix(in oklab, red, blue)) {
-  .sol-card:hover, .dp-a:hover, .dir-item:hover {
-    box-shadow: 0 12px 30px -18px color-mix(in oklab, var(--accent) 45%, transparent),
-                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
-  }
-}
-.hero-overlay {
-  backdrop-filter: saturate(140%) blur(10px);
-  -webkit-backdrop-filter: saturate(140%) blur(10px);
-}
-main p a:not(.btn):not(.btn-link)::after {
-  content: ""; display: block; height: 1px; background: var(--accent);
-  transform: scaleX(0); transform-origin: left center;
-  transition: transform .25s var(--ease-out, ease-out);
-}
-main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
-h1 em, .dek em, .hi-grad {
-  background: linear-gradient(90deg, var(--accent), var(--accent-3));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-a:focus-visible, button:focus-visible, .btn:focus-visible {
-  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
-}
-.dp-a-price, .stat .v, .num, [data-tnum] {
-  font-feature-settings: 'tnum' 1, 'lnum' 1;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
-.scroll-x > * { scroll-snap-align: start; }
-@media (prefers-reduced-motion: reduce) {
-  .dir-panel, .sol-card, .dp-a, .dir-item { transition: none; }
-}
+section[id] { scroll-margin-top: 76px; }
+.jumps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.vgrid { gap: 1px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r); overflow: hidden; }
+.vtile { background: var(--ink-bg); padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; }
+.vtile .vp { font-family: var(--mono); font-size: 12px; color: var(--acc-2); }
+.vtile h3 { color: #fff; font-size: 16.5px; font-weight: 600; letter-spacing: -0.015em; }
+.vtile p { font-size: 13px; color: rgba(234,242,238,0.6); }
 </style>
 </head>
 <body>
-<div class="scroll-prog" aria-hidden="true"></div>
 
-<header class="topbar">
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-    </div>
-  </div>
-  <div class="topbar-inner">
-    <a href="index.html" class="brand">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
-      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
-    </a>
-    <nav class="primary-nav" aria-label="Primary"><a href="what-is.html" data-nav="what-is" class="nav-explainer">What is an AI agent?</a>      <a href="solutions.html" data-nav="solutions">Solutions</a>
-      <a href="cases.html" data-nav="cases">Achieve</a>
-      <a href="demo.html" data-nav="demo">Demo</a>
-      <a href="pricing.html" data-nav="pricing">Pricing</a>
-      <a href="process.html" data-nav="process">Process</a>
-      <a href="about.html" data-nav="about">About</a>
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="what-is.html" class="is-accent">What is an AI agent?</a>
+      <a href="solutions.html" style="background:var(--bg-soft);color:var(--ink)">Solutions</a>
+      <a href="cases.html">Cases</a>
+      <a href="demo.html">Demo</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
     </nav>
-    <div class="topbar-cta">
-      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
-      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
-      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <span class="bar b1" aria-hidden="true"></span>
-        <span class="bar b2" aria-hidden="true"></span>
-        <span class="bar b3" aria-hidden="true"></span>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Book a free audit</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <div></div>
-    <div class="mobile-nav-inner">
-      <div class="mnav-group">
-        <h5>Work</h5>
-        <ul class="mnav-list">
-          <li><a href="what-is.html" data-nav="what-is">What is an AI agent? <span class="ar">→</span></a></li>
-          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
-          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
-          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
-          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
-          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
-          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
-          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mobile-nav-foot">
-      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-      <div class="mfoot-meta">
-        <span>Global · 24/7 · <span data-clock>—</span></span>
-        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
-      </div>
-    </div>
+  <nav class="msheet" id="msheet" aria-label="Mobile">
+    <a href="what-is.html">What is an AI agent? <span class="ar">→</span></a>
+    <a href="solutions.html">Solutions <span class="ar">→</span></a>
+    <a href="cases.html">Cases <span class="ar">→</span></a>
+    <a href="demo.html">Demo <span class="ar">→</span></a>
+    <a href="pricing.html">Pricing &amp; calculator <span class="ar">→</span></a>
+    <a href="process.html">Process <span class="ar">→</span></a>
+    <a href="about.html">About <span class="ar">→</span></a>
+    <a href="contact.html">Contact <span class="ar">→</span></a>
+    <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit</a>
   </nav>
 </header>
 
 <main>
+
   <!-- ========== HERO ========== -->
-  <section class="page-hero">
-    <div class="container">
-      <div class="hero-coord reveal">
-        <div class="c"><span>◎ Catalogue · v.5.0</span></div>
-        <div class="line"></div>
-        <div class="c right"><span>Specialised practice areas · Unlimited custom-built agents · multilingual voice · custom-built where you need it</span></div>
-      </div>
-
-      <h1 class="hero-title reveal delay-1">
-        Agents built for<br>
-        your <em>industry</em>.
-      </h1>
-
-      <div class="hero-lower reveal delay-2">
-        <p class="hero-dek">
-          Pick your industry. We'll show you exactly what we can <em>automate with AI</em> — every workflow, every agent, every price. <em>Specialised verticals + a multilingual voice desk</em>, plus <em>custom-built verticals</em> when yours isn't on the shelf. Pick one below — or brief us on a new one.
-        </p>
-        <div class="hero-actions">
-          <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-          <a href="cases.html" class="btn btn-lg">What you can achieve</a>
+  <section class="hero">
+    <div class="wrap">
+      <div class="reveal" style="max-width:820px">
+        <span class="pill">Catalogue · 14 practice areas · 150 agents</span>
+        <h1 class="display" style="margin:18px 0 22px">Agents built for your <em>industry</em>.</h1>
+        <p class="lede" style="max-width:60ch">Pick your industry and see exactly what we can take off your team's plate — every agent, every price, billed per finished outcome. Runs on our in-house AI cloud, or inside your VPC, data centre or air-gapped enclave — built for large enterprise and federal/government workloads. If your vertical isn't here, we custom-build it on the same per-outcome contract.</p>
+        <div class="hero-actions" style="margin-top:28px">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="ar">↗</span></a>
+          <a href="cases.html" class="btn btn-ghost btn-lg">What you can achieve</a>
+        </div>
+        <div class="jumps" aria-label="Jump to an industry">
+          <a class="lang" href="#healthcare"><span class="code">01</span> Healthcare</a>
+          <a class="lang" href="#legal"><span class="code">02</span> Legal</a>
+          <a class="lang" href="#finance"><span class="code">03</span> Finance</a>
+          <a class="lang" href="#real-estate"><span class="code">04</span> Real estate</a>
+          <a class="lang" href="#ecommerce"><span class="code">05</span> E-commerce</a>
+          <a class="lang" href="#hr"><span class="code">06</span> HR &amp; hiring</a>
+          <a class="lang" href="#marketing"><span class="code">07</span> Marketing</a>
+          <a class="lang" href="#manufacturing"><span class="code">08</span> Manufacturing</a>
+          <a class="lang" href="#education"><span class="code">09</span> Education</a>
+          <a class="lang" href="#insurance"><span class="code">10</span> Insurance</a>
+          <a class="lang" href="#hospitality"><span class="code">11</span> Hospitality</a>
+          <a class="lang" href="#logistics"><span class="code">12</span> Logistics</a>
+          <a class="lang" href="#public-safety"><span class="code">13</span> Public safety</a>
+          <a class="lang" href="#voice"><span class="code">14</span> Voice agents</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== DIRECTORY ========== -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-num reveal">
-          <span>Section II · Verticals</span>
-          <span class="big">02</span>
-        </div>
-        <div class="section-title-col reveal delay-1">
-          <div class="eyebrow accent">Click through the catalogue</div>
-          <h2 class="section-title">Specialised practice areas,<br><em>unlimited</em> custom-built agents.</h2>
-          <p class="dek">We don't build horizontal AI. Every agent below — including an always-on <em>multilingual voice desk</em> and a <em>Public safety</em> practice — is built on real workflows, ships with reference integrations, and is priced per completed outcome. <em>Don't see your industry?</em> We custom-build a vertical on the same per-outcome contract.</p>
-        </div>
+  <!-- ========== 01 HEALTHCARE ========== -->
+  <section class="section section--soft" id="healthcare">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">01 · Healthcare · 12 SKUs · 99.4% on-time SLA target</span>
+        <h2 class="h2">Give clinicians their <em>week</em> back.</h2>
+        <p class="lede">Notes, prior-auths, denials and intake eat a practice's margin before a single patient is seen better. These agents sit behind Epic, Cerner, Best Practice, MedicalDirector or Athena — HIPAA-aligned, audit-logged, clinician-reviewable — and attack the highest-dollar revenue-cycle pain first. For hospital groups, primary care, specialty clinics, ambulatory surgery, dental, telehealth and payers.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per visit</span><h3>Ambient clinical scribe</h3><p>Turns visit audio into a coder-ready SOAP note with the E/M level already suggested.</p><div class="stat-chip"><b>A$3.80</b> per visit</div></article>
+        <article class="card"><span class="kicker">02 · Per PA</span><h3>Prior-authorisation packet</h3><p>Drafts the medical-necessity case against payer rules and submits it to the portal.</p><div class="stat-chip"><b>A$6.40</b> per PA</div></article>
+        <article class="card"><span class="kicker">03 · Per appeal</span><h3>Denied-claim appeal writer</h3><p>Turns a denial code into an evidence pack and an ERISA-compliant appeal letter.</p><div class="stat-chip"><b>A$9.80</b> per appeal</div></article>
+        <article class="card"><span class="kicker">04 · Per encounter</span><h3>ICD-10 / CPT coder</h3><p>Codes the note into a compliance-safe claim with a full audit trail.</p><div class="stat-chip"><b>A$2.20</b> per encounter</div></article>
+        <article class="card"><span class="kicker">05 · Per case</span><h3>Utilisation review assistant</h3><p>Builds the medical-necessity pack for each admission against InterQual / MCG criteria.</p><div class="stat-chip"><b>A$11</b> per case</div></article>
+        <article class="card"><span class="kicker">06 · Per 100 claims</span><h3>Revenue-cycle denial analyst</h3><p>Spots denial trends, finds the root cause and re-submits in batch.</p><div class="stat-chip"><b>A$22</b> per 100 claims</div></article>
+        <article class="card"><span class="kicker">07 · Per intake</span><h3>Patient intake normaliser</h3><p>Turns faxes, PDFs, emails and portal forms into clean, structured EMR records.</p><div class="stat-chip"><b>A$1.80</b> per intake</div></article>
+        <article class="card"><span class="kicker">08 · Per recovered</span><h3>No-show recovery voice</h3><p>Calls no-shows in their language, rebooks against the live calendar, falls back to SMS.</p><div class="stat-chip"><b>A$4.80</b> per recovered</div></article>
+        <article class="card"><span class="kicker">09 · Per refill</span><h3>Pharmacy refill voice</h3><p>Takes the patient call, checks formulary and PBM, and sends the e-scribe.</p><div class="stat-chip"><b>A$1.10</b> per refill</div></article>
+        <article class="card"><span class="kicker">10 · Per provider · mo</span><h3>Credentialing &amp; re-cred packet</h3><p>Keeps NPI, CAQH, DEA and payer applications current and tracks every expiration.</p><div class="stat-chip"><b>A$38</b> per provider · mo</div></article>
+        <article class="card"><span class="kicker">11 · Per closed gap</span><h3>Care-gap outreach voice</h3><p>Runs multilingual outreach on HEDIS measures and preventive screenings.</p><div class="stat-chip"><b>A$8.40</b> per closed gap</div></article>
+        <article class="card"><span class="kicker">12 · Per result</span><h3>Lab-result patient notifier</h3><p>Calls patients with a plain-language explanation of results, synced to MyChart.</p><div class="stat-chip"><b>A$0.62</b> per result</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=healthcare" class="btn btn-primary">Book audit · Healthcare <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 02 LEGAL ========== -->
+  <section class="section" id="legal">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">02 · Legal · 10 SKUs · 99.0% on-time SLA target</span>
+        <h2 class="h2">Discovery, diligence and drafting — <em>weeks into hours</em>.</h2>
+        <p class="lede">Document review and routine drafting burn billable hours that never reach the client. These agents plug into Relativity, iManage, NetDocuments, HighQ, Ironclad and your jurisdiction's e-filing layer, and every output carries a privilege flag, citation and confidence score. For BigLaw litigation and transactional teams, in-house GC offices, RegOps and corporate compliance.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per 1k docs</span><h3>Discovery &amp; privilege tagger</h3><p>Tags privilege, work-product, relevance, PII and issue codes across the whole corpus.</p><div class="stat-chip"><b>A$68</b> per 1k docs</div></article>
+        <article class="card"><span class="kicker">02 · Per deal</span><h3>M&amp;A diligence memo</h3><p>Reads the data room and returns risk themes, an executive summary and a red-flag log.</p><div class="stat-chip"><b>A$2,400</b> per deal</div></article>
+        <article class="card"><span class="kicker">03 · Per contract</span><h3>Contract redline &amp; negotiator</h3><p>Marks up counterparty paper against your playbook, inside your CLM.</p><div class="stat-chip"><b>A$24</b> per contract</div></article>
+        <article class="card"><span class="kicker">04 · Per 1k entries</span><h3>Privilege log generator</h3><p>Produces a court-ready log with schedule, privilege type and sample review.</p><div class="stat-chip"><b>A$180</b> per 1k entries</div></article>
+        <article class="card"><span class="kicker">05 · Per invoice</span><h3>Outside-counsel invoice reviewer</h3><p>Checks UTBMS / ABA codes, flags outliers and builds the rebate packet.</p><div class="stat-chip"><b>A$0.85</b> per invoice</div></article>
+        <article class="card"><span class="kicker">06 · Per qualified</span><h3>Client intake + conflict-check voice</h3><p>Answers the phone, runs the conflict scan and opens the matter.</p><div class="stat-chip"><b>A$4.20</b> per qualified</div></article>
+        <article class="card"><span class="kicker">07 · Per memo</span><h3>Legal research drafter</h3><p>Bluebook-cited, jurisdiction-scoped memos with confidence bands.</p><div class="stat-chip"><b>A$28</b> per memo</div></article>
+        <article class="card"><span class="kicker">08 · Per filing</span><h3>Court filing drafter &amp; e-filer</h3><p>Drafts the motion, brief and exhibit packet, then submits via PACER / eCourts.</p><div class="stat-chip"><b>A$36</b> per filing</div></article>
+        <article class="card"><span class="kicker">09 · Per hour audio</span><h3>Deposition &amp; transcript summariser</h3><p>Issue-tagged digests with an impeachment map and exhibit pulls.</p><div class="stat-chip"><b>A$9.50</b> per hour audio</div></article>
+        <article class="card"><span class="kicker">10 · Per matter · mo</span><h3>Timekeeping narrative expander</h3><p>Expands cryptic time entries into audit-safe, UTBMS-coded lines.</p><div class="stat-chip"><b>A$14</b> per matter · mo</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=legal" class="btn btn-primary">Book audit · Legal <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 03 FINANCE ========== -->
+  <section class="section section--soft" id="finance">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">03 · Finance · 10 SKUs · 99.6% on-time SLA target</span>
+        <h2 class="h2">Close the books by the <em>second</em>, not the ninth.</h2>
+        <p class="lede">Every day the close slips costs decisions, weekends and audit fees. These agents match, reconcile and draft around the clock — every posting audit-trailed and reversible, nothing hitting the ledger without a human approve. Plugs into NetSuite, Oracle, SAP, Xero, MYOB, Dynamics, Workday and your Stripe / Adyen / Wise / Plaid / bank feeds. For controllers, AP/AR, FP&amp;A, treasury and fintech ops — ASX-200 to scale-up.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per invoice</span><h3>Three-way match AP</h3><p>Matches PO, receipt and invoice, routes the exceptions, posts the rest.</p><div class="stat-chip"><b>A$0.85</b> per invoice</div></article>
+        <article class="card"><span class="kicker">02 · Per remittance</span><h3>Cash application</h3><p>Applies remittances to the right customer account — partials and overpayments included.</p><div class="stat-chip"><b>A$0.42</b> per remittance</div></article>
+        <article class="card"><span class="kicker">03 · Per entity · mo</span><h3>Month-end accrual drafter</h3><p>Drafts accruals and prepayments automatically, each with a confidence score.</p><div class="stat-chip"><b>A$240</b> per entity · mo</div></article>
+        <article class="card"><span class="kicker">04 · Per entity · mo</span><h3>Intercompany reconciler</h3><p>Matches across entities, handles FX and drafts the elimination entry.</p><div class="stat-chip"><b>A$180</b> per entity · mo</div></article>
+        <article class="card"><span class="kicker">05 · Per entry</span><h3>Bank · card · wallet recon</h3><p>Auto-matches 99% of feed entries to the ledger, with a kill-switch on drift.</p><div class="stat-chip"><b>A$0.41</b> per entry</div></article>
+        <article class="card"><span class="kicker">06 · Per claim</span><h3>T&amp;E expense &amp; policy audit</h3><p>Reads the receipt, applies policy and hands the approver a clean exception pack.</p><div class="stat-chip"><b>A$0.65</b> per claim</div></article>
+        <article class="card"><span class="kicker">07 · Per verified</span><h3>KYB / KYC onboarding voice</h3><p>Walks applicants through identity, collects documents, maps UBOs and scores risk.</p><div class="stat-chip"><b>A$8.40</b> per verified</div></article>
+        <article class="card"><span class="kicker">08 · Of recovered</span><h3>AR collections voice</h3><p>Calls overdue accounts, takes promise-to-pay and sends the payment link.</p><div class="stat-chip"><b>3.4%</b> of recovered</div></article>
+        <article class="card"><span class="kicker">09 · Per vendor</span><h3>Vendor onboarding</h3><p>Collects W-9 / W-8BEN / COI, verifies TIN and banking details, runs the e-sign.</p><div class="stat-chip"><b>A$4.60</b> per vendor</div></article>
+        <article class="card"><span class="kicker">10 · Per return</span><h3>Sales-tax nexus &amp; return drafter</h3><p>Monitors nexus and drafts state and VAT returns ready to file.</p><div class="stat-chip"><b>A$42</b> per return</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=finance" class="btn btn-primary">Book audit · Finance <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 04 REAL ESTATE ========== -->
+  <section class="section" id="real-estate">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">04 · Real estate · 12 SKUs · 98.8% on-time SLA target</span>
+        <h2 class="h2">Listings, leases and lenders — <em>one agent desk</em>.</h2>
+        <p class="lede">Missed enquiries are missed commissions, and the admin repeats every week, every unit, every settlement. We speak MLS, REA, Domain, CoreLogic, Rightmove, Zillow and LoopNet, and plug into VaultRE, Rex, Rockend, PropertyMe, Yardi, AppFolio, Salesforce and your title / closing stack. For brokerages, property managers, REITs, commercial landlords, PropTech platforms, short-stay operators and title / conveyancing firms.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per qualified</span><h3>Inbound enquiry voice (24/7)</h3><p>Answers in the caller's language, qualifies, books the inspection and writes back to the CRM.</p><div class="stat-chip"><b>A$3.20</b> per qualified</div></article>
+        <article class="card"><span class="kicker">02 · Per listing</span><h3>Listing copy + hero-photo</h3><p>Photos and a spec sheet in; portal-ready, SEO-tuned, multilingual copy out.</p><div class="stat-chip"><b>A$4.40</b> per listing</div></article>
+        <article class="card"><span class="kicker">03 · Per CMA</span><h3>CMA / price-guide drafter</h3><p>Comps, yield and heat-map in a one-page PDF for the vendor pitch.</p><div class="stat-chip"><b>A$9.80</b> per CMA</div></article>
+        <article class="card"><span class="kicker">04 · Per lease</span><h3>Commercial lease abstractor</h3><p>Distils an 80-plus-page lease into key dates, options, rent reviews and risks.</p><div class="stat-chip"><b>A$18</b> per lease</div></article>
+        <article class="card"><span class="kicker">05 · Per screen</span><h3>Tenant screening</h3><p>Credit, income, references, ID and bank-statement analysis in one report.</p><div class="stat-chip"><b>A$7.10</b> per screen</div></article>
+        <article class="card"><span class="kicker">06 · Per unit · mo</span><h3>Rent-roll + arrears reconciler</h3><p>Daily bank feed becomes ageing, variance and the owner statement.</p><div class="stat-chip"><b>A$0.90</b> per unit · mo</div></article>
+        <article class="card"><span class="kicker">07 · Per ticket</span><h3>Maintenance hotline voice</h3><p>Triages the tenant call, dispatches the trade, checks the quote and the warranty.</p><div class="stat-chip"><b>A$2.10</b> per ticket</div></article>
+        <article class="card"><span class="kicker">08 · Per settlement</span><h3>Settlement / closing coordinator</h3><p>Chases conveyancer, lender, title and insurer, and logs every milestone.</p><div class="stat-chip"><b>A$22</b> per settlement</div></article>
+        <article class="card"><span class="kicker">09 · Of recovered</span><h3>Late-rent collection voice</h3><p>Tiered, jurisdiction-aware calls with payment plans and notice-to-vacate triggers.</p><div class="stat-chip"><b>4.1%</b> of recovered</div></article>
+        <article class="card"><span class="kicker">10 · Per inspection</span><h3>Move-in / out condition report</h3><p>Photos and video become a bond-dispute-grade structured report.</p><div class="stat-chip"><b>A$12</b> per inspection</div></article>
+        <article class="card"><span class="kicker">11 · Per portfolio</span><h3>Monthly investor reporting pack</h3><p>Operating, financial and variance narrative, delivered as PDF and XLSX.</p><div class="stat-chip"><b>A$68</b> per portfolio</div></article>
+        <article class="card"><span class="kicker">12 · Per asset</span><h3>CRE due-diligence packet</h3><p>Rent roll, leases, capex, zoning and environmental in one summary.</p><div class="stat-chip"><b>A$280</b> per asset</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=real-estate" class="btn btn-primary">Book audit · Real estate <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 05 E-COMMERCE ========== -->
+  <section class="section section--soft" id="ecommerce">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">05 · E-commerce · 10 SKUs · 99.2% on-time SLA target</span>
+        <h2 class="h2">Recover the revenue that <em>leaks between systems</em>.</h2>
+        <p class="lede">Refunds, chargebacks, stockouts and unanswered WISMO calls quietly drain margin every day. These agents plug into Shopify, Amazon SP-API, TikTok Shop, Klaviyo, Gorgias, Zendesk, Linnworks, NetSuite and every major 3PL — and remove the work your CX team hates, not the team itself. For D2C brands, marketplace sellers, 3PL-powered merchants and Amazon operations.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per resolved</span><h3>Refund &amp; dispute agent</h3><p>Reads order, carrier and tone, then makes the right offer — fraud-aware.</p><div class="stat-chip"><b>A$3.80</b> per resolved</div></article>
+        <article class="card"><span class="kicker">02 · Per pack</span><h3>Chargeback evidence builder</h3><p>Builds and auto-submits Stripe / Shopify / Amazon evidence packs, tuned for win rate.</p><div class="stat-chip"><b>A$22</b> per pack</div></article>
+        <article class="card"><span class="kicker">03 · Per SKU</span><h3>Listing enricher</h3><p>SEO copy, A+ content, alt-text and variant scaffolding for every SKU.</p><div class="stat-chip"><b>A$1.20</b> per SKU</div></article>
+        <article class="card"><span class="kicker">04 · Per SKU · day</span><h3>Amazon SP-API Buy-Box repricer</h3><p>Rules plus ML pricing with a stockout guard, velocity-aware.</p><div class="stat-chip"><b>A$0.04</b> per SKU · day</div></article>
+        <article class="card"><span class="kicker">05 · Per SKU · wk</span><h3>Inventory forecaster</h3><p>Forecasts by SKU, channel and lead time, drafts the PO, flags velocity anomalies.</p><div class="stat-chip"><b>A$0.30</b> per SKU · wk</div></article>
+        <article class="card"><span class="kicker">06 · Per reply</span><h3>Review responder</h3><p>Replies in your brand voice, in the customer's language, escalation-aware.</p><div class="stat-chip"><b>A$0.80</b> per reply</div></article>
+        <article class="card"><span class="kicker">07 · Per resolved</span><h3>WISMO voice</h3><p>Answers "where is my order?" 24/7, checks carrier exceptions, books re-delivery.</p><div class="stat-chip"><b>A$0.95</b> per resolved</div></article>
+        <article class="card"><span class="kicker">08 · Per incident</span><h3>3PL exceptions writer</h3><p>Short-ship, damage or refused delivery — the claim packet drafts itself.</p><div class="stat-chip"><b>A$2.40</b> per incident</div></article>
+        <article class="card"><span class="kicker">09 · Per accepted</span><h3>Post-purchase upsell voice</h3><p>Outbound, review-gated and offer-matched — you pay only when the customer says yes.</p><div class="stat-chip"><b>A$1.80</b> per accepted</div></article>
+        <article class="card"><span class="kicker">10 · Per return</span><h3>Returns fraud scorer</h3><p>Flags serial returners and policy abuse before the refund goes out.</p><div class="stat-chip"><b>A$0.22</b> per return</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=ecommerce" class="btn btn-primary">Book audit · E-commerce <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 06 HR & HIRING ========== -->
+  <section class="section" id="hr">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">06 · HR &amp; hiring · 10 SKUs · 99.0% on-time SLA target</span>
+        <h2 class="h2">Close roles in <em>days</em>, not quarters.</h2>
+        <p class="lede">Every week a role stays open costs output, and good candidates go to whoever moves first. These agents source, screen, schedule and onboard — every screening decision explained and bias-audited — inside Workday, Greenhouse, Lever, SmartRecruiters, BambooHR and Rippling. For in-house talent teams, RPOs, staffing agencies and shared-service HR.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per contacted</span><h3>Multi-channel sourcer</h3><p>LinkedIn, Boolean and database search with a personalised first touch.</p><div class="stat-chip"><b>A$1.40</b> per contacted</div></article>
+        <article class="card"><span class="kicker">02 · Per CV</span><h3>CV shortlister</h3><p>Scores every CV against the JD with explainable, bias-audited reasoning.</p><div class="stat-chip"><b>A$0.60</b> per CV</div></article>
+        <article class="card"><span class="kicker">03 · Per screen</span><h3>Phone-screen voice</h3><p>Runs structured first-round interviews in the candidate's language.</p><div class="stat-chip"><b>A$5.80</b> per screen</div></article>
+        <article class="card"><span class="kicker">04 · Per slot</span><h3>Interview scheduler</h3><p>Calendars, timezones, reschedules and panel interviews — handled.</p><div class="stat-chip"><b>A$1.40</b> per slot</div></article>
+        <article class="card"><span class="kicker">05 · Per referee</span><h3>Reference-check voice</h3><p>Calls referees asynchronously, asks structured questions, writes the report.</p><div class="stat-chip"><b>A$8.40</b> per referee</div></article>
+        <article class="card"><span class="kicker">06 · Per offer</span><h3>Offer-letter generator</h3><p>Comp band, region rules and the approval chain — drafted and routed.</p><div class="stat-chip"><b>A$6.20</b> per offer</div></article>
+        <article class="card"><span class="kicker">07 · Per hire</span><h3>Onboarding dispatcher</h3><p>Docs, system access, payroll and the first-week agenda, set up before day one.</p><div class="stat-chip"><b>A$28</b> per hire</div></article>
+        <article class="card"><span class="kicker">08 · Per enrolment</span><h3>Benefits enrolment voice</h3><p>Walks employees through plans, dependents and life-event changes.</p><div class="stat-chip"><b>A$6.80</b> per enrolment</div></article>
+        <article class="card"><span class="kicker">09 · Per resolved</span><h3>Internal help-desk</h3><p>Policy, payroll and leave questions answered with SOX-safe responses.</p><div class="stat-chip"><b>A$1.10</b> per resolved</div></article>
+        <article class="card"><span class="kicker">10 · Per exit</span><h3>Exit-interview voice</h3><p>Candid transcripts, recurring themes and retention intelligence from every departure.</p><div class="stat-chip"><b>A$7.60</b> per exit</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=hr" class="btn btn-primary">Book audit · HR <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 07 MARKETING ========== -->
+  <section class="section section--soft" id="marketing">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">07 · Marketing · 10 SKUs · 98.5% on-time SLA target</span>
+        <h2 class="h2">Ship briefs, not <em>brainstorms</em>.</h2>
+        <p class="lede">Your strategy is yours — these agents turn it into shippable output at the pace your calendar demands, instead of two-week creative cycles. For in-house brand, growth and content teams, performance agencies and CMO offices.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per brief</span><h3>Brief translator</h3><p>Turns the positioning doc into a channel-mapped creative brief.</p><div class="stat-chip"><b>A$14</b> per brief</div></article>
+        <article class="card"><span class="kicker">02 · Per variant</span><h3>Campaign variant engine</h3><p>Hero, social, email and SMS variants mapped to each funnel stage.</p><div class="stat-chip"><b>A$2.20</b> per variant</div></article>
+        <article class="card"><span class="kicker">03 · Per asset</span><h3>Ad-creative sprinter</h3><p>Meta, TikTok, LinkedIn and YouTube variants at scale.</p><div class="stat-chip"><b>A$3.40</b> per asset</div></article>
+        <article class="card"><span class="kicker">04 · Per URL</span><h3>SEO content auditor + refresh</h3><p>Site-wide audit, a refresh plan, and the drafts already queued.</p><div class="stat-chip"><b>A$1.80</b> per URL</div></article>
+        <article class="card"><span class="kicker">05 · Per meeting</span><h3>Outbound SDR voice</h3><p>Works the list to a booked meeting, fully CRM-integrated.</p><div class="stat-chip"><b>A$38</b> per meeting</div></article>
+        <article class="card"><span class="kicker">06 · Per account</span><h3>ABM account researcher</h3><p>Target-account dossiers with ICP fit and executive news.</p><div class="stat-chip"><b>A$4.80</b> per account</div></article>
+        <article class="card"><span class="kicker">07 · Per post</span><h3>Blog drafter</h3><p>Outline to cited, SEO-ready draft in one pass.</p><div class="stat-chip"><b>A$26</b> per post</div></article>
+        <article class="card"><span class="kicker">08 · Per variant</span><h3>Landing-page CRO sprinter</h3><p>Hypothesis-mapped page variants, wired straight into your test tool.</p><div class="stat-chip"><b>A$9.40</b> per variant</div></article>
+        <article class="card"><span class="kicker">09 · Per alert</span><h3>PR &amp; share-of-voice monitor</h3><p>Watches brand and competitors, scores sentiment, sends the alert.</p><div class="stat-chip"><b>A$0.90</b> per alert</div></article>
+        <article class="card"><span class="kicker">10 · Per signed</span><h3>Influencer outreach + negotiate</h3><p>Builds the list, makes first contact, negotiates terms, writes the brief.</p><div class="stat-chip"><b>A$42</b> per signed</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=marketing" class="btn btn-primary">Book audit · Marketing <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 08 MANUFACTURING ========== -->
+  <section class="section" id="manufacturing">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">08 · Manufacturing · 10 SKUs · 99.3% on-time SLA target</span>
+        <h2 class="h2">Catch quality escapes <em>before</em> they leave the line.</h2>
+        <p class="lede">An escape your customer finds first costs far more than one caught on shift. These agents sit between the ERP, the MES and the line operator — surfacing anomalies, reconciling work orders and drafting CAPA in real time. For discrete and process manufacturers, quality engineers, MES / ERP ops, supplier quality and safety teams, especially mid-market plants with SAP / Oracle / Dynamics sprawl.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per shift</span><h3>Live QA-log watcher</h3><p>Reads sensor and NCR data live, flags anomalies and trends, escalates by shift.</p><div class="stat-chip"><b>A$12</b> per shift</div></article>
+        <article class="card"><span class="kicker">02 · Per CAPA</span><h3>CAPA writer</h3><p>Five-whys root cause, corrective and preventive actions, owner assigned.</p><div class="stat-chip"><b>A$34</b> per CAPA</div></article>
+        <article class="card"><span class="kicker">03 · Per NCR</span><h3>Supplier NCR drafter</h3><p>Drafts the non-conformance and 8D packet, submits to the supplier portal.</p><div class="stat-chip"><b>A$18</b> per NCR</div></article>
+        <article class="card"><span class="kicker">04 · Per WO</span><h3>Work-order plan-vs-actual reconciler</h3><p>Captures the delta, the cause code, and the scrap and rework.</p><div class="stat-chip"><b>A$0.95</b> per WO</div></article>
+        <article class="card"><span class="kicker">05 · Per BOM</span><h3>Bill of materials reconciler</h3><p>Catches revision drift between ERP and engineering CAD, rolls up cost.</p><div class="stat-chip"><b>A$14</b> per BOM</div></article>
+        <article class="card"><span class="kicker">06 · Per ticket</span><h3>Maintenance triager</h3><p>IoT and CMMS signals become tickets with a parts-availability check.</p><div class="stat-chip"><b>A$2.80</b> per ticket</div></article>
+        <article class="card"><span class="kicker">07 · Per shift</span><h3>Shift-handover voice</h3><p>A voice note becomes a structured log with anomaly tags and a supervisor ping.</p><div class="stat-chip"><b>A$4.80</b> per shift</div></article>
+        <article class="card"><span class="kicker">08 · Per confirmed</span><h3>Supplier chase voice</h3><p>Calls suppliers on POs, ETAs and expedites — and gets a confirmed answer.</p><div class="stat-chip"><b>A$3.40</b> per confirmed</div></article>
+        <article class="card"><span class="kicker">09 · Per report</span><h3>Safety near-miss intake</h3><p>Shop-floor voice reporting into an incident log and trend dashboard.</p><div class="stat-chip"><b>A$1.90</b> per report</div></article>
+        <article class="card"><span class="kicker">10 · Per cert</span><h3>Quality certificate parser</h3><p>Checks CoCs and mill certs for compliance, pack versus spec.</p><div class="stat-chip"><b>A$1.40</b> per cert</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=manufacturing" class="btn btn-primary">Book audit · Manufacturing <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 09 EDUCATION ========== -->
+  <section class="section section--soft" id="education">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">09 · Education · 10 SKUs · 99.0% on-time SLA target</span>
+        <h2 class="h2">Admissions and student services, <em>open 24/7</em>.</h2>
+        <p class="lede">Slow responses lose enrolments; the inbound flood never stops. These agents answer in the student's language and write straight back to your SIS, LMS and CRM. For universities, K-12 districts, RTOs, bootcamps, ESL providers and education platforms.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per application</span><h3>Admissions triage</h3><p>Parses, scores and routes every application, flags missing docs, replies in language.</p><div class="stat-chip"><b>A$2.40</b> per application</div></article>
+        <article class="card"><span class="kicker">02 · Per transcript</span><h3>International transcript reconciler</h3><p>Maps credits, runs WES / NACES checks and builds the conversion pack.</p><div class="stat-chip"><b>A$3.80</b> per transcript</div></article>
+        <article class="card"><span class="kicker">03 · Per packet</span><h3>Financial-aid packaging</h3><p>Eligibility, award letter, appeal draft and the e-sign flow.</p><div class="stat-chip"><b>A$11</b> per packet</div></article>
+        <article class="card"><span class="kicker">04 · Per call</span><h3>Student-services voice</h3><p>Multilingual, 24/7, with live SIS look-up and ticket creation.</p><div class="stat-chip"><b>A$1.20</b> per call</div></article>
+        <article class="card"><span class="kicker">05 · Per booked</span><h3>Tutor-dispatch voice</h3><p>Matches subject and schedule across a multi-region tutor network.</p><div class="stat-chip"><b>A$2.80</b> per booked</div></article>
+        <article class="card"><span class="kicker">06 · Per converted</span><h3>Enrolment chaser</h3><p>Multi-touch follow-up on deposits, starter docs and orientation.</p><div class="stat-chip"><b>A$14</b> per converted</div></article>
+        <article class="card"><span class="kicker">07 · Per essay</span><h3>Essay-integrity checker</h3><p>AI-content flags, citation scan, originality and style analysis.</p><div class="stat-chip"><b>A$0.80</b> per essay</div></article>
+        <article class="card"><span class="kicker">08 · Per call</span><h3>Fee + payment-plan voice</h3><p>Handles tuition and scholarship questions and negotiates payment plans.</p><div class="stat-chip"><b>A$0.95</b> per call</div></article>
+        <article class="card"><span class="kicker">09 · Per flagged</span><h3>At-risk student early-warning</h3><p>Engagement, grades and attendance signals, with a drafted intervention.</p><div class="stat-chip"><b>A$4.40</b> per flagged</div></article>
+        <article class="card"><span class="kicker">10 · Per cohort</span><h3>Course-feedback summariser</h3><p>Turns reviews into themes, alerts and an accreditor-ready pack.</p><div class="stat-chip"><b>A$28</b> per cohort</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=education" class="btn btn-primary">Book audit · Education <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 10 INSURANCE ========== -->
+  <section class="section" id="insurance">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">10 · Insurance · 10 SKUs · 99.3% on-time SLA target</span>
+        <h2 class="h2">Triage every FNOL in minutes — <em>in the claimant's language</em>.</h2>
+        <p class="lede">Slow first notice of loss means leakage, fraud and churned policyholders. These agents take the call, structure the loss and route by severity — with a full adjuster-reviewable audit trail on every decision. Plugs into Guidewire, Duck Creek, Salesforce FSC, Applied Epic, EZLynx and your bordereaux feeds. For P&amp;C carriers, MGAs, wholesale brokers, TPAs and captive teams.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per FNOL</span><h3>FNOL voice agent</h3><p>Takes the call in the claimant's language and structures the loss on the spot.</p><div class="stat-chip"><b>A$6.80</b> per FNOL</div></article>
+        <article class="card"><span class="kicker">02 · Per claim</span><h3>Severity &amp; routing</h3><p>Low, medium, high, complex — routed correctly, SIU-flagged when warranted.</p><div class="stat-chip"><b>A$1.40</b> per claim</div></article>
+        <article class="card"><span class="kicker">03 · Per claim</span><h3>Fraud red-flag scorer</h3><p>Pattern, image and statement analysis against the NICB watchlist.</p><div class="stat-chip"><b>A$0.85</b> per claim</div></article>
+        <article class="card"><span class="kicker">04 · Per bill</span><h3>Medical bill reviewer</h3><p>CPT validation, duplicate detection, UCR and negotiated-rate checks.</p><div class="stat-chip"><b>A$1.60</b> per bill</div></article>
+        <article class="card"><span class="kicker">05 · Per case</span><h3>Subrogation case-builder</h3><p>Assesses liability and assembles the third-party recovery packet.</p><div class="stat-chip"><b>A$26</b> per case</div></article>
+        <article class="card"><span class="kicker">06 · Per submission</span><h3>Underwriting submission packet</h3><p>SOV, loss-run summary and risk memo — quote-ready.</p><div class="stat-chip"><b>A$48</b> per submission</div></article>
+        <article class="card"><span class="kicker">07 · Per call</span><h3>Policy-check voice</h3><p>Answers customer policy questions, scoped to the policy — never sales advice.</p><div class="stat-chip"><b>A$1.10</b> per call</div></article>
+        <article class="card"><span class="kicker">08 · Per letter</span><h3>Bodily-injury demand-letter</h3><p>Medicals, lost wages and damages with the statute cited.</p><div class="stat-chip"><b>A$42</b> per letter</div></article>
+        <article class="card"><span class="kicker">09 · Per renewed</span><h3>Renewal-outreach voice</h3><p>Outbound renewal calls with the quote and a rate-change explainer.</p><div class="stat-chip"><b>A$18</b> per renewed</div></article>
+        <article class="card"><span class="kicker">10 · Per batch · 1k</span><h3>CAT-event batch intake</h3><p>Storm or wildfire mass-FNOL intake with geofenced triage.</p><div class="stat-chip"><b>A$2,400</b> per batch · 1k</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=insurance" class="btn btn-primary">Book audit · Insurance <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 11 HOSPITALITY ========== -->
+  <section class="section section--soft" id="hospitality">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">11 · Hospitality · 10 SKUs · 99.1% SLA · answer &lt; 2 rings</span>
+        <h2 class="h2">Every call answered. Every booking <em>captured</em>.</h2>
+        <p class="lede">A missed call after 10pm is a booking your competitor takes. These agents answer in the guest's language and plug into Opera, Mews and Cloudbeds (PMS), Toast and Lightspeed (POS), SevenRooms and every major OTA. For hotels, restaurant groups, tour and experience operators, gyms, spas and short-stay portfolios.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per booking</span><h3>Booking voice agent</h3><p>PMS-integrated, upsell-aware, with live availability.</p><div class="stat-chip"><b>A$1.60</b> per booking</div></article>
+        <article class="card"><span class="kicker">02 · Per call</span><h3>Concierge voice</h3><p>Directions, local tips and upsells, in 14 languages.</p><div class="stat-chip"><b>A$1.20</b> per call</div></article>
+        <article class="card"><span class="kicker">03 · Per minute</span><h3>Overflow concierge</h3><p>Absorbs call spikes, issues vouchers, handles compensation.</p><div class="stat-chip"><b>A$0.18</b> per minute</div></article>
+        <article class="card"><span class="kicker">04 · Per reply</span><h3>Review responder</h3><p>TripAdvisor, Google and Booking replies in your brand tone.</p><div class="stat-chip"><b>A$0.80</b> per reply</div></article>
+        <article class="card"><span class="kicker">05 · Per completed</span><h3>Post-stay NPS voice</h3><p>Structured outbound surveys with themes and escalation.</p><div class="stat-chip"><b>A$0.95</b> per completed</div></article>
+        <article class="card"><span class="kicker">06 · Per recovered</span><h3>No-show recovery voice</h3><p>Rebooks the guest, applies the cancel fee, salvages the revenue.</p><div class="stat-chip"><b>A$4.60</b> per recovered</div></article>
+        <article class="card"><span class="kicker">07 · Per qualified</span><h3>Group-enquiry router</h3><p>Qualifies events, weddings and MICE enquiries before they reach sales.</p><div class="stat-chip"><b>A$6.40</b> per qualified</div></article>
+        <article class="card"><span class="kicker">08 · Per update</span><h3>Menu + allergen writer</h3><p>Copy, allergens and translations, synced to the POS.</p><div class="stat-chip"><b>A$2.80</b> per update</div></article>
+        <article class="card"><span class="kicker">09 · Per night</span><h3>Night-audit reconciler</h3><p>Folio close, rate variance and housekeeping status, every night.</p><div class="stat-chip"><b>A$8.20</b> per night</div></article>
+        <article class="card"><span class="kicker">10 · Per interaction</span><h3>Loyalty points voice</h3><p>Redemptions, tiers and partner transfers, with a fraud check.</p><div class="stat-chip"><b>A$0.62</b> per interaction</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=hospitality" class="btn btn-primary">Book audit · Hospitality <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 12 LOGISTICS ========== -->
+  <section class="section" id="logistics">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">12 · Logistics · 10 SKUs · 99.0% on-time SLA target</span>
+        <h2 class="h2">Tell the customer <em>before they ask</em>.</h2>
+        <p class="lede">Exceptions discovered by the customer cost claims, credits and contracts. These agents predict the slip, write the update and draft the claim — plugged into Samsara, Descartes, CargoWise, Fleet Complete, Shipwell and most TMS stacks. For 3PLs, last-mile and line-haul carriers, freight forwarders, customs brokers and logistics-tech platforms.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per trip</span><h3>Driver dispatch voice</h3><p>Hands-free stop confirmations and route updates for drivers.</p><div class="stat-chip"><b>A$0.42</b> per trip</div></article>
+        <article class="card"><span class="kicker">02 · Per shipment</span><h3>Live ETA predictor</h3><p>GPS, driver and traffic signals into a customer notification.</p><div class="stat-chip"><b>A$0.18</b> per shipment</div></article>
+        <article class="card"><span class="kicker">03 · Per call</span><h3>Customer WISMO voice</h3><p>Track-and-trace and re-scheduling, in the customer's language.</p><div class="stat-chip"><b>A$0.95</b> per call</div></article>
+        <article class="card"><span class="kicker">04 · Per exception</span><h3>Exception-packet writer</h3><p>Short-ship, damage or refused delivery — the claim drafts itself.</p><div class="stat-chip"><b>A$3.60</b> per exception</div></article>
+        <article class="card"><span class="kicker">05 · Per POD</span><h3>POD capture</h3><p>Driver voice note becomes a signed POD with image QC.</p><div class="stat-chip"><b>A$0.22</b> per POD</div></article>
+        <article class="card"><span class="kicker">06 · Per doc</span><h3>Customs docs reviewer</h3><p>HS codes, duty checks and certificates of origin, paperless.</p><div class="stat-chip"><b>A$1.80</b> per doc</div></article>
+        <article class="card"><span class="kicker">07 · Per claim</span><h3>Carrier-claim drafter</h3><p>Builds the evidence pack, submits the claim, runs the chase.</p><div class="stat-chip"><b>A$24</b> per claim</div></article>
+        <article class="card"><span class="kicker">08 · Per load</span><h3>Load-board triage</h3><p>Bids rates, matches loads, chats with brokers, logs the decision.</p><div class="stat-chip"><b>A$2.40</b> per load</div></article>
+        <article class="card"><span class="kicker">09 · Per shipment</span><h3>Cross-border declaration</h3><p>Multi-country declarations, ATA Carnet, restricted-goods flags.</p><div class="stat-chip"><b>A$4.80</b> per shipment</div></article>
+        <article class="card"><span class="kicker">10 · Per incident</span><h3>Detention / demurrage billing</h3><p>Captures time on site, gathers evidence, drafts the invoice.</p><div class="stat-chip"><b>A$6.20</b> per incident</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=logistics" class="btn btn-primary">Book audit · Logistics <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 13 PUBLIC SAFETY ========== -->
+  <section class="section section--soft" id="public-safety">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">13 · Public safety &amp; justice · 10 SKUs · 100% audit-logged</span>
+        <h2 class="h2">Paperwork off the beat. <em>Evidence</em> on the record.</h2>
+        <p class="lede">Officers lose two-plus hours a shift to admin that never makes the street safer. These agents take the paperwork layer — incident reports, evidence inventory, court filings, FOI requests, witness statements — with full chain-of-custody logging on every action. Deployable on-prem or in a sovereign region of your choosing (AU, UK, EU, US, UAE, SA). For police and sheriff's departments, prosecutors' offices, corrections, private investigators and in-house investigations teams.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card"><span class="kicker">01 · Per report</span><h3>Incident report writer</h3><p>Body-cam audio and voice notes become a structured incident report.</p><div class="stat-chip"><b>A$4.80</b> per report</div></article>
+        <article class="card"><span class="kicker">02 · Per item</span><h3>Evidence inventory &amp; CoC</h3><p>Media and documents inventoried with a chain-of-custody log.</p><div class="stat-chip"><b>A$0.90</b> per item</div></article>
+        <article class="card"><span class="kicker">03 · Per statement</span><h3>Witness statement voice</h3><p>Multilingual intake, transcribed and signed.</p><div class="stat-chip"><b>A$3.40</b> per statement</div></article>
+        <article class="card"><span class="kicker">04 · Per filing</span><h3>Court filings drafter</h3><p>Motions, briefs and the exhibits packet, ready to file.</p><div class="stat-chip"><b>A$28</b> per filing</div></article>
+        <article class="card"><span class="kicker">05 · Per request</span><h3>FOI / records request triage</h3><p>Classifies, redacts and assembles the release packet.</p><div class="stat-chip"><b>A$6.20</b> per request</div></article>
+        <article class="card"><span class="kicker">06 · Per doc · mo</span><h3>Subpoena &amp; warrant tracker</h3><p>Deadlines, service status and alerts — nothing lapses quietly.</p><div class="stat-chip"><b>A$0.45</b> per doc · mo</div></article>
+        <article class="card"><span class="kicker">07 · Per txn scored</span><h3>AML transaction scorer</h3><p>Pattern detection with an explainable score and a drafted SAR.</p><div class="stat-chip"><b>A$0.08</b> per txn scored</div></article>
+        <article class="card"><span class="kicker">08 · Per case</span><h3>Fraud-case builder</h3><p>Evidence, timeline and the referral packet, assembled.</p><div class="stat-chip"><b>A$18</b> per case</div></article>
+        <article class="card"><span class="kicker">09 · Per call</span><h3>Court-calendar voice</h3><p>Answers inbound hearing-status calls and routes the rest.</p><div class="stat-chip"><b>A$1.20</b> per call</div></article>
+        <article class="card"><span class="kicker">10 · Per subject</span><h3>Background-check packet</h3><p>Records searched, deduplicated and annotated into one packet.</p><div class="stat-chip"><b>A$3.80</b> per subject</div></article>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=public-safety" class="btn btn-primary">Book audit · Public safety <span class="ar">↗</span></a></div>
+    </div>
+  </section>
+
+  <!-- ========== 14 VOICE AGENTS ========== -->
+  <section class="section dark" id="voice">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">14 · Voice agents · 16 SKUs · answer &lt; 2 rings</span>
+        <h2 class="h2">An AI phone desk that <em>never</em> goes to voicemail.</h2>
+        <p class="lede">Inbound, outbound, warm-transfer and live interpretation on the numbers you already own — Aircall, Twilio, RingCentral, Zoom Phone, GoTo. Every call is transcribed, scored, summarised and written back to HubSpot, Salesforce, Zendesk or your helpdesk. Fluent, not translated, with more languages added per engagement.</p>
       </div>
 
-      <div class="directory reveal delay-2" data-directory>
-        <aside class="dir-list">
-          <div class="dir-head"><span>◆ Practice areas</span><span>14</span></div>
-          <button type="button" class="dir-item active" data-dir-item="healthcare">
-            <span class="dir-num">01</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/healthcare.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Healthcare</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="legal">
-            <span class="dir-num">02</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/legal.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Legal</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="finance">
-            <span class="dir-num">03</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/finance.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Finance</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="real-estate">
-            <span class="dir-num">04</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/real-estate.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Real estate</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="ecommerce">
-            <span class="dir-num">05</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/ecommerce.svg')" aria-hidden="true"></span>
-            <span class="dir-name">E-commerce</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="hr">
-            <span class="dir-num">06</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/hr.svg')" aria-hidden="true"></span>
-            <span class="dir-name">HR &amp; hiring</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="marketing">
-            <span class="dir-num">07</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/marketing.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Marketing</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="manufacturing">
-            <span class="dir-num">08</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/manufacturing.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Manufacturing</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="education">
-            <span class="dir-num">09</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/education.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Education</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="insurance">
-            <span class="dir-num">10</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/insurance.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Insurance</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="hospitality">
-            <span class="dir-num">11</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/hospitality.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Hospitality</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="logistics">
-            <span class="dir-num">12</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/logistics.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Logistics</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="public-safety">
-            <span class="dir-num">13</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/public-safety.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Public safety</span>
-            <span class="dir-arrow">→</span>
-          </button>
-          <button type="button" class="dir-item" data-dir-item="voice">
-            <span class="dir-num">14</span>
-            <span class="dir-glyph" style="--glyph:url('assets/verticals/voice.svg')" aria-hidden="true"></span>
-            <span class="dir-name">Voice agents</span>
-            <span class="dir-arrow">→</span>
-          </button>
-        </aside>
+      <div class="langs reveal" style="margin-bottom:28px">
+        <span class="lang"><span class="code">EN</span> English</span>
+        <span class="lang"><span class="code">ES</span> Spanish</span>
+        <span class="lang"><span class="code">ZH</span> Mandarin</span>
+        <span class="lang"><span class="code">AR</span> Arabic</span>
+        <span class="lang"><span class="code">HI</span> Hindi</span>
+        <span class="lang"><span class="code">VI</span> Vietnamese</span>
+        <span class="lang"><span class="code">PT</span> Portuguese</span>
+        <span class="lang"><span class="code">FR</span> French</span>
+        <span class="lang"><span class="code">DE</span> German</span>
+        <span class="lang"><span class="code">JA</span> Japanese</span>
+        <span class="lang"><span class="code">KO</span> Korean</span>
+        <span class="lang"><span class="code">TH</span> Thai</span>
+        <span class="lang"><span class="code">ID</span> Indonesian</span>
+        <span class="lang"><span class="code">IT</span> Italian</span>
+        <span class="lang"><span class="code">+more</span> on request</span>
+      </div>
 
-        <div class="dir-panels">
+      <div class="grid grid-4 vgrid reveal">
+        <div class="vtile"><span class="vp">per answered · A$0.38</span><h3>Inbound receptionist</h3><p>24/7 greet · route · capture</p></div>
+        <div class="vtile"><span class="vp">per meeting · A$38</span><h3>Outbound SDR caller</h3><p>List → meeting booked in calendar</p></div>
+        <div class="vtile"><span class="vp">per booked · A$1.60</span><h3>Appointment booker</h3><p>Clinic · salon · trades · calendar</p></div>
+        <div class="vtile"><span class="vp">per resolved · A$1.80</span><h3>Tier-1 support voice</h3><p>Helpdesk KB · deflect · warm-transfer</p></div>
+        <div class="vtile"><span class="vp">of recovered · 3.4%</span><h3>Collections &amp; payments</h3><p>Promise-to-pay · Stripe link</p></div>
+        <div class="vtile"><span class="vp">per completed · A$0.95</span><h3>Survey &amp; NPS caller</h3><p>Outbound · structured · multilingual</p></div>
+        <div class="vtile"><span class="vp">per qualified · A$4.20</span><h3>Lead qualifier voice</h3><p>Form-fill → qualified call</p></div>
+        <div class="vtile"><span class="vp">per triaged · A$2.80</span><h3>Emergency triage voice</h3><p>After-hours · severity · page</p></div>
+        <div class="vtile"><span class="vp">per minute · A$0.22</span><h3>Multilingual interpreter</h3><p>Live EN ↔ 13 others</p></div>
+        <div class="vtile"><span class="vp">per call · A$0.14</span><h3>Call-summary writer</h3><p>Transcript → CRM · action items</p></div>
+        <div class="vtile"><span class="vp">per VM · A$0.11</span><h3>Voicemail-to-task</h3><p>VM transcribe · route · SLA clock</p></div>
+        <div class="vtile"><span class="vp">per scored · A$0.28</span><h3>QA &amp; compliance grader</h3><p>Random sample · script · flags</p></div>
+        <div class="vtile"><span class="vp">per minute · A$0.18</span><h3>Overflow concierge</h3><p>Spike handler · hotel / clinic</p></div>
+        <div class="vtile"><span class="vp">per trip · A$0.42</span><h3>Driver dispatch voice</h3><p>Route updates · POD capture</p></div>
+        <div class="vtile"><span class="vp">per FNOL · A$6.80</span><h3>FNOL claims intake</h3><p>First-notice-of-loss · scored</p></div>
+        <div class="vtile"><span class="vp">per minute · A$0.28</span><h3>Translation hotline</h3><p>14-language · on-demand</p></div>
+      </div>
+      <div class="center" style="margin-top:28px"><a href="contact.html?vertical=voice" class="btn btn-light btn-lg">Book audit · Voice agents <span class="ar">↗</span></a></div>
+    </div>
+  </section>
 
-          <!-- HEALTHCARE -->
-          <div class="dir-panel active" data-dir-panel="healthcare" id="healthcare">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 01 · Healthcare</div>
-                <h3 class="dp-title">Free up <em>clinicians</em> from paperwork that shouldn't need a human.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.4%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>hospital groups, primary care, specialty clinics, ambulatory surgery, dental, telehealth and payers</em>. Agents are <em>HIPAA-aligned, audit-logged and clinician-reviewable</em>, and slot in behind Epic, Cerner, Best Practice, Medical-Director, Athena or your existing EMR. We focus on the highest-dollar pain: ambient scribe, prior-auth, denials, and the revenue-cycle workflows that eat a practice's week.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 12 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Ambient clinical scribe<span>Visit audio → SOAP note · E/M-level suggested · coder-ready</span></div><span class="dp-a-unit">per visit</span><span class="dp-a-price">A$3.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Prior-authorisation packet<span>Payer rules · medical-necessity draft · portal submit</span></div><span class="dp-a-unit">per PA</span><span class="dp-a-price">A$6.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Denied-claim appeal writer<span>Denial code → evidence pack · ERISA-compliant letter</span></div><span class="dp-a-unit">per appeal</span><span class="dp-a-price">A$9.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">ICD-10 / CPT coder<span>Note → coded claim with audit trail · compliance-safe</span></div><span class="dp-a-unit">per encounter</span><span class="dp-a-price">A$2.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Utilisation review assistant<span>Admission → medical-necessity pack · InterQual / MCG</span></div><span class="dp-a-unit">per case</span><span class="dp-a-price">A$11</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Revenue-cycle denial analyst<span>Trend detection · root cause · re-submit batch</span></div><span class="dp-a-unit">per 100 claims</span><span class="dp-a-price">A$22</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Patient intake normaliser<span>Fax / PDF / email / portal → clean structured EMR record</span></div><span class="dp-a-unit">per intake</span><span class="dp-a-price">A$1.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">No-show recovery voice<span>Multilingual rebooking · SMS fall-back · calendar live</span></div><span class="dp-a-unit">per recovered</span><span class="dp-a-price">A$4.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Pharmacy refill voice<span>Patient call · formulary + PBM check · e-scribe</span></div><span class="dp-a-unit">per refill</span><span class="dp-a-price">A$1.10</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Credentialing &amp; re-cred packet<span>NPI · CAQH · DEA · payer apps · expirations tracker</span></div><span class="dp-a-unit">per provider · mo</span><span class="dp-a-price">A$38</span></div>
-            <div class="dp-agent"><span class="dp-a-num">11</span><div class="dp-a-name">Care-gap outreach voice<span>HEDIS measures · preventive screen outreach · multilingual</span></div><span class="dp-a-unit">per closed gap</span><span class="dp-a-price">A$8.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">12</span><div class="dp-a-name">Lab-result patient notifier<span>Result interpretation · patient-friendly voice call · MyChart</span></div><span class="dp-a-unit">per result</span><span class="dp-a-price">A$0.62</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=healthcare" class="btn btn-primary">Book audit · Healthcare <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- LEGAL -->
-          <div class="dir-panel" data-dir-panel="legal" id="legal">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 02 · Legal</div>
-                <h3 class="dp-title">Turn discovery, diligence and drafting from <em>weeks</em> into hours.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.0%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>BigLaw litigation &amp; transactional, in-house GC offices, RegOps and corporate compliance teams</em>. <em>Every output includes privilege flag, citation and confidence score.</em> We plug into Relativity, iManage, NetDocuments, HighQ, Ironclad and the e-filing layer in your jurisdiction. Built for the work that actually moves billable hours.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Discovery &amp; privilege tagger<span>Privilege · work-product · relevance · PII · issue code</span></div><span class="dp-a-unit">per 1k docs</span><span class="dp-a-price">A$68</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">M&amp;A diligence memo<span>VDR upload → risk themes · exec summary · red-flag log</span></div><span class="dp-a-unit">per deal</span><span class="dp-a-price">A$2,400</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Contract redline &amp; negotiator<span>CLM-integrated · playbook-aware · counterparty markup</span></div><span class="dp-a-unit">per contract</span><span class="dp-a-price">A$24</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Privilege log generator<span>Court-ready · schedule · privilege type · sample review</span></div><span class="dp-a-unit">per 1k entries</span><span class="dp-a-price">A$180</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Outside-counsel invoice reviewer<span>UTBMS / ABA codes · outlier flag · rebate packet</span></div><span class="dp-a-unit">per invoice</span><span class="dp-a-price">A$0.85</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Client intake + conflict-check voice<span>AI phone agent · conflict scan · matter open</span></div><span class="dp-a-unit">per qualified</span><span class="dp-a-price">A$4.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Legal research drafter<span>Bluebook-cited · jurisdiction scoped · confidence banded</span></div><span class="dp-a-unit">per memo</span><span class="dp-a-price">A$28</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Court filing drafter &amp; e-filer<span>Motion · brief · exhibit packet · PACER / eCourts submit</span></div><span class="dp-a-unit">per filing</span><span class="dp-a-price">A$36</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Deposition &amp; transcript summariser<span>Issue-tagged digest · impeachment map · exhibit pull</span></div><span class="dp-a-unit">per hour audio</span><span class="dp-a-price">A$9.50</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Timekeeping narrative expander<span>Cryptic entry → audit-safe line · UTBMS coded</span></div><span class="dp-a-unit">per matter · mo</span><span class="dp-a-price">A$14</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=legal" class="btn btn-primary">Book audit · Legal <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- FINANCE -->
-          <div class="dir-panel" data-dir-panel="finance" id="finance">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 03 · Finance</div>
-                <h3 class="dp-title">Close the books by the <em>second</em>, not the ninth.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.6%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>controllers, AP / AR teams, FP&amp;A, treasury, fintech ops and ASX-200 through early-stage scale-ups</em>. Every posting is audit-trailed and reversible; nothing hits the ledger without a human <em>approve</em>. Plugs into NetSuite, Oracle, SAP, Xero, MYOB, Dynamics, Workday and the Stripe / Adyen / Wise / Plaid / bank feeds.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Three-way match AP<span>PO + receipt + invoice · exception routing · post</span></div><span class="dp-a-unit">per invoice</span><span class="dp-a-price">A$0.85</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Cash application<span>Remittance → customer account · partial + overpayment</span></div><span class="dp-a-unit">per remittance</span><span class="dp-a-price">A$0.42</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Month-end accrual drafter<span>Automatic accruals &amp; prepayments · confidence scored</span></div><span class="dp-a-unit">per entity · mo</span><span class="dp-a-price">A$240</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Intercompany reconciler<span>Multi-entity match · FX · elimination entry</span></div><span class="dp-a-unit">per entity · mo</span><span class="dp-a-price">A$180</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Bank · card · wallet recon<span>Feed → ledger · 99% auto-match · kill-switch on drift</span></div><span class="dp-a-unit">per entry</span><span class="dp-a-price">A$0.41</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">T&amp;E expense &amp; policy audit<span>Receipt OCR · policy rules · exception · approver pack</span></div><span class="dp-a-unit">per claim</span><span class="dp-a-price">A$0.65</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">KYB / KYC onboarding voice<span>Identity walk-through · doc collection · UBO · risk score</span></div><span class="dp-a-unit">per verified</span><span class="dp-a-price">A$8.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">AR collections voice<span>Promise-to-pay · Stripe link · escalation-aware</span></div><span class="dp-a-unit">recovered</span><span class="dp-a-price">3.4%</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Vendor onboarding<span>W-9 / W-8BEN / COI · TIN check · banking · e-sign</span></div><span class="dp-a-unit">per vendor</span><span class="dp-a-price">A$4.60</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Sales-tax nexus &amp; return drafter<span>Nexus monitor · state / VAT returns · filing-ready pack</span></div><span class="dp-a-unit">per return</span><span class="dp-a-price">A$42</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=finance" class="btn btn-primary">Book audit · Finance <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- REAL ESTATE -->
-          <div class="dir-panel" data-dir-panel="real-estate" id="real-estate">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 04 · Real estate</div>
-                <h3 class="dp-title">Listings, leases and lenders — <em>all on one agent desk</em>.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">98.8%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>brokerages, property managers, REITs, commercial landlords, PropTech platforms, short-stay operators and title / conveyancing firms</em>. For residential and commercial operators, brokerage teams, PropTech platforms, property managers, REITs and short-stay portfolios. <em>We speak MLS, REA, Domain, CoreLogic, Rightmove, Zillow, LoopNet</em> and plug into VaultRE, Rex, Rockend, PropertyMe, Yardi, AppFolio, Salesforce and the title / closing stacks. Designed for the work that repeats every week, every unit, every settlement.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 12 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Inbound enquiry voice (24/7)<span>Multilingual · book inspection · qualify · CRM write-back</span></div><span class="dp-a-unit">per qualified</span><span class="dp-a-price">A$3.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Listing copy + hero-photo<span>Photos + spec sheet → portal-ready copy · SEO · multilingual</span></div><span class="dp-a-unit">per listing</span><span class="dp-a-price">A$4.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">CMA / price-guide drafter<span>Comps · yield · heat-map · PDF one-pager for vendor pitch</span></div><span class="dp-a-unit">per CMA</span><span class="dp-a-price">A$9.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Commercial lease abstractor<span>80+ page lease → key dates · options · rent review · risks</span></div><span class="dp-a-unit">per lease</span><span class="dp-a-price">A$18</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Tenant screening<span>Credit · income · references · ID · bank-statement analyse</span></div><span class="dp-a-unit">per screen</span><span class="dp-a-price">A$7.10</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Rent-roll + arrears reconciler<span>Daily bank feed · ageing · variance · owner statement</span></div><span class="dp-a-unit">per unit · mo</span><span class="dp-a-price">A$0.90</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Maintenance hotline voice<span>Tenant triage · trade dispatch · quote + warranty check</span></div><span class="dp-a-unit">per ticket</span><span class="dp-a-price">A$2.10</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Settlement / closing coordinator<span>Conveyancer · lender · title · insurer chase · milestone log</span></div><span class="dp-a-unit">per settlement</span><span class="dp-a-price">A$22</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Late-rent collection voice<span>Tiered · jurisdictional · payment-plan · NOTB trigger</span></div><span class="dp-a-unit">recovered</span><span class="dp-a-price">4.1%</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Move-in / out condition report<span>Photo / video → structured report · bond-dispute grade</span></div><span class="dp-a-unit">per inspection</span><span class="dp-a-price">A$12</span></div>
-            <div class="dp-agent"><span class="dp-a-num">11</span><div class="dp-a-name">Monthly investor reporting pack<span>Operating + financial + variance narrative · PDF / XLSX</span></div><span class="dp-a-unit">per portfolio</span><span class="dp-a-price">A$68</span></div>
-            <div class="dp-agent"><span class="dp-a-num">12</span><div class="dp-a-name">CRE due-diligence packet<span>Rent roll + leases + capex + zoning + environmental summary</span></div><span class="dp-a-unit">per asset</span><span class="dp-a-price">A$280</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=real-estate" class="btn btn-primary">Book audit · Real estate <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- E-COMMERCE -->
-          <div class="dir-panel" data-dir-panel="ecommerce" id="ecommerce">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 05 · E-commerce</div>
-                <h3 class="dp-title">Recover revenue that <em>leaks between systems</em>.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.2%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>D2C brands, marketplace sellers, 3PL-powered merchants and regional/global Amazon operations</em>. For D2C brands, marketplaces, 3PLs and Amazon-first sellers. Plugs into Shopify, Amazon SP-API, TikTok Shop, Klaviyo, Gorgias, Zendesk, Linnworks, NetSuite and every major 3PL. <em>We don't replace your CX team — we remove the work they hate.</em>
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Refund &amp; dispute agent<span>Order + carrier + tone → right offer · fraud-aware</span></div><span class="dp-a-unit">per resolved</span><span class="dp-a-price">A$3.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Chargeback evidence builder<span>Stripe / Shopify / Amazon · auto-submit · win-rate tuned</span></div><span class="dp-a-unit">per pack</span><span class="dp-a-price">A$22</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Listing enricher<span>SEO copy · A+ content · alt-text · variant scaffolding</span></div><span class="dp-a-unit">per SKU</span><span class="dp-a-price">A$1.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Amazon SP-API Buy-Box repricer<span>Rules + ML price · stockout guard · velocity-aware</span></div><span class="dp-a-unit">per SKU · day</span><span class="dp-a-price">A$0.04</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Inventory forecaster<span>SKU × channel × lead-time · PO draft · velocity anomaly</span></div><span class="dp-a-unit">per SKU · wk</span><span class="dp-a-price">A$0.30</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Review responder<span>Brand-voice · multilingual · escalation-aware</span></div><span class="dp-a-unit">per reply</span><span class="dp-a-price">A$0.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">WISMO voice<span>24/7 track-and-trace call · carrier exception · re-delivery</span></div><span class="dp-a-unit">per resolved</span><span class="dp-a-price">A$0.95</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">3PL exceptions writer<span>Shortship · damage · refused · claim packet auto-draft</span></div><span class="dp-a-unit">per incident</span><span class="dp-a-price">A$2.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Post-purchase upsell voice<span>Outbound · review-gated · offer-matched</span></div><span class="dp-a-unit">per accepted</span><span class="dp-a-price">A$1.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Returns fraud scorer<span>Pattern flags · serial-returner · policy-abuse block</span></div><span class="dp-a-unit">per return</span><span class="dp-a-price">A$0.22</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=ecommerce" class="btn btn-primary">Book audit · E-commerce <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- HR -->
-          <div class="dir-panel" data-dir-panel="hr" id="hr">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 06 · HR &amp; hiring</div>
-                <h3 class="dp-title">Close roles in <em>days</em>, not quarters.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.0%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>in-house talent, RPOs, staffing agencies and shared-service HR</em>. For in-house talent teams, RPOs and staffing agencies. <em>Every screening explains its reject reason and is bias-audited.</em> Plugs into Workday, Greenhouse, Lever, SmartRecruiters, BambooHR and Rippling.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Multi-channel sourcer<span>LinkedIn + Boolean + DB · personalised first-touch</span></div><span class="dp-a-unit">per contacted</span><span class="dp-a-price">A$1.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">CV shortlister<span>JD-aligned · bias-audited · explainable score</span></div><span class="dp-a-unit">per CV</span><span class="dp-a-price">A$0.60</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Phone-screen voice<span>Multilingual · structured · first-round interview</span></div><span class="dp-a-unit">per screen</span><span class="dp-a-price">A$5.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Interview scheduler<span>Calendars · timezones · reschedules · panels</span></div><span class="dp-a-unit">per slot</span><span class="dp-a-price">A$1.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Reference-check voice<span>Async · structured · written report</span></div><span class="dp-a-unit">per referee</span><span class="dp-a-price">A$8.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Offer-letter generator<span>Comp band · region · approval chain</span></div><span class="dp-a-unit">per offer</span><span class="dp-a-price">A$6.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Onboarding dispatcher<span>Docs · systems · payroll · first-week agenda</span></div><span class="dp-a-unit">per hire</span><span class="dp-a-price">A$28</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Benefits enrolment voice<span>Plan walk-through · dependents · life-event change</span></div><span class="dp-a-unit">per enrolment</span><span class="dp-a-price">A$6.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Internal help-desk<span>Policy · payroll · leave · SOX-safe responses</span></div><span class="dp-a-unit">per resolved</span><span class="dp-a-price">A$1.10</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Exit-interview voice<span>Candid transcripts · themes · retention intelligence</span></div><span class="dp-a-unit">per exit</span><span class="dp-a-price">A$7.60</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=hr" class="btn btn-primary">Book audit · HR <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- MARKETING -->
-          <div class="dir-panel" data-dir-panel="marketing" id="marketing">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 07 · Marketing</div>
-                <h3 class="dp-title">Ship briefs, not <em>brainstorms</em>.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">98.5%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>in-house brand, growth-marketing, content teams and performance-marketing agencies</em>. For in-house brand teams, growth-stage agencies and CMO offices. <em>We don't write your strategy</em> — we take your positioning and turn it into shippable output at the pace your calendar demands.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Brief translator<span>Positioning doc → creative brief · channel-mapped</span></div><span class="dp-a-unit">per brief</span><span class="dp-a-price">A$14</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Campaign variant engine<span>Hero · social · email · SMS · MSG-mapped to funnel stage</span></div><span class="dp-a-unit">per variant</span><span class="dp-a-price">A$2.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Ad-creative sprinter<span>Meta · TikTok · LinkedIn · YT · variants at-scale</span></div><span class="dp-a-unit">per asset</span><span class="dp-a-price">A$3.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">SEO content auditor + refresh<span>Site-wide audit · refresh plan · drafts queued</span></div><span class="dp-a-unit">per URL</span><span class="dp-a-price">A$1.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Outbound SDR voice<span>List → booked meeting · CRM-integrated</span></div><span class="dp-a-unit">per meeting</span><span class="dp-a-price">A$38</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">ABM account researcher<span>Target-account dossier · ICP fit · exec news</span></div><span class="dp-a-unit">per account</span><span class="dp-a-price">A$4.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Blog drafter<span>Outline · draft · SEO · cited</span></div><span class="dp-a-unit">per post</span><span class="dp-a-price">A$26</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Landing-page CRO sprinter<span>Variant generator · hypothesis-mapped · wired to test tool</span></div><span class="dp-a-unit">per variant</span><span class="dp-a-price">A$9.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">PR &amp; share-of-voice monitor<span>Brand + competitor watch · sentiment · alerts</span></div><span class="dp-a-unit">per alert</span><span class="dp-a-price">A$0.90</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Influencer outreach + negotiate<span>List build · first-contact · deal terms · brief</span></div><span class="dp-a-unit">per signed</span><span class="dp-a-price">A$42</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=marketing" class="btn btn-primary">Book audit · Marketing <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- MANUFACTURING -->
-          <div class="dir-panel" data-dir-panel="manufacturing" id="manufacturing">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 08 · Manufacturing</div>
-                <h3 class="dp-title">Catch quality escapes <em>before</em> they leave the line.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.3%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>discrete &amp; process manufacturers, quality engineers, MES / ERP ops, supplier quality and safety teams</em>. For mid-market manufacturers with SAP / Oracle / Dynamics sprawl and an MES that nobody fully trusts. <em>We sit between the ERP, the MES, and the line operator</em> — surfacing anomalies, reconciling work orders, and drafting CAPA before your customers notice the escape.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Live QA-log watcher<span>Sensor + NCR · anomaly · trend · shift-escalation</span></div><span class="dp-a-unit">per shift</span><span class="dp-a-price">A$12</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">CAPA writer<span>Root-cause 5-whys · corrective + preventive · owner assigned</span></div><span class="dp-a-unit">per CAPA</span><span class="dp-a-price">A$34</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Supplier NCR drafter<span>Non-conformance · 8D packet · supplier portal submit</span></div><span class="dp-a-unit">per NCR</span><span class="dp-a-price">A$18</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Work-order plan-vs-actual reconciler<span>Delta · cause code · scrap + rework capture</span></div><span class="dp-a-unit">per WO</span><span class="dp-a-price">A$0.95</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Bill of materials reconciler<span>ERP ↔ engineering CAD · revision drift · cost roll-up</span></div><span class="dp-a-unit">per BOM</span><span class="dp-a-price">A$14</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Maintenance triager<span>IoT + CMMS · ticket creation · parts-availability check</span></div><span class="dp-a-unit">per ticket</span><span class="dp-a-price">A$2.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Shift-handover voice<span>Voice note → structured log · anomaly tag · supervisor ping</span></div><span class="dp-a-unit">per shift</span><span class="dp-a-price">A$4.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Supplier chase voice<span>AI phone agent · PO / ETA / expedite</span></div><span class="dp-a-unit">per confirmed</span><span class="dp-a-price">A$3.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Safety near-miss intake<span>Shop-floor voice · incident log · trend dashboard</span></div><span class="dp-a-unit">per report</span><span class="dp-a-price">A$1.90</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Quality certificate parser<span>CoC / mill cert · compliance check · pack vs spec</span></div><span class="dp-a-unit">per cert</span><span class="dp-a-price">A$1.40</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=manufacturing" class="btn btn-primary">Book audit · Manufacturing <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- EDUCATION -->
-          <div class="dir-panel" data-dir-panel="education" id="education">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 09 · Education</div>
-                <h3 class="dp-title">Turn admissions &amp; student-services into <em>a 24/7 desk</em>.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.0%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>universities, K-12 districts, RTOs, bootcamps, ESL providers and education-adjacent platforms</em>. For universities, K-12 networks, RTOs, bootcamps and ESL providers. Agents handle the inbound flood in the student's language and write back to your SIS / LMS / CRM.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Admissions triage<span>Parse · score · flag missing docs · reply in language</span></div><span class="dp-a-unit">per application</span><span class="dp-a-price">A$2.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">International transcript reconciler<span>Credit mapping · WES / NACES check · conversion pack</span></div><span class="dp-a-unit">per transcript</span><span class="dp-a-price">A$3.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Financial-aid packaging<span>Eligibility · award letter · appeal draft · e-sign flow</span></div><span class="dp-a-unit">per packet</span><span class="dp-a-price">A$11</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Student-services voice<span>Multilingual · 24/7 · SIS live look-up · ticket create</span></div><span class="dp-a-unit">per call</span><span class="dp-a-price">A$1.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Tutor-dispatch voice<span>Subject match · scheduling · multi-region tutor network</span></div><span class="dp-a-unit">per booked</span><span class="dp-a-price">A$2.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Enrolment chaser<span>Deposit · starter-docs · orientation · multi-touch</span></div><span class="dp-a-unit">per converted</span><span class="dp-a-price">A$14</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Essay-integrity checker<span>AI-content flag · citation scan · originality · style</span></div><span class="dp-a-unit">per essay</span><span class="dp-a-price">A$0.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Fee + payment-plan voice<span>Tuition · scholarships · plan negotiate</span></div><span class="dp-a-unit">per call</span><span class="dp-a-price">A$0.95</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">At-risk student early-warning<span>Engagement + grade + attendance · intervention draft</span></div><span class="dp-a-unit">per flagged</span><span class="dp-a-price">A$4.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Course-feedback summariser<span>Reviews · themes · alerts · accreditor-ready pack</span></div><span class="dp-a-unit">per cohort</span><span class="dp-a-price">A$28</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=education" class="btn btn-primary">Book audit · Education <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- INSURANCE -->
-          <div class="dir-panel" data-dir-panel="insurance" id="insurance">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 10 · Insurance</div>
-                <h3 class="dp-title">Triage every FNOL in minutes — <em>in the claimant's language</em>.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.3%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>P&amp;C carriers, MGAs, wholesale brokers, TPAs and in-house captive insurance teams</em>. For P&amp;C carriers, MGAs, brokers and TPAs. Plugs into Guidewire, Duck Creek, Salesforce FSC, Applied Epic, EZLynx and the bordereaux feeds. <em>Full adjuster-reviewable audit trail on every decision.</em>
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">FNOL voice agent<span>Take the call · structure the loss · multilingual</span></div><span class="dp-a-unit">per FNOL</span><span class="dp-a-price">A$6.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Severity &amp; routing<span>Low · medium · high · complex · SIU-flag</span></div><span class="dp-a-unit">per claim</span><span class="dp-a-price">A$1.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Fraud red-flag scorer<span>Pattern · image · statement · NICB watchlist</span></div><span class="dp-a-unit">per claim</span><span class="dp-a-price">A$0.85</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Medical bill reviewer<span>CPT validation · duplicate · UCR · negotiated rate</span></div><span class="dp-a-unit">per bill</span><span class="dp-a-price">A$1.60</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Subrogation case-builder<span>Liability assessment · third-party recovery packet</span></div><span class="dp-a-unit">per case</span><span class="dp-a-price">A$26</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Underwriting submission packet<span>SOV · loss-run summary · risk memo · quote-ready</span></div><span class="dp-a-unit">per submission</span><span class="dp-a-price">A$48</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Policy-check voice<span>Customer Q&amp;A · policy-scoped · no sales advice</span></div><span class="dp-a-unit">per call</span><span class="dp-a-price">A$1.10</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Bodily-injury demand-letter<span>Medicals · lost-wages · damages · statute cite</span></div><span class="dp-a-unit">per letter</span><span class="dp-a-price">A$42</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Renewal-outreach voice<span>Outbound · quote · rate-change explainer</span></div><span class="dp-a-unit">per renewed</span><span class="dp-a-price">A$18</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">CAT-event batch intake<span>Storm / wildfire · mass FNOL · geofenced triage</span></div><span class="dp-a-unit">per batch · 1k</span><span class="dp-a-price">A$2,400</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=insurance" class="btn btn-primary">Book audit · Insurance <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- HOSPITALITY -->
-          <div class="dir-panel" data-dir-panel="hospitality" id="hospitality">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 11 · Hospitality</div>
-                <h3 class="dp-title">Every call answered. Every booking <em>captured</em>.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.1%</div>
-                <div class="dp-badge-u">Answer &lt; 2 rings</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>hotels, restaurant groups, tour &amp; experience operators, gyms, spas and short-stay portfolios</em>. For hotels, restaurants, tours, gyms, spas and short-stay operators. Plugs into Opera / Mews / Cloudbeds (PMS), Toast / Lightspeed (POS), SevenRooms and every major OTA. <em>Answers in the guest's language.</em>
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Booking voice agent<span>PMS-integrated · upsell-aware · availability live</span></div><span class="dp-a-unit">per booking</span><span class="dp-a-price">A$1.60</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Concierge voice<span>Directions · local · upsell · 14-language</span></div><span class="dp-a-unit">per call</span><span class="dp-a-price">A$1.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Overflow concierge<span>Spike handler · voucher · compensate</span></div><span class="dp-a-unit">per minute</span><span class="dp-a-price">A$0.18</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Review responder<span>TripAdvisor · Google · Booking · brand-tone</span></div><span class="dp-a-unit">per reply</span><span class="dp-a-price">A$0.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Post-stay NPS voice<span>Outbound · structured · themes · escalation</span></div><span class="dp-a-unit">per completed</span><span class="dp-a-price">A$0.95</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">No-show recovery voice<span>Re-book · cancel fee · salvage</span></div><span class="dp-a-unit">per recovered</span><span class="dp-a-price">A$4.60</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Group-enquiry router<span>Events · weddings · MICE · qualified</span></div><span class="dp-a-unit">per qualified</span><span class="dp-a-price">A$6.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Menu + allergen writer<span>Copy · allergens · translations · POS-sync</span></div><span class="dp-a-unit">per update</span><span class="dp-a-price">A$2.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Night-audit reconciler<span>Folio close · rate variance · housekeeping status</span></div><span class="dp-a-unit">per night</span><span class="dp-a-price">A$8.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Loyalty points voice<span>Redemption · tier · partner-transfer · fraud check</span></div><span class="dp-a-unit">per interaction</span><span class="dp-a-price">A$0.62</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=hospitality" class="btn btn-primary">Book audit · Hospitality <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- LOGISTICS -->
-          <div class="dir-panel" data-dir-panel="logistics" id="logistics">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 12 · Logistics</div>
-                <h3 class="dp-title">Dispatch, track, and <em>tell the customer</em> — before they ask.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.0%</div>
-                <div class="dp-badge-u">On-time / 90d</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>3PLs, last-mile &amp; line-haul carriers, freight forwarders, customs brokers and logistics-tech platforms</em>. For 3PLs, last-mile operators, freight forwarders and line-haul carriers. Plugs into Samsara, Descartes, CargoWise, Fleet Complete, Shipwell and most TMS stacks. <em>Predicts the exception before the customer calls.</em>
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 10 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Driver dispatch voice<span>Stop confirm · route update · handsfree</span></div><span class="dp-a-unit">per trip</span><span class="dp-a-price">A$0.42</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Live ETA predictor<span>GPS + driver + traffic · customer notify</span></div><span class="dp-a-unit">per shipment</span><span class="dp-a-price">A$0.18</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Customer WISMO voice<span>Track &amp; trace · re-schedule · multilingual</span></div><span class="dp-a-unit">per call</span><span class="dp-a-price">A$0.95</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Exception-packet writer<span>Shortship · damage · refused · claim draft</span></div><span class="dp-a-unit">per exception</span><span class="dp-a-price">A$3.60</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">POD capture<span>Driver voice note → signed POD · image QC</span></div><span class="dp-a-unit">per POD</span><span class="dp-a-price">A$0.22</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Customs docs reviewer<span>HS codes · duty check · cert of origin · paperless</span></div><span class="dp-a-unit">per doc</span><span class="dp-a-price">A$1.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Carrier-claim drafter<span>Evidence pack · submission · chase</span></div><span class="dp-a-unit">per claim</span><span class="dp-a-price">A$24</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Load-board triage<span>Rate bid · match · broker chat · decision log</span></div><span class="dp-a-unit">per load</span><span class="dp-a-price">A$2.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Cross-border declaration<span>Multi-country · ATA Carnet · restricted-goods flag</span></div><span class="dp-a-unit">per shipment</span><span class="dp-a-price">A$4.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Detention / demurrage billing<span>Time-on-site capture · evidence · invoice draft</span></div><span class="dp-a-unit">per incident</span><span class="dp-a-price">A$6.20</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=logistics" class="btn btn-primary">Book audit · Logistics <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- PUBLIC SAFETY & JUSTICE -->
-          <div class="dir-panel" data-dir-panel="public-safety" id="public-safety">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Vertical 13 · Public safety &amp; justice</div>
-                <h3 class="dp-title">Paperwork off the beat. <em>Evidence</em> on the record.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.5%</div>
-                <div class="dp-badge-u">Audit-logged / 100%</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              For <em>police and sheriff's departments, prosecutors' offices, corrections, private investigators and in-house investigations teams</em>. Agents handle the paperwork layer of the job — incident reports, evidence inventory, court filings, FOI / records requests, witness statements — with <em>full chain-of-custody logging</em> and every action audit-trailed. Deployable on-prem or in a customer-selected sovereign region (AU, UK, EU, US, UAE, SA).
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Incident report writer<span>Body-cam / voice-note → structured report</span></div><span class="dp-a-unit">per report</span><span class="dp-a-price">A$4.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Evidence inventory &amp; CoC<span>Media · docs · chain-of-custody log</span></div><span class="dp-a-unit">per item</span><span class="dp-a-price">A$0.90</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Witness statement voice<span>Multilingual intake · transcribed · signed</span></div><span class="dp-a-unit">per statement</span><span class="dp-a-price">A$3.40</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Court filings drafter<span>Motions · briefs · exhibits packet</span></div><span class="dp-a-unit">per filing</span><span class="dp-a-price">A$28</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">FOI / records request triage<span>Classify · redact · release packet</span></div><span class="dp-a-unit">per request</span><span class="dp-a-price">A$6.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Subpoena &amp; warrant tracker<span>Deadlines · service status · alerts</span></div><span class="dp-a-unit">per doc · mo</span><span class="dp-a-price">A$0.45</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">AML transaction scorer<span>Pattern · SAR draft · explainable score</span></div><span class="dp-a-unit">per txn scored</span><span class="dp-a-price">A$0.08</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Fraud-case builder<span>Evidence · timeline · referral packet</span></div><span class="dp-a-unit">per case</span><span class="dp-a-price">A$18</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Court-calendar voice<span>Inbound · hearing status · routing</span></div><span class="dp-a-unit">per call</span><span class="dp-a-price">A$1.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Background-check packet<span>Records search · deduped · annotated</span></div><span class="dp-a-unit">per subject</span><span class="dp-a-price">A$3.80</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=public-safety" class="btn btn-primary">Book audit · Public safety <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
-          <!-- VOICE AGENTS -->
-          <div class="dir-panel" data-dir-panel="voice" id="voice">
-            <div class="dp-top">
-              <div>
-                <div class="dp-eyebrow">— Voice agents · multilingual</div>
-                <h3 class="dp-title">An AI phone desk that <em>never</em> goes to voicemail.</h3>
-              </div>
-              <div class="dp-badge">
-                <div class="dp-badge-k">Target SLA</div>
-                <div class="dp-badge-v">99.1%</div>
-                <div class="dp-badge-u">Answer &lt; 2 rings</div>
-              </div>
-            </div>
-            <p class="dp-body">
-              A full AI <em>voice-agent stack</em> — inbound, outbound, warm-transfer, multilingual — that plugs into Aircall, Twilio, RingCentral, Zoom Phone, GoTo and your existing CRM. <em>Every call transcribed, scored, summarised and written back</em> to HubSpot, Salesforce, Zendesk, or your helpdesk. <em>Multilingual</em> — currently shipping EN · ES · ZH · AR · HI · VI · PT · FR · DE · JA · KO · TH · ID · IT, with more added per engagement.
-            </p>
-            <div class="dp-agents-head"><span>◆ Agent catalogue · 16 SKUs</span><span>Per-outcome · AUD</span></div>
-            <div class="dp-agent"><span class="dp-a-num">01</span><div class="dp-a-name">Inbound receptionist<span>24/7 greet · route · capture</span></div><span class="dp-a-unit">per answered</span><span class="dp-a-price">A$0.38</span></div>
-            <div class="dp-agent"><span class="dp-a-num">02</span><div class="dp-a-name">Outbound SDR caller<span>List → meeting booked in calendar</span></div><span class="dp-a-unit">per meeting</span><span class="dp-a-price">A$38</span></div>
-            <div class="dp-agent"><span class="dp-a-num">03</span><div class="dp-a-name">Appointment booker<span>Clinic · salon · trades · calendar</span></div><span class="dp-a-unit">per booked</span><span class="dp-a-price">A$1.60</span></div>
-            <div class="dp-agent"><span class="dp-a-num">04</span><div class="dp-a-name">Tier-1 support voice<span>Helpdesk KB · deflect · warm-transfer</span></div><span class="dp-a-unit">per resolved</span><span class="dp-a-price">A$1.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">05</span><div class="dp-a-name">Collections &amp; payments<span>Promise-to-pay · Stripe link</span></div><span class="dp-a-unit">recovered</span><span class="dp-a-price">3.4%</span></div>
-            <div class="dp-agent"><span class="dp-a-num">06</span><div class="dp-a-name">Survey &amp; NPS caller<span>Outbound · structured · multilingual</span></div><span class="dp-a-unit">per completed</span><span class="dp-a-price">A$0.95</span></div>
-            <div class="dp-agent"><span class="dp-a-num">07</span><div class="dp-a-name">Lead qualifier voice<span>Form-fill → qualified call</span></div><span class="dp-a-unit">per qualified</span><span class="dp-a-price">A$4.20</span></div>
-            <div class="dp-agent"><span class="dp-a-num">08</span><div class="dp-a-name">Emergency triage voice<span>After-hours · severity · page</span></div><span class="dp-a-unit">per triaged</span><span class="dp-a-price">A$2.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">09</span><div class="dp-a-name">Multilingual interpreter<span>Live EN ↔ 13 others</span></div><span class="dp-a-unit">per minute</span><span class="dp-a-price">A$0.22</span></div>
-            <div class="dp-agent"><span class="dp-a-num">10</span><div class="dp-a-name">Call-summary writer<span>Transcript → CRM · action items</span></div><span class="dp-a-unit">per call</span><span class="dp-a-price">A$0.14</span></div>
-            <div class="dp-agent"><span class="dp-a-num">11</span><div class="dp-a-name">Voicemail-to-task<span>VM transcribe · route · SLA clock</span></div><span class="dp-a-unit">per VM</span><span class="dp-a-price">A$0.11</span></div>
-            <div class="dp-agent"><span class="dp-a-num">12</span><div class="dp-a-name">QA &amp; compliance grader<span>Random sample · script · flags</span></div><span class="dp-a-unit">per scored</span><span class="dp-a-price">A$0.28</span></div>
-            <div class="dp-agent"><span class="dp-a-num">13</span><div class="dp-a-name">Overflow concierge<span>Spike handler · hotel / clinic</span></div><span class="dp-a-unit">per minute</span><span class="dp-a-price">A$0.18</span></div>
-            <div class="dp-agent"><span class="dp-a-num">14</span><div class="dp-a-name">Driver dispatch voice<span>Route updates · POD capture</span></div><span class="dp-a-unit">per trip</span><span class="dp-a-price">A$0.42</span></div>
-            <div class="dp-agent"><span class="dp-a-num">15</span><div class="dp-a-name">FNOL claims intake<span>First-notice-of-loss · scored</span></div><span class="dp-a-unit">per FNOL</span><span class="dp-a-price">A$6.80</span></div>
-            <div class="dp-agent"><span class="dp-a-num">16</span><div class="dp-a-name">Translation hotline<span>14-language · on-demand</span></div><span class="dp-a-unit">per minute</span><span class="dp-a-price">A$0.28</span></div>
-            <div class="dp-foot">
-              <a href="contact.html?vertical=voice" class="btn btn-primary">Book audit · Voice agents <span class="arrow">↗</span></a>
-            </div>
-          </div>
-
+  <!-- ========== CUSTOM VERTICALS ========== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="shead shead--center reveal">
+        <span class="eyebrow">Don't see your industry?</span>
+        <h2 class="h2">We <em>custom-build</em> verticals. Ask.</h2>
+        <p class="lede">We turn down more vertical requests than we accept — we won't build in a space we can't ship to SLA. But every vertical above started as someone's first brief, and a custom build runs on exactly the same per-outcome contract: audit first, written SLA, miss-it-it's-free.</p>
+        <div class="btns" style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+          <a href="contact.html" class="btn btn-primary btn-lg">Request a vertical <span class="ar">↗</span></a>
+          <a href="pricing.html" class="btn btn-ghost btn-lg">See pricing</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ========== END CTA ========== -->
-  <section class="endcta">
-    <div class="container">
-      <div class="endcta-wrap reveal">
-        <div class="eyebrow accent" style="justify-content:center;margin-bottom:2rem;">Don't see your industry?</div>
-        <h2>We might build for you. <em>Ask.</em></h2>
-        <p class="dek">We turn down more vertical requests than we accept — we won't build in a space we don't already know. But we're always open to a conversation about a new vertical.</p>
-        <div class="actions">
-          <a href="contact.html" class="btn btn-primary btn-lg">Request a vertical <span class="arrow">↗</span></a>
-          <a href="pricing.html" class="btn btn-lg">See pricing</a>
+  <section class="section dark cta-band">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" style="justify-content:center">Start with an audit, not a pitch</span>
+        <h2 class="h2">Two weeks. One workflow. <em>No obligation.</em></h2>
+        <p class="lede">We spend 10 working days inside your team — observing, measuring, mapping. If we find a workflow we can ship agents for, we price it per outcome. If we don't, you keep the full diagnostic, on us.</p>
+        <div class="btns">
+          <a href="contact.html" class="btn btn-light btn-lg">Book my audit <span class="ar">↗</span></a>
+          <a href="cases.html" class="btn btn-outline-light btn-lg">What you can achieve</a>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- ========== VS. PLATFORMS ========== -->
-<section class="vs-ribbon reveal">
-  <div class="container">
-    <div class="vs-inner">
-      <div>
-        <div class="eyebrow">Built where the platforms stop</div>
-        <h2>Platforms ship a model.<br>We ship the <em>whole workflow</em>.</h2>
-        <p>Every solution on this page is a finished agent, not a starter template. Off-the-shelf agent builders give you a blank canvas; Autopilot Labs gives you an intake agent already wired into your PMS, a reconciliation agent already matched to your ledger, a lease-abstract agent already trained on AU/UK/ME tenancy law. Live, audited, billed per outcome.</p>
-      </div>
-      <div class="vs-compare">
-        <div>
-          <h6>DIY on a platform</h6>
-          <ul>
-            <li>Months of prompt / eval work</li>
-            <li>You own every integration</li>
-            <li>Unpredictable token bills</li>
-            <li>Generic tone, generic accuracy</li>
-          </ul>
-        </div>
-        <div class="us">
-          <h6>Autopilot Labs catalogue</h6>
-          <ul>
-            <li>Unlimited custom-built vertical agents</li>
-            <li>We integrate, we operate, we fix</li>
-            <li>Flat per-outcome unit price</li>
-            <li>Trained on your industry's language</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 </main>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk (Arabic, English and your customers' languages). We bill per completed outcome. Not per seat. Not per token.</p>
+<!-- ========== FOOTER ========== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <h3>Agents that <em>finish</em>.</h3>
+        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk. We bill per completed outcome. Not per seat. Not per token.</p>
       </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="process.html">Process</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="cases.html">Case studies</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="careers.html">Careers</a></li>
-          <li><a href="journal.html">Journal</a></li>
-          <li><a href="manifesto.html">Manifesto</a></li>
-          <li><a href="press.html">Press</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Verticals</h5>
-        <ul>
-          <li><a href="#healthcare">Healthcare</a></li>
-          <li><a href="#legal">Legal</a></li>
-          <li><a href="#finance">Finance</a></li>
-          <li><a href="#real-estate">Real estate</a></li>
-          <li><a href="#voice">Voice agents</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Office</h5>
-        <ul>
-          <li><a href="#">L14 · 459 Collins St</a></li>
-          <li><a href="#">Global · Remote-first</a></li>
-          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
-          <li><a href="#">+61 3 9000 0000</a></li>
-        </ul>
-      </div>
+      <div class="foot-col"><h5>Work</h5><ul>
+        <li><a href="what-is.html">What is an AI agent?</a></li>
+        <li><a href="solutions.html">Solutions</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="cases.html">Case studies</a></li>
+        <li><a href="calculator.html">Calculator</a></li>
+        <li><a href="demo.html">Live demo</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Product</h5><ul>
+        <li><a href="docs.html">API docs</a></li>
+        <li><a href="integrations.html">Integrations</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="status.html">Status</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Company</h5><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+        <li><a href="press.html">Press</a></li>
+        <li><a href="partners.html">Partners</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Learn</h5><ul>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="help.html">Help center</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="sitemap.html">Sitemap</a></li>
+      </ul></div>
     </div>
-    <div class="footer-bottom">
-      <div class="left"><span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span></div>
-      <div class="right">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">SLA</a>
-        <span>v. 4.6 · build 2026.Q2</span>
-      </div>
+    <div class="foot-bottom">
+      <div class="left">© 2026 Autopilot Labs Pty Ltd · Global · Remote-first · 24/7 delivery · <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></div>
+      <div class="right"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">SLA</a></div>
     </div>
   </div>
 </footer>
 
-<script src="assets/site.js?v=27"></script>
 <script>
-  // Deep-link: #vertical opens that panel
-  (function () {
-    const hash = (location.hash || '').replace('#', '');
-    if (!hash) return;
-    const safe = (window.CSS && CSS.escape) ? CSS.escape(hash) : hash.replace(/[^a-z0-9_-]/gi, '');
-    const btn = document.querySelector('[data-dir-item="' + safe + '"]');
-    if (btn) btn.click();
-  })();
+/* mobile nav */
+(function(){
+  var t = document.getElementById('navToggle'), s = document.getElementById('msheet');
+  if(!t||!s) return;
+  t.addEventListener('click', function(){
+    var open = s.classList.toggle('open');
+    t.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('lock', open);
+  });
+  s.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ s.classList.remove('open'); document.body.classList.remove('lock'); t.setAttribute('aria-expanded','false'); }); });
+})();
+
+/* reveal on scroll */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+})();
 </script>
 </body>
 </html>
