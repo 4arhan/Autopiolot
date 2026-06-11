@@ -3,654 +3,346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What is a vertical AI agent? — Autopilot Labs</title>
-<meta name="description" content="A plain-English explainer: what a vertical AI agent actually is, how it's different from a chatbot or a copilot, what it ships, and how we bill for outcomes instead of tokens.">
+<title>What is an AI agent? — Autopilot Labs</title>
+<meta name="description" content="A plain-English explainer: what a vertical AI agent is, how it differs from a chatbot, a copilot or a raw LLM API, what's inside one, and why businesses are switching to per-outcome AI.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/site.css?v=27">
-<link rel="stylesheet" href="assets/motion.css?v=2">
+<link rel="stylesheet" href="assets/app.css?v=3">
 <style>
-.wi-hero {
-  padding: clamp(4rem, 8vw, 7rem) 0 clamp(2.5rem, 5vw, 4rem);
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.wi-hero::before {
-  content: '';
-  position: absolute;
-  inset: -10%;
-  background:
-    radial-gradient(ellipse 42% 48% at 92% 8%, rgba(0,82,255,0.42), transparent 62%),
-    radial-gradient(ellipse 30% 32% at 8% 92%, rgba(110,111,255,0.16), transparent 60%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: -1;
-}
-.wi-kicker {
-  display: flex;
-  gap: 1rem;
-  align-items: baseline;
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.wi-kicker b { color: var(--accent); font-weight: 600; }
-.wi-h1 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(40px, 5.4vw, 84px);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
-  color: var(--ink);
-  max-width: 18ch;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
-}
-.wi-h1 em {
-  background: linear-gradient(135deg, var(--accent), #6E6FFF 60%, var(--accent));
-  background-size: 200% 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: normal;
-  font-weight: 500;
-  animation: rolesGrad 8s ease-in-out infinite;
-}
-@keyframes rolesGrad {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
-}
-.wi-dek {
-  font-family: var(--font-display);
-  font-size: clamp(17px, 1.35vw, 22px);
-  line-height: 1.5;
-  color: var(--ink-3);
-  max-width: 60ch;
-  margin-bottom: 2rem;
-}
-.wi-dek em { color: var(--ink); font-weight: 500; }
-
-/* Definition card */
-.wi-def {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  margin: clamp(3rem, 5vw, 4.5rem) 0;
-  border: 1px solid var(--line-strong);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 28px 60px -32px rgba(0,82,255,0.18);
-}
-.wi-def > div {
-  padding: clamp(2rem, 3vw, 2.75rem);
-  background: var(--paper);
-}
-.wi-def > div:first-child {
-  background: linear-gradient(135deg, var(--accent), #1A6BFF);
-  color: var(--paper);
-}
-.wi-def-k {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  opacity: 0.7;
-}
-.wi-def-v {
-  font-family: var(--font-display);
-  font-size: clamp(26px, 3vw, 42px);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-}
-.wi-def > div:first-child .wi-def-v em {
-  background: linear-gradient(180deg, #FFFFFF, #BCD1FF);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: normal;
-  font-weight: 500;
-}
-.wi-def > div:last-child .wi-def-v em {
-  color: var(--accent);
-  font-style: normal;
-  font-weight: 500;
-}
-@media (max-width: 800px) {
-  .wi-def { grid-template-columns: 1fr; }
-}
-
-/* Vs. matrix */
-.wi-vs {
-  padding: clamp(4rem, 8vw, 7rem) 0;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-3);
-}
-.wi-vs-head {
-  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  text-align: center;
-}
-.wi-vs-head .eb {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-.wi-vs-head .eb::before {
-  content: '';
-  width: 7px; height: 7px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulseDot 2.4s ease-in-out infinite;
-}
-.wi-vs-head h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(32px, 4.2vw, 56px);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  margin-top: 1rem;
-  max-width: 22ch;
-  margin-left: auto;
-  margin-right: auto;
-  text-wrap: balance;
-}
-.wi-vs-head h2 em { color: var(--accent); font-style: normal; font-weight: 500; }
-
-.wi-matrix {
-  display: grid;
-  grid-template-columns: 200px repeat(4, 1fr);
-  border: 1px solid var(--line-strong);
-  background: var(--paper);
-  border-radius: 6px;
-  overflow: hidden;
-}
-.wi-matrix > * {
-  padding: 1rem 1.1rem;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  font-size: 13.5px;
-  line-height: 1.45;
-  color: var(--ink-2);
-  background: var(--paper);
-}
-.wi-matrix > *:nth-child(5n) { border-right: 0; }
-.wi-matrix > .h {
-  background: var(--paper-3);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-}
-.wi-matrix > .h.us { color: var(--accent); background: var(--accent-soft); }
-.wi-matrix > .r {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-  background: var(--paper-3);
-}
-.wi-matrix > .us-cell {
-  color: var(--ink);
-  font-weight: 500;
-  background: linear-gradient(180deg, var(--paper) 0%, var(--accent-soft) 100%);
-  border-left: 2px solid var(--accent);
-}
-.wi-matrix > .us-cell em { color: var(--accent); font-style: normal; font-weight: 600; }
-@media (max-width: 900px) {
-  .wi-matrix { grid-template-columns: 1fr; }
-  .wi-matrix > * { border-right: 0; }
-  .wi-matrix > .h:not(:first-child) { display: none; }
-  .wi-matrix > *:not(.h):not(.r):not(.us-cell):not(:nth-child(5n+1))::before {
-    content: attr(data-l) ' · ';
-    font-family: var(--font-mono);
-    font-size: 9.5px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 4px;
-  }
-}
-
-/* Anatomy block */
-.wi-anatomy {
-  padding: clamp(4rem, 8vw, 7rem) 0;
-  border-bottom: 1px solid var(--line);
-}
-.wi-anatomy-head {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: end;
-  padding-bottom: clamp(2rem, 3vw, 3rem);
-  border-bottom: 1px solid var(--line);
-  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-}
-.wi-anatomy-head h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(32px, 4vw, 54px);
-  line-height: 1.0;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
-}
-.wi-anatomy-head h2 em { color: var(--accent); font-style: normal; font-weight: 500; }
-.wi-anatomy-head p {
-  font-size: clamp(15.5px, 1.1vw, 17.5px);
-  line-height: 1.55;
-  color: var(--ink-3);
-  max-width: 48ch;
-}
-.wi-anatomy-head p em { color: var(--ink); font-weight: 500; }
-
-.wi-parts {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--line-strong);
-  border: 1px solid var(--line-strong);
-  border-radius: 4px;
-}
-.wi-part {
-  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-3) 100%);
-  padding: 1.75rem 1.5rem 1.6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  position: relative;
-  transition: background .25s var(--ease);
-}
-.wi-part:hover { background: linear-gradient(180deg, var(--paper) 0%, #F4F7FF 100%); }
-.wi-part .no {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  color: var(--accent);
-  font-weight: 600;
-  padding: 3px 8px;
-  background: var(--accent-soft);
-  border: 1px solid var(--line-accent);
-  border-radius: 999px;
-  width: fit-content;
-  margin-bottom: 0.5rem;
-}
-.wi-part h4 {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.018em;
-  color: var(--ink);
-  line-height: 1.2;
-}
-.wi-part h4 em { color: var(--accent); font-style: normal; font-weight: 500; }
-.wi-part p {
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--ink-3);
-}
-@media (max-width: 900px) { .wi-parts { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 540px) { .wi-parts { grid-template-columns: 1fr; } }
-
-/* FAQ */
-.wi-faq {
-  padding: clamp(4rem, 8vw, 7rem) 0;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-3);
-}
-.wi-faq h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(28px, 3.4vw, 44px);
-  letter-spacing: -0.035em;
-  margin-bottom: 2rem;
-  max-width: 30ch;
-}
-.wi-faq-list { list-style: none; padding: 0; margin: 0; }
-.wi-faq details {
-  border-top: 1px solid var(--line);
-  padding: 1.5rem 0;
-  cursor: pointer;
-}
-.wi-faq details:last-child { border-bottom: 1px solid var(--line); }
-.wi-faq summary {
-  font-family: var(--font-display);
-  font-size: 19px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1.5rem;
-  position: relative;
-  padding-right: 24px;
-}
-.wi-faq summary::-webkit-details-marker { display: none; }
-.wi-faq summary::after {
-  content: '+';
-  font-family: var(--font-mono);
-  font-size: 22px;
-  color: var(--accent);
-  font-weight: 400;
-  position: absolute;
-  right: 0;
-  top: -2px;
-  transition: transform .25s var(--ease);
-}
-.wi-faq details[open] summary::after { transform: rotate(45deg); }
-.wi-faq details p {
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--ink-3);
-  margin-top: 1rem;
-  max-width: 64ch;
-}
-.wi-faq details p em { color: var(--ink); font-weight: 500; }
-
-/* CTA */
-.wi-cta {
-  padding: clamp(4rem, 8vw, 6.5rem) 0;
-  text-align: center;
-  background:
-    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(0,82,255,0.10), transparent 70%);
-}
-.wi-cta h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(30px, 4vw, 56px);
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-  margin-bottom: 1.5rem;
-  max-width: 22ch;
-  margin-left: auto;
-  margin-right: auto;
-  text-wrap: balance;
-}
-.wi-cta h2 em { color: var(--accent); font-style: normal; font-weight: 500; }
-.wi-cta p {
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--ink-3);
-  max-width: 56ch;
-  margin: 0 auto 2rem;
-}
-.wi-cta .acts {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-}
+/* page-specific: comparison spec rows + FAQ */
+.spec{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:2px}
+.spec li{font-size:14px;line-height:1.5;color:var(--ink-3)}
+.spec li b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:2px}
+.us-card{background:var(--acc-soft);border-color:var(--acc-line)}
+.us-card .spec li{color:var(--ink-2)}
+.us-card .spec li b{color:var(--acc-3)}
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}
+.faq details:first-of-type{border-top:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-weight:600;font-size:17.5px;letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--acc);font-family:var(--mono);font-size:20px;line-height:1;flex-shrink:0;transition:transform .2s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin-top:10px;color:var(--ink-3);font-size:15px;line-height:1.6;max-width:64ch}
 </style>
 </head>
 <body>
-<div class="scroll-prog" aria-hidden="true"></div>
-<header class="topbar">
-  <div class="topbar-inner">
-    <a href="index.html" class="brand">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
-      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
-    </a>
-    <nav class="primary-nav" aria-label="Primary"><a href="what-is.html" data-nav="what-is" class="nav-explainer is-active">What is an AI agent?</a>
-      <a href="solutions.html" data-nav="solutions">Solutions</a>
-      <a href="cases.html" data-nav="cases">Achieve</a>
-      <a href="demo.html" data-nav="demo">Demo</a>
-      <a href="pricing.html" data-nav="pricing">Pricing</a>
-      <a href="process.html" data-nav="process">Process</a>
-      <a href="about.html" data-nav="about">About</a>
+
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="what-is.html" class="is-accent" style="background:var(--bg-soft);color:var(--ink)">What is an AI agent?</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="cases.html">Cases</a>
+      <a href="demo.html">Demo</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
     </nav>
-    <div class="topbar-cta">
-      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
-      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
-      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <span class="bar b1" aria-hidden="true"></span>
-        <span class="bar b2" aria-hidden="true"></span>
-        <span class="bar b3" aria-hidden="true"></span>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Book a free audit</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <div></div>
-    <div class="mobile-nav-inner">
-      <div class="mnav-group">
-        <h5>Start here</h5>
-        <ul class="mnav-list">
-          <li><a href="what-is.html" data-nav="what-is">What is an AI agent? <span class="ar">→</span></a></li>
-          <li><a href="what-is.html" data-nav="what-is">What is an AI agent? <span class="ar">→</span></a></li>
-          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
-          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
-          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
-          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
-          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
-          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
-          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mobile-nav-foot">
-      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-    </div>
+  <nav class="msheet" id="msheet" aria-label="Mobile">
+    <a href="what-is.html" style="background:var(--bg-soft);color:var(--ink)">What is an AI agent? <span class="ar">→</span></a>
+    <a href="solutions.html">Solutions <span class="ar">→</span></a>
+    <a href="cases.html">Cases <span class="ar">→</span></a>
+    <a href="demo.html">Demo <span class="ar">→</span></a>
+    <a href="pricing.html">Pricing &amp; calculator <span class="ar">→</span></a>
+    <a href="process.html">Process <span class="ar">→</span></a>
+    <a href="about.html">About <span class="ar">→</span></a>
+    <a href="contact.html">Contact <span class="ar">→</span></a>
+    <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit</a>
   </nav>
 </header>
 
 <main>
-  <section class="wi-hero">
-    <div class="container">
-      <div class="wi-kicker">
-        <span>§ 00 · Definitions</span>
-        <span>·</span>
-        <b>3 min read</b>
-      </div>
-      <h1 class="wi-h1">A vertical AI agent finishes <em>one specific job</em> — end to end.</h1>
-      <p class="wi-dek">It's not a chatbot. It's not a copilot. It's not a generic LLM with a prompt. It's <em>a custom-built worker</em> trained on your domain, plugged into your systems, accountable to a measurable outcome — and billed only when that outcome ships.</p>
-    </div>
-  </section>
 
-  <section class="container">
-    <div class="wi-def">
-      <div>
-        <div class="wi-def-k">In one sentence</div>
-        <div class="wi-def-v">A piece of software that <em>does the repetitive job</em>, written for one workflow, paid per finished result.</div>
-      </div>
-      <div>
-        <div class="wi-def-k">What it isn't</div>
-        <div class="wi-def-v">A generic assistant, a search box, a copilot, or <em>anything billed per token</em>.</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="wi-vs">
-    <div class="container">
-      <div class="wi-vs-head">
-        <span class="eb">Compared to what you've been pitched</span>
-        <h2>Most "AI" you've been sold gives you <em>a toolbox</em>. A vertical agent ships the <em>finished work</em>.</h2>
-      </div>
-      <div class="wi-matrix">
-        <div class="h"></div>
-        <div class="h" data-l="Chatbot">Chatbot</div>
-        <div class="h" data-l="Copilot">Copilot</div>
-        <div class="h" data-l="Generic LLM API">Generic LLM API</div>
-        <div class="h us" data-l="Vertical agent">Vertical agent</div>
-
-        <div class="r">What it does</div>
-        <div data-l="Chatbot">Answers questions in a window</div>
-        <div data-l="Copilot">Suggests inside an app</div>
-        <div data-l="Generic LLM API">Returns text from a prompt</div>
-        <div class="us-cell" data-l="Vertical agent">Completes the <em>whole task</em>, writes the result back to your systems</div>
-
-        <div class="r">Where it lives</div>
-        <div data-l="Chatbot">A widget on a page</div>
-        <div data-l="Copilot">Inside the vendor's app</div>
-        <div data-l="Generic LLM API">In your code</div>
-        <div class="us-cell" data-l="Vertical agent">In your <em>actual workflow</em> — CRM, EMR, phone, ticketing</div>
-
-        <div class="r">Who maintains it</div>
-        <div data-l="Chatbot">You write all the rules</div>
-        <div data-l="Copilot">Locked to the vendor's roadmap</div>
-        <div data-l="Generic LLM API">You build & operate it</div>
-        <div class="us-cell" data-l="Vertical agent"><em>We operate it</em>, including model swaps, tuning, on-call</div>
-
-        <div class="r">Billing</div>
-        <div data-l="Chatbot">Per seat / per message</div>
-        <div data-l="Copilot">Per seat / month</div>
-        <div data-l="Generic LLM API">Per token</div>
-        <div class="us-cell" data-l="Vertical agent"><em>Per completed outcome</em> — never per token, never per seat</div>
-
-        <div class="r">SLA</div>
-        <div data-l="Chatbot">None</div>
-        <div data-l="Copilot">Best-effort</div>
-        <div data-l="Generic LLM API">Provider uptime only</div>
-        <div class="us-cell" data-l="Vertical agent"><em>Written, per workflow</em> — miss it, you don't pay</div>
-
-        <div class="r">When you'd pick it</div>
-        <div data-l="Chatbot">Generic FAQ deflection</div>
-        <div data-l="Copilot">Augmenting a power user</div>
-        <div data-l="Generic LLM API">DIY internal tool</div>
-        <div class="us-cell" data-l="Vertical agent"><em>Replacing a repetitive role</em> at scale, in production, with accountability</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="wi-anatomy">
-    <div class="container">
-      <div class="wi-anatomy-head">
-        <div>
-          <h2>What's inside <em>one</em> agent.</h2>
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="reveal" style="max-width:820px">
+        <span class="pill">Explainer · 3 min read</span>
+        <h1 class="display hero-display" style="max-width:none">An AI agent finishes the <em>whole job</em>.</h1>
+        <p class="lede hero-lede" style="max-width:58ch">Not a chatbot. Not a copilot. Not a generic model behind a prompt. A vertical AI agent is a custom-built worker trained on your domain, plugged into your systems, accountable to a measurable outcome — and billed only when that outcome ships.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="ar">↗</span></a>
+          <a href="solutions.html" class="btn btn-ghost btn-lg">See what we build</a>
         </div>
-        <p>Four parts, always. Different model, different prompts, different integrations per workflow — but the shape is the same. We're not selling you LLM access; we're selling you <em>a unit of finished work</em>.</p>
       </div>
-      <div class="wi-parts">
-        <article class="wi-part">
-          <span class="no">01</span>
-          <h4>A <em>model</em> picked for the job</h4>
-          <p>GPT-5, Claude Opus 4.7, Gemini, Llama, a fine-tuned 8B — whichever wins on accuracy + cost for this specific workflow. We re-evaluate quarterly.</p>
+    </div>
+  </section>
+
+  <!-- ========== DEFINITION PAIR ========== -->
+  <section class="section--tight">
+    <div class="wrap">
+      <div class="grid grid-2 reveal">
+        <article class="card ent-card feature">
+          <span class="kicker" style="color:var(--acc-2)">In one sentence</span>
+          <h3 class="h3">Software that <em>does the repetitive job</em> — written for one workflow, paid per finished result.</h3>
         </article>
-        <article class="wi-part">
-          <span class="no">02</span>
-          <h4>A <em>workflow brain</em></h4>
-          <p>The rules, scripts, escalation paths, allowed actions. Pulled from your SOPs, not invented by us. You sign off before we ship.</p>
-        </article>
-        <article class="wi-part">
-          <span class="no">03</span>
-          <h4>Live <em>integrations</em></h4>
-          <p>Read/write into your CRM, EMR, helpdesk, phone, calendar. OAuth, SCIM, webhooks — all wired. The agent isn't watching from outside; it's inside the system doing the work.</p>
-        </article>
-        <article class="wi-part">
-          <span class="no">04</span>
-          <h4>An <em>outcome meter</em></h4>
-          <p>Every action is logged, scored, and timestamped against the contractually-defined outcome. The invoice mirrors the meter — passes only.</p>
+        <article class="card">
+          <span class="kicker">What it isn't</span>
+          <h3 class="h3">A generic assistant, a search box, a copilot, or <em>anything billed per token</em>.</h3>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="wi-faq">
-    <div class="container">
-      <h2>The questions every buyer asks.</h2>
-      <details>
-        <summary>Why not just use ChatGPT / Claude / Gemini directly?</summary>
-        <p>You can. For ad-hoc queries, that's the right tool. But "ad-hoc" stops scaling the moment a real workflow has a deadline, a written outcome, or audit liability. A vertical agent wraps the LLM in scripts, integrations, escalation rules, and an SLA — so the same underlying model becomes a <em>service you can put in a contract</em>, not a tool one person fiddles with.</p>
-      </details>
-      <details>
-        <summary>How is this different from a chatbot or a copilot?</summary>
-        <p>A chatbot answers questions in a window — the human still does the work. A copilot suggests inside an app — the human still hits "accept." A vertical agent <em>closes the loop</em>: it takes the call, writes the file, dispatches the truck, books the appointment, posts the entry. The outcome shows up in your system without a human in the middle.</p>
-      </details>
-      <details>
-        <summary>What does "billed per outcome" actually mean?</summary>
-        <p>We define the outcome in writing — "one resolved ticket," "one booked inspection," "one reconciled invoice" — agree the unit price, and then the meter only ticks when the agent ships a clean pass. Failed attempts, retries, escalations to a human: <em>free</em>. You see the per-outcome ledger live, the same view our ops team uses.</p>
-      </details>
-      <details>
-        <summary>How long from "we should try this" to live in production?</summary>
-        <p>Average <em>4 to 8 weeks</em> from a one-page brief to a live agent shipping outcomes against your SLA. Faster on workflows we've shipped before; slower on novel verticals that need new integrations. Either way: we don't bill until the meter is live.</p>
-      </details>
-      <details>
-        <summary>What if our use case isn't on your site?</summary>
-        <p>It usually isn't. Every engagement is custom-built — the workflows we list are samples of what we've shipped, not the menu. Send us a paragraph describing what your team does on repeat; we'll come back with a quote in a week.</p>
-      </details>
-      <details>
-        <summary>Who owns the agent — us or you?</summary>
-        <p>You own the workflow definition, the data, the integrations, and the SOPs. We own the operational responsibility — model selection, tuning, monitoring, on-call. If you ever want to take it in-house, the brief and the playbook come with you. We don't trap you in a lock-in.</p>
-      </details>
+  <!-- ========== COMPARISON MATRIX ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Compared to what you've been pitched</span>
+        <h2 class="h2">Most "AI" hands you a toolbox. A vertical agent ships the <em>finished work</em>.</h2>
+        <p class="lede">Four ways businesses buy AI today, side by side. The first three leave the work — and the risk — with your team.</p>
+      </div>
+
+      <div class="grid grid-4 reveal">
+        <article class="card">
+          <span class="kicker">Option 01</span>
+          <h3>Chatbot</h3>
+          <ul class="spec">
+            <li><b>What it does</b>Answers questions in a window — your team still does the work</li>
+            <li><b>Where it lives</b>A widget on a page</li>
+            <li><b>Who maintains it</b>You write all the rules</li>
+            <li><b>Billing</b>Per seat / per message</li>
+            <li><b>SLA</b>None</li>
+            <li><b>Pick it when</b>You need generic FAQ deflection</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="kicker">Option 02</span>
+          <h3>Copilot</h3>
+          <ul class="spec">
+            <li><b>What it does</b>Suggests inside an app — a human still hits "accept"</li>
+            <li><b>Where it lives</b>Inside the vendor's app</li>
+            <li><b>Who maintains it</b>Locked to the vendor's roadmap</li>
+            <li><b>Billing</b>Per seat / month</li>
+            <li><b>SLA</b>Best-effort</li>
+            <li><b>Pick it when</b>You're augmenting a power user</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="kicker">Option 03</span>
+          <h3>Generic LLM API</h3>
+          <ul class="spec">
+            <li><b>What it does</b>Returns text from a prompt</li>
+            <li><b>Where it lives</b>In your code</li>
+            <li><b>Who maintains it</b>You build it, you operate it</li>
+            <li><b>Billing</b>Per token</li>
+            <li><b>SLA</b>Provider uptime only</li>
+            <li><b>Pick it when</b>You're building a DIY internal tool</li>
+          </ul>
+        </article>
+        <article class="card us-card">
+          <span class="kicker">Option 04 · Ours</span>
+          <h3><em>Vertical agent</em></h3>
+          <ul class="spec">
+            <li><b>What it does</b>Completes the whole task and writes the result back to your systems</li>
+            <li><b>Where it lives</b>In your actual workflow — CRM, EMR, phone, ticketing</li>
+            <li><b>Who maintains it</b>We operate it — model swaps, tuning, on-call</li>
+            <li><b>Billing</b>Per completed outcome — never per token, never per seat</li>
+            <li><b>SLA</b>Written, per workflow — miss it, you don't pay</li>
+            <li><b>Pick it when</b>You're replacing a repetitive role at scale, with accountability</li>
+          </ul>
+        </article>
+      </div>
     </div>
   </section>
 
-  <section class="wi-cta">
-    <div class="container">
-      <h2>Bring us a workflow.<br>Get a <em>quote in a week</em>.</h2>
-      <p>Two-week audit, per-outcome quote, written SLA. If we can't beat your current cost on the workflow, we'll say so in the readout.</p>
-      <div class="acts">
-        <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-        <a href="cases.html" class="btn btn-lg">See what we've shipped</a>
+  <!-- ========== WHY BUSINESSES ARE SWITCHING ========== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Why businesses are switching</span>
+        <h2 class="h2">The economics are <em>hard to argue with</em>.</h2>
+        <p class="lede">When a repetitive role moves to an agent, three things change on the P&amp;L immediately — and none of them depend on AI hype.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card">
+          <span class="pill">Cost</span>
+          <h3>Pay per result, not per <em>headcount</em>.</h3>
+          <p>A salary buys you hours — busy or idle, accurate or not. Per-outcome pricing means you pay cents or dollars per finished task, and the bill scales down in quiet weeks just as it scales up in busy ones.</p>
+          <div class="stat-chip"><b>Per outcome</b> · no seats, no tokens</div>
+        </article>
+        <article class="card">
+          <span class="pill">Coverage</span>
+          <h3>24/7, in every <em>language</em>.</h3>
+          <p>Agents don't queue calls overnight or hand work to the morning shift. The 3 a.m. enquiry gets answered, booked and logged the same way the 3 p.m. one does — hours your team gets back for the work that needs judgment.</p>
+          <div class="stat-chip"><b>24/7</b> · <b>14</b>&nbsp;languages live</div>
+        </article>
+        <article class="card">
+          <span class="pill">Risk</span>
+          <h3>Failed runs cost you <em>nothing</em>.</h3>
+          <p>Every outcome is metered against a written SLA. Retries, escalations and misses are free — the meter only ticks on a clean pass. The downside risk of automation sits with us, not on your invoice.</p>
+          <div class="stat-chip"><b>Miss SLA</b> → not billed</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ANATOMY ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Anatomy</span>
+        <h2 class="h2">What's inside <em>one</em> agent.</h2>
+        <p class="lede">Four parts, always — different model, prompts and integrations per workflow, same shape. Runs on our in-house AI cloud, or inside your VPC, data centre or air-gapped enclave — built for large enterprise and federal/government workloads.</p>
+      </div>
+      <div class="grid grid-4 steps reveal">
+        <article class="card step">
+          <span class="n">01</span>
+          <h3>A model picked for the job</h3>
+          <p>GPT-5, Claude Opus 4.7, Gemini, Llama, a fine-tuned 8B — whichever wins on accuracy and cost for this specific workflow. Re-evaluated quarterly.</p>
+          <span class="when">The engine</span>
+        </article>
+        <article class="card step">
+          <span class="n">02</span>
+          <h3>A workflow brain</h3>
+          <p>The rules, scripts, escalation paths and allowed actions — pulled from your SOPs, not invented by us. You sign off before we ship.</p>
+          <span class="when">The judgment</span>
+        </article>
+        <article class="card step">
+          <span class="n">03</span>
+          <h3>Live integrations</h3>
+          <p>Read/write into your CRM, EMR, helpdesk, phone and calendar via OAuth, SCIM and webhooks. The agent works inside the system, not watching from outside.</p>
+          <span class="when">The hands</span>
+        </article>
+        <article class="card step">
+          <span class="n">04</span>
+          <h3>An outcome meter</h3>
+          <p>Every action logged, scored and timestamped against the contractually defined outcome. The invoice mirrors the meter — passes only.</p>
+          <span class="when">The bill</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FAQ ========== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="h2">The questions every buyer asks.</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Why not just use ChatGPT / Claude / Gemini directly?</summary>
+          <p>For ad-hoc queries, you should — that's the right tool. But ad-hoc stops scaling the moment a workflow has a deadline, a written outcome or audit liability. A vertical agent wraps the model in scripts, integrations, escalation rules and an SLA, so the same underlying technology becomes a service you can put in a contract — not a tool one person fiddles with.</p>
+        </details>
+        <details>
+          <summary>How is this different from a chatbot or a copilot?</summary>
+          <p>A chatbot answers questions in a window — the human still does the work. A copilot suggests inside an app — the human still hits "accept." A vertical agent closes the loop: it takes the call, writes the file, dispatches the truck, books the appointment, posts the entry. The outcome lands in your system without a human in the middle.</p>
+        </details>
+        <details>
+          <summary>What does "billed per outcome" actually mean?</summary>
+          <p>We define the outcome in writing — "one resolved ticket," "one booked inspection," "one reconciled invoice" — agree the unit price, and the meter only ticks when the agent ships a clean pass. Failed attempts, retries and escalations to a human are free. You see the per-outcome ledger live, the same view our ops team uses.</p>
+        </details>
+        <details>
+          <summary>How long from "we should try this" to live in production?</summary>
+          <p>On average 4 to 8 weeks from a one-page brief to a live agent shipping outcomes against your SLA — faster on workflows we've shipped before, slower on novel verticals that need new integrations. Either way, we don't bill until the meter is live.</p>
+        </details>
+        <details>
+          <summary>What if our use case isn't on your site?</summary>
+          <p>It usually isn't. Every engagement is custom-built — the workflows we list are samples of what we've shipped, not the menu. Send us a paragraph describing what your team does on repeat and we'll come back with a quote in a week.</p>
+        </details>
+        <details>
+          <summary>Who owns the agent — us or you?</summary>
+          <p>You own the workflow definition, the data, the integrations and the SOPs. We own the operational responsibility — model selection, tuning, monitoring, on-call. If you ever want to take it in-house, the brief and the playbook come with you. No lock-in.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="section dark cta-band">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" style="justify-content:center">Start with an audit, not a pitch</span>
+        <h2 class="h2">Bring us a workflow. Get a <em>quote in a week</em>.</h2>
+        <p class="lede">Two-week audit, per-outcome quote, written SLA. If we can't beat your current cost on the workflow, we'll say so in the readout — and you keep the diagnostic.</p>
+        <div class="btns">
+          <a href="contact.html" class="btn btn-light btn-lg">Book a free audit <span class="ar">↗</span></a>
+          <a href="cases.html" class="btn btn-outline-light btn-lg">See what we've shipped</a>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>AI agents,<br><em>shipped per outcome</em>.</h3>
-        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk (Arabic, English and your customers' languages). We bill per completed outcome. Not per seat. Not per token.</p>
+<!-- ========== FOOTER ========== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <h3>Agents that <em>finish</em>.</h3>
+        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk. We bill per completed outcome. Not per seat. Not per token.</p>
       </div>
-      <div class="footer-col">
-        <h5>Start here</h5>
-        <ul>
-          <li><a href="what-is.html">What is an AI agent?</a></li>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="cases.html">Achieve</a></li>
-          <li><a href="demo.html">Demo</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Commercial</h5>
-        <ul>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="calculator.html">Calculator</a></li>
-          <li><a href="process.html">Process</a></li>
-          <li><a href="contact.html">Book audit</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="careers.html">Careers</a></li>
-          <li><a href="press.html">Press</a></li>
-          <li><a href="research.html">Research</a></li>
-        </ul>
-      </div>
+      <div class="foot-col"><h5>Work</h5><ul>
+        <li><a href="what-is.html">What is an AI agent?</a></li>
+        <li><a href="solutions.html">Solutions</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="cases.html">Case studies</a></li>
+        <li><a href="calculator.html">Calculator</a></li>
+        <li><a href="demo.html">Live demo</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Product</h5><ul>
+        <li><a href="docs.html">API docs</a></li>
+        <li><a href="integrations.html">Integrations</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="status.html">Status</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Company</h5><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+        <li><a href="press.html">Press</a></li>
+        <li><a href="partners.html">Partners</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="foot-col"><h5>Learn</h5><ul>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="help.html">Help center</a></li>
+        <li><a href="glossary.html">Glossary</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="sitemap.html">Sitemap</a></li>
+      </ul></div>
     </div>
-    <div class="footer-bottom">
-      <div class="left">
-        <span>© Autopilot Labs · 2026</span>
-        <a href="trust.html">Trust</a>
-        <a href="security.html">Security</a>
-        <a href="status.html">Status</a>
-      </div>
-      <div class="right">
-        <a href="sitemap.html">Sitemap</a>
-        <a href="changelog.html">Changelog</a>
-      </div>
+    <div class="foot-bottom">
+      <div class="left">© 2026 Autopilot Labs Pty Ltd · Global · Remote-first · 24/7 delivery · <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></div>
+      <div class="right"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">SLA</a></div>
     </div>
   </div>
 </footer>
-<script src="assets/site.js?v=27" defer></script>
+
+<script>
+/* mobile nav */
+(function(){
+  var t = document.getElementById('navToggle'), s = document.getElementById('msheet');
+  if(!t||!s) return;
+  t.addEventListener('click', function(){
+    var open = s.classList.toggle('open');
+    t.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('lock', open);
+  });
+  s.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ s.classList.remove('open'); document.body.classList.remove('lock'); t.setAttribute('aria-expanded','false'); }); });
+})();
+
+/* reveal on scroll */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
 </body>
 </html>
