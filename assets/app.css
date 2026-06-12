@@ -572,3 +572,98 @@ em { font-style: normal; color: var(--acc); font-weight: 600; }
 }
 @keyframes marq { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; flex-wrap: wrap; width: auto; } }
+
+/* =========================================================
+   MOBILE NAV V2 — fancy sheet
+   Burger morphs to X, links stagger in, soft active states.
+   ========================================================= */
+html { text-size-adjust: 100%; } /* stop Android Chrome font-boosting */
+
+.nav-toggle { transition: background .2s var(--ease), color .2s var(--ease); }
+.nav-toggle .nt-x { display: none; }
+.nav-toggle[aria-expanded="true"] { background: var(--acc-soft); color: var(--acc-3); }
+.nav-toggle[aria-expanded="true"] .nt-b { display: none; }
+.nav-toggle[aria-expanded="true"] .nt-x { display: block; }
+
+@media (max-width: 920px) {
+  .msheet {
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+    padding: 14px var(--pad) calc(28px + env(safe-area-inset-bottom));
+  }
+  .msheet a {
+    border: 0;
+    border-radius: 14px;
+    padding: 15px 16px;
+    margin: 2px 0;
+    font-size: 17px;
+    min-height: 54px;
+    background: transparent;
+    transition: background .18s;
+  }
+  .msheet a:active { background: var(--acc-soft); }
+  .msheet a .ar { color: var(--acc-3); font-weight: 600; }
+  .msheet .btn { margin-top: 14px; }
+  .msheet .ms-mail {
+    justify-content: center;
+    font-size: 14px;
+    color: var(--ink-3);
+    min-height: 44px;
+    margin-top: 2px;
+  }
+  /* staggered entrance */
+  .msheet > * { opacity: 0; transform: translateY(12px); }
+  .msheet.open > * { animation: msIn .38s var(--ease) forwards; }
+  .msheet.open > *:nth-child(1)  { animation-delay: .02s; }
+  .msheet.open > *:nth-child(2)  { animation-delay: .05s; }
+  .msheet.open > *:nth-child(3)  { animation-delay: .08s; }
+  .msheet.open > *:nth-child(4)  { animation-delay: .11s; }
+  .msheet.open > *:nth-child(5)  { animation-delay: .14s; }
+  .msheet.open > *:nth-child(6)  { animation-delay: .17s; }
+  .msheet.open > *:nth-child(7)  { animation-delay: .20s; }
+  .msheet.open > *:nth-child(8)  { animation-delay: .23s; }
+  .msheet.open > *:nth-child(9)  { animation-delay: .26s; }
+  .msheet.open > *:nth-child(10) { animation-delay: .30s; }
+  @keyframes msIn { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .msheet > * { opacity: 1; transform: none; }
+    .msheet.open > * { animation: none; }
+  }
+}
+
+/* =========================================================
+   FOOTER V2 — minimal. One brand line, primary links, one email.
+   (Replaces the 5-column link farm.)
+   ========================================================= */
+.foot-min {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+.foot-tag {
+  margin-top: 14px;
+  font-size: 14.5px;
+  color: var(--ink-3);
+  max-width: 40ch;
+  line-height: 1.55;
+}
+.foot-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 28px;
+}
+.foot-nav a {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink-2);
+  padding: 7px 0;
+  transition: color .18s;
+}
+.foot-nav a:hover { color: var(--acc-3); }
+.foot-mail { margin-top: 18px; }
+@media (max-width: 720px) {
+  .foot-min { grid-template-columns: 1fr; gap: 28px; }
+  .foot-nav a { font-size: 15.5px; padding: 9px 0; }
+}

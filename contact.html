@@ -6,7 +6,7 @@
 <title>Contact — Autopilot Labs · Book a free two-week audit</title>
 <meta name="description" content="Book a free two-week workflow audit with Autopilot Labs. We price your most painful workflow per outcome — or you walk away with the full diagnostic, on us.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/app.css?v=7">
+<link rel="stylesheet" href="assets/app.css?v=8">
 <style>
 .contact-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(24px, 3vw, 48px); align-items: start; }
 @media (max-width: 920px) { .contact-grid { grid-template-columns: 1fr; } }
@@ -83,7 +83,7 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
     <div class="nav-cta">
       <a href="contact.html" class="btn btn-primary">Book a free audit</a>
       <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+        <svg class="nt-b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg><svg class="nt-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5L5 19" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
@@ -97,6 +97,7 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
     <a href="about.html">About <span class="ar">→</span></a>
     <a href="contact.html">Contact <span class="ar">→</span></a>
     <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit</a>
+    <a class="ms-mail" href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
   </nav>
 </header>
 
@@ -222,22 +223,14 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
           </div>
 
           <div class="side-card">
-            <h4>Single point of contact</h4>
-            <div class="cm"><span class="k">Audit</span><span class="v"><a href="mailto:enquires@autopilotlabs.io?subject=Audit%20request">enquires@autopilotlabs.io</a></span><span class="b">&lt; 1 day</span></div>
-            <div class="cm"><span class="k">Sales</span><span class="v"><a href="mailto:enquires@autopilotlabs.io?subject=New%20engagement">enquires@autopilotlabs.io</a></span><span class="b">&lt; 1 day</span></div>
-            <div class="cm"><span class="k">Press</span><span class="v"><a href="mailto:enquires@autopilotlabs.io?subject=Press%20enquiry">enquires@autopilotlabs.io</a></span><span class="b">&lt; 2 days</span></div>
-            <div class="cm"><span class="k">Security</span><span class="v"><a href="mailto:enquires@autopilotlabs.io?subject=Security%20enquiry">enquires@autopilotlabs.io</a></span><span class="b">&lt; 1 day</span></div>
-          </div>
-
-          <div class="side-card">
-            <h4>Prefer async?</h4>
-            <p style="font-size:14px;color:var(--ink-3);line-height:1.55;margin-bottom:14px">Send a Loom or a two-paragraph write-up of the workflow. If we can quote from it alone, we will — no call required.</p>
-            <a href="mailto:enquires@autopilotlabs.io?subject=Async%20audit%20request" class="btn btn-ghost" style="width:100%">Start async <span class="ar">↗</span></a>
+            <h4>One email for everything</h4>
+            <p style="font-size:14px;color:var(--ink-3);line-height:1.55;margin-bottom:14px">Audits, sales, press, security — it all lands in the same inbox, and a human replies within one working day.</p>
+            <a href="mailto:enquires@autopilotlabs.io" class="btn btn-primary" style="width:100%">enquires@autopilotlabs.io</a>
           </div>
 
           <div class="side-card">
             <h4>End-to-end automation</h4>
-            <p style="font-size:14px;color:var(--ink-3);line-height:1.6">We do <em>e2e automation</em> with agents we build for your workflow — fully remote, follow-the-sun, on-prem or cloud. ABN 00 000 000 000.</p>
+            <p style="font-size:14px;color:var(--ink-3);line-height:1.6">We do <em>e2e automation</em> with agents we build for your workflow — fully remote, follow-the-sun, on-prem or cloud.</p>
             <p class="note" style="margin-top:10px">Global delivery · 24/7</p>
           </div>
         </aside>
@@ -273,45 +266,25 @@ fieldset.field { border: 0; padding: 0; min-width: 0; }
 <!-- ========== FOOTER ========== -->
 <footer class="foot">
   <div class="wrap">
-    <div class="foot-top">
-      <div class="foot-brand">
-        <h3>Agents that <em>finish</em>.</h3>
-        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk. We bill per completed outcome. Not per seat. Not per token.</p>
+    <div class="foot-min">
+      <div>
+        <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+        <p class="foot-tag">End-to-end automation with agents we build for your workflow. Billed per outcome — never per seat, never per token.</p>
       </div>
-      <div class="foot-col"><h5>Work</h5><ul>
-        <li><a href="what-is.html">What is an AI agent?</a></li>
-        <li><a href="solutions.html">Solutions</a></li>
-        <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="cases.html">Case studies</a></li>
-        <li><a href="calculator.html">Calculator</a></li>
-        <li><a href="demo.html">Live demo</a></li>
-      </ul></div>
-      <div class="foot-col"><h5>Product</h5><ul>
-        <li><a href="docs.html">API docs</a></li>
-        <li><a href="integrations.html">Integrations</a></li>
-        <li><a href="security.html">Security</a></li>
-        <li><a href="trust.html">Trust</a></li>
-        <li><a href="status.html">Status</a></li>
-        <li><a href="changelog.html">Changelog</a></li>
-      </ul></div>
-      <div class="foot-col"><h5>Company</h5><ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="careers.html">Careers</a></li>
-        <li><a href="manifesto.html">Manifesto</a></li>
-        <li><a href="press.html">Press</a></li>
-        <li><a href="partners.html">Partners</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul></div>
-      <div class="foot-col"><h5>Learn</h5><ul>
-        <li><a href="journal.html">Journal</a></li>
-        <li><a href="help.html">Help center</a></li>
-        <li><a href="glossary.html">Glossary</a></li>
-        <li><a href="research.html">Research</a></li>
-        <li><a href="sitemap.html">Sitemap</a></li>
-      </ul></div>
+      <nav class="foot-nav" aria-label="Footer">
+        <a href="what-is.html">What is an AI agent?</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="cases.html">Cases</a>
+        <a href="demo.html">Demo</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="process.html">Process</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="btn btn-ghost foot-mail" href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
     </div>
     <div class="foot-bottom">
-      <div class="left">© 2026 Autopilot Labs Pty Ltd · Global · Remote-first · 24/7 delivery · <a href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a></div>
+      <div class="left">© 2026 Autopilot Labs · Global · Remote-first · 24/7 delivery</div>
       <div class="right"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">SLA</a></div>
     </div>
   </div>
