@@ -3,1642 +3,578 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live demo — Watch an AI agent run · Autopilot Labs</title>
-<meta name="description" content="Press start. We simulate one of our healthcare-intake AI agents processing a real (anonymised) incoming fax. 12 seconds. No signup.">
+<title>Live demo — watch an AI agent finish a real job | Autopilot Labs</title>
+<meta name="description" content="Pick a scenario and watch a vertical AI agent finish the whole job — inbound call, support ticket, invoice processing, claims intake — with timestamps, transcript and the outcome billed.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5">
-<link rel="stylesheet" href="assets/motion.css">
+<link rel="stylesheet" href="assets/app.css?v=8">
 <style>
-/* =========================================================
-   DEMO PAGE — "Watch an AI agent run"
-   Modernist Swiss · cobalt · sans-only
-   ========================================================= */
-
-.demo-hero {
-  padding: clamp(5.5rem, 10vw, 9rem) 0 clamp(2rem, 4vw, 3.5rem);
-  border-bottom: 1px solid var(--line);
-}
-.demo-hero h1 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(44px, 8vw, 108px);
-  line-height: 0.9;
-  letter-spacing: -0.045em;
-  max-width: 16ch;
-  margin-bottom: 1.75rem;
-  color: var(--ink);
-}
-.demo-hero h1 em {
-  color: var(--accent);
-  font-style: normal;
-  font-weight: 500;
-}
-.demo-hero .dek {
-  font-family: var(--font-display);
-  font-size: clamp(16px, 1.5vw, 21px);
-  line-height: 1.5;
-  color: var(--ink-3);
-  max-width: 58ch;
-  margin-bottom: 2rem;
-}
-.demo-hero .hero-coord {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 1.25rem;
-  align-items: center;
-  padding-bottom: 2rem;
-  margin-bottom: 2.25rem;
-  border-bottom: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.demo-hero .hero-coord .line {
-  height: 1px;
-  background: var(--line-strong);
-  min-width: 0;
-}
-.demo-hero .hero-coord .right { text-align: right; }
-
-/* =========================================================
-   DEMO PANEL — 3 columns (scenarios · terminal · metrics)
-   ========================================================= */
-.demo-stage {
-  padding: clamp(1rem, 3vw, 2.5rem) 0 clamp(3rem, 6vw, 5rem);
-}
-.demo-panel {
-  display: grid;
-  grid-template-columns: 280px 1fr 300px;
-  gap: 0;
-  background: var(--paper);
-  border: 1px solid var(--ink);
-  overflow: hidden;
-}
-@media (max-width: 1100px) {
-  .demo-panel { grid-template-columns: 1fr; }
-}
-
-/* Column headers */
-.col-head {
-  padding: 0.85rem 1.25rem;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-3);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 42px;
-}
-.col-head strong {
-  color: var(--ink);
-  font-weight: 500;
-}
-.col-head .dot-live {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--accent);
-  font-weight: 500;
-}
-.col-head .dot-live::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulse-dot 1.6s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-
-/* ----- LEFT: scenario picker ----- */
-.scenarios {
-  border-right: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-}
-@media (max-width: 1100px) {
-  .scenarios { border-right: 0; border-bottom: 1px solid var(--line); }
-}
-.scenarios-list {
-  padding: 0.75rem 0.75rem 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-}
-.scen {
-  display: block;
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--line);
-  background: var(--paper);
-  cursor: pointer;
-  position: relative;
-  transition: border-color 180ms var(--ease), background 180ms var(--ease);
-}
-.scen:hover { border-color: var(--line-strong); background: var(--paper-3); }
-.scen input { position: absolute; opacity: 0; pointer-events: none; }
-.scen.is-active {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-.scen.is-active::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px; background: var(--accent);
-}
-.scen-no {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-}
-.scen.is-active .scen-no { color: var(--accent); }
-.scen-name {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin-bottom: 0.3rem;
-}
-.scen-desc {
-  font-family: var(--font-display);
-  font-size: 12px;
-  color: var(--ink-3);
-  line-height: 1.45;
-}
-.scen-radio {
-  position: absolute;
-  right: 1.1rem;
-  top: 1rem;
-  width: 14px; height: 14px;
-  border: 1.5px solid var(--line-strong);
-  border-radius: 50%;
-  background: var(--paper);
-}
-.scen.is-active .scen-radio {
-  border-color: var(--accent);
-}
-.scen.is-active .scen-radio::after {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  background: var(--accent);
-  border-radius: 50%;
-}
-.scen-foot {
-  padding: 1rem 1.25rem;
-  border-top: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  line-height: 1.6;
-}
-.scen-foot b {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-/* ----- CENTER: terminal log ----- */
-.terminal {
-  background: #09090B;
-  color: #FAFAFA;
-  display: flex;
-  flex-direction: column;
-  min-height: 540px;
-}
-.terminal .col-head {
-  background: #111114;
-  color: rgba(250,250,250,0.5);
-  border-bottom: 1px solid rgba(250,250,250,0.1);
-}
-.terminal .col-head strong { color: #FAFAFA; }
-.terminal .col-head .dot-live { color: #4A8BFF; }
-.terminal .col-head .dot-live::before { background: #4A8BFF; }
-
-.term-chrome {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  background: #111114;
-  border-bottom: 1px solid rgba(250,250,250,0.08);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: rgba(250,250,250,0.4);
-}
-.term-chrome .lamp {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  border: 1px solid rgba(250,250,250,0.2);
-  background: transparent;
-}
-.term-chrome .lamp.on { background: #4A8BFF; border-color: #4A8BFF; }
-.term-chrome .path {
-  margin-left: 14px;
-  color: rgba(250,250,250,0.55);
-  letter-spacing: 0.02em;
-  flex: 1;
-}
-.term-chrome .right {
-  color: #4A8BFF;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.term-body {
-  padding: 1.25rem 1.5rem;
-  flex: 1;
-  overflow-y: auto;
-  max-height: 480px;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  line-height: 1.75;
-  letter-spacing: 0.01em;
-  scroll-behavior: smooth;
-}
-.term-body::-webkit-scrollbar { width: 8px; }
-.term-body::-webkit-scrollbar-track { background: transparent; }
-.term-body::-webkit-scrollbar-thumb {
-  background: rgba(250,250,250,0.12);
-  border-radius: 4px;
-}
-
-.log-line {
-  display: grid;
-  grid-template-columns: 76px 1fr;
-  gap: 14px;
-  color: rgba(250,250,250,0.82);
-  padding: 2px 0;
-  opacity: 0;
-  animation: line-in 220ms var(--ease) forwards;
-}
-@keyframes line-in {
-  from { opacity: 0; transform: translateY(3px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.log-line .t {
-  color: rgba(250,250,250,0.38);
-  font-variant-numeric: tabular-nums;
-}
-.log-line .msg { color: rgba(250,250,250,0.82); }
-.log-line.info .msg { color: rgba(250,250,250,0.82); }
-.log-line.warn .msg { color: #F59E0B; }
-.log-line.ok .msg   { color: #34D399; }
-.log-line.ship {
-  margin-top: 0.75rem;
-  padding: 0.75rem 0.9rem;
-  background: rgba(0,82,255,0.14);
-  border-left: 2px solid #4A8BFF;
-  grid-template-columns: 76px 1fr;
-}
-.log-line.ship .msg {
-  color: #4A8BFF;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-.log-line .msg b {
-  color: #FAFAFA;
-  font-weight: 500;
-}
-.log-line .msg .dim { color: rgba(250,250,250,0.48); }
-
-.term-cursor {
-  display: inline-block;
-  width: 7px; height: 14px;
-  background: #4A8BFF;
-  vertical-align: -2px;
-  margin-left: 4px;
-  animation: blink 1s steps(2) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-
-.term-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  gap: 1.25rem;
-  padding: 2rem;
-  text-align: center;
-  color: rgba(250,250,250,0.5);
-}
-.term-empty .glyph {
-  width: 56px; height: 56px;
-  border: 1.5px solid rgba(250,250,250,0.22);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #4A8BFF;
-}
-.term-empty .msg {
-  font-family: var(--font-display);
-  font-size: 15.5px;
-  color: rgba(250,250,250,0.82);
-  max-width: 32ch;
-  line-height: 1.45;
-  letter-spacing: -0.01em;
-}
-.term-empty .sub {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: rgba(250,250,250,0.4);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.term-controls {
-  display: flex;
-  gap: 0;
-  border-top: 1px solid rgba(250,250,250,0.08);
-  background: #111114;
-}
-.term-btn {
-  flex: 1;
-  padding: 1rem 1.25rem;
-  background: transparent;
-  border: 0;
-  border-right: 1px solid rgba(250,250,250,0.08);
-  color: #FAFAFA;
-  font-family: var(--font-display);
-  font-size: 13.5px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: background 160ms var(--ease), color 160ms var(--ease);
-}
-.term-btn:last-child { border-right: 0; }
-.term-btn:hover { background: rgba(250,250,250,0.05); }
-.term-btn:disabled {
-  color: rgba(250,250,250,0.32);
-  cursor: not-allowed;
-}
-.term-btn:disabled:hover { background: transparent; }
-.term-btn.primary {
-  background: #0052FF;
-  color: #FFFFFF;
-}
-.term-btn.primary:hover { background: #1A6BFF; }
-.term-btn.primary:disabled {
-  background: rgba(0,82,255,0.3);
-  color: rgba(255,255,255,0.5);
-}
-.term-btn .icon {
-  font-family: var(--font-mono);
-  font-size: 11px;
-}
-
-/* ----- RIGHT: metrics ----- */
-.metrics {
-  border-left: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-  background: var(--paper);
-}
-@media (max-width: 1100px) {
-  .metrics { border-left: 0; border-top: 1px solid var(--line); }
-}
-.metrics-list {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-.metric {
-  padding: 1.5rem 1.4rem 1.25rem;
-  border-bottom: 1px solid var(--line);
-  position: relative;
-  overflow: hidden;
-}
-.metric:last-child { border-bottom: 0; }
-.metric-k {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-}
-.metric-k .trend {
-  color: var(--accent);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-}
-.metric-v {
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  margin-bottom: 0.35rem;
-  transition: color 200ms var(--ease);
-}
-.metric-v.flash { color: var(--accent); }
-.metric-v .u {
-  font-size: 0.42em;
-  color: var(--muted);
-  font-weight: 400;
-  margin-left: 4px;
-  letter-spacing: 0;
-}
-.metric-sub {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-.metric .spark {
-  position: absolute;
-  right: 0.8rem;
-  bottom: 0.75rem;
-  display: flex;
-  gap: 2px;
-  align-items: flex-end;
-  height: 20px;
-}
-.metric .spark .bar {
-  width: 3px;
-  background: var(--line-strong);
-  transition: height 240ms var(--ease), background 240ms var(--ease);
-}
-.metric.is-live .spark .bar { background: var(--accent); }
-
-.metrics-foot {
-  padding: 1rem 1.4rem;
-  border-top: 1px solid var(--line);
-  background: var(--paper-3);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.metrics-foot b {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-/* =========================================================
-   WHAT JUST HAPPENED — 3 phase explainer
-   ========================================================= */
-.phases-section {
-  background: var(--paper-3);
-  padding: clamp(4rem, 7vw, 6.5rem) 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.phases-head {
-  max-width: 64rem;
-  margin-bottom: 3.5rem;
-}
-.phases-head .eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.25rem;
-}
-.phases-head h2 {
-  font-family: var(--font-display);
-  font-size: clamp(36px, 5vw, 64px);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 1.25rem;
-}
-.phases-head h2 em {
-  color: var(--accent);
-  font-style: normal;
-  font-weight: 500;
-}
-.phases-head p {
-  font-size: 16px;
-  color: var(--ink-3);
-  line-height: 1.55;
-  max-width: 60ch;
-}
-
-.phases {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  background: var(--paper);
-  border: 1px solid var(--line);
-}
-@media (max-width: 900px) {
-  .phases { grid-template-columns: 1fr; }
-}
-.phase {
-  padding: 2.5rem 2rem;
-  border-right: 1px solid var(--line);
-  position: relative;
-  transition: background 240ms var(--ease);
-}
-.phase:last-child { border-right: 0; }
-@media (max-width: 900px) {
-  .phase { border-right: 0; border-bottom: 1px solid var(--line); }
-  .phase:last-child { border-bottom: 0; }
-}
-.phase:hover { background: var(--paper-3); }
-.phase::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: var(--accent);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 360ms var(--ease);
-}
-.phase:hover::before { transform: scaleX(1); }
-.phase-no {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-}
-.phase-icon {
-  width: 52px;
-  height: 52px;
-  margin-bottom: 1.75rem;
-  color: var(--ink);
-}
-.phase-name {
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1;
-  color: var(--ink);
-  margin-bottom: 1rem;
-}
-.phase-body {
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: var(--ink-3);
-  margin-bottom: 1.5rem;
-}
-.phase-kv {
-  padding: 0.85rem 1rem;
-  background: var(--paper-3);
-  border-left: 2px solid var(--accent);
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: var(--ink-3);
-  line-height: 1.55;
-  letter-spacing: 0.02em;
-}
-.phase-kv b {
-  display: block;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 500;
-  margin-bottom: 4px;
-}
-
-/* =========================================================
-   CTA row
-   ========================================================= */
-.demo-cta {
-  padding: clamp(4rem, 7vw, 6.5rem) 0;
-  background: var(--ink);
-  color: var(--paper);
-  position: relative;
-  overflow: hidden;
-}
-.demo-cta::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 45% at 15% 0%, rgba(0,82,255,0.12), transparent 55%),
-    radial-gradient(ellipse 50% 35% at 85% 100%, rgba(0,82,255,0.08), transparent 55%);
-  pointer-events: none;
-}
-.demo-cta-inner {
-  position: relative; z-index: 2;
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: end;
-}
-@media (max-width: 900px) {
-  .demo-cta-inner { grid-template-columns: 1fr; }
-}
-.demo-cta-kicker {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(250,250,250,0.5);
-  padding-bottom: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(250,250,250,0.14);
-}
-.demo-cta h2 {
-  font-family: var(--font-display);
-  font-size: clamp(36px, 5.5vw, 68px);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  font-weight: 500;
-  color: var(--paper);
-  margin-bottom: 1.5rem;
-}
-.demo-cta h2 em {
-  color: #4A8BFF;
-  font-style: normal;
-  font-weight: 500;
-}
-.demo-cta p {
-  font-family: var(--font-display);
-  font-size: 16.5px;
-  line-height: 1.55;
-  color: rgba(250,250,250,0.7);
-  max-width: 52ch;
-}
-.demo-cta-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-}
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  padding: 1.15rem 1.5rem;
-  border: 1px solid rgba(250,250,250,0.24);
-  color: var(--paper);
-  text-decoration: none;
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  transition: background 180ms var(--ease), border-color 180ms var(--ease), color 180ms var(--ease);
-}
-.cta-btn:hover {
-  background: #0052FF;
-  border-color: #0052FF;
-  color: #FFFFFF;
-}
-.cta-btn.primary {
-  background: #0052FF;
-  border-color: #0052FF;
-}
-.cta-btn.primary:hover {
-  background: #1A6BFF;
-  border-color: #1A6BFF;
-}
-.cta-btn .arrow {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  transition: transform 180ms var(--ease);
-}
-.cta-btn:hover .arrow { transform: translate(4px, -4px); }
-
-/* =========================================================
-   FAQ strip
-   ========================================================= */
-.faq-strip {
-  padding: clamp(4rem, 6vw, 5.5rem) 0;
-  border-bottom: 1px solid var(--line);
-}
-.faq-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding-bottom: 1.5rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.faq-head .t {
-  font-family: var(--font-display);
-  font-size: clamp(24px, 2.6vw, 36px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
-.faq-head .t em { color: var(--accent); font-style: normal; font-weight: 500; }
-.faq-head .m {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.faq-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--line);
-}
-@media (max-width: 900px) { .faq-list { grid-template-columns: 1fr; } }
-.faq-item {
-  padding: 1.75rem;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.faq-item:nth-child(3n) { border-right: 0; }
-.faq-item:nth-last-child(-n+3) { border-bottom: 0; }
-@media (max-width: 900px) {
-  .faq-item { border-right: 0; border-bottom: 1px solid var(--line); }
-  .faq-item:last-child { border-bottom: 0; }
-}
-.faq-q {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin-bottom: 0.6rem;
-  line-height: 1.35;
-}
-.faq-a {
-  font-size: 13.5px;
-  color: var(--ink-3);
-  line-height: 1.6;
-}
-
-/* Reduced motion overrides */
-@media (prefers-reduced-motion: reduce) {
-  .log-line { animation: none !important; opacity: 1 !important; }
-  .term-cursor { animation: none !important; }
-  .col-head .dot-live::before { animation: none !important; }
-  .metric-v.flash { transition: none !important; }
-}
-
-@media (max-width: 720px) {
-  .demo-hero .hero-coord { grid-template-columns: 1fr; gap: 0.35rem; text-align: left; }
-  .demo-hero .hero-coord .line { display: none; }
-  .demo-hero .hero-coord .right { text-align: left; }
-  .terminal { min-height: 0; }
-  .term-body { max-height: 360px; padding: 1rem 1.1rem; font-size: 11.5px; line-height: 1.65; }
-  .log-line { grid-template-columns: 58px 1fr; gap: 10px; }
-  .log-line.ship { grid-template-columns: 58px 1fr; padding: 0.65rem 0.75rem; }
-  .metric { padding: 1.25rem 1.1rem 1rem; }
-  .metric-v { font-size: 30px; }
-  .phase { padding: 1.75rem 1.25rem; }
-  .phase-name { font-size: 22px; }
-  .faq-item { padding: 1.25rem 1.1rem; }
-}
-@media (max-width: 520px) {
-  .scen { padding: 0.9rem 0.95rem; }
-  .scen-name { font-size: 15px; }
-  .scen-desc { font-size: 11.5px; }
-  .scen-radio { right: 0.8rem; top: 0.85rem; }
-  .term-chrome { padding: 9px 10px; font-size: 9px; }
-  .term-chrome .path { margin-left: 8px; font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .term-body { padding: 0.85rem 0.9rem; font-size: 10.75px; }
-  .log-line { grid-template-columns: 48px 1fr; gap: 8px; }
-  .log-line.ship { grid-template-columns: 48px 1fr; padding: 0.55rem 0.6rem; }
-  .term-btn { padding: 0.95rem 0.5rem; font-size: 13px; min-height: 44px; }
-  .metric { padding: 1rem 0.9rem 0.9rem; }
-  .metric-v { font-size: 26px; }
-  .metric .spark { right: 0.6rem; bottom: 0.6rem; }
-  .phase-name { font-size: 20px; }
-  .phase-no { margin-bottom: 1rem; }
-  .phase-icon { width: 44px; height: 44px; margin-bottom: 1.25rem; }
-  .demo-cta-actions { gap: 0.65rem; }
-  .demo-cta h2 { font-size: clamp(30px, 9vw, 44px); }
-  .cta-btn { padding: 1rem 1.1rem; font-size: 14px; gap: 0.75rem; }
-  .faq-head { padding-bottom: 1rem; margin-bottom: 1.25rem; }
-}
-@media (max-width: 380px) {
-  .term-controls { flex-direction: column; }
-  .term-btn { border-right: 0; border-bottom: 1px solid rgba(250,250,250,0.08); }
-  .term-btn:last-child { border-bottom: 0; }
-  .demo-hero h1 { font-size: clamp(34px, 12vw, 48px); }
-  .log-line { grid-template-columns: 40px 1fr; gap: 6px; }
-  .log-line.ship { grid-template-columns: 40px 1fr; }
-  .metric-v { font-size: 22px; }
-  .phase { padding: 1.25rem 1rem; }
-}
+.demo-shell{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;align-items:start}
+@media (max-width:980px){.demo-shell{grid-template-columns:1fr}}
+.demo-tabs{display:grid;grid-template-columns:1fr;gap:8px}
+@media (max-width:980px){.demo-tabs{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.demo-tabs{grid-template-columns:1fr}}
+.tab{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:1px solid var(--line);background:#fff;border-radius:var(--r);text-align:left;cursor:pointer;transition:border-color .2s,background .2s;width:100%}
+.tab:hover{border-color:var(--line-2)}
+.tab.active{border-color:var(--acc);background:var(--acc-soft)}
+.tab .tnum{font-size:12px;color:var(--acc-3);font-weight:700;letter-spacing:.03em;flex-shrink:0;margin-top:2px}
+.tab .tcontent{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tab h4{font-size:15.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.tab.active h4{color:var(--acc-3)}
+.tab p{font-size:13px;color:var(--ink-3);line-height:1.45}
+.stage{border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--shadow-lg)}
+.stage::before{content:"";display:block;height:3px;background:linear-gradient(90deg,var(--acc),var(--acc-2),var(--acc))}
+.stage-bar{display:flex;align-items:center;gap:8px;height:42px;padding:0 14px;border-bottom:1px solid var(--line);background:var(--bg-soft-2);font-family:var(--mono);font-size:11px;color:var(--muted)}
+.stage-bar .dot{width:10px;height:10px;border-radius:50%}
+.stage-bar .dot:nth-of-type(1){background:#FF5F57}
+.stage-bar .dot:nth-of-type(2){background:#FEBC2E}
+.stage-bar .dot:nth-of-type(3){background:#28C840}
+.stage-bar .url{margin-left:8px}
+.stage-bar .live{margin-left:auto;color:var(--acc-3);font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.stage-bar .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acc);animation:blink 2s infinite}
+.feed{height:440px;overflow-y:auto;padding:18px 18px 12px;background:#fff;display:flex;flex-direction:column;gap:10px}
+.line{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;font-size:14.5px;line-height:1.5;animation:lineIn .3s var(--ease)}
+@keyframes lineIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.line .t{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding-top:3px}
+.line .body{color:var(--ink-2)}
+.line .body strong{color:var(--ink);font-weight:600}
+.line.you .body::before{content:"Caller · ";font-size:11px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;font-weight:700}
+.line.agent .body::before{content:"Agent · ";font-size:11px;letter-spacing:.04em;color:var(--acc-3);text-transform:uppercase;font-weight:700}
+.line.sys .body{color:var(--ink-3);font-style:italic;font-size:13.5px}
+.line.sys .body::before{content:"⟶ ";color:var(--acc);font-style:normal;font-weight:700}
+.line.win{background:var(--acc-soft);border:1px solid var(--acc-line);border-left:3px solid var(--acc);padding:13px 16px;border-radius:8px;margin-top:10px;grid-template-columns:1fr auto;display:grid;gap:16px;font-size:14px;color:var(--ink);align-items:center;animation:winPop .5s var(--ease)}
+@keyframes winPop{0%{opacity:0;transform:scale(.96)}60%{transform:scale(1.015)}100%{opacity:1;transform:none}}
+.line.win strong{color:var(--acc-3);font-weight:700}
+.line.win .price{color:var(--acc-3);font-weight:700;font-size:16px}
+.typing{display:inline-flex;gap:4px;padding:6px 2px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--acc);opacity:.4;animation:tdot 1s infinite}
+.typing i:nth-child(2){animation-delay:.16s}.typing i:nth-child(3){animation-delay:.32s}
+@keyframes tdot{40%{opacity:1;transform:translateY(-2px)}}
+.stage-foot{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;background:var(--bg-soft-2);border-top:1px solid var(--line);font-size:12px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stage-foot button{font-size:12px;color:var(--acc-3);font-weight:700;letter-spacing:.03em;text-transform:uppercase;cursor:pointer}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.metric{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;background:#fff}
+.metric .mk{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.metric .mv{font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.metric .mv em{color:var(--acc)}
+@media (max-width:640px){.metrics{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<div class="scroll-prog" aria-hidden="true"></div>
 
-<!-- ========== TOPBAR ========== -->
-<header class="topbar">
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-    </div>
-  </div>
-  <div class="topbar-inner">
-    <a href="index.html" class="brand">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
-      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
-    </a>
-    <nav class="primary-nav" aria-label="Primary">
-      <a href="solutions.html" data-nav="solutions">Solutions</a>
-      <a href="cases.html" data-nav="cases">Achieve</a>
-      <a href="demo.html" data-nav="demo">Demo</a>
-      <a href="pricing.html" data-nav="pricing">Pricing</a>
-      <a href="process.html" data-nav="process">Process</a>
-      <a href="about.html" data-nav="about">About</a>
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="what-is.html" class="is-accent">What is an AI agent?</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="cases.html">Cases</a>
+      <a href="demo.html" style="background:var(--bg-soft);color:var(--ink)">Demo</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
     </nav>
-    <div class="topbar-cta">
-      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
-      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
-      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <span class="bar b1" aria-hidden="true"></span>
-        <span class="bar b2" aria-hidden="true"></span>
-        <span class="bar b3" aria-hidden="true"></span>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Book a free audit</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg class="nt-b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg><svg class="nt-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5L5 19" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <div></div>
-    <div class="mobile-nav-inner">
-      <div class="mnav-group">
-        <h5>Work</h5>
-        <ul class="mnav-list">
-          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
-          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
-          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
-          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
-          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
-          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
-          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mobile-nav-foot">
-      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-      <div class="mfoot-meta">
-        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
-        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
-      </div>
-    </div>
+  <nav class="msheet" id="msheet" aria-label="Mobile">
+    <a href="what-is.html">What is an AI agent? <span class="ar">→</span></a>
+    <a href="solutions.html">Solutions <span class="ar">→</span></a>
+    <a href="cases.html">Cases <span class="ar">→</span></a>
+    <a href="demo.html" style="background:var(--bg-soft);color:var(--ink)">Demo <span class="ar">→</span></a>
+    <a href="pricing.html">Pricing &amp; calculator <span class="ar">→</span></a>
+    <a href="process.html">Process <span class="ar">→</span></a>
+    <a href="about.html">About <span class="ar">→</span></a>
+    <a href="contact.html">Contact <span class="ar">→</span></a>
+    <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit</a>
+    <a class="ms-mail" href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
   </nav>
 </header>
 
 <main>
+
   <!-- ========== HERO ========== -->
-  <section class="demo-hero">
-    <div class="container">
-      <div class="hero-coord reveal">
-        <div><span>◎ Live demo · no signup · no card</span></div>
-        <div class="line"></div>
-        <div class="right"><span>No. 009 — See an agent finish the job</span></div>
-      </div>
-      <h1 class="reveal delay-1">
-        Watch an AI agent<br>
-        <em>automate a workflow</em> — live.
-      </h1>
-      <p class="dek reveal delay-2">
-        Press start. We will simulate one of our healthcare-intake agents processing a real (anonymised) incoming fax. 12 seconds. No signup required. Pick a different workflow from the left if you'd rather see legal, finance, or hiring.
-      </p>
-    </div>
-  </section>
-
-  <!-- ========== DEMO PANEL ========== -->
-  <section class="demo-stage">
-    <div class="container">
-      <div class="demo-panel reveal delay-1" aria-label="Interactive agent demo">
-
-        <!-- LEFT: scenario picker -->
-        <aside class="scenarios" aria-label="Pick a workflow to simulate">
-          <div class="col-head">
-            <strong>Scenario</strong>
-            <span>Step 1 of 2</span>
-          </div>
-          <div class="scenarios-list" role="radiogroup" aria-label="Workflow scenarios">
-            <label class="scen is-active" data-scenario="healthcare">
-              <input type="radio" name="scenario" value="healthcare" checked>
-              <div class="scen-radio" aria-hidden="true"></div>
-              <div class="scen-no"><span>01 · Default</span><span>12s</span></div>
-              <div class="scen-name">Healthcare intake</div>
-              <div class="scen-desc">Process an incoming patient fax: extract fields, cross-check the EMR, flag exceptions.</div>
-            </label>
-            <label class="scen" data-scenario="legal">
-              <input type="radio" name="scenario" value="legal">
-              <div class="scen-radio" aria-hidden="true"></div>
-              <div class="scen-no"><span>02</span><span>12s</span></div>
-              <div class="scen-name">Legal discovery</div>
-              <div class="scen-desc">Triage, tag, and privilege-flag a freshly uploaded litigation exhibit.</div>
-            </label>
-            <label class="scen" data-scenario="finance">
-              <input type="radio" name="scenario" value="finance">
-              <div class="scen-radio" aria-hidden="true"></div>
-              <div class="scen-no"><span>03</span><span>12s</span></div>
-              <div class="scen-name">Finance reconciliation</div>
-              <div class="scen-desc">Match a bank statement line to the correct GL entry and post the journal.</div>
-            </label>
-            <label class="scen" data-scenario="hr">
-              <input type="radio" name="scenario" value="hr">
-              <div class="scen-radio" aria-hidden="true"></div>
-              <div class="scen-no"><span>04</span><span>12s</span></div>
-              <div class="scen-name">HR · CV shortlist</div>
-              <div class="scen-desc">Read a CV, score it against the job spec, and draft a shortlist note for the hiring manager.</div>
-            </label>
-          </div>
-          <div class="scen-foot">
-            <b>Note.</b> Inputs are anonymised samples from real production traffic — the agent logic that runs against them is the exact same code we ship to clients.
-          </div>
-        </aside>
-
-        <!-- CENTER: terminal -->
-        <section class="terminal" aria-label="Agent log stream">
-          <div class="col-head">
-            <strong>Agent log · live stream</strong>
-            <span class="dot-live" data-live-label>idle</span>
-          </div>
-          <div class="term-chrome" aria-hidden="true">
-            <span class="lamp"></span><span class="lamp"></span><span class="lamp on"></span>
-            <span class="path" data-term-path>autopilotlabs@ops ~ /agents/intake.01/run</span>
-            <span class="right">Secure · TLS 1.3</span>
-          </div>
-          <div class="term-body" id="termBody" role="log" aria-live="polite" aria-atomic="false">
-            <div class="term-empty" data-empty>
-              <div class="glyph" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="6,4 20,12 6,20" fill="currentColor"/></svg>
-              </div>
-              <div class="msg">Press <b style="color:#4A8BFF;">start demo</b> to watch the agent parse, validate, and ship an outcome. Takes about 12 seconds.</div>
-              <div class="sub">No signup · anonymised input · 1 outcome per run</div>
-            </div>
-          </div>
-          <div class="term-controls">
-            <button class="term-btn primary" id="btnStart" type="button" aria-label="Start the demo">
-              <span class="icon" aria-hidden="true">▶</span> Start demo
-            </button>
-            <button class="term-btn" id="btnReset" type="button" disabled aria-label="Reset the demo">
-              <span class="icon" aria-hidden="true">↻</span> Reset
-            </button>
-          </div>
-        </section>
-
-        <!-- RIGHT: metrics -->
-        <aside class="metrics" aria-label="Live metrics">
-          <div class="col-head">
-            <strong>Metrics</strong>
-            <span>Live</span>
-          </div>
-          <div class="metrics-list">
-            <div class="metric" data-metric="outcomes">
-              <div class="metric-k"><span>Outcomes shipped</span><span class="trend">+1</span></div>
-              <div class="metric-v"><span data-val="outcomes">0</span></div>
-              <div class="metric-sub">This session</div>
-              <div class="spark" aria-hidden="true"></div>
-            </div>
-            <div class="metric" data-metric="latency">
-              <div class="metric-k"><span>Avg latency</span><span class="trend" data-trend="latency">—</span></div>
-              <div class="metric-v"><span data-val="latency">0</span><span class="u">ms</span></div>
-              <div class="metric-sub">Fax received → outcome</div>
-              <div class="spark" aria-hidden="true"></div>
-            </div>
-            <div class="metric" data-metric="cost">
-              <div class="metric-k"><span>Cost · per outcome</span><span class="trend" data-trend="cost">—</span></div>
-              <div class="metric-v"><span class="u" style="font-size:0.55em;margin:0;">A$</span><span data-val="cost">0.00</span></div>
-              <div class="metric-sub">vs A$18 human baseline</div>
-              <div class="spark" aria-hidden="true"></div>
-            </div>
-            <div class="metric" data-metric="confidence">
-              <div class="metric-k"><span>Confidence</span><span class="trend" data-trend="confidence">—</span></div>
-              <div class="metric-v"><span data-val="confidence">0.00</span></div>
-              <div class="metric-sub">Agent self-assessed</div>
-              <div class="spark" aria-hidden="true"></div>
-            </div>
-          </div>
-          <div class="metrics-foot">
-            <span>◆ Local session</span>
-            <b data-run-label>Run 00</b>
-          </div>
-        </aside>
-
+  <section class="hero">
+    <div class="wrap">
+      <div class="reveal" style="max-width:820px">
+        <span class="pill">Live demo · end-to-end automation</span>
+        <h1 class="display hero-display" style="max-width:none">Watch an agent finish a <em>real job</em>.</h1>
+        <p class="lede hero-lede" style="max-width:60ch">Eight scenarios of <em>end-to-end automation</em> — inbound calls, support tickets, invoice runs, claims intake, recruiter screens, a 4 am driver hotline, an after-hours property lead and an expense filed from a photo. The agent thinks, acts and ships the outcome — line by line — straight to your systems. Same agent for small teams, large enterprise and federal government. Runs on a laptop, server, cloud or fully on-prem.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="ar">↗</span></a>
+          <a href="solutions.html" class="btn btn-ghost btn-lg">Browse all agents</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== WHAT JUST HAPPENED ========== -->
-  <section class="phases-section">
-    <div class="container">
-      <div class="phases-head reveal">
-        <div class="eyebrow">§ 02 — What just happened</div>
-        <h2>Three phases. <em>Twelve seconds.</em> One finished job.</h2>
-        <p>What you watched is the same three-phase loop every Autopilot Labs agent runs. No chatbot, no prompt engineering by you — the AI reads the input, checks itself against your system of record, then ships the outcome to wherever it needs to go. In plain English, here is what it does, and why it matters.</p>
+  <!-- ========== INTERACTIVE STAGE ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Pick a scenario · watch it run</span>
+        <h2 class="h2">Eight workflows. Eight outcomes. <em>No human in the loop.</em></h2>
+        <p class="lede">Each scenario is a verbatim trace from a production agent. The timestamps are real, the transcripts are real, and the outcome billed is exactly what landed on the next invoice.</p>
       </div>
-      <div class="phases reveal delay-1">
 
-        <!-- PHASE 01 · PARSE -->
-        <article class="phase">
-          <div class="phase-no">— 01 · Parse</div>
-          <div class="phase-icon" aria-hidden="true">
-            <svg viewBox="0 0 52 52" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="8" y="6" width="28" height="36" stroke="currentColor"/>
-              <line x1="14" y1="14" x2="30" y2="14"/>
-              <line x1="14" y1="20" x2="30" y2="20"/>
-              <line x1="14" y1="26" x2="26" y2="26"/>
-              <line x1="14" y1="32" x2="24" y2="32"/>
-              <circle cx="40" cy="36" r="8" stroke="#0052FF"/>
-              <line x1="46" y1="42" x2="50" y2="46" stroke="#0052FF" stroke-width="2"/>
-            </svg>
+      <div class="demo-shell reveal">
+
+        <div class="demo-tabs" role="tablist">
+          <button class="tab active" data-scenario="voice" role="tab" type="button">
+            <span class="tnum">01</span>
+            <span class="tcontent">
+              <h4>Voice · inbound clinic call</h4>
+              <p>Patient calls to reschedule. Agent verifies, offers slots, writes to the EMR.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="support" role="tab" type="button">
+            <span class="tnum">02</span>
+            <span class="tcontent">
+              <h4>Support · refund ticket</h4>
+              <p>Customer wants a refund. Agent checks the order, policy, processes and emails.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="invoice" role="tab" type="button">
+            <span class="tnum">03</span>
+            <span class="tcontent">
+              <h4>Finance · supplier invoice</h4>
+              <p>PDF invoice arrives. Agent matches to PO, codes the GL, queues for payment.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="claims" role="tab" type="button">
+            <span class="tnum">04</span>
+            <span class="tcontent">
+              <h4>Insurance · FNOL claim</h4>
+              <p>Driver calls in an accident. Agent captures the claim, files it, dispatches.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="recruit" role="tab" type="button">
+            <span class="tnum">05</span>
+            <span class="tcontent">
+              <h4>HR · candidate phone screen</h4>
+              <p>Agent runs the 15-min structured screen, scores, books on-site, writes the ATS note.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="dispatch" role="tab" type="button">
+            <span class="tnum">06</span>
+            <span class="tcontent">
+              <h4>Logistics · driver hotline, 4 am</h4>
+              <p>Road closure mid-run. Agent reroutes, rebooks the dock, notifies the receiver.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="realestate" role="tab" type="button">
+            <span class="tnum">07</span>
+            <span class="tcontent">
+              <h4>Real estate · 9:42 pm portal lead</h4>
+              <p>Buyer enquires after hours. Agent replies, offers slots, books the inspection.</p>
+            </span>
+          </button>
+          <button class="tab" data-scenario="expense" role="tab" type="button">
+            <span class="tnum">08</span>
+            <span class="tcontent">
+              <h4>Back-office · expense from a photo</h4>
+              <p>Receipt photo lands in Slack. Agent policy-checks, codes it, files it.</p>
+            </span>
+          </button>
+        </div>
+
+        <div class="stage">
+          <div class="stage-bar" aria-hidden="true">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url" id="stageUrl">ops.autopilotlabs.io / live / voice-inbound</span>
+            <span class="live">LIVE</span>
           </div>
-          <h3 class="phase-name">Read the input, field by field.</h3>
-          <p class="phase-body">The agent opens the incoming document — a fax, an email attachment, a bank CSV, a CV — and pulls out structured fields. Names, dates, amounts, references. Built-in OCR, vision, and table extraction are all handled by the AI. Nothing for you to configure.</p>
-          <div class="phase-kv">
-            <b>In plain English</b>
-            Think of a very fast, very careful intern who can read anything, in any layout, in about a second — and never mistypes.
+          <div class="feed" id="feed"></div>
+          <div class="stage-foot">
+            <span id="stageNote">Healthcare · multilingual voice desk</span>
+            <button id="restart" type="button">Restart ↺</button>
           </div>
+        </div>
+
+      </div>
+
+      <div class="metrics reveal">
+        <div class="metric"><div class="mk">Time to outcome</div><div class="mv" id="mTime">—</div></div>
+        <div class="metric"><div class="mk">Human time saved</div><div class="mv" id="mSaved">—</div></div>
+        <div class="metric"><div class="mk">Outcome billed</div><div class="mv" id="mBilled"><em>—</em></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHAT YOU JUST WATCHED ========== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">What you just watched</span>
+        <h2 class="h2">No prompts. No clicking. <em>Just a finished job.</em></h2>
+        <p class="lede">Behind every line of that transcript is a real agent doing real work — picking the model, reading your systems, taking the action, writing the result back. Here's what makes it different from a chatbot.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card">
+          <span class="kicker">It acts</span>
+          <h3>Writes to your <em>real systems</em></h3>
+          <p>The agent isn't telling you what to do — it's logging into your EMR, CRM, ERP or phone stack and doing it. With permissions, audit trails and rollback on every action.</p>
         </article>
-
-        <!-- PHASE 02 · VALIDATE -->
-        <article class="phase">
-          <div class="phase-no">— 02 · Validate</div>
-          <div class="phase-icon" aria-hidden="true">
-            <svg viewBox="0 0 52 52" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="6" y="12" width="18" height="28" stroke="currentColor"/>
-              <rect x="28" y="12" width="18" height="28" stroke="#0052FF"/>
-              <line x1="24" y1="26" x2="28" y2="26" stroke="currentColor" stroke-width="2"/>
-              <line x1="10" y1="20" x2="20" y2="20"/>
-              <line x1="10" y1="26" x2="18" y2="26"/>
-              <line x1="10" y1="32" x2="20" y2="32"/>
-              <line x1="32" y1="20" x2="42" y2="20" stroke="#0052FF"/>
-              <line x1="32" y1="26" x2="40" y2="26" stroke="#0052FF"/>
-              <polyline points="32,34 36,38 44,30" stroke="#0052FF" stroke-width="2"/>
-            </svg>
-          </div>
-          <h3 class="phase-name">Cross-check against your system of record.</h3>
-          <p class="phase-body">The AI does not just guess. It checks every extracted field against your source of truth — the EMR, the ledger, the ATS, the warehouse. If anything disagrees, it flags the exception, scores its own confidence, and routes low-confidence items to a human. The rest, it finishes.</p>
-          <div class="phase-kv">
-            <b>In plain English</b>
-            Before the agent ships anything, it asks: "Do I agree with this? Does my database agree with this? Am I sure?" If no, a human sees it. If yes, it ships.
-          </div>
+        <article class="card">
+          <span class="kicker">It decides</span>
+          <h3>Knows when to <em>escalate</em></h3>
+          <p>Every workflow has rules for when a human owns the next step. The agent hands off with full context — transcript, attempted actions, suggested fix — so the human doesn't start cold.</p>
         </article>
-
-        <!-- PHASE 03 · SHIP -->
-        <article class="phase">
-          <div class="phase-no">— 03 · Ship</div>
-          <div class="phase-icon" aria-hidden="true">
-            <svg viewBox="0 0 52 52" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.5">
-              <polygon points="26,6 44,16 44,36 26,46 8,36 8,16" stroke="currentColor"/>
-              <line x1="26" y1="6" x2="26" y2="26"/>
-              <line x1="26" y1="26" x2="8" y2="16"/>
-              <line x1="26" y1="26" x2="44" y2="16"/>
-              <circle cx="26" cy="30" r="6" fill="#0052FF" stroke="none"/>
-            </svg>
-          </div>
-          <h3 class="phase-name">Post the outcome where it belongs.</h3>
-          <p class="phase-body">The finished job — a normalised record, a posted journal entry, a tagged document, a draft email — lands in your existing system. No new UI for your team to learn. The agent logs every action, timestamps the outcome, and bills only if the SLA passed. Miss the SLA, you do not pay.</p>
-          <div class="phase-kv">
-            <b>In plain English</b>
-            The work shows up in the tool your team already uses — Epic, NetSuite, Relativity, your ATS — as if a very diligent teammate did it while you were asleep.
-          </div>
+        <article class="card">
+          <span class="kicker">It bills</span>
+          <h3>Charges <em>per finished outcome</em></h3>
+          <p>Every line you saw is logged against the contract SLA. Outcomes that ship are billed. Failed attempts and escalations are not. The meter mirrors the work.</p>
         </article>
+      </div>
+    </div>
+  </section>
 
+  <!-- ========== HOW TO DEPLOY ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Where this can run</span>
+        <h2 class="h2">From your laptop to a sovereign enclave — <em>same agent</em>.</h2>
+        <p class="lede">The agent you just watched runs in four shapes. Pick the one your data, your latency and your auditor are happy with.</p>
+      </div>
+      <div class="grid grid-4 reveal">
+        <article class="card"><span class="kicker">Edge</span><h3>On your laptop</h3><p>Local model, no internet required. For field roles and solo operators.</p></article>
+        <article class="card"><span class="kicker">Local</span><h3>Your local server</h3><p>One mid-tier server, LAN-only. Common for clinics, law firms and councils.</p></article>
+        <article class="card"><span class="kicker">Cloud</span><h3>Our cloud or yours</h3><p>The default. Runs on our in-house AI cloud or inside your AWS/Azure/GCP.</p></article>
+        <article class="card"><span class="kicker">On-prem</span><h3>Sealed appliance</h3><p>Fully air-gapped, sovereign by design. For federal, defence and classified.</p></article>
       </div>
     </div>
   </section>
 
   <!-- ========== CTA ========== -->
-  <section class="demo-cta">
-    <div class="container">
-      <div class="demo-cta-inner">
-        <div>
-          <div class="demo-cta-kicker">§ 03 — Stop watching. Start shipping.</div>
-          <h2>Want one of these<br><em>automating your workflow?</em></h2>
-          <p>We will spend ten working days inside your team, map the path end-to-end, and come back with a shortlist of workflows we can automate with AI — priced per finished outcome. If nothing fits, you walk away with a free diagnostic report.</p>
-        </div>
-        <div class="demo-cta-actions">
-          <a href="contact.html" class="cta-btn primary">Book a free audit <span class="arrow" aria-hidden="true">↗</span></a>
-          <a href="pricing.html" class="cta-btn">See outcome pricing <span class="arrow" aria-hidden="true">↗</span></a>
-          <a href="solutions.html" class="cta-btn">Browse our agents <span class="arrow" aria-hidden="true">↗</span></a>
+  <section class="section dark cta-band">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" style="justify-content:center">Make it yours</span>
+        <h2 class="h2">Run the same demo on <em>your own workflow</em>.</h2>
+        <p class="lede">Two weeks, free, no obligation. We watch the workflow, build the agent, and you see your version of this transcript by the end of week three.</p>
+        <div class="btns">
+          <a href="contact.html" class="btn btn-light btn-lg">Book my audit <span class="ar">↗</span></a>
+          <a href="process.html" class="btn btn-outline-light btn-lg">How it works</a>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- ========== FAQ STRIP ========== -->
-  <section class="faq-strip">
-    <div class="container">
-      <div class="faq-head">
-        <div class="t">About the <em>demo</em>, in plain English.</div>
-        <div class="m">§ 04 — FAQ</div>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item">
-          <div class="faq-q">Is this the actual AI running, or a recording?</div>
-          <div class="faq-a">The log stream is scripted for the demo so you see the full story in 12 seconds. The phases, fields, and timings mirror a real production run. Want to watch the real one? Book an audit and we will give you a read-only seat on the ops console.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Do you see my data?</div>
-          <div class="faq-a">No. Every byte on this page runs locally in your browser. Nothing is sent to us, logged, or stored. Pick a scenario, press start, close the tab. We never know you were here unless you book.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">What if I want a different workflow simulated?</div>
-          <div class="faq-a">The four scenarios cover our most common agent shapes. If yours is different — a claim triage, a lease abstraction, a return dispute — we will build a bespoke demo on the audit call, with your own sample data.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">How accurate are the latency and cost figures?</div>
-          <div class="faq-a">They match the 90-day rolling medians from our production ops console. Healthcare-intake actually runs a hair faster; legal discovery a hair slower on very large exhibits. Everything within a couple of hundred milliseconds.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Can the AI be wrong? What happens then?</div>
-          <div class="faq-a">Yes — and it is built to know when. Every agent scores its own confidence. Below a per-workflow threshold, the outcome is routed to a human reviewer before it ships. You never pay for an outcome that did not pass the SLA.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">How soon could something like this run on my workflow?</div>
-          <div class="faq-a">Median audit-to-production is 14 days after contract. The audit itself is 10 working days, so from first call to finished agent you are looking at about a month — no new hires, no new SaaS, no new training.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <!-- ========== FOOTER ========== -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-min">
+      <div>
+        <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+        <p class="foot-tag">End-to-end automation with agents we build for your workflow. Billed per outcome — never per seat, never per token.</p>
       </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="process.html">Process</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="cases.html">Case studies</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Verticals</h5>
-        <ul>
-          <li><a href="solutions.html#healthcare">Healthcare</a></li>
-          <li><a href="solutions.html#legal">Legal</a></li>
-          <li><a href="solutions.html#finance">Finance</a></li>
-          <li><a href="solutions.html#hr">HR &amp; hiring</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Office</h5>
-        <ul>
-          <li><a href="#">L14 · 459 Collins St</a></li>
-          <li><a href="#">Melbourne VIC 3000</a></li>
-          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
-        </ul>
-      </div>
+      <nav class="foot-nav" aria-label="Footer">
+        <a href="what-is.html">What is an AI agent?</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="cases.html">Cases</a>
+        <a href="demo.html">Demo</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="process.html">Process</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="btn btn-ghost foot-mail" href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
     </div>
-    <div class="footer-bottom">
-      <div class="left">
-        <span>© 2026 Autopilot Labs Pty Ltd · ABN 00 000 000 000</span>
-      </div>
-      <div class="right">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">SLA</a>
-        <span>v. 4.6 · build 2026.Q2</span>
-      </div>
+    <div class="foot-bottom">
+      <div class="left">© 2026 Autopilot Labs · Global · Remote-first · 24/7 delivery</div>
+      <div class="right"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">SLA</a></div>
     </div>
   </div>
 </footer>
 
-<!-- ========== DEMO SCRIPT ========== -->
 <script>
-(function () {
-  'use strict';
+/* mobile nav */
+(function(){
+  var t = document.getElementById('navToggle'), s = document.getElementById('msheet');
+  if(!t||!s) return;
+  t.addEventListener('click', function(){
+    var open = s.classList.toggle('open');
+    t.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('lock', open);
+  });
+  s.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ s.classList.remove('open'); document.body.classList.remove('lock'); t.setAttribute('aria-expanded','false'); }); });
+})();
 
-  // =========================================================
-  // Scenario scripts — each is an array of [timeMs, kind, message]
-  // kind: 'info' | 'warn' | 'ok' | 'ship'
-  // =========================================================
-  var SCENARIOS = {
-    healthcare: {
-      label: 'Healthcare intake',
-      path: 'autopilotlabs@ops ~ /agents/intake.01/run --scenario=healthcare',
-      runtimeMs: 12000,
-      outcome: { latencyMs: 1247, costAud: 1.80, confidence: 0.94 },
+/* reveal on scroll */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+})();
+
+/* ===== Scenario player ===== */
+(function(){
+  var scenarios = {
+    voice: {
+      url: 'ops.autopilotlabs.io / live / voice-inbound',
+      note: 'Healthcare · multilingual voice desk',
+      time: '54 sec', saved: '6 min', billed: 'A$1.60',
       lines: [
-        [  40, 'info', "AGENT.INTAKE.01 initialised \u00b7 <span class='dim'>model=autopilotlabs-vertical-health / v4.6</span>"],
-        [ 180, 'info', "Connected to EMR \u00b7 <span class='dim'>tenant=meridian-brisbane</span>"],
-        [ 410, 'info', "Received input: <b>fax_04.pdf</b> <span class='dim'>(2.1MB \u00b7 4 pages)</span>"],
-        [ 790, 'info', "Routing to <b>Parse</b> phase \u2192 OCR + vision"],
-        [1120, 'info', "Extracted 14 fields \u00b7 confidence <b>0.94</b>"],
-        [1610, 'info', "Fields: name, DOB, Medicare#, referral_source, ICD-10, \u2026"],
-        [2050, 'info', "Routing to <b>Validate</b> phase"],
-        [2440, 'info', "Cross-checked MRN against EMR \u2192 <b>match found</b>"],
-        [2980, 'warn', "Referral_source blank \u2192 filling from fax letterhead"],
-        [3640, 'info', "Self-score: <b>confidence 0.94</b> (threshold 0.80) \u2192 ok"],
-        [4680, 'info', "Routing to <b>Ship</b> phase"],
-        [5420, 'info', "Posting normalised record to EMR intake queue"],
-        [6120, 'ok'  , "EMR acknowledged \u00b7 record_id <b>INT-8821-04</b>"],
-        [6710, 'info', "Draft clinician note appended"],
-        [7340, 'info', "Audit log sealed \u00b7 hash <span class='dim'>9a4\u2026f7c</span>"],
-        [9200, 'ship', "\u2713 Outcome shipped \u00b7 <b>1247ms</b> \u00b7 <b>A$1.80</b> \u00b7 SLA pass"]
+        {t:'09:42:08', k:'sys', body:'Inbound call · MetroHealth clinic · caller-id matched to <strong>Priya N.</strong> (DOB on file)'},
+        {t:'09:42:09', k:'agent', body:"Hi, MetroHealth clinic — you're speaking with the assistant. I can see you're calling from Priya's number. How can I help?"},
+        {t:'09:42:14', k:'you', body:'Hi, I want to move my Tuesday appointment to Thursday morning if you have it.'},
+        {t:'09:42:16', k:'agent', body:'Of course. I have your appointment for <strong>Tuesday 4 March, 10:15 with Dr Patel</strong>. Checking Thursday morning…'},
+        {t:'09:42:21', k:'sys', body:'Reading <strong>provider.calendar</strong> · Patel · Thu 6 Mar · slots returned'},
+        {t:'09:42:22', k:'agent', body:'Thursday I have 9:00, 10:30 and 11:45 with Dr Patel. Which suits?'},
+        {t:'09:42:30', k:'you', body:'10:30, please.'},
+        {t:'09:42:31', k:'agent', body:"Booked. Releasing Tuesday, holding Thursday 10:30. I'll text the confirmation. Anything else?"},
+        {t:'09:42:35', k:'sys', body:'Writing to <strong>EMR · appointment</strong> · cancel Tue → book Thu · SMS confirmation queued'},
+        {t:'09:42:36', k:'you', body:"No, that's perfect, thanks."},
+        {t:'09:42:37', k:'agent', body:"You're welcome. Take care, Priya."},
+        {t:'09:42:38', k:'sys', body:'Call ended · transcript filed · SLA: under 60 sec ✓'},
+        {t:'',  k:'win', body:'<strong>Outcome shipped:</strong> 1 appointment reschedule', price:'A$1.60'}
       ]
     },
-    legal: {
-      label: 'Legal discovery',
-      path: 'autopilotlabs@ops ~ /agents/discovery.03/run --scenario=legal',
-      runtimeMs: 12000,
-      outcome: { latencyMs: 2188, costAud: 3.40, confidence: 0.91 },
+    support: {
+      url: 'ops.autopilotlabs.io / live / support-ticket',
+      note: 'E-commerce · Zendesk · per resolved',
+      time: '41 sec', saved: '11 min', billed: 'A$1.85',
       lines: [
-        [  35, 'info', "AGENT.DISCOVERY.03 initialised \u00b7 <span class='dim'>model=autopilotlabs-vertical-legal / v4.6</span>"],
-        [ 210, 'info', "Connected to Relativity workspace <span class='dim'>WF-2026-114</span>"],
-        [ 490, 'info', "Received exhibit: <b>exhibit_A_47.pdf</b> <span class='dim'>(18.4MB \u00b7 62 pages)</span>"],
-        [ 880, 'info', "Routing to <b>Parse</b> phase \u2192 OCR + layout"],
-        [1410, 'info', "Detected: letter, contract, email thread, hand-annotated page"],
-        [1980, 'info', "Extracted 142 entities \u00b7 parties, dates, clauses, \u2026"],
-        [2610, 'info', "Routing to <b>Validate</b> phase"],
-        [3090, 'info', "Cross-ref'd parties against matter.entities \u2192 4 new aliases"],
-        [3720, 'warn', "Page 41 flagged potentially privileged \u2192 confirming"],
-        [4480, 'info', "Privilege model: <b>WORK_PRODUCT</b> \u00b7 confidence 0.88"],
-        [5140, 'info', "Applied tags: <b>RESPONSIVE</b>, <b>PRIV:WP</b>, key_doc"],
-        [5860, 'info', "Routing to <b>Ship</b> phase"],
-        [6540, 'info', "Uploading to Relativity folder <b>/priv/2026-114</b>"],
-        [7280, 'ok'  , "Relativity accepted \u00b7 doc_id <b>RLT-8821-041</b>"],
-        [7980, 'info', "Notified reviewing associate <span class='dim'>(S. Reviewer)</span>"],
-        [8610, 'info', "Audit log sealed \u00b7 chain-of-custody hash recorded"],
-        [10400, 'ship', "\u2713 Outcome shipped \u00b7 <b>2188ms</b> \u00b7 <b>A$3.40</b> \u00b7 SLA pass"]
+        {t:'14:08:02', k:'sys', body:"New ticket #28411 · subject: <strong>“Wrong size — need refund”</strong> · customer: Liam W."},
+        {t:'14:08:03', k:'sys', body:'Reading <strong>order.history</strong> · order #B-99281 · delivered 2 days ago'},
+        {t:'14:08:05', k:'sys', body:'Reading <strong>refund.policy</strong> · within 30-day window ✓ · item unworn ✓ · returnable ✓'},
+        {t:'14:08:06', k:'agent', body:"Hi Liam, thanks for letting us know — sorry the size wasn't right. You're well within the 30-day window."},
+        {t:'14:08:09', k:"agent", body:"I've started the refund for <strong>A$129.00</strong> to the card ending 4471. You'll see it in 2–4 business days."},
+        {t:'14:08:11', k:'sys', body:'Calling <strong>stripe.refunds.create</strong> · refunded · A$129.00'},
+        {t:'14:08:12', k:'agent', body:"I've also emailed you a free return label — stick it on the original box and drop at any AusPost. No need to print if you scan the QR."},
+        {t:'14:08:13', k:'sys', body:'Calling <strong>shippo.labels.create</strong> · return label issued · email queued'},
+        {t:'14:08:14', k:'agent', body:'Anything else I can help with, or shall I close this off?'},
+        {t:'14:08:25', k:'you', body:"No, that's super quick, thanks!"},
+        {t:'14:08:27', k:'agent', body:"You're welcome. Ticket closing — have a great rest of your day."},
+        {t:'14:08:43', k:'sys', body:'Ticket resolved · CSAT request sent · SLA: under 5 min ✓'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 refund resolved end-to-end', price:'A$1.85'}
       ]
     },
-    finance: {
-      label: 'Finance reconciliation',
-      path: 'autopilotlabs@ops ~ /agents/recon.02/run --scenario=finance',
-      runtimeMs: 12000,
-      outcome: { latencyMs: 884, costAud: 0.41, confidence: 0.98 },
+    invoice: {
+      url: 'ops.autopilotlabs.io / live / invoice-recon',
+      note: 'Finance · AP automation · per processed',
+      time: '38 sec', saved: '14 min', billed: 'A$0.85',
       lines: [
-        [  30, 'info', "AGENT.RECON.02 initialised \u00b7 <span class='dim'>model=autopilotlabs-vertical-fin / v4.6</span>"],
-        [ 150, 'info', "Connected to NetSuite \u00b7 tenant <span class='dim'>halcyon-london</span>"],
-        [ 360, 'info', "Received input: <b>stmt_2026-04-15.csv</b> <span class='dim'>(312 rows)</span>"],
-        [ 680, 'info', "Routing to <b>Parse</b> phase \u2192 tabular + NLP on memo"],
-        [1040, 'info', "Normalised 312 rows \u00b7 currency=GBP,AUD,USD"],
-        [1490, 'info', "Currency converted at 2026-04-15 close rates"],
-        [2120, 'info', "Routing to <b>Validate</b> phase"],
-        [2610, 'info', "Matched 298 / 312 lines to GL (<b>95.5%</b>)"],
-        [3240, 'warn', "14 unmatched \u2192 running fuzzy memo + amount match"],
-        [3920, 'ok'  , "Matched 13 more via memo \u00b7 1 routed to human"],
-        [4680, 'info', "Self-score: <b>confidence 0.98</b> (threshold 0.92) \u2192 ok"],
-        [5310, 'info', "Routing to <b>Ship</b> phase"],
-        [5940, 'info', "Drafting 311 journal entries \u00b7 posting batch"],
-        [6720, 'ok'  , "NetSuite accepted \u00b7 batch_id <b>JE-88214</b>"],
-        [7430, 'info', "Flagged row #244 for FP&amp;A review <span class='dim'>(\u00a39,402)</span>"],
-        [8080, 'info', "Audit log sealed \u00b7 SOX-ready snapshot stored"],
-        [9800, 'ship', "\u2713 Outcome shipped \u00b7 <b>884ms/line</b> \u00b7 <b>A$0.41</b> \u00b7 SLA pass"]
+        {t:'07:11:04', k:'sys', body:'Inbox · invoice email from <strong>Northbay Logistics</strong> · PDF attached'},
+        {t:'07:11:05', k:'sys', body:'Reading <strong>invoice.pdf</strong> · vendor: Northbay · #NB-44821 · A$3,840.00 · 14 line items'},
+        {t:'07:11:08', k:'agent', body:'Matching invoice <strong>NB-44821</strong> against open purchase orders for Northbay…'},
+        {t:'07:11:10', k:'sys', body:'Reading <strong>erp.purchase_orders</strong> · 3 open · best match PO-7741 (A$3,840 · 14 lines)'},
+        {t:'07:11:11', k:'agent', body:'Matched to <strong>PO-7741</strong>. Line totals and quantities tie — no variance. Proceeding to GL coding.'},
+        {t:'07:11:13', k:'sys', body:'Reading <strong>gl.coding.rules</strong> · vendor=Northbay · cost-centre 4400 · account 6210-freight'},
+        {t:'07:11:14', k:'agent', body:'Coded to <strong>4400 / 6210-freight</strong>. Approval routes to <strong>R. Patel</strong> under A$5,000 threshold.'},
+        {t:'07:11:16', k:'sys', body:'Calling <strong>erp.invoices.create</strong> · status: ready_for_approval · approver: R. Patel'},
+        {t:'07:11:18', k:'agent', body:'Slack ping to R. Patel — invoice ready for one-click approval. ETA-to-pay: 2 business days.'},
+        {t:'07:11:19', k:'sys', body:'Calling <strong>slack.dm</strong> · sent · audit trail: pdf + match + gl + approver'},
+        {t:'07:11:42', k:'sys', body:'Run complete · SLA: under 60 sec ✓'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 invoice processed end-to-end', price:'A$0.85'}
       ]
     },
-    hr: {
-      label: 'HR \u00b7 CV shortlist',
-      path: 'autopilotlabs@ops ~ /agents/shortlist.01/run --scenario=hr',
-      runtimeMs: 12000,
-      outcome: { latencyMs: 1504, costAud: 0.88, confidence: 0.89 },
+    claims: {
+      url: 'ops.autopilotlabs.io / live / claims-fnol',
+      note: 'Insurance · FNOL · 24/7 intake',
+      time: '2 min 12 sec', saved: '22 min', billed: 'A$6.80',
       lines: [
-        [  40, 'info', "AGENT.SHORTLIST.01 initialised \u00b7 <span class='dim'>model=autopilotlabs-vertical-hr / v4.6</span>"],
-        [ 170, 'info', "Connected to ATS \u00b7 job <b>SRE-SNR-041</b>"],
-        [ 400, 'info', "Received input: <b>cv_candidate_114.pdf</b> <span class='dim'>(308KB \u00b7 3 pages)</span>"],
-        [ 740, 'info', "Routing to <b>Parse</b> phase \u2192 layout + entity"],
-        [1120, 'info', "Extracted 42 fields: roles, skills, tenure, locations, \u2026"],
-        [1580, 'info', "Detected 8-year SRE history \u00b7 AWS, Terraform, k8s"],
-        [2100, 'info', "Routing to <b>Validate</b> phase"],
-        [2580, 'info', "Scoring against job spec \u2192 <b>must-haves 7/7</b>"],
-        [3180, 'info', "Scoring nice-to-haves \u2192 <b>4/6</b>"],
-        [3820, 'warn', "Employment gap 2023 detected \u2192 flagged for recruiter"],
-        [4460, 'info', "Fit score: <b>0.89</b> (shortlist threshold 0.75) \u2192 advance"],
-        [5210, 'info', "Routing to <b>Ship</b> phase"],
-        [5940, 'info', "Posting candidate to ATS shortlist \u00b7 stage=screen"],
-        [6620, 'ok'  , "ATS accepted \u00b7 candidate_id <b>CND-88204</b>"],
-        [7310, 'info', "Drafted recruiter note \u00b7 <span class='dim'>3 questions to cover gap</span>"],
-        [7980, 'info', "Notified hiring manager <span class='dim'>(R. Vasquez)</span>"],
-        [9600, 'ship', "\u2713 Outcome shipped \u00b7 <b>1504ms</b> \u00b7 <b>A$0.88</b> \u00b7 SLA pass"]
+        {t:'23:14:51', k:'sys', body:'Inbound call · after-hours · caller-id matched to <strong>James T.</strong> · policy PV-882-441 active'},
+        {t:'23:14:52', k:'agent', body:"You've reached Pacific Insurance after-hours claims. I'm the assistant — I can see your policy. How can I help?"},
+        {t:'23:14:58', k:'you', body:"I've had an accident — someone hit me at the lights about 20 minutes ago."},
+        {t:'23:15:00', k:'agent', body:"I'm sorry to hear that. Is everyone safe and is the vehicle drivable?"},
+        {t:'23:15:04', k:'you', body:"Yes, we're okay, both cars off the road. Just shaken."},
+        {t:'23:15:06', k:'agent', body:'Good. Let me open a claim now — can you tell me the cross streets?'},
+        {t:'23:15:11', k:'you', body:'Bridge Road and Williams Road, Richmond.'},
+        {t:'23:15:13', k:'sys', body:'Opening <strong>claim.fnol</strong> · policy PV-882-441 · type: collision · location: -37.815, 144.998'},
+        {t:'23:15:14', k:'agent', body:"Got it. Do you have the other driver's licence plate and a phone number?"},
+        {t:'23:15:30', k:'you', body:'Plate is 1TG-4HZ, phone is 0412 558 901. He said his name was Mark.'},
+        {t:'23:15:33', k:'sys', body:'Captured third-party · plate 1TG-4HZ · contact 0412 558 901'},
+        {t:'23:15:34', k:'agent', body:"Thank you. I've created claim <strong>CL-2026-04918</strong>. An assessor will call tomorrow morning between 8 and 10. I'll text you a link to upload photos."},
+        {t:'23:15:38', k:'sys', body:'Calling <strong>assessor.dispatch</strong> · scheduled tomorrow 08:00–10:00'},
+        {t:'23:15:39', k:'sys', body:'SMS sent · upload link · case ref CL-2026-04918'},
+        {t:'23:15:40', k:'agent', body:"You should get home carefully — or call a tow, we cover it. Anything else?"},
+        {t:'23:15:48', k:'you', body:"No, that's really helpful, thank you."},
+        {t:'23:15:49', k:'agent', body:"You're welcome. Take care, James."},
+        {t:'23:17:03', k:'sys', body:'Call complete · transcript + summary filed to carrier system · SLA: structured in under 3 min ✓'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 first-notice-of-loss intake', price:'A$6.80'}
+      ]
+    },
+    recruit: {
+      url: 'ops.autopilotlabs.io / live / hr-screen',
+      note: 'HR · phone screening · per screen',
+      time: '15 min', saved: '40 min', billed: 'A$8.40',
+      lines: [
+        {t:'11:30:00', k:'sys', body:'Outbound call · candidate <strong>Sara M.</strong> · role: Senior Backend Engineer · req #R-7188'},
+        {t:'11:30:04', k:'agent', body:"Hi Sara, this is the assistant from Northwind Tech — calling for your scheduled 15-minute screen for the Senior Backend role. Is now still a good time?"},
+        {t:'11:30:09', k:'you', body:'Yes, perfect — ready when you are.'},
+        {t:'11:30:11', k:'agent', body:"Great. I'll keep it tight — five technical, three on the role, then your questions. Sound good?"},
+        {t:'11:30:14', k:'sys', body:'Reading <strong>rubric.r-7188</strong> · 8 questions · scoring on signals'},
+        {t:'11:30:20', k:'agent', body:"Let's start — walk me through the largest system you've owned, and where you took it from to."},
+        {t:'11:32:50', k:'sys', body:'Scoring · system-design · 4/5 · signal: scale &amp; ownership'},
+        {t:'11:33:00', k:'agent', body:'Great context. Tell me about a time you traded speed vs correctness — what did you choose, and why?'},
+        {t:'11:36:10', k:'sys', body:'Scoring · judgement · 4/5 · signal: pragmatism'},
+        {t:'11:36:20', k:'agent', body:'Last technical — how do you decide what to monitor, and what to alert on, separately?'},
+        {t:'11:39:30', k:'sys', body:'Scoring · operations · 5/5 · signal: production rigour'},
+        {t:'11:40:00', k:'agent', body:"Switching to the role — what are you looking for in the next two years?"},
+        {t:'11:42:40', k:'sys', body:'Scoring · motivation · 4/5 · signal: aligned'},
+        {t:'11:43:00', k:'agent', body:"Last from me — anything you'd like to ask the team?"},
+        {t:'11:44:30', k:'agent', body:"Great chat, Sara. I'll write this up — you'll hear back within 24 hours on next steps."},
+        {t:'11:44:50', k:'sys', body:'Writing to <strong>ats.candidate</strong> · score 21/25 · recommend: proceed to on-site'},
+        {t:'11:44:51', k:'sys', body:'Calendar invite drafted · onsite Thu 14:00 · awaiting hiring manager approval'},
+        {t:'11:45:02', k:'sys', body:'Slack DM to hiring manager · summary + recommended slot'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 candidate screened, scored, routed', price:'A$8.40'}
+      ]
+    },
+    dispatch: {
+      url: 'ops.autopilotlabs.io / live / dispatch-voice',
+      note: 'Logistics · driver hotline · 24/7',
+      time: '1 min 04', saved: '12 min', billed: 'A$0.42',
+      lines: [
+        {t:'04:18:22', k:'sys', body:'Inbound call · driver hotline · matched to <strong>Marko V.</strong> · run #R-2241 (Melb metro)'},
+        {t:'04:18:23', k:'agent', body:'Dispatch — go ahead, Marko.'},
+        {t:'04:18:27', k:'you', body:"CityLink's shut at Bulla Road, there's been a crash. I'm going to miss the 4:40 window at DC-3."},
+        {t:'04:18:29', k:'sys', body:'Reading <strong>traffic.live</strong> · M2 closure confirmed · est. delay 45 min'},
+        {t:'04:18:31', k:'agent', body:"Confirmed — the M2's closed. Re-routing you via the Ring Road; it adds 18 minutes. Your new ETA at DC-3 is <strong>5:02</strong>."},
+        {t:'04:18:34', k:'sys', body:'Writing <strong>tms.run R-2241</strong> · route updated · ETA 05:02'},
+        {t:'04:18:36', k:'agent', body:"I've pushed the new ETA to DC-3 and texted the receiving dock. Your window is re-booked for 5:00–5:30."},
+        {t:'04:18:38', k:'sys', body:'Calling <strong>dock.booking</strong> · slot moved ✓ · SMS to receiver sent'},
+        {t:'04:18:45', k:'you', body:'Champion. What about the Coles drop after?'},
+        {t:'04:18:47', k:'agent', body:"Still inside its window even with the delay — no change needed. Drive safe out there."},
+        {t:'04:19:26', k:'sys', body:'Call ended · exception logged on run #R-2241 · on-call human not required ✓'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 delivery exception handled end-to-end', price:'A$0.42'}
+      ]
+    },
+    realestate: {
+      url: 'ops.autopilotlabs.io / live / enquiry-desk',
+      note: 'Real estate · portal lead · after-hours',
+      time: '3 min 40', saved: '25 min', billed: 'A$3.20',
+      lines: [
+        {t:'21:42:10', k:'sys', body:'New portal lead · realestate.com.au · listing <strong>14 Birch St</strong> · enquirer: Hannah L.'},
+        {t:'21:42:11', k:'sys', body:'Reading <strong>lead.message</strong> · "Is this still available? Could we see it this weekend?"'},
+        {t:'21:42:13', k:'sys', body:'Reading <strong>listing.calendar</strong> · Sat private slots 10:20 / 11:40 · Sun open home 1:00–1:30'},
+        {t:'21:42:15', k:'agent', body:"Hi Hannah — yes, 14 Birch St is still available, and I've attached the brochure and floorplan. For this weekend I can do a private inspection <strong>Saturday 10:20 or 11:40</strong>, or the open home runs <strong>Sunday 1–1:30</strong>. Which suits you best?"},
+        {t:'21:42:17', k:'sys', body:'Email sent · brochure + floorplan attached · calendar holds placed on both Saturday slots'},
+        {t:'21:58:41', k:'you', body:'10:20 Saturday would be perfect, thank you!'},
+        {t:'21:58:44', k:'agent', body:"Locked in — <strong>Saturday 10:20 at 14 Birch St</strong>. You'll get a reminder Saturday morning; parking is easiest on Elm Court. Looking forward to it."},
+        {t:'21:58:46', k:'sys', body:'Writing <strong>crm.inspection</strong> · booked · reminder scheduled · lead scored: HOT'},
+        {t:'21:58:47', k:'sys', body:"Agent's morning brief updated · 1 new inspection · buyer profile attached"},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 inspection booked from a cold lead', price:'A$3.20'}
+      ]
+    },
+    expense: {
+      url: 'ops.autopilotlabs.io / live / expense-filing',
+      note: 'Back-office · expenses · per filed',
+      time: '19 sec', saved: '7 min', billed: 'A$0.30',
+      lines: [
+        {t:'12:31:05', k:'sys', body:'Photo received via Slack from <strong>Dana K.</strong> · receipt.jpg'},
+        {t:'12:31:06', k:'sys', body:'Reading <strong>receipt</strong> · Nobu Melbourne · A$184.30 · 4 covers · yesterday 19:45'},
+        {t:'12:31:08', k:'agent', body:'Matching to your calendar… found it: <strong>"Dinner — Acme Corp renewal"</strong> with 3 external guests.'},
+        {t:'12:31:10', k:'sys', body:'Reading <strong>expense.policy</strong> · client entertainment ✓ · under A$60/head ✓ · attendee names required ✓'},
+        {t:'12:31:11', k:'agent', body:'Filed as <strong>Client Entertainment · cost-centre 3300</strong> — attendees pulled from the invite, receipt attached.'},
+        {t:'12:31:13', k:'sys', body:'Writing <strong>expensify.report</strong> · submitted · approver: M. Chen'},
+        {t:'12:31:14', k:'agent', body:'Done, Dana — A$184.30 filed under the Acme dinner, sitting with Mei for approval. Nothing else needed from you.'},
+        {t:'12:31:24', k:'sys', body:'Run complete · SLA: under 60 sec ✓'},
+        {t:'', k:'win', body:'<strong>Outcome shipped:</strong> 1 expense filed &amp; policy-checked', price:'A$0.30'}
       ]
     }
   };
 
-  // =========================================================
-  // State
-  // =========================================================
-  var state = {
-    scenario: 'healthcare',
-    running: false,
-    completed: false,
-    runCount: 0,
-    totalLatency: 0,
-    totalCost: 0,
-    bestConfidence: 0,
-    timers: []
-  };
+  var feed = document.getElementById('feed');
+  var stageUrl = document.getElementById('stageUrl');
+  var stageNote = document.getElementById('stageNote');
+  var tabs = document.querySelectorAll('.tab');
+  var restart = document.getElementById('restart');
+  var mTime = document.getElementById('mTime');
+  var mSaved = document.getElementById('mSaved');
+  var mBilled = document.getElementById('mBilled');
+  var timers = [];
+  var current = 'voice';
 
-  var reduceMotion = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function clearTimers(){ timers.forEach(function(id){ clearTimeout(id); }); timers = []; }
 
-  // =========================================================
-  // DOM refs
-  // =========================================================
-  var termBody = document.getElementById('termBody');
-  var btnStart = document.getElementById('btnStart');
-  var btnReset = document.getElementById('btnReset');
-  var liveLabel = document.querySelector('[data-live-label]');
-  var termPath = document.querySelector('[data-term-path]');
-  var runLabel = document.querySelector('[data-run-label]');
-  var scenCards = document.querySelectorAll('.scen');
-
-  // =========================================================
-  // Scenario picker
-  // =========================================================
-  scenCards.forEach(function (card) {
-    card.addEventListener('click', function () {
-      if (state.running) return;
-      var s = card.getAttribute('data-scenario');
-      selectScenario(s);
-    });
-  });
-
-  function selectScenario(key) {
-    state.scenario = key;
-    scenCards.forEach(function (c) {
-      c.classList.toggle('is-active', c.getAttribute('data-scenario') === key);
-      var input = c.querySelector('input');
-      if (input) input.checked = (c.getAttribute('data-scenario') === key);
-    });
-    termPath.textContent = SCENARIOS[key].path;
-    resetPanel();
-  }
-
-  // =========================================================
-  // Terminal controls
-  // =========================================================
-  btnStart.addEventListener('click', function () {
-    if (state.running) return;
-    if (state.completed) resetPanel();
-    startRun();
-  });
-  btnReset.addEventListener('click', function () {
-    if (state.running) return;
-    resetPanel();
-  });
-
-  function resetPanel() {
-    clearTimers();
-    state.running = false;
-    state.completed = false;
-    termBody.innerHTML =
-      '<div class="term-empty" data-empty>' +
-        '<div class="glyph" aria-hidden="true">' +
-          '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="6,4 20,12 6,20" fill="currentColor"/></svg>' +
-        '</div>' +
-        '<div class="msg">Press <b style="color:#4A8BFF;">start demo</b> to watch the agent parse, validate, and ship an outcome. Takes about 12 seconds.</div>' +
-        '<div class="sub">No signup · anonymised input · 1 outcome per run</div>' +
-      '</div>';
-    btnStart.disabled = false;
-    btnReset.disabled = true;
-    liveLabel.textContent = 'idle';
-    btnStart.innerHTML = '<span class="icon" aria-hidden="true">\u25B6</span> Start demo';
-  }
-
-  function startRun() {
-    var scn = SCENARIOS[state.scenario];
-    state.running = true;
-    state.completed = false;
-    btnStart.disabled = true;
-    btnReset.disabled = true;
-    liveLabel.textContent = 'running';
-    btnStart.innerHTML = '<span class="icon" aria-hidden="true">\u25A0</span> Running\u2026';
-    termBody.innerHTML = '';
-    state.runCount += 1;
-    runLabel.textContent = 'Run ' + String(state.runCount).padStart(2, '0');
-
-    if (reduceMotion) {
-      // Dump all lines immediately
-      scn.lines.forEach(function (ln) { appendLine(ln[0], ln[1], ln[2]); });
-      finishRun(scn);
-      return;
-    }
-
-    // Stream lines
-    scn.lines.forEach(function (ln) {
-      var t = setTimeout(function () {
-        appendLine(ln[0], ln[1], ln[2]);
-        updateLiveMetrics(ln[0], scn);
-      }, ln[0]);
-      state.timers.push(t);
-    });
-
-    // Finalise after runtime
-    var tEnd = setTimeout(function () {
-      finishRun(scn);
-    }, scn.runtimeMs + 200);
-    state.timers.push(tEnd);
-  }
-
-  function finishRun(scn) {
-    state.running = false;
-    state.completed = true;
-    btnStart.disabled = false;
-    btnReset.disabled = false;
-    liveLabel.textContent = 'shipped';
-    btnStart.innerHTML = '<span class="icon" aria-hidden="true">\u25B6</span> Run again';
-
-    // Commit session totals
-    state.totalLatency += scn.outcome.latencyMs;
-    state.totalCost += scn.outcome.costAud;
-    if (scn.outcome.confidence > state.bestConfidence) {
-      state.bestConfidence = scn.outcome.confidence;
-    }
-    commitFinalMetrics(scn);
-  }
-
-  function clearTimers() {
-    state.timers.forEach(function (t) { clearTimeout(t); });
-    state.timers = [];
-  }
-
-  // =========================================================
-  // Log rendering
-  // =========================================================
-  function appendLine(ms, kind, html) {
-    var line = document.createElement('div');
-    line.className = 'log-line ' + (kind || 'info');
-    var t = (ms / 1000).toFixed(3);
-    line.innerHTML =
-      '<span class="t">[' + t + 's]</span>' +
-      '<span class="msg">' + html + '</span>';
-    termBody.appendChild(line);
-    termBody.scrollTop = termBody.scrollHeight;
-  }
-
-  // =========================================================
-  // Metrics
-  // =========================================================
-  var valOutcomes    = document.querySelector('[data-val="outcomes"]');
-  var valLatency     = document.querySelector('[data-val="latency"]');
-  var valCost        = document.querySelector('[data-val="cost"]');
-  var valConfidence  = document.querySelector('[data-val="confidence"]');
-  var trendLatency   = document.querySelector('[data-trend="latency"]');
-  var trendCost      = document.querySelector('[data-trend="cost"]');
-  var trendConfidence= document.querySelector('[data-trend="confidence"]');
-  var sparks         = document.querySelectorAll('.spark');
-
-  // Seed sparklines
-  initSparks();
-  function initSparks() {
-    sparks.forEach(function (s) {
-      s.innerHTML = '';
-      for (var i = 0; i < 10; i++) {
-        var b = document.createElement('span');
-        b.className = 'bar';
-        b.style.height = (2 + Math.random() * 4) + 'px';
-        s.appendChild(b);
-      }
-    });
-  }
-
-  function updateLiveMetrics(ms, scn) {
-    // Progress factor 0..1 through run
-    var p = Math.min(1, ms / scn.runtimeMs);
-    var latency = Math.round(scn.outcome.latencyMs * p);
-    var cost    = (scn.outcome.costAud * p);
-    var conf    = (0.50 + (scn.outcome.confidence - 0.50) * p);
-
-    writeMetric(valLatency,    latency,         'int');
-    writeMetric(valCost,       cost.toFixed(2), 'raw');
-    writeMetric(valConfidence, conf.toFixed(2), 'raw');
-
-    animateSparks(p);
-  }
-
-  function commitFinalMetrics(scn) {
-    var avgLatency = Math.round(state.totalLatency / state.runCount);
-    var avgCost = state.totalCost / state.runCount;
-
-    flash(valOutcomes);
-    writeMetric(valOutcomes,    state.runCount,          'int');
-    writeMetric(valLatency,     avgLatency,              'int');
-    writeMetric(valCost,        avgCost.toFixed(2),      'raw');
-    writeMetric(valConfidence,  scn.outcome.confidence.toFixed(2), 'raw');
-
-    trendLatency.textContent    = '\u25BC ' + Math.round(100 * (1 - avgLatency / 60000)) + '%';
-    trendCost.textContent       = '\u25BC ' + Math.round(100 * (1 - avgCost / 18)) + '%';
-    trendConfidence.textContent = '\u25B2 ' + Math.round(scn.outcome.confidence * 100) + '%';
-
-    flashAll();
-    document.querySelectorAll('.metric').forEach(function (m) { m.classList.add('is-live'); });
-    animateSparks(1);
-  }
-
-  function writeMetric(el, val, kind) {
-    if (!el) return;
-    if (kind === 'int') {
-      el.textContent = Number(val).toLocaleString();
+  function renderLine(line){
+    var el = document.createElement('div');
+    el.className = 'line ' + line.k;
+    if(line.k === 'win'){
+      el.innerHTML = '<span class="body">' + line.body + '</span><span class="price">' + line.price + '</span>';
     } else {
-      el.textContent = val;
+      el.innerHTML = '<span class="t">' + line.t + '</span><span class="body">' + line.body + '</span>';
     }
+    feed.appendChild(el);
+    feed.scrollTop = feed.scrollHeight;
   }
 
-  function flash(el) {
-    if (!el) return;
-    var parent = el.closest('.metric-v');
-    if (!parent) return;
-    parent.classList.add('flash');
-    setTimeout(function () { parent.classList.remove('flash'); }, 320);
+  var typingEl = null;
+  function showTyping(){
+    if(typingEl) return;
+    typingEl = document.createElement('div');
+    typingEl.className = 'line agent';
+    typingEl.innerHTML = '<span class="t"></span><span class="body"><span class="typing"><i></i><i></i><i></i></span></span>';
+    feed.appendChild(typingEl);
+    feed.scrollTop = feed.scrollHeight;
   }
-  function flashAll() {
-    document.querySelectorAll('.metric-v').forEach(function (el) {
-      el.classList.add('flash');
-      setTimeout(function () { el.classList.remove('flash'); }, 380);
+  function hideTyping(){
+    if(typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+    typingEl = null;
+  }
+
+  /* Realistic pacing: each line lands after a delay scaled to how
+     long the previous line takes to read/say; agent lines get a
+     brief typing indicator first. */
+  function play(name){
+    clearTimers();
+    hideTyping();
+    feed.innerHTML = '';
+    var s = scenarios[name];
+    if(!s) return;
+    current = name;
+    stageUrl.textContent = s.url;
+    stageNote.textContent = s.note;
+    mTime.textContent = '—';
+    mSaved.textContent = '—';
+    mBilled.innerHTML = '<em>—</em>';
+
+    var at = 500;
+    s.lines.forEach(function(line){
+      var text = line.body.replace(/<[^>]+>/g, '');
+      var dwell = Math.min(2400, 420 + text.length * 14);
+      if(line.k === 'sys') dwell = Math.min(1300, 380 + text.length * 6);
+      if(line.k === 'win') dwell = 900;
+
+      if(line.k === 'agent'){
+        var tAt = at;
+        timers.push(setTimeout(showTyping, tAt));
+        at += 650; // typing time
+      }
+      var lAt = at;
+      timers.push(setTimeout(function(){
+        hideTyping();
+        renderLine(line);
+        if(line.k === 'win'){
+          mTime.textContent = s.time;
+          mSaved.innerHTML = '<em>' + s.saved + '</em>';
+          mBilled.innerHTML = '<em>' + s.billed + '</em>';
+        }
+      }, lAt));
+      at += dwell;
     });
   }
 
-  function animateSparks(p) {
-    sparks.forEach(function (s) {
-      Array.prototype.forEach.call(s.children, function (bar, i) {
-        var base = 3 + Math.sin((i + 1) * 0.9 + p * 6) * 3;
-        var growth = 2 + p * 14 + Math.random() * 4;
-        bar.style.height = Math.max(2, base + growth) + 'px';
-      });
+  tabs.forEach(function(b){
+    b.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      play(b.dataset.scenario);
     });
-  }
+  });
+  restart.addEventListener('click', function(){ play(current); });
 
-  // =========================================================
-  // Init
-  // =========================================================
-  selectScenario('healthcare');
-
-  // =========================================================
-  // Clock (matches site chrome)
-  // =========================================================
-  function tickClock() {
-    var els = document.querySelectorAll('[data-clock]');
-    if (!els.length) return;
-    var now = new Date();
-    var h = String(now.getHours()).padStart(2, '0');
-    var m = String(now.getMinutes()).padStart(2, '0');
-    var s = String(now.getSeconds()).padStart(2, '0');
-    var txt = h + ':' + m + ':' + s;
-    els.forEach(function (el) { el.textContent = txt; });
-  }
-  tickClock();
-  setInterval(tickClock, 1000);
+  play('voice');
 })();
 </script>
-<script src="assets/site.js?v=5"></script>
 </body>
 </html>

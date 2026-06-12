@@ -6,11 +6,8 @@
 <title>H1 2026 report — Autopilot Labs</title>
 <meta name="description" content="The Autopilot Labs annual report — publishes end of 2026. Outcomes shipped by vertical, pricing transparency, what we got wrong and what we fixed.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5">
-<link rel="stylesheet" href="assets/motion.css">
+<link rel="stylesheet" href="assets/site.css?v=27">
+<link rel="stylesheet" href="assets/motion.css?v=2">
 <style>
 .placeholder { padding: clamp(5rem, 10vw, 10rem) 0 clamp(4rem, 7vw, 7rem); border-bottom: 1px solid var(--line); }
 .placeholder .meta-row { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-bottom: 1.25rem; margin-bottom: clamp(2rem, 4vw, 3rem); border-bottom: 1px solid var(--line); flex-wrap: wrap; gap: 1rem; }
@@ -47,11 +44,11 @@
 <header class="topbar">
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
       <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
       <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
       <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
       <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
       <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
       <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
@@ -63,11 +60,11 @@
       <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
       <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
       <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
+      <span class="ticker-item"><span class="tup">Global</span> · Always-on · 24/7 · Multi-region</span>
       <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
       <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
       <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
+      <span class="ticker-item">Voice desk · <span class="tup">multilingual</span> · &lt; 2 rings</span>
       <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
       <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
       <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
@@ -86,8 +83,7 @@
       <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
       <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
     </a>
-    <nav class="primary-nav" aria-label="Primary">
-      <a href="solutions.html" data-nav="solutions">Solutions</a>
+    <nav class="primary-nav" aria-label="Primary"><a href="what-is.html" data-nav="what-is" class="nav-explainer">What is an AI agent?</a>      <a href="solutions.html" data-nav="solutions">Solutions</a>
       <a href="cases.html" data-nav="cases">Achieve</a>
       <a href="demo.html" data-nav="demo">Demo</a>
       <a href="pricing.html" data-nav="pricing">Pricing</a>
@@ -110,6 +106,7 @@
       <div class="mnav-group">
         <h5>Work</h5>
         <ul class="mnav-list">
+          <li><a href="what-is.html" data-nav="what-is">What is an AI agent? <span class="ar">→</span></a></li>
           <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
           <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
           <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
@@ -123,8 +120,8 @@
     <div class="mobile-nav-foot">
       <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
       <div class="mfoot-meta">
-        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
-        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
+        <span>Global · 24/7 · <span data-clock>—</span></span>
+        <a href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
       </div>
     </div>
   </nav>
@@ -155,7 +152,7 @@
     <div class="footer-top">
       <div class="footer-brand">
         <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+        <p>Autopilot Labs is a global AI workflow studio. We build vertical agents for regulated industries — and custom-build a new vertical when yours isn't on the shelf — with an always-on multilingual voice desk (Arabic, English and your customers' languages). We bill per completed outcome. Not per seat. Not per token.</p>
       </div>
       <div class="footer-col">
         <h5>Company</h5>
@@ -178,10 +175,8 @@
       <div class="footer-col">
         <h5>Office</h5>
         <ul>
-          <li><a href="#">L14 · 459 Collins St</a></li>
-          <li><a href="#">Melbourne VIC 3000</a></li>
-          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
-          <li><a href="#">+61 3 9000 0000</a></li>
+          <li><a href="#">Global · Remote-first</a></li>
+          <li><a href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a></li>
         </ul>
       </div>
     </div>
@@ -198,6 +193,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/site.js?v=5"></script>
+<script src="assets/site.js?v=27"></script>
 </body>
 </html>

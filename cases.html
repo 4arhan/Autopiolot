@@ -4,673 +4,536 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What you can achieve — Autopilot Labs</title>
-<meta name="description" content="Thirteen industries, one voice desk in 14 languages, one pattern: AI agents that finish the job and bill per outcome. See what you can achieve across healthcare, legal, finance, real estate, e-commerce, HR, marketing, manufacturing, education, insurance, hospitality, logistics, and public safety.">
+<meta name="description" content="33 real workflows we automate end-to-end — intake, reconciliation, collections, dispatch, hiring, claims — each with a before/after and a per-outcome price. Plus a 16-SKU multilingual voice desk in 14 languages.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5">
-<link rel="stylesheet" href="assets/motion.css">
+<link rel="stylesheet" href="assets/app.css?v=8">
 <style>
-/* Hero */
-.cs-hero { padding: clamp(4.5rem, 9vw, 8rem) 0 clamp(3rem, 5vw, 5rem); border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
-.cs-hero::before { content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 50% 60% at 100% 0%, var(--accent-soft), transparent 55%);
-  pointer-events: none; }
-.cs-hero .container { position: relative; }
-.cs-hero .meta { display: flex; justify-content: space-between; align-items: baseline;
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted); padding-bottom: 1.25rem; margin-bottom: clamp(2rem, 4vw, 3rem);
-  border-bottom: 1px solid var(--line); flex-wrap: wrap; gap: 1rem; }
-.cs-hero .meta b { color: var(--ink); font-weight: 500; }
-.cs-hero .meta .accent { color: var(--accent); }
-.cs-hero h1 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(52px, 10vw, 160px); line-height: 0.86; letter-spacing: -0.058em;
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem); text-wrap: balance; }
-.cs-hero h1 em { color: var(--accent); }
-.cs-hero .dk { font-size: clamp(17px, 1.3vw, 21px); line-height: 1.5; color: var(--ink-3);
-  max-width: 60ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
-.cs-hero .dk em { color: var(--ink); font-weight: 500; }
-.cs-hero .acts { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-/* Stats row under hero */
-.cs-stats { display: grid; grid-template-columns: repeat(4, 1fr);
-  margin-top: clamp(2rem, 4vw, 3rem); border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line); }
-.cs-stats .s { padding: 1.25rem 1.5rem 1.25rem 0; border-right: 1px solid var(--line); }
-.cs-stats .s:last-child { border-right: 0; padding-right: 0; }
-.cs-stats .n { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(28px, 2.8vw, 44px); letter-spacing: -0.04em; line-height: 1;
-  color: var(--ink); margin-bottom: 0.4rem; }
-.cs-stats .n em { color: var(--accent); }
-.cs-stats .l { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--muted); }
-@media (max-width: 800px) { .cs-stats { grid-template-columns: repeat(2, 1fr); } }
-
-/* Cards grid */
-.cs-grid { padding: clamp(4rem, 8vw, 8rem) 0; border-bottom: 1px solid var(--line); }
-.cs-grid-head { display: flex; justify-content: space-between; align-items: baseline;
-  padding-bottom: 1.25rem; border-bottom: 1px solid var(--line-strong); margin-bottom: clamp(2rem, 4vw, 3rem);
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--muted); flex-wrap: wrap; gap: 1rem; }
-.cs-grid-head b { color: var(--ink); font-weight: 500; }
-.cs-grid-head .accent { color: var(--accent); }
-
-.cs-list { display: grid; grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--line-strong); background: var(--line-strong); gap: 1px; }
-.cs-item { background: var(--paper); padding: clamp(1.75rem, 2.4vw, 2.5rem);
-  display: flex; flex-direction: column; gap: 1rem; position: relative;
-  transition: background .2s; overflow: hidden; }
-.cs-item::after { content: ''; position: absolute; inset: auto 0 0 0; height: 2px;
-  background: var(--accent); transform: scaleX(0); transform-origin: left;
-  transition: transform .35s var(--ease); }
-.cs-item:hover { background: var(--paper-3); }
-.cs-item:hover::after { transform: scaleX(1); }
-.cs-item .t { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted); padding-bottom: 0.75rem; border-bottom: 1px solid var(--line); }
-.cs-item .t .nm { color: var(--accent); font-weight: 500; }
-.cs-item h3 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(22px, 1.8vw, 28px); letter-spacing: -0.025em; line-height: 1.08;
-  text-wrap: balance; }
-.cs-item h3 em { color: var(--accent); }
-
-.cs-ba { display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-  border: 1px solid var(--line); margin-top: 0.25rem; }
-.cs-ba > div { padding: 0.9rem 1rem; border-right: 1px solid var(--line); min-height: 92px; }
-.cs-ba > div:last-child { border-right: 0; background: var(--paper-3); }
-.cs-ba .k { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-.cs-ba .v { font-size: 13px; line-height: 1.4; color: var(--ink); font-weight: 400; }
-.cs-ba .v em { color: var(--accent); font-weight: 500; }
-
-.cs-foot { display: flex; justify-content: space-between; align-items: center;
-  margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--line);
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--muted); }
-.cs-foot .pr { color: var(--accent); font-weight: 500; letter-spacing: -0.005em;
-  text-transform: none; font-family: var(--font-display); font-size: 14px; }
-
-@media (max-width: 1100px) { .cs-list { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 700px) { .cs-list { grid-template-columns: 1fr; } .cs-ba { grid-template-columns: 1fr; } .cs-ba > div { border-right: 0; border-bottom: 1px solid var(--line); } .cs-ba > div:last-child { border-bottom: 0; } }
-
-/* Voice flagship */
-.voice-flag { background: var(--ink); color: var(--paper);
-  padding: clamp(5rem, 9vw, 9rem) 0;
-  border-bottom: 1px solid var(--ink);
-  position: relative; overflow: hidden; }
-.voice-flag::before { content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 50% at 15% 0%, rgba(0,82,255,0.14), transparent 55%),
-              radial-gradient(ellipse 55% 45% at 90% 100%, rgba(0,82,255,0.1), transparent 55%);
-  pointer-events: none; }
-.voice-flag::after { content: ''; position: absolute; inset: 0;
-  background-image: linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px);
-  background-size: 96px 100%; pointer-events: none; }
-.voice-flag .container { position: relative; z-index: 1; }
-
-.vf-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 5rem); padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
-  border-bottom: 1px solid rgba(255,255,255,0.14);
-  margin-bottom: clamp(2.5rem, 5vw, 4.5rem); align-items: end; }
-.vf-head .eyebrow { font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: #4A8BFF; font-weight: 500; margin-bottom: 1rem; }
-.vf-head h2 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(44px, 7vw, 108px); line-height: 0.92; letter-spacing: -0.055em;
-  text-wrap: balance; }
-.vf-head h2 em { color: #4A8BFF; }
-.vf-head p { font-size: clamp(16px, 1.2vw, 19px); line-height: 1.55;
-  color: rgba(255,255,255,0.75); max-width: 48ch; }
-.vf-head p em { color: var(--paper); font-weight: 500; }
-@media (max-width: 900px) { .vf-head { grid-template-columns: 1fr; } }
-
-/* Language chip row */
-.vf-langs { display: flex; flex-wrap: wrap; gap: 8px;
-  padding: 1.25rem 0; margin-bottom: clamp(2rem, 4vw, 3rem);
-  border-top: 1px dashed rgba(255,255,255,0.14);
-  border-bottom: 1px dashed rgba(255,255,255,0.14); }
-.vf-langs .lg { display: inline-flex; align-items: center; gap: 8px;
-  padding: 7px 14px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.02);
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
-  text-transform: uppercase; color: rgba(255,255,255,0.9);
-  transition: background .2s, border-color .2s, color .2s; }
-.vf-langs .lg:hover { background: rgba(0,82,255,0.2); border-color: #4A8BFF; color: var(--paper); }
-.vf-langs .lg .code { color: #4A8BFF; font-weight: 500; }
-
-/* Voice SKU grid */
-.vf-skus { display: grid; grid-template-columns: repeat(4, 1fr);
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06); gap: 1px; }
-.vf-sku { background: var(--ink); padding: 1.5rem;
-  display: flex; flex-direction: column; gap: 0.6rem;
-  transition: background .2s; }
-.vf-sku:hover { background: #0b0b0f; }
-.vf-sku .sn { font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: rgba(255,255,255,0.45); }
-.vf-sku h4 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(17px, 1.35vw, 20px); letter-spacing: -0.02em; line-height: 1.1;
-  color: var(--paper); }
-.vf-sku p { font-family: var(--font-mono); font-size: 10.5px;
-  letter-spacing: 0.06em; color: rgba(255,255,255,0.6);
-  text-transform: uppercase; }
-.vf-sku .ft { margin-top: auto; padding-top: 0.75rem;
-  border-top: 1px dashed rgba(255,255,255,0.12);
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(255,255,255,0.45); }
-.vf-sku .ft .p { color: #4A8BFF; font-weight: 500;
-  letter-spacing: -0.005em; text-transform: none;
-  font-family: var(--font-display); font-size: 13.5px; }
-@media (max-width: 1000px) { .vf-skus { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .vf-skus { grid-template-columns: 1fr; } }
-
-.vf-cta { margin-top: clamp(2rem, 3vw, 3rem);
-  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-.vf-cta .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-.vf-cta .btn:hover { background: #4A8BFF; color: var(--paper); border-color: #4A8BFF; }
-.vf-cta .note { font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.06em; color: rgba(255,255,255,0.55); }
-
-/* Process band */
-.lev-band { padding: clamp(4rem, 8vw, 8rem) 0; background: var(--paper-3); border-bottom: 1px solid var(--line); }
-.lev-head { max-width: 58rem; margin-bottom: clamp(2.5rem, 4vw, 3.5rem); }
-.lev-head .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1rem; }
-.lev-head h2 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(36px, 5vw, 64px); line-height: 1.02; letter-spacing: -0.04em;
-  text-wrap: balance; }
-.lev-head h2 em { color: var(--accent); }
-.lev-head p { margin-top: 1rem; font-size: clamp(15px, 1.1vw, 17px);
-  line-height: 1.55; color: var(--ink-3); max-width: 46ch; }
-.lev-steps { display: grid; grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--line-strong); background: var(--line-strong); gap: 1px; }
-.lev-step { background: var(--paper); padding: clamp(1.5rem, 2.2vw, 2rem);
-  display: flex; flex-direction: column; gap: 0.75rem; transition: background .2s; }
-.lev-step:hover { background: var(--paper); }
-.lev-step .sn { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(40px, 4vw, 60px); letter-spacing: -0.04em; line-height: 0.9;
-  color: var(--accent); }
-.lev-step h4 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(18px, 1.4vw, 22px); letter-spacing: -0.02em; line-height: 1.1; }
-.lev-step p { font-size: 13.5px; line-height: 1.55; color: var(--ink-3); }
-@media (max-width: 900px) { .lev-steps { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .lev-steps { grid-template-columns: 1fr; } }
-
-/* End CTA */
-.cs-cta { padding: clamp(5rem, 9vw, 9rem) 0; text-align: center; }
-.cs-cta h2 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(40px, 6vw, 96px); line-height: 0.96; letter-spacing: -0.05em;
-  margin-bottom: 1.25rem; text-wrap: balance; }
-.cs-cta h2 em { color: var(--accent); }
-.cs-cta p { font-size: clamp(16px, 1.2vw, 19px); color: var(--ink-3);
-  line-height: 1.5; max-width: 46rem; margin: 0 auto 2.5rem; }
-.cs-cta .acts { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
-
-@media (max-width: 520px) {
-  .cs-hero h1 { font-size: clamp(34px, 10vw, 44px); letter-spacing: -0.045em; }
-  .cs-hero .acts .btn { width: 100%; justify-content: center; }
-  .cs-stats .s { padding: 1rem 1rem 1rem 0; }
-  .cs-stats .n { font-size: 26px; }
-  .cs-item { padding: 1.5rem 1.25rem; }
-  .cs-item h3 { font-size: clamp(19px, 5.2vw, 22px); }
-  .cs-ba > div { padding: 0.8rem 0.9rem; min-height: 0; }
-  .cs-ba .v { font-size: 12.5px; }
-  .cs-foot { flex-wrap: wrap; gap: 0.4rem; }
-  .vf-head h2 { font-size: clamp(36px, 11vw, 60px); letter-spacing: -0.045em; }
-  .vf-sku { padding: 1.25rem; }
-  .vf-cta { gap: 0.75rem; }
-  .vf-cta .btn { width: 100%; justify-content: center; }
-  .vf-langs { gap: 6px; padding: 1rem 0; }
-  .vf-langs .lg { padding: 6px 10px; font-size: 10.5px; letter-spacing: 0.06em; }
-  .lev-step { padding: 1.5rem 1.25rem; }
-  .lev-step .sn { font-size: clamp(36px, 10vw, 48px); }
-  .cs-cta h2 { font-size: clamp(32px, 11vw, 56px); letter-spacing: -0.04em; }
-  .cs-cta .acts { display: flex; }
-  .cs-cta .acts .btn { width: 100%; justify-content: center; }
-}
-@media (max-width: 380px) {
-  .cs-stats { grid-template-columns: 1fr; }
-  .cs-stats .s { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
-  .cs-stats .s:last-child { border-bottom: 0; }
-}
-
-/* === 2026 modernization polish ============================ */
-.case-card, .cs-card, .lev-step, .cs-cta {
-  border: 1px solid rgba(0,82,255,0.08);
-  transition: transform .25s var(--ease-out, ease-out),
-              box-shadow .25s var(--ease-out, ease-out),
-              border-color .25s var(--ease-out, ease-out);
-}
-.case-card:hover, .cs-card:hover, .lev-step:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0,82,255,0.18);
-  box-shadow: 0 10px 28px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
-}
-@supports (background: color-mix(in oklab, red, blue)) {
-  .case-card:hover, .cs-card:hover, .lev-step:hover {
-    box-shadow: 0 12px 30px -18px color-mix(in oklab, var(--accent) 45%, transparent),
-                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
-  }
-}
-.hero-overlay {
-  backdrop-filter: saturate(140%) blur(10px);
-  -webkit-backdrop-filter: saturate(140%) blur(10px);
-}
-main p a:not(.btn):not(.btn-link)::after {
-  content: ""; display: block; height: 1px; background: var(--accent);
-  transform: scaleX(0); transform-origin: left center;
-  transition: transform .25s var(--ease-out, ease-out);
-}
-main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
-.cs-hero h1 em, h1 em, .dek em, .hi-grad {
-  background: linear-gradient(90deg, var(--accent), var(--accent-3));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-a:focus-visible, button:focus-visible, .btn:focus-visible {
-  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
-}
-.cs-stats .s .v, .lev-step .sn, .num, [data-tnum] {
-  font-feature-settings: 'tnum' 1, 'lnum' 1;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
-.scroll-x > * { scroll-snap-align: start; }
-@media (prefers-reduced-motion: reduce) {
-  .case-card, .cs-card, .lev-step { transition: none; }
-}
+.ba { border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; font-size: 13.5px; line-height: 1.5; color: var(--ink-3); }
+.ba > div { padding: 11px 13px; background: var(--bg-soft-2); }
+.ba .after { background: var(--acc-soft); border-top: 1px solid var(--acc-line); color: var(--ink-2); }
+.ba .k { display: block; font-family: var(--sans); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; font-weight: 600; }
+.ba .after .k { color: var(--acc-3); }
+.vgrid { gap: 1px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r); overflow: hidden; }
+.vtile { background: var(--ink-bg); padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; }
+.vtile .vp { font-family: var(--sans); font-size: 12px; color: var(--acc-2); }
+.vtile h3 { color: #fff; font-size: 16.5px; font-weight: 600; letter-spacing: -0.015em; }
+.vtile p { font-size: 13px; color: rgba(234,242,238,0.6); }
 </style>
 </head>
 <body>
-<div class="scroll-prog" aria-hidden="true"></div>
-<header class="topbar">
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-    </div>
-  </div>
-  <div class="topbar-inner">
-    <a href="index.html" class="brand">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
-      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
-    </a>
-    <nav class="primary-nav" aria-label="Primary">
-      <a href="solutions.html" data-nav="solutions">Solutions</a>
-      <a href="cases.html" data-nav="cases">Achieve</a>
-      <a href="demo.html" data-nav="demo">Demo</a>
-      <a href="pricing.html" data-nav="pricing">Pricing</a>
-      <a href="process.html" data-nav="process">Process</a>
-      <a href="about.html" data-nav="about">About</a>
+
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="what-is.html" class="is-accent">What is an AI agent?</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="cases.html" style="background:var(--bg-soft);color:var(--ink)">Cases</a>
+      <a href="demo.html">Demo</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
     </nav>
-    <div class="topbar-cta">
-      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
-      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
-      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <span class="bar b1" aria-hidden="true"></span>
-        <span class="bar b2" aria-hidden="true"></span>
-        <span class="bar b3" aria-hidden="true"></span>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Book a free audit</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg class="nt-b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg><svg class="nt-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5L5 19" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <div></div>
-    <div class="mobile-nav-inner">
-      <div class="mnav-group">
-        <h5>Work</h5>
-        <ul class="mnav-list">
-          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
-          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
-          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
-          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
-          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
-          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
-          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mobile-nav-foot">
-      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-      <div class="mfoot-meta">
-        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
-        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
-      </div>
-    </div>
+  <nav class="msheet" id="msheet" aria-label="Mobile">
+    <a href="what-is.html">What is an AI agent? <span class="ar">→</span></a>
+    <a href="solutions.html">Solutions <span class="ar">→</span></a>
+    <a href="cases.html">Cases <span class="ar">→</span></a>
+    <a href="demo.html">Demo <span class="ar">→</span></a>
+    <a href="pricing.html">Pricing &amp; calculator <span class="ar">→</span></a>
+    <a href="process.html">Process <span class="ar">→</span></a>
+    <a href="about.html">About <span class="ar">→</span></a>
+    <a href="contact.html">Contact <span class="ar">→</span></a>
+    <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit</a>
+    <a class="ms-mail" href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
   </nav>
 </header>
+
 <main>
-  <section class="cs-hero">
-    <div class="container">
-      <div class="meta">
-        <span>◎ <b>What you can achieve</b> · Autopilot Labs</span>
-        <span>Thirteen industries · one <span class="accent">voice desk · 14 languages</span> · one pattern</span>
-      </div>
-      <h1>What you can<br><em>achieve</em>.</h1>
-      <p class="dk">Thirteen industries, one <em>always-on voice desk fluent in 14 languages</em> (Arabic included), one pattern: AI agents that finish the job and get billed per outcome. Every card below is a workflow we're ready to audit, build, and run against an SLA — pick the row that looks like <em>your team's week</em>. Hubs in <em>Melbourne, Dubai and Riyadh</em>.</p>
-      <div class="acts">
-        <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-        <a href="solutions.html" class="btn btn-lg">Full agent catalogue</a>
-      </div>
 
-      <div class="cs-stats">
-        <div class="s"><div class="n">14</div><div class="l">Practice areas</div></div>
-        <div class="s"><div class="n">150<em>+</em></div><div class="l">Agents in catalogue</div></div>
-        <div class="s"><div class="n">14</div><div class="l">Voice languages · incl. AR</div></div>
-        <div class="s"><div class="n">2<em>wk</em></div><div class="l">Free workflow audit</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cs-grid">
-    <div class="container">
-      <div class="cs-grid-head">
-        <span>◆ <b>What you can achieve</b> · by industry</span>
-        <span>Pick your row · <span class="accent">we'll price it per outcome</span></span>
-      </div>
-      <div class="cs-list">
-        <article class="cs-item">
-          <div class="t"><span class="nm">01 · Healthcare</span><span>Patient intake</span></div>
-          <h3>Faxed intake forms → <em>structured EMR records</em>, in minutes.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Nurse retypes faxes &amp; PDF intake forms into 4 systems. ~3 hours/day, queue grows overnight.</div></div>
-            <div><div class="k">With agent</div><div class="v">Agent normalises every inbound fax / PDF / email, writes a clean EMR record, <em>flags edge-cases for review</em>.</div></div>
-          </div>
-          <div class="cs-foot"><span>per intake</span><span class="pr">A$1.80</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">02 · Legal</span><span>Discovery tagging</span></div>
-          <h3>Terabyte dumps → <em>privilege, relevance, issue-coded</em> overnight.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Junior associates hand-tag millions of docs for 4-8 weeks. Privilege risk, bill-shock, missed deadlines.</div></div>
-            <div><div class="k">With agent</div><div class="v">Tags every doc with privilege flag, work-product call, and issue code — <em>with citation + confidence score</em>.</div></div>
-          </div>
-          <div class="cs-foot"><span>per 1,000 docs</span><span class="pr">A$68</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">03 · Finance</span><span>Reconciliation</span></div>
-          <h3>Bank, card, Stripe feeds → <em>journal-ready entries</em> by the 2nd.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Controllers chase exceptions all month. Close slips past day 9, weekends gone, FP&amp;A blocked.</div></div>
-            <div><div class="k">With agent</div><div class="v">Auto-matches feeds against ledger, proposes entries with confidence scores, <em>posts only on approval</em>.</div></div>
-          </div>
-          <div class="cs-foot"><span>per entry</span><span class="pr">A$0.41</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">04 · Real estate</span><span>Listing &amp; enquiry</span></div>
-          <h3>Photos + features → <em>portal-ready copy</em>; leads qualified in minutes.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Agents rewrite listings at 9pm, chase portal leads next morning, buyers gone to the faster firm.</div></div>
-            <div><div class="k">With agent</div><div class="v">Copy drafted from photos + spec sheet, <em>portal leads triaged &amp; replied to inside a minute</em>.</div></div>
-          </div>
-          <div class="cs-foot"><span>per listing</span><span class="pr">A$4.40</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">05 · E-commerce</span><span>Refund &amp; dispute</span></div>
-          <h3>Refund tickets → <em>policy-compliant resolutions</em> in under a minute.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">CX reps spend 60% of shift on refund-policy decisions. Refund-fraud incidence creeps up quietly.</div></div>
-            <div><div class="k">With agent</div><div class="v">Reads order, shipping, carrier exceptions &amp; tone, <em>drafts the right offer</em> — refund, replace, credit, escalate.</div></div>
-          </div>
-          <div class="cs-foot"><span>per resolved</span><span class="pr">A$3.80</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">06 · HR &amp; hiring</span><span>CV shortlist</span></div>
-          <h3>Inbound CVs → <em>scored, bias-audited shortlist</em>, same day.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Recruiters screen for four days. Strong candidates ghost for competitors. Roles stay open &gt; 60 days.</div></div>
-            <div><div class="k">With agent</div><div class="v">Scores every CV against the JD with <em>explicit reasons</em>, bias-audited, shortlist to hiring manager within the hour.</div></div>
-          </div>
-          <div class="cs-foot"><span>per CV</span><span class="pr">A$0.60</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">07 · Marketing</span><span>Brief → draft</span></div>
-          <h3>Positioning doc → <em>shippable campaign drafts</em>, in hours.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Creative team spends two weeks on blog/email/social drafts. Strategy team argues over brand voice every brief.</div></div>
-            <div><div class="k">With agent</div><div class="v">Reads positioning + tone doc, drafts blog/email/social/landing inside the guardrails — <em>editorially edited</em>, not replaced.</div></div>
-          </div>
-          <div class="cs-foot"><span>per variant</span><span class="pr">A$2.20</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">08 · Manufacturing</span><span>QA log watcher</span></div>
-          <h3>Line-side logs → <em>anomalies, drafts, CAPA tickets</em>, shift-by-shift.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">QA engineers read shift logs after-the-fact. Escapes hit customers first, QA second, plant manager third.</div></div>
-            <div><div class="k">With agent</div><div class="v">Reads sensor + NCR logs live, <em>drafts CAPA with root-cause + evidence</em>, escalates with confidence scoring.</div></div>
-          </div>
-          <div class="cs-foot"><span>per shift</span><span class="pr">A$12</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">09 · Education</span><span>Admissions triage</span></div>
-          <h3>Inbound applications → <em>completed, scored, routed</em> files, same day.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Admissions team manually reviews documents, chases missing transcripts, answers the same 12 questions 200x.</div></div>
-            <div><div class="k">With agent</div><div class="v">Parses every application, flags missing docs, <em>scores against criteria</em>, sends the right follow-up in the right language.</div></div>
-          </div>
-          <div class="cs-foot"><span>per application</span><span class="pr">A$2.40</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">10 · Insurance</span><span>Claims FNOL &amp; triage</span></div>
-          <h3>First-notice-of-loss → <em>triaged, severity-scored claim</em> in minutes.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">FNOL callers wait 22 min in queue; adjusters re-key details; low-complexity claims clog the high-complexity queue.</div></div>
-            <div><div class="k">With agent</div><div class="v">Takes the call in the claimant's language, captures structured FNOL, <em>routes by severity</em> with fraud red-flags attached.</div></div>
-          </div>
-          <div class="cs-foot"><span>per FNOL</span><span class="pr">A$6.80</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">11 · Hospitality</span><span>Booking &amp; concierge</span></div>
-          <h3>Inbound hotel / restaurant calls → <em>confirmed bookings</em> in 60 seconds.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Front desk covers the phone and check-in; bookings missed after 10pm; guests repeat the same requests to three staff.</div></div>
-            <div><div class="k">With agent</div><div class="v">Answers the phone in the guest's language, <em>books, upsells, confirms, writes the PMS note</em>, routes complex asks to a human.</div></div>
-          </div>
-          <div class="cs-foot"><span>per confirmed</span><span class="pr">A$1.60</span></div>
-        </article>
-        <article class="cs-item">
-          <div class="t"><span class="nm">12 · Logistics</span><span>Dispatch &amp; track-and-trace</span></div>
-          <h3>Driver updates + exceptions → <em>live ETAs, customer notifications, clean POD</em>.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Dispatchers juggle phone + WhatsApp + TMS. Exceptions discovered when the customer calls, not before.</div></div>
-            <div><div class="k">With agent</div><div class="v">Ingests GPS + driver voice notes, <em>predicts ETA slips</em>, writes the customer update, drafts the exception claim packet.</div></div>
-          </div>
-          <div class="cs-foot"><span>per shipment</span><span class="pr">A$0.92</span></div>
-        </article>
-
-        <article class="cs-item">
-          <div class="t"><span class="nm">13 · Public safety</span><span>Case files &amp; evidence</span></div>
-          <h3>Body-cam &amp; voice notes → <em>structured case files, chain-of-custody locked</em>.</h3>
-          <div class="cs-ba">
-            <div><div class="k">Before</div><div class="v">Officers finish shift, spend 2+ hours retyping incident notes. Evidence logged on paper, indexed weekly. Court filings stall on admin.</div></div>
-            <div><div class="k">With agent</div><div class="v">Ingests body-cam audio + voice notes, <em>writes the structured report</em>, inventories evidence with cryptographic chain-of-custody, drafts the court filing.</div></div>
-          </div>
-          <div class="cs-foot"><span>per report</span><span class="pr">A$4.80</span></div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="voice-flag">
-    <div class="container">
-      <div class="vf-head">
-        <div>
-          <div class="eyebrow">Flagship · cross-cutting</div>
-          <h2>A voice desk.<br>In <em>14 languages</em>.<br>That never misses a ring.</h2>
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="reveal" style="max-width:820px">
+        <span class="pill">Work we automate · billed per outcome</span>
+        <h1 class="display" style="margin:18px 0 22px">What you can <em>achieve</em>.</h1>
+        <p class="lede" style="max-width:60ch">Thirty-three workflows every business runs, from the front desk to the back office — each one a job an agent finishes end-to-end, with the hours returned and the price per outcome printed on the card. Find the row that looks like your team's week.</p>
+        <div class="hero-actions" style="margin-top:28px">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="ar">↗</span></a>
+          <a href="solutions.html" class="btn btn-ghost btn-lg">Full agent catalogue</a>
         </div>
-        <div>
-          <p>One AI phone desk that slots into <em>Aircall · Twilio · RingCentral · Zoom Phone · GoTo</em>. Answers inbound in under two rings, runs outbound against your list, warm-transfers on edge cases, <em>writes the CRM note</em> and the action items. Every call transcribed, scored and stored — with an audit log your ops team can replay.</p>
-          <p>Fluent, not translated: real-time conversation in the caller's language, not a bolt-on transcription pipeline. Regional accents supported, tone matched to brand voice, escalation-aware.</p>
+        <p class="note" style="margin-top:24px">Shipped for <em style="color:var(--acc-3)">small teams, large enterprise and federal government</em> · Runs on your laptop, local server, cloud or on-prem.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== USE CASES ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">33 workflows · by industry &amp; by role</span>
+        <h2 class="h2">Before the agent. <em>After</em> the agent.</h2>
+        <p class="lede">Each card is a job we run in production: what it costs your team today, what the agent ships instead, and the per-outcome price. Runs on our in-house AI cloud, or inside your VPC, data centre or air-gapped enclave — built for large enterprise and federal/government workloads.</p>
+      </div>
+
+      <div class="grid grid-3 reveal">
+        <article class="card">
+          <span class="kicker">01 · Healthcare · Patient intake</span>
+          <h3>Faxed intake forms → structured EMR records, in minutes</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>A nurse retypes faxes and PDF forms into four systems — about three hours a day, and the queue grows overnight.</div>
+            <div class="after"><span class="k">With the agent</span>Every inbound fax, PDF and email becomes a clean EMR record; only the edge cases reach a human.</div>
+          </div>
+          <div class="stat-chip"><b>A$1.80</b> per intake</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">02 · Legal · Discovery tagging</span>
+          <h3>Terabyte document dumps → privilege-tagged and issue-coded overnight</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Junior associates hand-tag millions of documents for four to eight weeks. Privilege risk, bill shock, missed deadlines.</div>
+            <div class="after"><span class="k">With the agent</span>Every document tagged for privilege, work product and issue code — with a citation and a confidence score.</div>
+          </div>
+          <div class="stat-chip"><b>A$68</b> per 1,000 docs</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">03 · Finance · Reconciliation</span>
+          <h3>Bank, card and Stripe feeds → journal-ready entries by the 2nd</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Controllers chase exceptions all month. The close slips past day nine and FP&amp;A waits on it.</div>
+            <div class="after"><span class="k">With the agent</span>Feeds auto-matched to the ledger, entries proposed with confidence scores, posted only on approval.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.41</b> per entry</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">04 · Real estate · Listing &amp; enquiry</span>
+          <h3>Photos and a spec sheet → portal-ready copy, leads answered in a minute</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Agents rewrite listings at 9pm and chase portal leads the next morning — after the buyer found a faster firm.</div>
+            <div class="after"><span class="k">With the agent</span>Copy drafted from photos and the spec sheet; portal leads triaged and replied to inside a minute.</div>
+          </div>
+          <div class="stat-chip"><b>A$4.40</b> per listing</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">05 · E-commerce · Refund &amp; dispute</span>
+          <h3>Refund tickets → policy-compliant resolutions in under a minute</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>CX reps spend 60% of every shift on refund-policy decisions while refund fraud creeps up quietly.</div>
+            <div class="after"><span class="k">With the agent</span>Order, shipping and carrier data read in seconds; the right offer made — refund, replace, credit or escalate.</div>
+          </div>
+          <div class="stat-chip"><b>A$3.80</b> per resolved</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">06 · HR &amp; hiring · CV shortlist</span>
+          <h3>Inbound CVs → scored, bias-audited shortlist, same day</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Recruiters screen for four days, strong candidates ghost for competitors, roles stay open past 60 days.</div>
+            <div class="after"><span class="k">With the agent</span>Every CV scored against the JD with explicit reasons, bias-audited, on the hiring manager's desk within the hour.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.60</b> per CV</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">07 · Marketing · Brief to draft</span>
+          <h3>Positioning doc → shippable campaign drafts, in hours</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Two weeks per campaign on blog, email and social drafts — plus a brand-voice argument on every brief.</div>
+            <div class="after"><span class="k">With the agent</span>Drafts for every channel inside your tone guardrails — editorially edited by your team, not replaced.</div>
+          </div>
+          <div class="stat-chip"><b>A$2.20</b> per variant</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">08 · Manufacturing · QA log watcher</span>
+          <h3>Line-side logs → anomalies and CAPA tickets, shift by shift</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>QA engineers read shift logs after the fact. Escapes reach customers first, QA second, the plant manager third.</div>
+            <div class="after"><span class="k">With the agent</span>Sensor and NCR logs read live; CAPA drafted with root cause and evidence, escalated with confidence scoring.</div>
+          </div>
+          <div class="stat-chip"><b>A$12</b> per shift</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">09 · Education · Admissions triage</span>
+          <h3>Inbound applications → completed, scored and routed files, same day</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Admissions staff review documents by hand, chase missing transcripts and answer the same 12 questions 200 times.</div>
+            <div class="after"><span class="k">With the agent</span>Every application parsed and scored, missing docs flagged, the right follow-up sent in the right language.</div>
+          </div>
+          <div class="stat-chip"><b>A$2.40</b> per application</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">10 · Insurance · FNOL &amp; triage</span>
+          <h3>First notice of loss → triaged, severity-scored claim in minutes</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>FNOL callers wait 22 minutes in queue, adjusters re-key details, and simple claims clog the complex queue.</div>
+            <div class="after"><span class="k">With the agent</span>The call taken in the claimant's language, the loss structured, routed by severity with fraud red-flags attached.</div>
+          </div>
+          <div class="stat-chip"><b>A$6.80</b> per FNOL</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">11 · Hospitality · Booking &amp; concierge</span>
+          <h3>Inbound hotel and restaurant calls → confirmed bookings in 60 seconds</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>The front desk covers phone and check-in at once; bookings are missed after 10pm; guests repeat themselves to three staff.</div>
+            <div class="after"><span class="k">With the agent</span>Answered in the guest's language — booked, upsold, confirmed, PMS note written, complex asks routed to a human.</div>
+          </div>
+          <div class="stat-chip"><b>A$1.60</b> per confirmed</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">12 · Logistics · Dispatch &amp; trace</span>
+          <h3>Driver updates and exceptions → live ETAs and clean PODs</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Dispatchers juggle phone, WhatsApp and the TMS. Exceptions surface when the customer calls — not before.</div>
+            <div class="after"><span class="k">With the agent</span>GPS and driver voice notes predict ETA slips; the customer update and the exception claim packet write themselves.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.92</b> per shipment</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">13 · Public safety · Case files</span>
+          <h3>Body-cam and voice notes → structured case files, chain-of-custody locked</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Officers spend two-plus hours after shift retyping notes; evidence is logged on paper; court filings stall on admin.</div>
+            <div class="after"><span class="k">With the agent</span>Body-cam audio becomes the structured report, evidence is inventoried with cryptographic chain-of-custody, the filing is drafted.</div>
+          </div>
+          <div class="stat-chip"><b>A$4.80</b> per report</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">14 · Voice · Inbound desk</span>
+          <h3>Every inbound call → answered, triaged and logged in under 2 rings</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>22% of calls roll to voicemail, after-hours cover costs $11k a month, and reps answer the same 12 questions all day.</div>
+            <div class="after"><span class="k">With the agent</span>Picked up in under two rings in the caller's language, matched to your CRM, 80% closed outright, the rest escalated with context.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.45</b> per call</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">15 · Voice · AR collections</span>
+          <h3>Overdue invoice list → promise-to-pay or escalation packet</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>An AR analyst dials 30 customers a day and leaves voicemails. DSO climbs past 62 days; write-offs creep up.</div>
+            <div class="after"><span class="k">With the agent</span>The whole list dialled in your tone, payment intents captured, promises scheduled — DSO down 18% in the first quarter.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.95</b> per recovery</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">16 · Voice · Medical front desk</span>
+          <h3>Patient calls → booked, rescheduled, refilled — written into the EMR</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>The front desk covers phones, walk-ins and insurance checks at once. Wait times spike; after-hours calls go nowhere.</div>
+            <div class="after"><span class="k">With the agent</span>Bookings, reschedules, refills and eligibility checks handled in the patient's language, the note written straight into the EMR. HIPAA-aware, audit-logged.</div>
+          </div>
+          <div class="stat-chip"><b>A$1.20</b> per booking</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">17 · Voice · Appointment reminders</span>
+          <h3>Tomorrow's calendar → confirmed, rescheduled or refilled tonight</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>No-shows sit at 18%, SMS reminders get ignored, and reception can't dial 240 patients before 5pm.</div>
+            <div class="after"><span class="k">With the agent</span>Every patient called the night before, confirmed or rescheduled in their language, cancelled slots refilled from the waitlist.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.55</b> per confirmed</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">18 · Multi-channel · SDR</span>
+          <h3>ICP list → qualified meetings on the AE's calendar, with discovery doc</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>SDRs send 80 cold emails a day for a 0.6% reply rate; half the booked meetings no-show; AEs walk in cold.</div>
+            <div class="after"><span class="k">With the agent</span>Each account researched, outreach personalised across email, LinkedIn and voice, objections handled, the discovery brief pre-filled.</div>
+          </div>
+          <div class="stat-chip"><b>A$42</b> per booked meeting</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">19 · Email + chat · Support L1</span>
+          <h3>Inbound tickets → resolved end-to-end, in your tone of voice</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>82% of tickets are repeat questions — refunds, WISMO, resets, invoice copies — and tier-1 burns your humans out.</div>
+            <div class="after"><span class="k">With the agent</span>The repeat 80% handled end-to-end; the rest escalated with a clean handoff packet so humans walk into context, not chaos.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.85</b> per resolved</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">20 · Legal + real estate · Leases</span>
+          <h3>200-page leases → covenant and critical-date schedule, in 90 seconds</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>A paralegal abstracts each lease for six hours. Critical dates get missed; renewal options expire silently.</div>
+            <div class="after"><span class="k">With the agent</span>Every covenant, option, escalator and critical date extracted, cross-referenced against the portfolio, written into lease admin.</div>
+          </div>
+          <div class="stat-chip"><b>A$24</b> per lease</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">21 · Voice + doc · KYC / AML</span>
+          <h3>New applicant → identity verified, sanctions cleared, file opened</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Analysts check IDs and run sanctions by hand, then call applicants for missing docs. Four-day cycle, 31% abandonment.</div>
+            <div class="after"><span class="k">With the agent</span>ID verification, sanctions/PEP screen and source-of-funds questions over voice; the file opened with an audit trail, edge cases to a human in under five minutes.</div>
+          </div>
+          <div class="stat-chip"><b>A$1.40</b> per applicant</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">22 · Voice · Restaurant &amp; venue</span>
+          <h3>Booking calls → seated, upsold and confirmed in 60 seconds</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>The maître d' splits attention between phone and floor. Bookings are missed during service; nobody answers after 10pm.</div>
+            <div class="after"><span class="k">With the agent</span>Booked from the live floor plan in the caller's language, the tasting menu upsold, the POS note written — including post-service hours.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.70</b> per booked</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">23 · Voice + email · Field service</span>
+          <h3>Service requests → scheduled, dispatched, customer notified</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>The dispatcher juggles phone, WhatsApp and the ticketing system. Techs idle while requests pile up; ETAs are guesses.</div>
+            <div class="after"><span class="k">With the agent</span>The right tech booked against route, skills and parts; the customer texted a real ETA window; payment authorised; the work order opened.</div>
+          </div>
+          <div class="stat-chip"><b>A$1.20</b> per dispatch</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">24 · Voice · Prior-auth chase</span>
+          <h3>Pending auths → called in, decisioned, attached to the encounter</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>The practice manager spends two hours a day on hold with payors. Procedures reschedule; revenue slips a quarter.</div>
+            <div class="after"><span class="k">With the agent</span>Sits on hold, navigates the IVR, gives clinical justification from the chart, captures the auth number and notifies the patient.</div>
+          </div>
+          <div class="stat-chip"><b>A$3.20</b> per auth</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">25 · Doc + voice · Fraud review</span>
+          <h3>Flagged transactions → investigated, decisioned, customer contacted</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>The fraud queue grows faster than the team clears it. Genuine customers blocked, real fraud released, 18-hour dwell times.</div>
+            <div class="after"><span class="k">With the agent</span>Device, IP, behaviour and history pulled, a recommendation drafted with evidence, the customer verified by phone in their language.</div>
+          </div>
+          <div class="stat-chip"><b>A$1.80</b> per review</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">26 · HR · Recruiter screening</span>
+          <h3>400 CVs a week → shortlisted, voice-screened, calendar-ready overnight</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>A recruiter reads 400 CVs a week to surface 12 phone screens — while good candidates join the faster employer.</div>
+            <div class="after"><span class="k">With the agent</span>Every CV scored, a five-minute voice screen run in the candidate's language, the human interview booked, the brief written.</div>
+          </div>
+          <div class="stat-chip"><b>A$2.40</b> per screen</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">27 · HR · Onboarding desk</span>
+          <h3>Day-1 paperwork → signed, filed and provisioned before first login</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>An HR coordinator chases tax forms, ID copies, bank details, the NDA and IT tickets — for every hire, every week.</div>
+            <div class="after"><span class="k">With the agent</span>The new hire walked through paperwork over chat or voice, everything filed to the HRIS, access tickets raised, week-1 training booked.</div>
+          </div>
+          <div class="stat-chip"><b>A$14.00</b> per hire</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">28 · IT · Tier-1 helpdesk</span>
+          <h3>Password, access and VPN tickets → resolved without a human</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>60% of helpdesk tickets are the same six issues, and engineers triage Jira instead of building.</div>
+            <div class="after"><span class="k">With the agent</span>Identity verified via SSO, passwords reset, scoped access granted, the user walked through the fix — only the rest escalated.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.95</b> per resolved</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">29 · Sales · Lead follow-up</span>
+          <h3>Form fills → qualified, briefed and calendar-booked in under 5 minutes</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>SDRs work the queue nine to five. After-hours leads cool overnight; weekend leads are dead by Monday.</div>
+            <div class="after"><span class="k">With the agent</span>Every inbound lead called or messaged inside five minutes, qualified against ICP, booked to the AE's calendar with a CRM brief.</div>
+          </div>
+          <div class="stat-chip"><b>A$3.60</b> per qualified</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">30 · CX · Tier-1 support</span>
+          <h3>Inbound tickets → answered, resolved or routed on first touch</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>The team is buried in repetitive how-to tickets; first response averages six hours and CSAT slips.</div>
+            <div class="after"><span class="k">With the agent</span>The ticket and customer history read together, answers drawn from your own docs and product data, only genuine exceptions escalated.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.85</b> per ticket</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">31 · Marketing · Social &amp; reviews</span>
+          <h3>DMs and reviews → moderated and replied, on brand, in minutes</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>The community manager hand-replies across IG, FB, X, Google and TripAdvisor; negative reviews sit unanswered for days.</div>
+            <div class="after"><span class="k">With the agent</span>Every inbound message triaged, an on-brand reply drafted with the right offer, angry ones escalated, all of it logged to the CRM.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.55</b> per reply</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">32 · Ops · Calendar &amp; scheduling</span>
+          <h3>Booking, rescheduling and no-show recovery → handled end-to-end</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Front-desk staff and EAs play calendar Tetris for hours while no-shows cost roughly 12% of revenue, unchased.</div>
+            <div class="after"><span class="k">With the agent</span>Booked, rescheduled and confirmed across calendars in any timezone; no-shows called in their language and rebooked.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.65</b> per booking</div>
+        </article>
+
+        <article class="card">
+          <span class="kicker">33 · Finance · Expense &amp; PO</span>
+          <h3>Receipts, invoices and POs → coded, matched and approved automatically</h3>
+          <div class="ba">
+            <div><span class="k">Before</span>Finance chases missing receipts and unmatched POs to month-end; approvers ignore the pings and the close slips.</div>
+            <div class="after"><span class="k">With the agent</span>Every receipt and invoice coded to GL, matched against the PO, routed to the right approver and filed to the ERP — only exceptions land on a human.</div>
+          </div>
+          <div class="stat-chip"><b>A$0.38</b> per item</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VOICE DESK ========== -->
+  <section class="section dark">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Flagship · cross-cutting</span>
+        <h2 class="h2">A voice desk. <em>Multilingual</em>. That never misses a ring.</h2>
+        <p class="lede">One AI phone desk on the numbers you already own — Aircall, Twilio, RingCentral, Zoom Phone, GoTo. It answers inbound in under two rings, runs outbound against your list, warm-transfers edge cases and writes the CRM note. Every call transcribed, scored and replayable. Fluent, not translated: real-time conversation in the caller's language, regional accents included, tone matched to your brand.</p>
+      </div>
+
+      <div class="langs reveal" style="margin-bottom:28px">
+        <span class="lang"><span class="code">EN</span> English</span>
+        <span class="lang"><span class="code">ES</span> Spanish</span>
+        <span class="lang"><span class="code">ZH</span> Mandarin</span>
+        <span class="lang"><span class="code">AR</span> Arabic</span>
+        <span class="lang"><span class="code">HI</span> Hindi</span>
+        <span class="lang"><span class="code">VI</span> Vietnamese</span>
+        <span class="lang"><span class="code">PT</span> Portuguese</span>
+        <span class="lang"><span class="code">FR</span> French</span>
+        <span class="lang"><span class="code">DE</span> German</span>
+        <span class="lang"><span class="code">JA</span> Japanese</span>
+        <span class="lang"><span class="code">KO</span> Korean</span>
+        <span class="lang"><span class="code">TH</span> Thai</span>
+        <span class="lang"><span class="code">ID</span> Indonesian</span>
+        <span class="lang"><span class="code">IT</span> Italian</span>
+        <span class="lang"><span class="code">+more</span> on request</span>
+      </div>
+
+      <div class="grid grid-4 vgrid reveal">
+        <div class="vtile"><span class="vp">per answered · A$0.38</span><h3>Inbound receptionist</h3><p>24/7 greet · route · capture</p></div>
+        <div class="vtile"><span class="vp">per meeting · A$38</span><h3>Outbound SDR caller</h3><p>List → meeting booked</p></div>
+        <div class="vtile"><span class="vp">per booked · A$1.60</span><h3>Appointment booker</h3><p>Live calendar · confirm</p></div>
+        <div class="vtile"><span class="vp">per resolved · A$1.80</span><h3>Tier-1 support</h3><p>KB · deflect · warm-transfer</p></div>
+        <div class="vtile"><span class="vp">of recovered · 3.4%</span><h3>Collections &amp; payments</h3><p>Promise-to-pay · Stripe link</p></div>
+        <div class="vtile"><span class="vp">per completed · A$0.95</span><h3>Survey &amp; NPS</h3><p>Outbound · structured · multilingual</p></div>
+        <div class="vtile"><span class="vp">per qualified · A$4.20</span><h3>Lead qualifier</h3><p>Form-fill → qualified call</p></div>
+        <div class="vtile"><span class="vp">per triaged · A$2.80</span><h3>Emergency triage</h3><p>After-hours · severity · page</p></div>
+        <div class="vtile"><span class="vp">per minute · A$0.22</span><h3>Multilingual interpreter</h3><p>Live EN ↔ 13 others</p></div>
+        <div class="vtile"><span class="vp">per call · A$0.14</span><h3>Call-summary writer</h3><p>Transcript → CRM note · actions</p></div>
+        <div class="vtile"><span class="vp">per VM · A$0.11</span><h3>Voicemail-to-task</h3><p>VM transcribe · route · SLA clock</p></div>
+        <div class="vtile"><span class="vp">per scored · A$0.28</span><h3>QA &amp; compliance grader</h3><p>Script adherence · flags</p></div>
+        <div class="vtile"><span class="vp">per minute · A$0.18</span><h3>Overflow concierge</h3><p>Spike handler · hotel / clinic</p></div>
+        <div class="vtile"><span class="vp">per trip · A$0.42</span><h3>Driver dispatch voice</h3><p>Route updates · POD capture</p></div>
+        <div class="vtile"><span class="vp">per FNOL · A$6.80</span><h3>FNOL claims intake</h3><p>First-notice-of-loss · scored</p></div>
+        <div class="vtile"><span class="vp">per minute · A$0.28</span><h3>Translation hotline</h3><p>14-language on-demand</p></div>
+      </div>
+
+      <div class="center" style="margin-top:28px">
+        <a href="contact.html?vertical=voice" class="btn btn-light btn-lg">Spin up a voice pilot <span class="ar">↗</span></a>
+        <p class="note" style="margin-top:14px;color:rgba(234,242,238,0.55)">2-week audit → live in your phone stack in week 3.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="section dark cta-band" style="border-top:1px solid rgba(255,255,255,0.12)">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" style="justify-content:center">Start with an audit, not a pitch</span>
+        <h2 class="h2">Bring us your week's <em>worst workflow</em>.</h2>
+        <p class="lede">Two weeks, one workflow, no obligation. If we can ship agents against a contract SLA, we price it per outcome. If we can't, you walk away with the diagnostic report — on us.</p>
+        <div class="btns">
+          <a href="contact.html" class="btn btn-light btn-lg">Book my audit <span class="ar">↗</span></a>
+          <a href="process.html" class="btn btn-outline-light btn-lg">How it works</a>
         </div>
-      </div>
-
-      <div class="vf-langs" aria-label="Languages supported">
-        <span class="lg"><span class="code">EN</span> English</span>
-        <span class="lg"><span class="code">ES</span> Spanish</span>
-        <span class="lg"><span class="code">ZH</span> Mandarin</span>
-        <span class="lg"><span class="code">AR</span> Arabic</span>
-        <span class="lg"><span class="code">HI</span> Hindi</span>
-        <span class="lg"><span class="code">VI</span> Vietnamese</span>
-        <span class="lg"><span class="code">PT</span> Portuguese</span>
-        <span class="lg"><span class="code">FR</span> French</span>
-        <span class="lg"><span class="code">DE</span> German</span>
-        <span class="lg"><span class="code">JA</span> Japanese</span>
-        <span class="lg"><span class="code">KO</span> Korean</span>
-        <span class="lg"><span class="code">TH</span> Thai</span>
-        <span class="lg"><span class="code">ID</span> Indonesian</span>
-        <span class="lg"><span class="code">IT</span> Italian</span>
-        <span class="lg" style="opacity:0.7">+ more on request</span>
-      </div>
-
-      <div class="vf-skus">
-        <article class="vf-sku"><span class="sn">01</span><h4>Inbound receptionist</h4><p>24/7 greet · route · capture</p><div class="ft"><span>per answered</span><span class="p">A$0.38</span></div></article>
-        <article class="vf-sku"><span class="sn">02</span><h4>Outbound SDR caller</h4><p>List → meeting booked</p><div class="ft"><span>per meeting</span><span class="p">A$38</span></div></article>
-        <article class="vf-sku"><span class="sn">03</span><h4>Appointment booker</h4><p>Live calendar · confirm</p><div class="ft"><span>per booked</span><span class="p">A$1.60</span></div></article>
-        <article class="vf-sku"><span class="sn">04</span><h4>Tier-1 support</h4><p>KB · deflect · warm-transfer</p><div class="ft"><span>per resolved</span><span class="p">A$1.80</span></div></article>
-        <article class="vf-sku"><span class="sn">05</span><h4>Collections &amp; payments</h4><p>Promise-to-pay · Stripe link</p><div class="ft"><span>per recovered</span><span class="p">3.4%</span></div></article>
-        <article class="vf-sku"><span class="sn">06</span><h4>Survey &amp; NPS</h4><p>Outbound · structured · multilingual</p><div class="ft"><span>per completed</span><span class="p">A$0.95</span></div></article>
-        <article class="vf-sku"><span class="sn">07</span><h4>Lead qualifier</h4><p>Form-fill → qualified call</p><div class="ft"><span>per qualified</span><span class="p">A$4.20</span></div></article>
-        <article class="vf-sku"><span class="sn">08</span><h4>Emergency triage</h4><p>After-hours · severity · page</p><div class="ft"><span>per triaged</span><span class="p">A$2.80</span></div></article>
-        <article class="vf-sku"><span class="sn">09</span><h4>Multilingual interpreter</h4><p>Live EN ↔ 13 others</p><div class="ft"><span>per minute</span><span class="p">A$0.22</span></div></article>
-        <article class="vf-sku"><span class="sn">10</span><h4>Call-summary writer</h4><p>Transcript → CRM note · actions</p><div class="ft"><span>per call</span><span class="p">A$0.14</span></div></article>
-        <article class="vf-sku"><span class="sn">11</span><h4>Voicemail-to-task</h4><p>VM transcribe · route · SLA clock</p><div class="ft"><span>per VM</span><span class="p">A$0.11</span></div></article>
-        <article class="vf-sku"><span class="sn">12</span><h4>QA &amp; compliance grader</h4><p>Script adherence · flags</p><div class="ft"><span>per scored</span><span class="p">A$0.28</span></div></article>
-        <article class="vf-sku"><span class="sn">13</span><h4>Overflow concierge</h4><p>Spike handler · hotel / clinic</p><div class="ft"><span>per minute</span><span class="p">A$0.18</span></div></article>
-        <article class="vf-sku"><span class="sn">14</span><h4>Driver dispatch voice</h4><p>Route updates · POD capture</p><div class="ft"><span>per trip</span><span class="p">A$0.42</span></div></article>
-        <article class="vf-sku"><span class="sn">15</span><h4>FNOL claims intake</h4><p>First-notice-of-loss · scored</p><div class="ft"><span>per FNOL</span><span class="p">A$6.80</span></div></article>
-        <article class="vf-sku"><span class="sn">16</span><h4>Translation hotline</h4><p>14-language on-demand</p><div class="ft"><span>per minute</span><span class="p">A$0.28</span></div></article>
-      </div>
-
-      <div class="vf-cta">
-        <a href="contact.html?vertical=voice" class="btn btn-primary btn-lg">Spin up a voice pilot <span class="arrow">↗</span></a>
-        <span class="note">2-week audit → live in your phone stack in week 3.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="lev-band">
-    <div class="container">
-      <div class="lev-head">
-        <div class="eyebrow">How this gets shipped · §</div>
-        <h2>From a workflow audit<br>to a <em>billed outcome</em>.</h2>
-        <p>Every engagement follows the same four-beat. Two weeks in your team, two weeks in build, then agents running against a contract SLA — billed per finished unit, credited back when they miss.</p>
-      </div>
-      <div class="lev-steps">
-        <article class="lev-step">
-          <div class="sn">01</div>
-          <h4>Workflow audit</h4>
-          <p>Ten working days observing the job end-to-end. Maps the manual path, finds the bottleneck, prices only what we can ship.</p>
-        </article>
-        <article class="lev-step">
-          <div class="sn">02</div>
-          <h4>Agent build</h4>
-          <p>Wire the agent into your stack — EMR, ERP, CRM, phone — with audit logs, credit-back SLA, and a read-only ops console for your team.</p>
-        </article>
-        <article class="lev-step">
-          <div class="sn">03</div>
-          <h4>Shadow + cutover</h4>
-          <p>Agent runs alongside humans for a sign-off window. Confidence scores reviewed, threshold agreed, cutover signed by a named owner.</p>
-        </article>
-        <article class="lev-step">
-          <div class="sn">04</div>
-          <h4>In production</h4>
-          <p>Every outcome timestamped, billed per finished unit, audited on the console. Miss SLA, the outcome is free — automatic on the invoice.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="cs-cta">
-    <div class="container">
-      <h2>Bring us<br>your <em>week's worst</em> workflow.</h2>
-      <p>Two weeks, one workflow, no obligation. If we can ship agents against a contract SLA, we price it. If we can't, you walk away with the diagnostic report — on us.</p>
-      <div class="acts">
-        <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
-        <a href="process.html" class="btn btn-lg">How it works</a>
       </div>
     </div>
   </section>
 </main>
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+
+<!-- ========== FOOTER ========== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-min">
+      <div>
+        <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+        <p class="foot-tag">End-to-end automation with agents we build for your workflow. Billed per outcome — never per seat, never per token.</p>
       </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="process.html">Process</a></li>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Verticals</h5>
-        <ul>
-          <li><a href="solutions.html#healthcare">Healthcare</a></li>
-          <li><a href="solutions.html#legal">Legal</a></li>
-          <li><a href="solutions.html#finance">Finance</a></li>
-          <li><a href="solutions.html#real-estate">Real estate</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Office</h5>
-        <ul>
-          <li><a href="#">L14 · 459 Collins St</a></li>
-          <li><a href="#">Melbourne VIC 3000</a></li>
-          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
-          <li><a href="#">+61 3 9000 0000</a></li>
-        </ul>
-      </div>
+      <nav class="foot-nav" aria-label="Footer">
+        <a href="what-is.html">What is an AI agent?</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="cases.html">Cases</a>
+        <a href="demo.html">Demo</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="process.html">Process</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="btn btn-ghost foot-mail" href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
     </div>
-    <div class="footer-bottom">
-      <div class="left">
-        <span>© 2026 Autopilot Labs Pty Ltd</span>
-      </div>
-      <div class="right">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">SLA</a>
-        
-      </div>
+    <div class="foot-bottom">
+      <div class="left">© 2026 Autopilot Labs · Global · Remote-first · 24/7 delivery</div>
+      <div class="right"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">SLA</a></div>
     </div>
   </div>
 </footer>
-<script src="assets/site.js?v=5"></script>
+
+<script>
+/* mobile nav */
+(function(){
+  var t = document.getElementById('navToggle'), s = document.getElementById('msheet');
+  if(!t||!s) return;
+  t.addEventListener('click', function(){
+    var open = s.classList.toggle('open');
+    t.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('lock', open);
+  });
+  s.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ s.classList.remove('open'); document.body.classList.remove('lock'); t.setAttribute('aria-expanded','false'); }); });
+})();
+
+/* reveal on scroll */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
 </body>
 </html>

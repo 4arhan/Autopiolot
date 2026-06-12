@@ -4,579 +4,272 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — Autopilot Labs</title>
-<meta name="description" content="Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical AI agents across fourteen practice areas — thirteen industries plus a voice desk fluent in 14 languages (Arabic included) — and bill per completed outcome.">
+<meta name="description" content="Autopilot Labs is a global AI workflow studio. We build vertical AI agents for regulated industries — custom-built where needed — with a 24/7 multilingual voice desk, 120+ integrations and follow-the-sun delivery. Billed per completed outcome.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5">
-<link rel="stylesheet" href="assets/motion.css">
-<style>
-.ab-hero { padding: clamp(4.5rem, 9vw, 8rem) 0 clamp(3rem, 5vw, 5rem); border-bottom: 1px solid var(--line); }
-.ab-hero .meta { display: flex; justify-content: space-between; align-items: baseline;
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted); padding-bottom: 1.25rem; margin-bottom: clamp(2rem, 4vw, 3rem);
-  border-bottom: 1px solid var(--line); flex-wrap: wrap; gap: 1rem; }
-.ab-hero .meta b { color: var(--ink); font-weight: 500; }
-.ab-hero .meta .accent { color: var(--accent); }
-.ab-hero h1 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(52px, 10vw, 148px); line-height: 0.88; letter-spacing: -0.055em;
-  margin-bottom: clamp(1.75rem, 3vw, 2.5rem); text-wrap: balance; }
-.ab-hero h1 em { color: var(--accent); }
-.ab-hero .dk { font-size: clamp(17px, 1.3vw, 21px); line-height: 1.5; color: var(--ink-3);
-  max-width: 60ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
-.ab-hero .dk em { color: var(--ink); font-weight: 500; }
-.ab-hero .acts { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-/* What we do strip */
-.ab-what { padding: clamp(4rem, 8vw, 8rem) 0; border-bottom: 1px solid var(--line); background: var(--paper-3); }
-.ab-what-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: clamp(2rem, 4vw, 4rem); align-items: end; padding-bottom: clamp(2rem, 4vw, 3rem);
-  border-bottom: 1px solid var(--line-strong); margin-bottom: clamp(2.5rem, 4vw, 3.5rem); }
-.ab-what-head .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1rem; }
-.ab-what-head h2 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(36px, 5vw, 64px); line-height: 1.02; letter-spacing: -0.04em;
-  text-wrap: balance; }
-.ab-what-head h2 em { color: var(--accent); }
-.ab-what-head p { font-size: clamp(15px, 1.1vw, 17px); line-height: 1.55;
-  color: var(--ink-3); max-width: 46ch; }
-.ab-what-head p em { color: var(--ink); font-weight: 500; }
-
-.ind-grid { display: grid; grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--line-strong); background: var(--line-strong); gap: 1px; }
-.ind { background: var(--paper); padding: 1.5rem 1.5rem 1.75rem;
-  display: flex; flex-direction: column; gap: 0.6rem;
-  transition: background .2s; }
-.ind:hover { background: var(--paper-3); }
-.ind .top { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
-.ind .nm { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--muted); }
-.ind .g { width: 28px; height: 28px; background: currentColor; color: var(--ink-3);
-  -webkit-mask: var(--glyph) center/contain no-repeat;
-  mask: var(--glyph) center/contain no-repeat;
-  transition: color .2s; }
-.ind:hover .g { color: var(--accent); }
-.ind h4 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(18px, 1.4vw, 22px); letter-spacing: -0.02em; line-height: 1.1;
-  margin-top: 0.25rem; }
-.ind p { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); }
-.ind.voice { background: var(--ink); color: var(--paper); }
-.ind.voice:hover { background: #0b0b0f; }
-.ind.voice .nm { color: rgba(255,255,255,0.55); }
-.ind.voice .g { color: var(--paper); }
-.ind.voice:hover .g { color: var(--accent-2); }
-.ind.voice p { color: rgba(255,255,255,0.7); }
-@media (max-width: 900px) { .ab-what-head { grid-template-columns: 1fr; } .ind-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .ind-grid { grid-template-columns: 1fr; } }
-
-/* Reach band */
-.reach { padding: clamp(4rem, 8vw, 8rem) 0; border-bottom: 1px solid var(--line); }
-.reach-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 5rem); align-items: center; }
-.reach h2 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(40px, 6vw, 88px); line-height: 0.98; letter-spacing: -0.045em;
-  margin-bottom: clamp(1.25rem, 2vw, 1.75rem); text-wrap: balance; }
-.reach h2 em { color: var(--accent); }
-.reach p { font-size: clamp(15px, 1.15vw, 18px); line-height: 1.55;
-  color: var(--ink-3); max-width: 52ch; margin-bottom: 1.25rem; }
-.reach p em { color: var(--ink); font-weight: 500; }
-.reach-facts { display: grid; grid-template-columns: repeat(2, 1fr);
-  border: 1px solid var(--line-strong); background: var(--line-strong); gap: 1px;
-  margin-top: 1.5rem; }
-.reach-fact { background: var(--paper); padding: 1.25rem 1.5rem; }
-.reach-fact .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
-.reach-fact .v { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.025em;
-  color: var(--ink); }
-.reach-fact .v em { color: var(--accent); }
-
-.map-card { border: 1px solid var(--line-strong); background: var(--paper);
-  position: relative; overflow: hidden; }
-.map-card .chrome { display: flex; align-items: center; gap: 8px;
-  height: 34px; padding: 0 14px; border-bottom: 1px solid var(--ink);
-  font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
-.map-card .chrome .d { width: 7px; height: 7px; border: 1px solid var(--ink); }
-.map-card .chrome .u { margin-left: 14px; color: var(--ink); }
-.map-card .chrome .r { margin-left: auto; color: var(--accent); font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase; }
-.map-card svg { display: block; width: 100%; height: auto; }
-@media (max-width: 900px) { .reach-grid { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { .reach-facts { grid-template-columns: 1fr; } }
-
-/* Principles */
-.pri { padding: clamp(4rem, 8vw, 8rem) 0; border-bottom: 1px solid var(--line); background: var(--paper-3); }
-.pri-head { max-width: 48rem; margin-bottom: clamp(2.5rem, 4vw, 3.5rem); }
-.pri-head .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1rem; }
-.pri-head h2 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(36px, 5vw, 64px); line-height: 1.02; letter-spacing: -0.04em;
-  text-wrap: balance; }
-.pri-head h2 em { color: var(--accent); }
-.pri-row { display: grid; grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--line-strong); background: var(--line-strong); gap: 1px; }
-.pri-card { background: var(--paper); padding: clamp(1.75rem, 2.4vw, 2.25rem);
-  display: flex; flex-direction: column; gap: 0.75rem; }
-.pri-card .no { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--accent); font-weight: 500;
-  padding-bottom: 0.75rem; border-bottom: 1px solid var(--line); }
-.pri-card h3 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(20px, 1.7vw, 26px); letter-spacing: -0.025em; line-height: 1.1;
-  margin-top: 0.25rem; }
-.pri-card h3 em { color: var(--accent); }
-.pri-card p { font-size: 14px; line-height: 1.55; color: var(--ink-3); }
-@media (max-width: 900px) { .pri-row { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 520px) { .pri-row { grid-template-columns: 1fr; } }
-
-/* End CTA */
-.ab-end { padding: clamp(5rem, 9vw, 9rem) 0; text-align: center; }
-.ab-end h2 { font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(40px, 6vw, 88px); line-height: 0.98; letter-spacing: -0.045em;
-  margin-bottom: 1.25rem; text-wrap: balance; }
-.ab-end h2 em { color: var(--accent); }
-.ab-end p { font-size: clamp(16px, 1.2vw, 19px); color: var(--ink-3);
-  line-height: 1.5; max-width: 46rem; margin: 0 auto 2.5rem; }
-.ab-end .acts { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
-@media (max-width: 820px) {
-  .ab-hero .meta { font-size: 10px; flex-direction: column; align-items: flex-start; gap: 0.35rem; }
-  .ab-what-head { grid-template-columns: 1fr; }
-}
-@media (max-width: 720px) {
-  .ab-hero h1 { font-size: clamp(40px, 11vw, 60px); }
-  .ab-hero .dk { font-size: 16px; }
-  .reach h2 { font-size: clamp(32px, 9vw, 52px); }
-  .ab-end h2 { font-size: clamp(32px, 10vw, 56px); }
-  .pri-head h2 { font-size: clamp(30px, 8vw, 48px); }
-  .ab-what-head h2 { font-size: clamp(30px, 8vw, 48px); }
-  .ab-hero .acts { flex-direction: column; align-items: stretch; }
-  .ab-hero .acts .btn { width: 100%; justify-content: center; }
-}
-@media (max-width: 520px) {
-  .ab-hero h1 { font-size: clamp(34px, 10vw, 44px); letter-spacing: -0.04em; }
-  .ab-hero .acts .btn { width: 100%; }
-  .ab-end .acts { display: flex; flex-direction: column; width: 100%; }
-  .ab-end .acts .btn { width: 100%; }
-  .reach-fact { padding: 1rem 1.1rem; }
-  .reach-fact .v { font-size: 18px; word-break: break-word; }
-  .ind { padding: 1.25rem 1.1rem 1.5rem; }
-  .pri-card { padding: 1.5rem 1.25rem; }
-  .map-card svg { min-width: 0; }
-}
-@media (max-width: 380px) {
-  .ab-hero h1 { font-size: 34px; }
-  .reach h2, .ab-end h2, .pri-head h2, .ab-what-head h2 { font-size: 28px; }
-}
-
-/* === 2026 modernization polish ============================ */
-.reach-fact, .pri-card, .ind, .map-card, .ab-what-card {
-  border: 1px solid rgba(0,82,255,0.08);
-  transition: transform .25s var(--ease-out, ease-out),
-              box-shadow .25s var(--ease-out, ease-out),
-              border-color .25s var(--ease-out, ease-out);
-}
-.reach-fact:hover, .pri-card:hover, .ind:hover, .ab-what-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0,82,255,0.18);
-  box-shadow: 0 10px 28px -18px rgba(0,82,255,0.35), 0 2px 6px -3px rgba(10,12,20,0.08);
-}
-@supports (background: color-mix(in oklab, red, blue)) {
-  .reach-fact:hover, .pri-card:hover, .ind:hover, .ab-what-card:hover {
-    box-shadow: 0 12px 30px -18px color-mix(in oklab, var(--accent) 45%, transparent),
-                0 2px 6px -3px color-mix(in oklab, var(--ink) 12%, transparent);
-  }
-}
-.ab-hero .hero-overlay, .hero-overlay {
-  backdrop-filter: saturate(140%) blur(10px);
-  -webkit-backdrop-filter: saturate(140%) blur(10px);
-}
-main p a:not(.btn):not(.btn-link)::after {
-  content: ""; display: block; height: 1px; background: var(--accent);
-  transform: scaleX(0); transform-origin: left center;
-  transition: transform .25s var(--ease-out, ease-out);
-}
-main p a:not(.btn):not(.btn-link):hover::after { transform: scaleX(1); }
-.ab-hero h1 em, .dek em, .hi-grad {
-  background: linear-gradient(90deg, var(--accent), var(--accent-3));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-a:focus-visible, button:focus-visible, .btn:focus-visible {
-  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
-}
-.reach-fact .v, .stat .v, .num, [data-tnum] {
-  font-feature-settings: 'tnum' 1, 'lnum' 1;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-.scroll-x { scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
-.scroll-x > * { scroll-snap-align: start; }
-@media (prefers-reduced-motion: reduce) {
-  .reach-fact, .pri-card, .ind, .ab-what-card { transition: none; }
-}
-</style>
+<link rel="stylesheet" href="assets/app.css?v=8">
 </head>
 <body>
-<div class="scroll-prog" aria-hidden="true"></div>
-<header class="topbar">
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-      <span class="ticker-item"><span class="tup">Melbourne</span> · Dubai · Riyadh · Global reach</span>
-      <span class="ticker-item">Healthcare · <span class="tup">patient intake</span> · refill voice</span>
-      <span class="ticker-item">Legal · <span class="tup">discovery</span> · matter-status voice</span>
-      <span class="ticker-item">Finance · <span class="tup">reconciliation</span> · AR collections voice</span>
-      <span class="ticker-item">Voice desk · <span class="tup">14 languages</span> · &lt; 2 rings</span>
-      <span class="ticker-item">Real estate · <span class="tup">enquiry</span> · inspection voice</span>
-      <span class="ticker-item">E-commerce · <span class="tup">refunds</span> · WISMO voice</span>
-      <span class="ticker-item">HR · <span class="tup">shortlist</span> · phone-screener voice</span>
-      <span class="ticker-item">Marketing · <span class="tup">briefs</span> · outbound SDR voice</span>
-      <span class="ticker-item">Manufacturing · <span class="tup">QA</span> · supplier-chase voice</span>
-      <span class="ticker-item">Education · <span class="tup">admissions</span> · student voice</span>
-      <span class="ticker-item">Insurance · <span class="tup">claims triage</span> · FNOL voice</span>
-      <span class="ticker-item">Hospitality · <span class="tup">booking</span> · concierge voice</span>
-      <span class="ticker-item">Logistics · <span class="tup">dispatch</span> · driver voice</span>
-      <span class="ticker-item">Public safety · <span class="tup">case files</span> · evidence inventory</span>
-      <span class="ticker-item"><span class="tup">Workflow-first</span> · per-outcome pricing</span>
-    </div>
-  </div>
-  <div class="topbar-inner">
-    <a href="index.html" class="brand">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" fill="currentColor"/><rect x="15" y="15" width="6" height="6" fill="#0052FF"/></svg></span>
-      <span class="brand-name">AUTOPILOT LABS</span><span class="brand-dot">.</span>
-    </a>
-    <nav class="primary-nav" aria-label="Primary">
-      <a href="solutions.html" data-nav="solutions">Solutions</a>
-      <a href="cases.html" data-nav="cases">Achieve</a>
-      <a href="demo.html" data-nav="demo">Demo</a>
-      <a href="pricing.html" data-nav="pricing">Pricing</a>
-      <a href="process.html" data-nav="process">Process</a>
-      <a href="about.html" data-nav="about">About</a>
+
+<!-- ========== NAV ========== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="what-is.html" class="is-accent">What is an AI agent?</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="cases.html">Cases</a>
+      <a href="demo.html">Demo</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html" style="background:var(--bg-soft);color:var(--ink)">About</a>
     </nav>
-    <div class="topbar-cta">
-      <span class="status-pill"><span class="status-dot"></span> <span data-clock>—</span></span>
-      <a href="contact.html" class="btn btn-primary btn-sm btn-cta-desktop">Book audit <span class="arrow">↗</span></a>
-      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <span class="bar b1" aria-hidden="true"></span>
-        <span class="bar b2" aria-hidden="true"></span>
-        <span class="bar b3" aria-hidden="true"></span>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Book a free audit</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg class="nt-b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg><svg class="nt-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l14 14M19 5L5 19" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <div></div>
-    <div class="mobile-nav-inner">
-      <div class="mnav-group">
-        <h5>Work</h5>
-        <ul class="mnav-list">
-          <li><a href="solutions.html" data-nav="solutions">Solutions <span class="ar">→</span></a></li>
-          <li><a href="cases.html" data-nav="cases">What you can achieve <span class="ar">→</span></a></li>
-          <li><a href="demo.html" data-nav="demo">Live demo <span class="ar">→</span></a></li>
-          <li><a href="pricing.html" data-nav="pricing">Pricing &amp; calculator <span class="ar">→</span></a></li>
-          <li><a href="process.html" data-nav="process">Process <span class="ar">→</span></a></li>
-          <li><a href="about.html" data-nav="about">About <span class="ar">→</span></a></li>
-          <li><a href="contact.html" data-nav="contact">Contact <span class="ar">→</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mobile-nav-foot">
-      <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-      <div class="mfoot-meta">
-        <span>Melbourne · Dubai · Riyadh · <span data-clock>—</span></span>
-        <a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a>
-      </div>
-    </div>
+  <nav class="msheet" id="msheet" aria-label="Mobile">
+    <a href="what-is.html">What is an AI agent? <span class="ar">→</span></a>
+    <a href="solutions.html">Solutions <span class="ar">→</span></a>
+    <a href="cases.html">Cases <span class="ar">→</span></a>
+    <a href="demo.html">Demo <span class="ar">→</span></a>
+    <a href="pricing.html">Pricing &amp; calculator <span class="ar">→</span></a>
+    <a href="process.html">Process <span class="ar">→</span></a>
+    <a href="about.html" style="background:var(--bg-soft);color:var(--ink)">About <span class="ar">→</span></a>
+    <a href="contact.html">Contact <span class="ar">→</span></a>
+    <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit</a>
+    <a class="ms-mail" href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
   </nav>
 </header>
+
 <main>
-  <section class="ab-hero">
-    <div class="container">
-      <div class="meta">
-        <span>◎ <b>About</b> · Autopilot Labs</span>
-        <span>Melbourne · Dubai · Riyadh · <span class="accent">Global reach</span></span>
-      </div>
-      <h1>A studio,<br>not a <em>platform</em>.</h1>
-      <p class="dk">Autopilot Labs is an <em>AI workflow studio</em> — started in <em>Melbourne</em>, with hubs in <em>Dubai</em> and <em>Riyadh</em>, deployed globally. We build vertical AI agents across <em>fourteen practice areas</em> — thirteen industries plus a voice desk fluent in fourteen languages (Arabic included) — and bill per completed outcome. No product roadmap. No free tier. No self-serve sign-up.</p>
-      <div class="acts">
-        <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="arrow">↗</span></a>
-        <a href="cases.html" class="btn btn-lg">What you can achieve</a>
-      </div>
-    </div>
-  </section>
 
-  <section class="ab-what">
-    <div class="container">
-      <div class="ab-what-head">
-        <div>
-          <div class="eyebrow">What we cover</div>
-          <h2>Fourteen practice areas.<br><em>Nothing else.</em></h2>
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="reveal" style="max-width:820px">
+        <span class="pill">About · Autopilot Labs</span>
+        <h1 class="display hero-display" style="max-width:none">A studio, not a <em>platform</em>.</h1>
+        <p class="lede hero-lede" style="max-width:60ch">Autopilot Labs is the AI workflow studio that platforms point to when customers ask "who actually ships this?" We do <em>end-to-end automation</em> with agents we build for your workflow — across regulated industries, with a multilingual voice desk in Arabic, English and the languages your customers actually call in. Every agent ships against a written SLA, and you pay per completed outcome. Not per seat. Not per token.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary btn-lg">Book a free audit <span class="ar">↗</span></a>
+          <a href="cases.html" class="btn btn-ghost btn-lg">What you can achieve</a>
         </div>
-        <p>We don't build horizontal AI. Each practice area ships a <em>pre-priced catalogue</em> of agents, a target SLA, and a shortlist of workflows we're ready to run — including an always-on <em>voice desk in 14 languages</em> (Arabic included) and a new <em>Public safety &amp; justice</em> practice that slots into Aircall, Twilio, RingCentral, or your existing stack.</p>
-      </div>
-      <div class="ind-grid">
-        <a href="solutions.html#healthcare" class="ind">
-          <div class="top"><span class="nm">01 · Healthcare</span><span class="g" style="--glyph:url('assets/verticals/healthcare.svg')" aria-hidden="true"></span></div>
-          <h4>Healthcare</h4>
-          <p>Intake, prior-auth, coding, refill voice, denial appeals.</p>
-        </a>
-        <a href="solutions.html#legal" class="ind">
-          <div class="top"><span class="nm">02 · Legal</span><span class="g" style="--glyph:url('assets/verticals/legal.svg')" aria-hidden="true"></span></div>
-          <h4>Legal</h4>
-          <p>Discovery, leases, client intake voice, depo summaries.</p>
-        </a>
-        <a href="solutions.html#finance" class="ind">
-          <div class="top"><span class="nm">03 · Finance</span><span class="g" style="--glyph:url('assets/verticals/finance.svg')" aria-hidden="true"></span></div>
-          <h4>Finance</h4>
-          <p>Reconciliation, AR voice, month-end, KYC voice.</p>
-        </a>
-        <a href="solutions.html#real-estate" class="ind">
-          <div class="top"><span class="nm">04 · Real estate</span><span class="g" style="--glyph:url('assets/verticals/real-estate.svg')" aria-hidden="true"></span></div>
-          <h4>Real estate</h4>
-          <p>Listings, enquiry voice, inspections, settlements.</p>
-        </a>
-        <a href="solutions.html#ecommerce" class="ind">
-          <div class="top"><span class="nm">05 · E-commerce</span><span class="g" style="--glyph:url('assets/verticals/ecommerce.svg')" aria-hidden="true"></span></div>
-          <h4>E-commerce</h4>
-          <p>Refunds, chargebacks, WISMO voice, restock, reviews.</p>
-        </a>
-        <a href="solutions.html#hr" class="ind">
-          <div class="top"><span class="nm">06 · HR &amp; hiring</span><span class="g" style="--glyph:url('assets/verticals/hr.svg')" aria-hidden="true"></span></div>
-          <h4>HR &amp; hiring</h4>
-          <p>Shortlist, phone-screen voice, offers, exit voice.</p>
-        </a>
-        <a href="solutions.html#marketing" class="ind">
-          <div class="top"><span class="nm">07 · Marketing</span><span class="g" style="--glyph:url('assets/verticals/marketing.svg')" aria-hidden="true"></span></div>
-          <h4>Marketing</h4>
-          <p>Briefs, ad-creative, outbound SDR voice, PR monitor.</p>
-        </a>
-        <a href="solutions.html#manufacturing" class="ind">
-          <div class="top"><span class="nm">08 · Manufacturing</span><span class="g" style="--glyph:url('assets/verticals/manufacturing.svg')" aria-hidden="true"></span></div>
-          <h4>Manufacturing</h4>
-          <p>QA-log, CAPA, supplier-chase voice, safety intake.</p>
-        </a>
-        <a href="solutions.html#education" class="ind">
-          <div class="top"><span class="nm">09 · Education</span><span class="g" style="--glyph:url('assets/verticals/education.svg')" aria-hidden="true"></span></div>
-          <h4>Education</h4>
-          <p>Admissions triage, student-services voice, tutor dispatch.</p>
-        </a>
-        <a href="solutions.html#insurance" class="ind">
-          <div class="top"><span class="nm">10 · Insurance</span><span class="g" style="--glyph:url('assets/verticals/insurance.svg')" aria-hidden="true"></span></div>
-          <h4>Insurance</h4>
-          <p>FNOL voice, claims triage, fraud flags, underwriting.</p>
-        </a>
-        <a href="solutions.html#hospitality" class="ind">
-          <div class="top"><span class="nm">11 · Hospitality</span><span class="g" style="--glyph:url('assets/verticals/hospitality.svg')" aria-hidden="true"></span></div>
-          <h4>Hospitality</h4>
-          <p>Booking voice, concierge, upsell, overflow concierge.</p>
-        </a>
-        <a href="solutions.html#logistics" class="ind">
-          <div class="top"><span class="nm">12 · Logistics</span><span class="g" style="--glyph:url('assets/verticals/logistics.svg')" aria-hidden="true"></span></div>
-          <h4>Logistics</h4>
-          <p>Dispatch voice, track &amp; trace, exceptions, POD capture.</p>
-        </a>
-        <a href="solutions.html#public-safety" class="ind">
-          <div class="top"><span class="nm">13 · Public safety</span><span class="g" style="--glyph:url('assets/verticals/public-safety.svg')" aria-hidden="true"></span></div>
-          <h4>Public safety &amp; justice</h4>
-          <p>Incident reports, evidence inventory, court filings, witness voice, AML, fraud.</p>
-        </a>
-        <a href="solutions.html#voice" class="ind voice">
-          <div class="top"><span class="nm">14 · Voice</span><span class="g" style="--glyph:url('assets/verticals/voice.svg')" aria-hidden="true"></span></div>
-          <h4>Voice · 14 languages</h4>
-          <p>AI phone desk cross-cutting every industry. &lt; 2 rings, CRM-note writer.</p>
-        </a>
       </div>
     </div>
   </section>
 
-  <section class="reach">
-    <div class="container">
-      <div class="reach-grid">
-        <div>
-          <div class="eyebrow" style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:1rem;">Where we work</div>
-          <h2>Started in <em>Melbourne</em>.<br>Hubs in <em>Dubai</em> &amp; <em>Riyadh</em>.<br>Shipping <em>globally</em>.</h2>
-          <p>Three hubs — <em>Melbourne (AEST), Dubai (GST) and Riyadh (AST)</em> — cover clients across APAC, the Gulf and MENA, Europe, and the Americas. Agents run in customer-selected regions — <em>AU, UAE, SA, UK, EU, US, SG</em> — with data residency committed in-contract, including full support for PDPL and UAE Federal Data Protection Law.</p>
-          <p>We work primarily in English and Arabic, with multilingual voice-agent coverage across <em>14 languages</em>. Integrations cover <em>120+ tools</em> — EMR, ERP, CRM, phone, helpdesk, and the line-side systems that every manufacturer swears are one-of-a-kind. Regional GCC systems covered include Amiyah, Lean Business, Elm and Mashroat where relevant.</p>
-          <div class="reach-facts">
-            <div class="reach-fact"><div class="k">Hubs</div><div class="v">MEL<em> · </em>DXB<em> · </em>RUH</div></div>
-            <div class="reach-fact"><div class="k">Data regions</div><div class="v">AU · UAE · SA · UK · EU · US · SG</div></div>
-            <div class="reach-fact"><div class="k">Integrations</div><div class="v"><em>120+</em> tools</div></div>
-            <div class="reach-fact"><div class="k">Voice languages</div><div class="v"><em>14</em> live · incl. Arabic</div></div>
-          </div>
+  <!-- ========== WHAT WE DO ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">What we do</span>
+        <h2 class="h2">Deep verticals. <em>Custom-built</em> where you need them.</h2>
+        <p class="lede">We don't build horizontal AI. Each practice area ships a custom-built portfolio of agents, a target SLA and a shortlist of workflows we're ready to run — so you're buying finished work, not a science project.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card">
+          <span class="pill">Vertical agents</span>
+          <h3>Agents for <em>regulated</em> industries.</h3>
+          <p>Production agents across thirteen industries — healthcare, legal, finance, insurance, real estate, e-commerce, HR, marketing, manufacturing, education, hospitality, logistics, and public safety &amp; justice. We already know what a SOAP note and an FNOL packet need.</p>
+          <div class="stat-chip"><b>13</b>&nbsp;industries in production</div>
+        </article>
+        <article class="card">
+          <span class="pill">Custom verticals</span>
+          <h3>Yours isn't listed? <em>We build it.</em></h3>
+          <p>When your industry isn't on the shelf, we custom-build the vertical on the same per-outcome contract — same audit, same SLA, same pricing model. The catalogue is a sample of what we've shipped, not the limit of what we ship.</p>
+          <div class="stat-chip"><b>Same contract</b> · per outcome</div>
+        </article>
+        <article class="card">
+          <span class="pill">Voice desk</span>
+          <h3>A <em>multilingual</em> phone desk.</h3>
+          <p>An AI phone desk that cuts across every industry — answers in under two rings, runs inbound and outbound, warm-transfers edge cases and writes the CRM note. It slots into Aircall, Twilio, RingCentral or your existing stack.</p>
+          <div class="stat-chip"><b>14</b>&nbsp;languages · <b>&lt;2</b>&nbsp;rings · 24/7</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRINCIPLES ========== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">How we work</span>
+        <h2 class="h2">The rules we won't <em>negotiate</em>.</h2>
+        <p class="lede">Four principles, in writing, on every statement of work. They keep your risk low and our incentives honest.</p>
+      </div>
+      <div class="grid grid-4 reveal">
+        <article class="card">
+          <span class="pill">01 · Audit-first</span>
+          <h3>Two weeks, <em>free</em>.</h3>
+          <p>Every engagement begins with a free two-week workflow audit — observing, measuring, mapping. We only propose what we can confidently ship.</p>
+        </article>
+        <article class="card">
+          <span class="pill">02 · No audit, no build</span>
+          <h3>We'll say <em>no</em>.</h3>
+          <p>If the math doesn't work, we say so and leave the diagnostic behind. No retainers for vapour, no exceptions.</p>
+        </article>
+        <article class="card">
+          <span class="pill">03 · Paid on outcomes</span>
+          <h3>Miss SLA, <em>free</em>.</h3>
+          <p>Seats are a rounding error and tokens are our cost. You pay per finished unit against a contract SLA — misses are credited back automatically.</p>
+        </article>
+        <article class="card">
+          <span class="pill">04 · Vertical-only</span>
+          <h3>Depth beats <em>breadth</em>.</h3>
+          <p>We turn down work outside our practice areas — and custom-build a new vertical when yours isn't on the shelf. A named human signs off on every SLA-gated workflow.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GLOBAL REACH ========== -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Where we work</span>
+        <h2 class="h2">Global, remote-first, <em>follow-the-sun</em>.</h2>
+        <p class="lede">Our delivery org hands work across time zones — by the time your morning standup ends, your agent build has already advanced overnight. Agents run in the region you choose, with data residency committed in-contract, including full support for PDPL and UAE Federal Data Protection Law.</p>
+      </div>
+
+      <div class="grid grid-4 reveal" style="margin-bottom:16px">
+        <div class="card"><span class="kicker">Coverage</span><h3><em>24/7</em> follow-the-sun</h3><p>Always running on someone's work day — including your customers' nights and weekends.</p></div>
+        <div class="card"><span class="kicker">Data regions</span><h3>7 regions</h3><p>AU · UAE · SA · UK · EU · US · SG — residency committed in-contract.</p></div>
+        <div class="card"><span class="kicker">Integrations</span><h3><em>120+</em> tools</h3><p>EMR, ERP, CRM, phone, helpdesk — plus regional GCC systems like Amiyah, Lean Business, Elm and Mashroat.</p></div>
+        <div class="card"><span class="kicker">Voice languages</span><h3><em>14</em> live</h3><p>Arabic and English first, extended to whatever language your customers actually call in.</p></div>
+      </div>
+
+      <div class="grid grid-3 reveal">
+        <div class="card"><span class="kicker">01 · Healthcare</span><p>Intake, prior-auth, coding, refill voice, denial appeals.</p></div>
+        <div class="card"><span class="kicker">02 · Legal</span><p>Discovery, leases, client intake voice, depo summaries.</p></div>
+        <div class="card"><span class="kicker">03 · Finance</span><p>Reconciliation, AR voice, month-end, KYC voice.</p></div>
+        <div class="card"><span class="kicker">04 · Real estate</span><p>Listings, enquiry voice, inspections, settlements.</p></div>
+        <div class="card"><span class="kicker">05 · E-commerce</span><p>Refunds, chargebacks, WISMO voice, restock, reviews.</p></div>
+        <div class="card"><span class="kicker">06 · HR &amp; hiring</span><p>Shortlist, phone-screen voice, offers, exit voice.</p></div>
+        <div class="card"><span class="kicker">07 · Marketing</span><p>Briefs, ad-creative, outbound SDR voice, PR monitor.</p></div>
+        <div class="card"><span class="kicker">08 · Manufacturing</span><p>QA-log, CAPA, supplier-chase voice, safety intake.</p></div>
+        <div class="card"><span class="kicker">09 · Education</span><p>Admissions triage, student-services voice, tutor dispatch.</p></div>
+        <div class="card"><span class="kicker">10 · Insurance</span><p>FNOL voice, claims triage, fraud flags, underwriting.</p></div>
+        <div class="card"><span class="kicker">11 · Hospitality</span><p>Booking voice, concierge, upsell, overflow.</p></div>
+        <div class="card"><span class="kicker">12 · Logistics</span><p>Dispatch voice, track &amp; trace, exceptions, POD capture.</p></div>
+        <div class="card"><span class="kicker">13 · Public safety &amp; justice</span><p>Incident reports, evidence inventory, court filings, witness voice, AML, fraud.</p></div>
+        <div class="card"><span class="kicker">— · Voice desk</span><p>Cross-cutting multilingual phone desk — &lt;2 rings, CRM-note writer, every industry.</p></div>
+      </div>
+      <div class="center" style="margin-top:28px">
+        <a href="solutions.html" class="btn btn-ghost btn-lg">Explore the practice areas <span class="ar">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ENTERPRISE & SOVEREIGN ========== -->
+  <section class="section dark">
+    <div class="wrap">
+      <div class="shead reveal">
+        <span class="eyebrow">Enterprise &amp; sovereign capability</span>
+        <h2 class="h2">Your data, <em>your boundary</em>.</h2>
+        <p class="lede">Runs on our in-house AI cloud, or inside your VPC, data centre or air-gapped enclave — built for large enterprise and federal/government workloads. No reseller margin, no shared queue, and for sovereign deployments your data never leaves your boundary.</p>
+      </div>
+      <div class="grid grid-3 reveal">
+        <article class="card ent-card feature" style="border:1px solid rgba(255,255,255,0.14)">
+          <span class="kicker" style="color:var(--acc-2)">In-house AI cloud</span>
+          <h3>Our GPU fleet, your meter.</h3>
+          <ul class="checks">
+            <li>Dedicated inference, reserved throughput</li>
+            <li>Model choice we control end-to-end</li>
+            <li>Priced per outcome, not per token</li>
+          </ul>
+        </article>
+        <article class="card ent-card feature" style="border:1px solid rgba(255,255,255,0.14)">
+          <span class="kicker" style="color:var(--acc-2)">Large enterprise</span>
+          <h3>Built for the security review.</h3>
+          <ul class="checks">
+            <li>VPC / private-link deployment, BYO keys</li>
+            <li>SSO &amp; SCIM — Okta, Entra, Workspace</li>
+            <li>Written SLA on every workflow</li>
+          </ul>
+        </article>
+        <article class="card ent-card feature" style="border:1px solid rgba(255,255,255,0.14)">
+          <span class="kicker" style="color:var(--acc-2)">Federal &amp; government</span>
+          <h3>Sovereign by design.</h3>
+          <ul class="checks">
+            <li>Air-gapped &amp; on-prem deployment</li>
+            <li>Data sovereignty — in-region, in-boundary</li>
+            <li>Chain-of-custody audit trail</li>
+          </ul>
+        </article>
+      </div>
+      <div class="center" style="margin-top:28px">
+        <a href="contact.html" class="btn btn-light btn-lg">Talk to our solutions team <span class="ar">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== END CTA ========== -->
+  <section class="section dark cta-band" style="border-top:1px solid rgba(255,255,255,0.1)">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" style="justify-content:center">Start with an audit, not a pitch</span>
+        <h2 class="h2">Two weeks. One workflow. <em>No obligation.</em></h2>
+        <p class="lede">We spend 10 working days observing the job end-to-end. If we can ship agents against a contract SLA, we price it. If we can't, you walk away with the diagnostic report — on us.</p>
+        <div class="btns">
+          <a href="contact.html" class="btn btn-light btn-lg">Book my audit <span class="ar">↗</span></a>
+          <a href="process.html" class="btn btn-outline-light btn-lg">How it works</a>
         </div>
-        <figure class="map-card" aria-label="Hubs in Melbourne, Dubai and Riyadh, data residency across 7 regions">
-          <div class="chrome" aria-hidden="true">
-            <span class="d"></span><span class="d"></span><span class="d"></span>
-            <span class="u">autopilotlabs.io / regions</span>
-            <span class="r">3 hubs · 7 regions</span>
-          </div>
-          <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid2" width="24" height="24" patternUnits="userSpaceOnUse">
-                <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(9,9,11,0.06)" stroke-width="0.5"/>
-              </pattern>
-            </defs>
-            <rect width="600" height="320" fill="url(#grid2)"/>
-            <!-- Simplified world hint (not geographic, just suggestive) -->
-            <g stroke="rgba(9,9,11,0.35)" fill="none" stroke-width="0.8">
-              <path d="M 60 120 Q 140 90 220 130 T 380 120 Q 460 100 540 130"/>
-              <path d="M 60 200 Q 160 230 260 210 T 420 220 Q 500 215 540 230"/>
-            </g>
-            <!-- Melbourne hub (primary) -->
-            <g>
-              <circle cx="498" cy="248" r="24" fill="none" stroke="#0052FF" stroke-width="1" opacity="0.3"/>
-              <circle cx="498" cy="248" r="13" fill="none" stroke="#0052FF" stroke-width="1" opacity="0.6"/>
-              <circle cx="498" cy="248" r="6" fill="#0052FF"/>
-              <text x="498" y="234" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#09090B" letter-spacing="2" font-weight="600">MELBOURNE</text>
-              <text x="498" y="288" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#71717A" letter-spacing="1.5">HUB · AEST</text>
-            </g>
-            <!-- Dubai hub -->
-            <g>
-              <circle cx="344" cy="168" r="20" fill="none" stroke="#0052FF" stroke-width="1" opacity="0.3"/>
-              <circle cx="344" cy="168" r="11" fill="none" stroke="#0052FF" stroke-width="1" opacity="0.6"/>
-              <circle cx="344" cy="168" r="5" fill="#0052FF"/>
-              <text x="344" y="154" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#09090B" letter-spacing="2" font-weight="600">DUBAI</text>
-              <text x="344" y="192" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#71717A" letter-spacing="1.5">HUB · GST</text>
-            </g>
-            <!-- Riyadh hub -->
-            <g>
-              <circle cx="308" cy="178" r="18" fill="none" stroke="#0052FF" stroke-width="1" opacity="0.3"/>
-              <circle cx="308" cy="178" r="10" fill="none" stroke="#0052FF" stroke-width="1" opacity="0.6"/>
-              <circle cx="308" cy="178" r="5" fill="#0052FF"/>
-              <text x="300" y="204" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#09090B" letter-spacing="2" font-weight="600">RIYADH</text>
-              <text x="300" y="216" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8" fill="#71717A" letter-spacing="1.5">HUB · AST</text>
-            </g>
-            <!-- Other data-residency regions (smaller dots) -->
-            <g font-family="JetBrains Mono, monospace" font-size="8" fill="#71717A" letter-spacing="1.5">
-              <circle cx="110" cy="140" r="4" fill="#0052FF"/><text x="110" y="130" text-anchor="middle">US</text>
-              <circle cx="260" cy="116" r="4" fill="#0052FF"/><text x="260" y="106" text-anchor="middle">UK</text>
-              <circle cx="282" cy="132" r="4" fill="#0052FF"/><text x="286" y="146" text-anchor="start">EU</text>
-              <circle cx="438" cy="190" r="4" fill="#0052FF"/><text x="438" y="180" text-anchor="middle">SG</text>
-              <circle cx="478" cy="248" r="4" fill="#0052FF"/><text x="478" y="272" text-anchor="middle" opacity="0">AU</text>
-            </g>
-            <!-- Connector dotted from Melbourne hub -->
-            <g stroke="#0052FF" stroke-width="0.6" stroke-dasharray="2 3" opacity="0.5" fill="none">
-              <path d="M 498 248 Q 360 210 110 140"/>
-              <path d="M 498 248 Q 380 180 260 116"/>
-              <path d="M 498 248 Q 400 200 282 132"/>
-              <path d="M 498 248 Q 460 220 438 190"/>
-              <path d="M 498 248 Q 420 200 344 168"/>
-              <path d="M 498 248 Q 400 210 308 178"/>
-            </g>
-            <!-- corner labels -->
-            <text x="12" y="20" font-family="JetBrains Mono, monospace" font-size="9" fill="#71717A" letter-spacing="1.5">◎ HUBS · 03 · REGIONS · 07</text>
-            <text x="588" y="310" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="#71717A" letter-spacing="1.5">◆ IN-CONTRACT</text>
-          </svg>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="pri">
-    <div class="container">
-      <div class="pri-head">
-        <div class="eyebrow">How we work · Four articles</div>
-        <h2>The rules we<br>won't <em>negotiate</em>.</h2>
-      </div>
-      <div class="pri-row">
-        <article class="pri-card">
-          <div class="no">Article 01</div>
-          <h3>Audit <em>before</em> build.</h3>
-          <p>Every engagement begins with a free two-week workflow audit. If the math doesn't work, we say so and leave the diagnostic behind. No audit, no build — no exceptions.</p>
-        </article>
-        <article class="pri-card">
-          <div class="no">Article 02</div>
-          <h3>Outcomes are the <em>only</em> unit.</h3>
-          <p>Seats are a rounding error. Tokens are our cost. You pay per finished unit with an SLA in the contract. Miss the SLA, the outcome is credited back automatically.</p>
-        </article>
-        <article class="pri-card">
-          <div class="no">Article 03</div>
-          <h3>Nine areas. <em>Nothing else.</em></h3>
-          <p>We turn down work outside our fourteen practice areas. Depth beats breadth. We already know what a SOAP note is and why your LegalHold tag matters — no relearning on your retainer.</p>
-        </article>
-        <article class="pri-card">
-          <div class="no">Article 04</div>
-          <h3>A human <em>signs</em> every outcome.</h3>
-          <p>Every SLA-gated workflow has a named reviewer on our side, not just a monitoring dashboard. An agent runs the work. A person is accountable for it.</p>
-        </article>
-      </div>
-      <div style="margin-top: 2.5rem;">
-        <a href="manifesto.html" class="btn btn-lg">Read the full manifesto <span class="arrow">↗</span></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="ab-end">
-    <div class="container">
-      <h2>Two weeks. One workflow.<br><em>No obligation.</em></h2>
-      <p>We spend 10 working days observing the job end-to-end. If we can ship agents against a contract SLA, we price it. If we can't, you walk away with the diagnostic report — on us.</p>
-      <div class="acts">
-        <a href="contact.html" class="btn btn-primary btn-lg">Book my audit <span class="arrow">↗</span></a>
-        <a href="process.html" class="btn btn-lg">How it works</a>
       </div>
     </div>
   </section>
 </main>
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>Agents that<br><em>finish</em>.</h3>
-        <p>Autopilot Labs is an AI workflow studio with hubs in Melbourne, Dubai and Riyadh. We build vertical agents across fourteen practice areas — thirteen industries plus an always-on voice desk in 14 languages (Arabic included) — and bill per completed outcome. Not per seat, not per token.</p>
+
+<!-- ========== FOOTER ========== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-min">
+      <div>
+        <a href="index.html" class="brand"><span class="brand-mark">A</span> Autopilot&nbsp;Labs</a>
+        <p class="foot-tag">End-to-end automation with agents we build for your workflow. Billed per outcome — never per seat, never per token.</p>
       </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="process.html">Process</a></li>
-          <li><a href="solutions.html">Solutions</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Verticals</h5>
-        <ul>
-          <li><a href="solutions.html#healthcare">Healthcare</a></li>
-          <li><a href="solutions.html#legal">Legal</a></li>
-          <li><a href="solutions.html#finance">Finance</a></li>
-          <li><a href="solutions.html#real-estate">Real estate</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Office</h5>
-        <ul>
-          <li><a href="#">L14 · 459 Collins St</a></li>
-          <li><a href="#">Melbourne VIC 3000</a></li>
-          <li><a href="mailto:hello@autopilotlabs.io">hello@autopilotlabs.io</a></li>
-          <li><a href="#">+61 3 9000 0000</a></li>
-        </ul>
-      </div>
+      <nav class="foot-nav" aria-label="Footer">
+        <a href="what-is.html">What is an AI agent?</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="cases.html">Cases</a>
+        <a href="demo.html">Demo</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="process.html">Process</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <a class="btn btn-ghost foot-mail" href="mailto:enquires@autopilotlabs.io">enquires@autopilotlabs.io</a>
     </div>
-    <div class="footer-bottom">
-      <div class="left">
-        <span>© 2026 Autopilot Labs Pty Ltd</span>
-      </div>
-      <div class="right">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">SLA</a>
-        
-      </div>
+    <div class="foot-bottom">
+      <div class="left">© 2026 Autopilot Labs · Global · Remote-first · 24/7 delivery</div>
+      <div class="right"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">SLA</a></div>
     </div>
   </div>
 </footer>
-<script src="assets/site.js?v=5"></script>
+
+<script>
+/* mobile nav */
+(function(){
+  var t = document.getElementById('navToggle'), s = document.getElementById('msheet');
+  if(!t||!s) return;
+  t.addEventListener('click', function(){
+    var open = s.classList.toggle('open');
+    t.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('lock', open);
+  });
+  s.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ s.classList.remove('open'); document.body.classList.remove('lock'); t.setAttribute('aria-expanded','false'); }); });
+})();
+
+/* reveal on scroll */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
 </body>
 </html>
