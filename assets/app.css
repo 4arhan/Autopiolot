@@ -667,3 +667,117 @@ html { text-size-adjust: 100%; } /* stop Android Chrome font-boosting */
   .foot-min { grid-template-columns: 1fr; gap: 28px; }
   .foot-nav a { font-size: 15.5px; padding: 9px 0; }
 }
+
+/* =========================================================
+   PHOTOGRAPHY — stock imagery, practice cards, split rows,
+   photo band, quantum timeline. (Enterprise repositioning.)
+   ========================================================= */
+.photo { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--ink-bg); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(10,15,13,0.08); pointer-events: none; }
+
+/* Hero visual: photo + floating chips + overlapping console */
+.hero-visual { position: relative; }
+.hero-visual .photo { aspect-ratio: 5 / 4; box-shadow: var(--shadow-lg); }
+.hero-visual .console { position: relative; margin: -96px 18px 0; }
+.float-chip {
+  position: absolute; z-index: 2;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 10px 14px; border-radius: 14px;
+  background: rgba(255,255,255,0.92);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.25;
+}
+.float-chip small { display: block; font-size: 11.5px; font-weight: 500; color: var(--ink-3); }
+.float-chip .fc-ic {
+  width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--acc-soft); color: var(--acc-3);
+}
+.float-chip .fc-ic svg { width: 17px; height: 17px; }
+.float-chip.tl { top: 16px; left: 16px; }
+.float-chip.tr { top: 16px; right: 16px; }
+@media (max-width: 520px) {
+  .hero-visual .console { margin: -64px 10px 0; }
+  .float-chip.tr { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .float-chip { animation: bob 6s ease-in-out infinite; }
+  .float-chip.tr { animation-delay: -3s; }
+  @keyframes bob { 50% { transform: translateY(-6px); } }
+}
+
+/* Practice cards — image on top */
+.prac {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: border-color .2s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+.prac:hover { border-color: var(--line-2); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+.prac-img { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--ink-bg); }
+.prac-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.prac:hover .prac-img img { transform: scale(1.05); }
+.prac-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,26,20,0) 45%, rgba(11,26,20,0.55) 100%); }
+.prac-img .pill { position: absolute; left: 16px; bottom: 14px; z-index: 1; background: rgba(255,255,255,0.94); border-color: transparent; }
+.prac-body { display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.6vw, 30px); flex: 1; }
+.prac-body h3 { font-size: clamp(20px, 2vw, 24px); font-weight: 600; letter-spacing: -0.018em; line-height: 1.2; }
+.prac-body p { font-size: 15px; line-height: 1.58; color: var(--ink-3); }
+.prac-body .go { margin-top: auto; padding-top: 6px; font-size: 14.5px; font-weight: 600; color: var(--acc-3); }
+.prac:hover .go .ar { transform: translateX(4px); }
+.go .ar { display: inline-block; transition: transform .2s var(--ease); }
+
+/* Split row — photo beside copy */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: center; }
+.split .photo { aspect-ratio: 4 / 3; box-shadow: var(--shadow-lg); }
+.split--rev > .photo { order: 2; }
+.split .h2 { margin: 16px 0; }
+.split .lede { margin-bottom: 22px; }
+.split .checks { margin-bottom: 26px; }
+.split .checks li { font-size: 15px; }
+.split .checks li b { color: var(--ink); font-weight: 600; }
+@media (max-width: 860px) {
+  .split { grid-template-columns: 1fr; }
+  .split--rev > .photo { order: 0; }
+  .split .photo { aspect-ratio: 16 / 10; }
+}
+
+/* Photo band — full-width image with a deep emerald veil */
+.band { position: relative; color: #EAF2EE; overflow: hidden; background: var(--ink-bg); }
+.band > img.band-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; max-width: none; }
+.band::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(7,18,13,0.94) 0%, rgba(7,18,13,0.82) 48%, rgba(7,18,13,0.5) 100%); }
+.band > .wrap { position: relative; z-index: 2; }
+.band .h2, .band .display { color: #fff; }
+.band .lede, .band p { color: rgba(234,242,238,0.8); }
+.band em { color: var(--acc-2); }
+.band .eyebrow { color: var(--acc-2); }
+.band .eyebrow::before { background: var(--acc-2); }
+.band .pill { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; }
+
+/* Timeline (quantum clock) */
+.tline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: clamp(28px, 4vw, 44px); }
+.tline > div {
+  border: 1px solid rgba(255,255,255,0.16); border-radius: var(--r);
+  background: rgba(255,255,255,0.06);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  padding: 20px 22px;
+}
+.tline .yr { font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; letter-spacing: -0.03em; color: #fff; line-height: 1; }
+.tline h4 { font-size: 15.5px; font-weight: 600; color: #fff; margin: 10px 0 6px; }
+.tline p { font-size: 14px; line-height: 1.5; }
+@media (max-width: 720px) { .tline { grid-template-columns: 1fr; } }
+
+/* Page hero with photo (inner pages) */
+.hero-split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+.hero-split .photo { aspect-ratio: 5 / 4; box-shadow: var(--shadow-lg); }
+@media (max-width: 920px) { .hero-split { grid-template-columns: 1fr; gap: 32px; } .hero-split .photo { aspect-ratio: 16 / 10; } }
+
+/* Anchor offset under the sticky nav */
+[id] { scroll-margin-top: 84px; }
+
+/* extra stagger slots for the longer mobile sheet */
+@media (max-width: 920px) {
+  .msheet.open > *:nth-child(11) { animation-delay: .33s; }
+  .msheet.open > *:nth-child(12) { animation-delay: .36s; }
+}
