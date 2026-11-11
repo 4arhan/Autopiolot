@@ -328,3 +328,186 @@ textarea:focus-visible,
   background: var(--accent);
   color: var(--accent-fg);
 }
+
+/* =========================================================
+   16 · Enhancements — subtle, professional motion
+   ========================================================= */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---- 16.1  Stagger utility -------------------------------
+     Any [data-stagger] parent gets its direct-child .reveal
+     elements auto-delayed in 60ms increments (capped at 8).
+     Applied in JS. Fallback via CSS: */
+  [data-stagger] > .reveal:nth-child(1)  { transition-delay: 0ms;   }
+  [data-stagger] > .reveal:nth-child(2)  { transition-delay: 60ms;  }
+  [data-stagger] > .reveal:nth-child(3)  { transition-delay: 120ms; }
+  [data-stagger] > .reveal:nth-child(4)  { transition-delay: 180ms; }
+  [data-stagger] > .reveal:nth-child(5)  { transition-delay: 240ms; }
+  [data-stagger] > .reveal:nth-child(6)  { transition-delay: 300ms; }
+  [data-stagger] > .reveal:nth-child(7)  { transition-delay: 340ms; }
+  [data-stagger] > .reveal:nth-child(n+8){ transition-delay: 380ms; }
+
+  /* ---- 16.2  Card lift on hover ----------------------------
+     Adds a 2px rise + soft shadow to content cards site-wide.
+     Keeps the cobalt left rail from rule 5. */
+  .cs-item,
+  .j-card,
+  .role-card,
+  .press-card,
+  .ev-row,
+  .int-card,
+  .wp-card,
+  .lev-step {
+    transition:
+      transform 260ms var(--ease-sharp),
+      box-shadow 260ms var(--ease-sharp),
+      background-color 260ms var(--ease-sharp),
+      border-color 260ms var(--ease-sharp);
+    will-change: transform;
+  }
+  .cs-item:hover,
+  .j-card:hover,
+  .role-card:hover,
+  .ev-row:hover,
+  .int-card:hover,
+  .wp-card:hover,
+  .lev-step:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 2px 0 0 0 var(--accent),
+      0 10px 28px -18px rgba(0, 0, 0, 0.28);
+  }
+  .press-card:hover {
+    transform: translateY(-2px);
+  }
+
+  /* ---- 16.3  Arrow glyphs — unified slide -------------------
+     Extends rule 6 to all non-button arrow indicators. */
+  .read-arrow,
+  .press-read span,
+  .press-kit-link span,
+  .cs-cta .acts .arrow,
+  .art-more .arrow,
+  a .arrow {
+    display: inline-block;
+    transition: transform 200ms var(--ease-sharp);
+  }
+  .j-card:hover .read-arrow,
+  .press-card:hover .press-read span,
+  .press-kit-link:hover span {
+    transform: translate(3px, -3px);
+  }
+
+  /* ---- 16.4  Live dot pulse ---------------------------------
+     Quiet 2s pulse on anything marked live. */
+  @keyframes dotPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 82, 255, 0.35); }
+    50%      { box-shadow: 0 0 0 6px rgba(0, 82, 255, 0); }
+  }
+  .dot-live,
+  .status-dot,
+  .pulse-dot,
+  .home-eyebrow-dot {
+    animation: dotPulse 2.4s var(--ease-sharp) infinite;
+  }
+
+  /* ---- 16.5  (removed) Section-head em underline sweep —
+     the swept underline read as dated; accent ems now stand on
+     colour alone. */
+
+  /* ---- 16.6  Count-up number transition --------------------
+     Stats fed by JS counter use tabular-nums and a slight
+     scale-in so the final value lands cleanly. */
+  .count-up {
+    font-variant-numeric: tabular-nums lining-nums;
+    display: inline-block;
+  }
+  .count-up.settled {
+    animation: countSettle 260ms var(--ease-sharp);
+  }
+  @keyframes countSettle {
+    0%   { transform: translateY(2px); opacity: 0.85; }
+    100% { transform: none; opacity: 1; }
+  }
+
+  /* ---- 16.7  Topbar condense on scroll ---------------------
+     Complements existing is-scrolled logic. */
+  .topbar {
+    transition:
+      padding 220ms var(--ease-sharp),
+      background-color 220ms var(--ease-sharp),
+      box-shadow 220ms var(--ease-sharp),
+      border-color 220ms var(--ease-sharp);
+  }
+  .topbar.is-scrolled {
+    box-shadow: 0 1px 0 0 var(--line);
+  }
+
+  /* ---- 16.8  Nav link underline -----------------------------
+     Cobalt underline grows from center on hover for top-level
+     nav links. */
+  .topbar nav a,
+  .nav a {
+    position: relative;
+  }
+  .topbar nav a::after,
+  .nav a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: -4px;
+    height: 1px;
+    background: var(--accent);
+    transition: left 220ms var(--ease-sharp), right 220ms var(--ease-sharp);
+  }
+  .topbar nav a:hover::after,
+  .nav a:hover::after,
+  .topbar nav a.is-active::after,
+  .nav a.is-active::after {
+    left: 0;
+    right: 0;
+  }
+
+  /* ---- 16.9  Image fade-in -----------------------------------
+     img.lazy-fade fades once loaded. Paired with .ready in JS. */
+  img.lazy-fade {
+    opacity: 0;
+    transition: opacity 480ms var(--ease-sharp);
+  }
+  img.lazy-fade.ready {
+    opacity: 1;
+  }
+
+  /* ---- 16.10  Hero eyebrow dot — accent halo ----------------
+     Soft halo breathing on the home-eyebrow-dot for depth. */
+  .home-eyebrow-dot {
+    background: var(--accent);
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+  }
+
+  /* ---- 16.11  Button magnetic press ------------------------- */
+  .btn,
+  .btn-primary,
+  .btn-secondary {
+    transition:
+      background-color 180ms var(--ease-sharp),
+      color 180ms var(--ease-sharp),
+      border-color 180ms var(--ease-sharp),
+      transform 140ms var(--ease-sharp);
+  }
+  .btn:active,
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: translateY(1px);
+  }
+
+  /* ---- 16.12  Ticker seam hide + smoother motion ----------- */
+  .ticker-track {
+    will-change: transform;
+  }
+
+} /* end enhancements gate */

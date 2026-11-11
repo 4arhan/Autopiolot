@@ -54,6 +54,19 @@
     let lastFocus = null;
     let savedScrollY = 0;
 
+    // Inject a visible close (X) button inside the drawer if one isn't present.
+    // This fixes the "menu can open but not close" confusion on touch devices
+    // where users don't realize the hamburger has become an X.
+    let closeBtn = mobileNav.querySelector('.mnav-close');
+    if (!closeBtn) {
+      closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.className = 'mnav-close';
+      closeBtn.setAttribute('aria-label', 'Close menu');
+      closeBtn.innerHTML = '<span aria-hidden="true">Close</span><span class="x" aria-hidden="true">×</span>';
+      mobileNav.insertBefore(closeBtn, mobileNav.firstChild);
+    }
+
     const openMenu = () => {
       lastFocus = document.activeElement;
       savedScrollY = window.scrollY || window.pageYOffset || 0;
@@ -62,12 +75,14 @@
       document.body.classList.add('nav-locked');
       mobileNav.classList.add('open');
       toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
       const first = mobileNav.querySelector('a, button');
       if (first) setTimeout(() => first.focus(), 180);
     };
     const closeMenu = () => {
       mobileNav.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
       document.body.classList.remove('nav-locked');
       document.body.style.top = '';
       // Restore scroll position (html is scroll-smooth; use instant jump)
@@ -80,7 +95,14 @@
 
     toggle.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       if (mobileNav.classList.contains('open')) closeMenu(); else openMenu();
+    });
+
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMenu();
     });
 
     // Esc closes, focus trap on Tab
@@ -97,16 +119,37 @@
       }
     });
 
-    // Close when a link is clicked (SPA-ish feel on same-origin nav)
+    // Close when a link or explicitly-tagged close control is clicked.
     mobileNav.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href]');
+      const a = e.target.closest('a[href], [data-mnav-close]');
       if (a) closeMenu();
     });
 
-    // Close on resize-up to desktop
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1024 && mobileNav.classList.contains('open')) closeMenu();
+    // Backdrop close: tap directly on the drawer background (not on children)
+    mobileNav.addEventListener('click', (e) => {
+      if (e.target === mobileNav) closeMenu();
     });
+
+    // Close on any resize change when the menu is open (desktop or narrower).
+    let resizeRaf = null;
+    window.addEventListener('resize', () => {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        if (window.innerWidth > 1024 && mobileNav.classList.contains('open')) closeMenu();
+      });
+    });
+
+    // Swipe-up-to-close (mobile gesture)
+    let touchStartY = null;
+    mobileNav.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    mobileNav.addEventListener('touchend', (e) => {
+      if (touchStartY == null) return;
+      const endY = (e.changedTouches[0] && e.changedTouches[0].clientY) || touchStartY;
+      if (touchStartY - endY > 90 && mobileNav.scrollTop <= 0) closeMenu();
+      touchStartY = null;
+    }, { passive: true });
   }
 
   // Mark active nav link from current path
@@ -243,5 +286,111 @@
     style.id = 'autopilotlabs-dyn-kf';
     style.textContent = '@keyframes rotateWord {0%{opacity:0;transform:translateY(12px);filter:blur(3px)}100%{opacity:1;transform:none;filter:none}}';
     document.head.appendChild(style);
+  }
+
+  // ---- Auto-stagger: apply incremental transition-delay to direct .reveal
+  //      children of any [data-stagger] container. Motion.css has a CSS
+  //      fallback; this handles counts > 8 and lets us keep things tidy.
+  const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reducedMotion) {
+    document.querySelectorAll('[data-stagger]').forEach((container) => {
+      const step = parseInt(container.getAttribute('data-stagger-step') || '60', 10);
+      const max = parseInt(container.getAttribute('data-stagger-max') || '8', 10);
+      const children = container.querySelectorAll(':scope > .reveal');
+      children.forEach((child, i) => {
+        const n = Math.min(i, max);
+        child.style.transitionDelay = (n * step) + 'ms';
+      });
+    });
+  }
+
+  // ---- Count-up stats — animate any [data-count-to] element when it
+  //      enters the viewport. Supports integers and decimals; preserves
+  //      a leading sign or trailing symbol via data-prefix / data-suffix.
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    const targets = document.querySelectorAll('[data-count-to]');
+    if (targets.length) {
+      const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+      const animate = (el) => {
+        const to = parseFloat(el.getAttribute('data-count-to'));
+        if (isNaN(to)) return;
+        const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = parseInt(el.getAttribute('data-duration') || '1200', 10);
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const v = to * easeOutCubic(t);
+          el.textContent = prefix + v.toFixed(decimals) + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+          else el.classList.add('settled');
+        };
+        requestAnimationFrame(tick);
+      };
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            animate(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      targets.forEach((el) => {
+        el.classList.add('count-up');
+        el.textContent = (el.getAttribute('data-prefix') || '') + '0' + (el.getAttribute('data-suffix') || '');
+        io.observe(el);
+      });
+    }
+  }
+
+  // ---- Lazy fade-in for images marked .lazy-fade
+  document.querySelectorAll('img.lazy-fade').forEach((img) => {
+    if (img.complete) {
+      img.classList.add('ready');
+    } else {
+      img.addEventListener('load', () => img.classList.add('ready'), { once: true });
+      img.addEventListener('error', () => img.classList.add('ready'), { once: true });
+    }
+  });
+
+  // ---- Card cascade: when a grid enters the viewport, its children
+  //      fade in one after another. Works without modifying child markup.
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    const grids = [
+      '.roles-grid',
+      '.cs-list',
+      '.press-grid',
+      '.archive .grid',
+      '.int-grid'
+    ];
+    const selector = grids.join(',');
+    const nodes = document.querySelectorAll(selector);
+    if (nodes.length) {
+      const style = document.createElement('style');
+      style.textContent =
+        '.cascade > *{opacity:0;transform:translateY(10px);transition:opacity 520ms cubic-bezier(0.4,0,0.1,1),transform 520ms cubic-bezier(0.4,0,0.1,1)}' +
+        '.cascade.run > *{opacity:1;transform:none}';
+      document.head.appendChild(style);
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const grid = e.target;
+          const kids = grid.children;
+          for (let i = 0; i < kids.length; i++) {
+            const delay = Math.min(i * 55, 440);
+            kids[i].style.transitionDelay = delay + 'ms';
+          }
+          grid.classList.add('run');
+          io.unobserve(grid);
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+
+      nodes.forEach((g) => {
+        g.classList.add('cascade');
+        io.observe(g);
+      });
+    }
   }
 })();
